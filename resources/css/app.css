@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        background-color: #f4efe6;
+        color: #292524;
+    }
+}
+
+/* Warm Luxury Theme Card & Pill Utilities */
+.warm-card {
+    background-color: #ffffff;
+    border: 1px solid #e5ded4;
+    border-radius: 1.25rem;
+    box-shadow: 0 1px 3px 0 rgba(120, 113, 108, 0.08), 0 1px 2px -1px rgba(120, 113, 108, 0.08);
+}
+
+.warm-card-dashed {
+    background-color: #fefbf7;
+    border: 2px dashed #fdba74;
+    border-radius: 1.25rem;
+}
+
+.warm-input {
+    background-color: #ffffff;
+    border-color: #dcd5c9;
+    border-radius: 0.75rem;
+    color: #1c1917;
+}
+
+.warm-input:focus {
+    border-color: #f97316;
+    --tw-ring-color: #f97316;
+}
