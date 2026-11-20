@@ -292,7 +292,7 @@
         /* 2. Emerald Green Card (Sanctioned Income) */
         .stat-card-green {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0fdf4 100%);
-            border: 3px solid #10b981;
+            border: 3px solid #0d9467;
             border-bottom: 6.5px solid #059669;
             box-shadow:
                 0 16px 32px -6px rgba(16, 185, 129, 0.32),
@@ -325,20 +325,23 @@
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
 
-        /* 4. Royal Purple Card (Available Surplus) */
+        /* 4. Deep Maroon / Dark Red Card (Available Surplus) */
+        .stat-card-maroon,
         .stat-card-purple {
-            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #faf5ff 100%);
-            border: 3px solid #a855f7;
-            border-bottom: 6.5px solid #9333ea;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff1f2 100%);
+            border: 3px solid #881337;
+            border-bottom: 6.5px solid #4c0519;
             box-shadow:
-                0 16px 32px -6px rgba(147, 51, 234, 0.32),
+                0 16px 32px -6px rgba(136, 19, 55, 0.32),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
+        .stat-card-3d-wrap:hover .stat-card-maroon,
         .stat-card-3d-wrap:hover .stat-card-purple {
+            border-color: #881337;
             border-bottom-width: 8px;
             box-shadow:
-                0 22px 42px -6px rgba(147, 51, 234, 0.45),
+                0 22px 42px -6px rgba(136, 19, 55, 0.45),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
@@ -377,45 +380,56 @@
             border-bottom: 4px solid #9a3412;
             box-shadow: 0 8px 18px rgba(234, 88, 12, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
+        .candy-icon-maroon,
         .candy-icon-purple {
-            background: linear-gradient(135deg, #c084fc 0%, #9333ea 60%, #7e22ce 100%);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.7);
-            border-bottom: 4px solid #581c87;
-            box-shadow: 0 8px 18px rgba(147, 51, 234, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            background: linear-gradient(135deg, #e11d48 0%, #9f1239 60%, #4c0519 100%);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.65);
+            border-bottom: 4px solid #360210;
+            box-shadow: 0 8px 18px rgba(136, 19, 55, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5);
         }
 
         /* High-Contrast Card Typography */
         .stat-card-label {
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-            font-size: 0.9rem !important;
+            font-size: 0.88rem !important;
             font-weight: 700;
-            letter-spacing: 0.05em;
-            color: #64748b;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
             display: block;
+            margin-bottom: 0.15rem;
         }
 
         .stat-card-blue .stat-card-label {
-            color: #0056d2 !important;
+            color: #2563eb !important; /* Elegant medium royal blue */
+        }
+        .stat-card-green .stat-card-label {
+            color: #059669 !important; /* Elegant medium emerald */
+        }
+        .stat-card-orange .stat-card-label {
+            color: #ea580c !important; /* Elegant medium orange */
+        }
+        .stat-card-maroon .stat-card-label,
+        .stat-card-purple .stat-card-label {
+            color: #9f1239 !important; /* Elegant deep maroon */
         }
 
         .stat-card-value {
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-            font-weight: 800;
+            font-weight: 900;
             color: #0f172a;
             letter-spacing: -0.02em;
             font-feature-settings: "tnum";
             font-variant-numeric: tabular-nums;
             display: inline-flex;
             align-items: baseline;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.06);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
             -webkit-font-smoothing: antialiased;
         }
 
         .stat-card-currency {
-            font-size: 0.75em;
-            font-weight: 700;
-            color: #475569;
+            font-size: 0.8em;
+            font-weight: 900;
+            color: #0f172a;
             margin-right: 0.35rem;
             letter-spacing: 0.01em;
         }
@@ -676,19 +690,21 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label" style="color: #0056d2; font-size: 0.9rem;">TOTAL BUDGET AMOUNT</span>
+                            <span class="stat-card-label">TOTAL BUDGET AMOUNT</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
                                     {{ number_format($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}
                                 </span>
                             </div>
-                            <div class="flex items-center gap-1.5 mt-0.5">
-                                <span class="text-emerald-600 font-bold font-mono text-[11px] flex items-center">
-                                    <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                                    +12.5%
+                            <div class="mt-1 flex items-center">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50/90 text-blue-900 border border-blue-100">
+                                    <span class="text-emerald-600 font-bold flex items-center">
+                                        <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                                        +12.5%
+                                    </span>
+                                    <span class="text-slate-600 font-medium">vs last month</span>
                                 </span>
-                                <span class="text-slate-500 font-medium text-[11px] truncate">vs last month</span>
                             </div>
                         </div>
 
@@ -714,19 +730,21 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label" style="font-size: 0.9rem;">SANCTIONED INCOME</span>
+                            <span class="stat-card-label">SANCTIONED INCOME</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}">
                                     {{ number_format($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}
                                 </span>
                             </div>
-                            <div class="flex items-center gap-1.5 mt-0.5">
-                                <span class="text-emerald-600 font-bold font-mono text-[11px] flex items-center">
-                                    <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                                    +8.2%
+                            <div class="mt-1 flex items-center">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50/90 text-emerald-900 border border-emerald-100">
+                                    <span class="text-emerald-600 font-bold flex items-center">
+                                        <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                                        +8.2%
+                                    </span>
+                                    <span class="text-slate-600 font-medium">vs last month</span>
                                 </span>
-                                <span class="text-slate-500 font-medium text-[11px] truncate">vs last month</span>
                             </div>
                         </div>
 
@@ -753,7 +771,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label" style="font-size: 0.9rem;">TOTAL OUTSTANDING</span>
+                            <span class="stat-card-label">TOTAL OUTSTANDING</span>
                             @php
                                 $billedAmount = $stats['total_billed'] > 0 ? (float)$stats['total_billed'] : 8030837.90;
                             @endphp
@@ -763,12 +781,14 @@
                                     {{ number_format($billedAmount, 2) }}
                                 </span>
                             </div>
-                            <div class="flex items-center gap-1.5 mt-0.5">
-                                <span class="text-rose-600 font-bold font-mono text-[11px] flex items-center">
-                                    <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-                                    -2.1%
+                            <div class="mt-1 flex items-center">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-50/90 text-orange-900 border border-orange-100">
+                                    <span class="text-rose-600 font-bold flex items-center">
+                                        <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                                        -2.1%
+                                    </span>
+                                    <span class="text-slate-600 font-medium">vs last month</span>
                                 </span>
-                                <span class="text-slate-500 font-medium text-[11px] truncate">vs last month</span>
                             </div>
                         </div>
 
@@ -781,11 +801,11 @@
                     </div>
                 </div>
 
-                <!-- CARD 4: Available Surplus (Royal Purple 3D Theme) -->
+                <!-- CARD 4: Available Surplus (Deep Maroon / Dark Red 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
-                    <div class="stat-card-3d stat-card-purple">
+                    <div class="stat-card-3d stat-card-maroon">
                         <!-- Left: 3D Candy Icon Button -->
-                        <div class="stat-candy-icon candy-icon-purple">
+                        <div class="stat-candy-icon candy-icon-maroon">
                             <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                                 <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
@@ -795,27 +815,29 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label" style="font-size: 0.9rem;">AVAILABLE SURPLUS</span>
+                            <span class="stat-card-label">AVAILABLE SURPLUS</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}">
                                     {{ number_format($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}
                                 </span>
                             </div>
-                            <div class="flex items-center gap-1.5 mt-0.5">
-                                <span class="text-emerald-600 font-bold font-mono text-[11px] flex items-center">
-                                    <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
-                                    +15.6%
+                            <div class="mt-1 flex items-center">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50/90 text-rose-900 border border-rose-100">
+                                    <span class="text-emerald-600 font-bold flex items-center">
+                                        <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                                        +15.6%
+                                    </span>
+                                    <span class="text-slate-600 font-medium">vs last month</span>
                                 </span>
-                                <span class="text-slate-500 font-medium text-[11px] truncate">vs last month</span>
                             </div>
                         </div>
 
                         <!-- Right: Mini 3-bar indicator -->
                         <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
-                            <span class="w-1.5 rounded-full bg-purple-300" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full bg-purple-400" style="height: 80%;"></span>
-                            <span class="w-1.5 rounded-full bg-purple-600" style="height: 100%;"></span>
+                            <span class="w-1.5 rounded-full bg-rose-200" style="height: 45%;"></span>
+                            <span class="w-1.5 rounded-full bg-rose-400" style="height: 80%;"></span>
+                            <span class="w-1.5 rounded-full" style="background-color: #881337; height: 100%;"></span>
                         </div>
                     </div>
                 </div>
