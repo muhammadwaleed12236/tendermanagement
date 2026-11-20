@@ -251,121 +251,140 @@
                 <!-- LEFT COLUMN: Animated Desk Lamp & Cord -->
                 <div class="lamp-wrapper">
                     <!-- SVG Lamp Vector Graphic Exactly Matching User Reference Image -->
-                    <svg viewBox="0 0 360 480" class="w-[310px] h-[430px] select-none" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                    <svg viewBox="0 0 380 500" class="w-[330px] h-[450px] select-none" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
                         <defs>
-                            <!-- Warm Golden Ambient Cone Projection -->
-                            <linearGradient id="lampConeGradient" x1="20%" y1="0%" x2="100%" y2="80%">
-                                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.55"/>
-                                <stop offset="30%" stop-color="#f59e0b" stop-opacity="0.30"/>
-                                <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.10"/>
+                            <!-- Ambient Light Cone Projection across to the Login Card -->
+                            <linearGradient id="lampConeGradient" x1="10%" y1="10%" x2="100%" y2="85%">
+                                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.6"/>
+                                <stop offset="25%" stop-color="#f59e0b" stop-opacity="0.35"/>
+                                <stop offset="65%" stop-color="#f59e0b" stop-opacity="0.12"/>
                                 <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
                             </linearGradient>
 
-                            <!-- Bulb Intense Radial Glow -->
-                            <radialGradient id="bulbCenterGlow" cx="50%" cy="50%" r="50%">
+                            <!-- Bulb Intense 3D Radial Glow -->
+                            <radialGradient id="bulbCenterGlow" cx="45%" cy="40%" r="55%">
                                 <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
-                                <stop offset="45%" stop-color="#fef08a" stop-opacity="0.95"/>
-                                <stop offset="75%" stop-color="#f59e0b" stop-opacity="0.6"/>
+                                <stop offset="40%" stop-color="#fffbeb" stop-opacity="1"/>
+                                <stop offset="70%" stop-color="#fef08a" stop-opacity="0.95"/>
+                                <stop offset="90%" stop-color="#f59e0b" stop-opacity="0.5"/>
                                 <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
                             </radialGradient>
 
-                            <!-- Lamp Head Golden Inner Shade Gradient -->
-                            <linearGradient id="innerShadeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="#fffbeb"/>
-                                <stop offset="35%" stop-color="#fef08a"/>
-                                <stop offset="70%" stop-color="#f59e0b"/>
-                                <stop offset="100%" stop-color="#d97706"/>
+                            <!-- Inner Dish Golden 3D Spherical Reflector -->
+                            <radialGradient id="innerShadeGrad" cx="50%" cy="35%" r="65%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="25%" stop-color="#fef08a"/>
+                                <stop offset="60%" stop-color="#f59e0b"/>
+                                <stop offset="100%" stop-color="#b45309"/>
+                            </radialGradient>
+
+                            <!-- Matte Dark Charcoal Lamp Outer Hood Gradient with Top Ambient Rim Glow -->
+                            <linearGradient id="outerHoodGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+                                <stop offset="0%" stop-color="#4b5563"/>
+                                <stop offset="35%" stop-color="#2d3748"/>
+                                <stop offset="75%" stop-color="#1a202c"/>
+                                <stop offset="100%" stop-color="#0f172a"/>
                             </linearGradient>
 
-                            <!-- Matte Dark Charcoal Lamp Outer Hood Gradient -->
-                            <linearGradient id="outerHoodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#374151"/>
-                                <stop offset="50%" stop-color="#1f2937"/>
-                                <stop offset="100%" stop-color="#111827"/>
-                            </linearGradient>
-
-                            <!-- Brass Gold Rings Gradient -->
-                            <linearGradient id="goldBrassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <!-- Luxury Brass Gold Rings Gradient with Metallic Specular -->
+                            <linearGradient id="goldBrassGrad" x1="20%" y1="0%" x2="80%" y2="100%">
                                 <stop offset="0%" stop-color="#fef08a"/>
-                                <stop offset="50%" stop-color="#eab308"/>
-                                <stop offset="100%" stop-color="#a16207"/>
+                                <stop offset="30%" stop-color="#f59e0b"/>
+                                <stop offset="70%" stop-color="#b45309"/>
+                                <stop offset="100%" stop-color="#fef08a"/>
                             </linearGradient>
+
+                            <!-- Drop Shadow for Upper Joints -->
+                            <filter id="jointShadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.6"/>
+                            </filter>
                         </defs>
 
-                        <!-- Outer Ambient Halo Behind Hood When Lit -->
-                        <ellipse cx="230" cy="180" rx="100" ry="85" id="hoodOuterHalo" 
-                                 fill="#f59e0b" opacity="0.35" filter="blur(22px)" pointer-events="none" 
+                        <!-- Outer Ambient Warm Golden Halo Behind Hood -->
+                        <ellipse cx="232" cy="182" rx="110" ry="95" id="hoodOuterHalo" 
+                                 fill="#f59e0b" opacity="0.45" filter="blur(26px)" pointer-events="none" 
                                  style="transition: opacity 0.4s ease;"/>
 
                         <!-- Light Cone Beam Projecting Down and Across to the Right Card -->
                         <polygon id="lampBeamPolygon" 
-                                 points="155,160 295,190 740,400 420,580" 
+                                 points="152,175 304,188 780,410 410,600" 
                                  fill="url(#lampConeGradient)" 
                                  pointer-events="none"
-                                 style="transition: opacity 0.4s ease; filter: blur(4px);"/>
+                                 style="transition: opacity 0.4s ease; filter: blur(5px);"/>
 
                         <!-- 1. Deep Floor Shadow -->
-                        <ellipse cx="160" cy="425" rx="105" ry="16" fill="#000000" opacity="0.75" filter="blur(5px)"/>
+                        <ellipse cx="160" cy="435" rx="115" ry="18" fill="#000000" opacity="0.8" filter="blur(6px)"/>
 
                         <!-- 2. Lamp Circular Matte Base with Chamfered Ring -->
-                        <ellipse cx="160" cy="415" rx="84" ry="15" fill="#111827" stroke="#374151" stroke-width="2"/>
-                        <ellipse cx="160" cy="412" rx="74" ry="11" fill="#1f2937"/>
-                        <ellipse cx="160" cy="410" rx="64" ry="8" fill="#111827"/>
+                        <ellipse cx="160" cy="425" rx="92" ry="16" fill="#1e293b" stroke="#334155" stroke-width="2.5"/>
+                        <ellipse cx="160" cy="422" rx="80" ry="12" fill="#0f172a"/>
+                        <ellipse cx="160" cy="420" rx="68" ry="9" fill="#1e293b"/>
 
-                        <!-- 3. Lower Brass Joint with Washer Ring -->
-                        <circle cx="160" cy="405" r="18" fill="url(#goldBrassGrad)" stroke="#111827" stroke-width="2"/>
-                        <circle cx="160" cy="405" r="10" fill="#111827"/>
-                        <circle cx="160" cy="405" r="5" fill="url(#goldBrassGrad)"/>
+                        <!-- 3. Lower Brass Joint with Inner Pivot Ring (Exact match to image) -->
+                        <g filter="url(#jointShadow)">
+                            <circle cx="160" cy="414" r="19" fill="url(#goldBrassGrad)" stroke="#0f172a" stroke-width="2.5"/>
+                            <circle cx="160" cy="414" r="10.5" fill="#0f172a"/>
+                            <circle cx="160" cy="414" r="5" fill="url(#goldBrassGrad)"/>
+                        </g>
 
-                        <!-- 4. Lower Arm Segment (Double Telescopic Tubes with Center Spring Line) -->
-                        <path d="M160 405 L125 265" stroke="#1f2937" stroke-width="9" stroke-linecap="round"/>
-                        <path d="M157 405 L122 265" stroke="#4b5563" stroke-width="2"/>
-                        <path d="M162 405 L127 265" stroke="#111827" stroke-width="2"/>
+                        <!-- 4. Lower Arm Segment (Double Parallel Tubes with Center Coil Spring) -->
+                        <path d="M160 414 L122 268" stroke="#1e293b" stroke-width="11" stroke-linecap="round"/>
+                        <path d="M156 414 L118 268" stroke="#64748b" stroke-width="2"/>
+                        <path d="M164 414 L126 268" stroke="#0f172a" stroke-width="2.5"/>
 
                         <!-- Center Coiled Spring Line along lower arm -->
-                        <path d="M158 390 L127 280" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 4"/>
+                        <path d="M157 398 L124 285" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3 4"/>
 
-                        <!-- 5. Elbow Joint with Dual Brass Pivot Ring -->
-                        <circle cx="125" cy="265" r="16" fill="url(#goldBrassGrad)" stroke="#111827" stroke-width="2"/>
-                        <circle cx="125" cy="265" r="9" fill="#111827"/>
-                        <circle cx="125" cy="265" r="4.5" fill="url(#goldBrassGrad)"/>
+                        <!-- 5. Elbow Pivot Joint with Dual Golden Rings -->
+                        <g filter="url(#jointShadow)">
+                            <circle cx="122" cy="268" r="17" fill="url(#goldBrassGrad)" stroke="#0f172a" stroke-width="2.5"/>
+                            <circle cx="122" cy="268" r="9.5" fill="#0f172a"/>
+                            <circle cx="122" cy="268" r="4.5" fill="url(#goldBrassGrad)"/>
+                        </g>
 
                         <!-- 6. Upper Arm Segment -->
-                        <path d="M125 265 L175 180" stroke="#1f2937" stroke-width="7" stroke-linecap="round"/>
-                        <path d="M124 265 L174 180" stroke="#4b5563" stroke-width="1.5"/>
+                        <path d="M122 268 L178 178" stroke="#1e293b" stroke-width="8.5" stroke-linecap="round"/>
+                        <path d="M120 268 L176 178" stroke="#64748b" stroke-width="1.8"/>
+
+                        <!-- Upper Neck Pivot -->
+                        <circle cx="178" cy="178" r="8" fill="url(#goldBrassGrad)" stroke="#0f172a" stroke-width="2"/>
 
                         <!-- 7. Lamp Shade Head (Egg-Dome Shape exactly as in reference image) -->
-                        <!-- Matte Charcoal Upper Egg Dome -->
-                        <path d="M150 155 C150 70, 260 70, 298 185 C265 205, 175 195, 150 155 Z" 
-                              fill="url(#outerHoodGrad)" stroke="#4b5563" stroke-width="1.5"/>
+                        <!-- Matte Dark Charcoal Outer Shell -->
+                        <path d="M148 152 C145 60, 268 62, 308 188 C272 210, 172 198, 148 152 Z" 
+                              fill="url(#outerHoodGrad)" stroke="#475569" stroke-width="2"/>
 
-                        <!-- Glossy curved highlight on upper shell -->
-                        <path d="M175 105 C200 80, 240 85, 260 115" stroke="#9ca3af" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+                        <!-- Curved Glossy Light Highlight on Dome Crest -->
+                        <path d="M174 98 C204 74, 252 80, 276 118" stroke="#e2e8f0" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
 
-                        <!-- Interior Golden Illuminated Dish -->
-                        <ellipse cx="225" cy="172" rx="76" ry="32" transform="rotate(16 225 172)" 
+                        <!-- Interior Golden Illuminated Dish (Angled toward viewer & card) -->
+                        <ellipse cx="232" cy="172" rx="80" ry="34" transform="rotate(18 232 172)" 
                                  id="lampShadeInner"
                                  fill="url(#innerShadeGrad)" 
-                                 stroke="#fef08a" stroke-width="2"
-                                 filter="drop-shadow(0 0 16px rgba(245, 158, 11, 0.95))"/>
+                                 stroke="#fef08a" stroke-width="2.5"
+                                 filter="drop-shadow(0 0 18px rgba(245, 158, 11, 1))"/>
 
-                        <!-- 8. Glowing Spherical Bulb (Centered Inside Dish) -->
-                        <circle cx="230" cy="162" r="32" id="bulbHalo" fill="url(#bulbCenterGlow)" pointer-events="none"/>
-                        <circle cx="230" cy="160" r="16" id="lampBulb" fill="#ffffff" filter="drop-shadow(0 0 10px #fef08a) drop-shadow(0 0 20px #f59e0b)"/>
+                        <!-- Soft Inner Glow Ring inside Dish Lip -->
+                        <ellipse cx="230" cy="170" rx="72" ry="28" transform="rotate(18 230 170)" 
+                                 fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
 
-                        <!-- 9. Interactive Glowing Pull Cord Hanging Down from Bulb -->
+                        <!-- 8. Glowing Spherical Bulb with Intense Core Light -->
+                        <circle cx="236" cy="160" r="38" id="bulbHalo" fill="url(#bulbCenterGlow)" pointer-events="none"/>
+                        <circle cx="236" cy="158" r="18" id="lampBulb" fill="#ffffff" filter="drop-shadow(0 0 12px #fef08a) drop-shadow(0 0 24px #f59e0b)"/>
+
+                        <!-- 9. Interactive Glowing Pull Cord Hanging Down from Bulb Center -->
                         <g class="cord-pull" onclick="toggleLamp()" title="Click to Switch Lamp ON/OFF">
                             <!-- Golden hanging stem wire -->
-                            <line x1="228" y1="176" x2="228" y2="280" stroke="#fef08a" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 0 4px #f59e0b)"/>
+                            <line x1="236" y1="176" x2="236" y2="285" stroke="#fef08a" stroke-width="3.5" stroke-linecap="round" filter="drop-shadow(0 0 5px #f59e0b)"/>
                             
-                            <!-- Glowing Golden Pull Capsule Bead with Inner Ring -->
-                            <circle cx="228" cy="285" r="20" fill="#f59e0b" opacity="0.25" filter="blur(6px)"/>
-                            <ellipse cx="228" cy="288" rx="10" ry="12" fill="url(#goldBrassGrad)" stroke="#ffffff" stroke-width="1.5" filter="drop-shadow(0 0 8px #f59e0b)"/>
-                            <ellipse cx="226" cy="285" rx="3.5" ry="4.5" fill="#ffffff" opacity="0.85"/>
+                            <!-- Glowing Golden Pull Capsule Bead with Light Reflection -->
+                            <circle cx="236" cy="292" r="24" fill="#f59e0b" opacity="0.3" filter="blur(7px)"/>
+                            <ellipse cx="236" cy="294" rx="11" ry="14" fill="url(#goldBrassGrad)" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 0 10px #f59e0b)"/>
+                            <ellipse cx="233" cy="290" rx="4" ry="5.5" fill="#ffffff" opacity="0.9"/>
 
                             <!-- Interactive Tooltip Capsule Pill -->
-                            <rect x="250" y="274" width="88" height="28" rx="14" fill="#181e29" stroke="#f59e0b" stroke-width="1.8"/>
-                            <text x="294" y="292" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">Click Cord</text>
+                            <rect x="260" y="280" width="88" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+                            <text x="304" y="298" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">Click Cord</text>
                         </g>
                     </svg>
 
@@ -382,29 +401,13 @@
                 <!-- RIGHT COLUMN: Luxury Dark Login Card -->
                 <div class="luxury-card">
                     <!-- Title & Subtitle -->
-                    <div class="mb-5">
+                    <div class="mb-6">
                         <h2 class="text-3xl font-extrabold text-white tracking-tight">
                             Welcome
                         </h2>
                         <p class="text-xs text-slate-400 mt-1">
                             Sign in to continue to your account
                         </p>
-                    </div>
-
-                    <!-- Sign In / Sign Up Switcher Pill -->
-                    <div class="mb-5 p-1 bg-black/40 rounded-xl border border-white/5 grid grid-cols-2 gap-1 text-xs font-bold text-center">
-                        <span class="py-2 rounded-lg bg-white/10 text-white shadow-xs">
-                            Sign In
-                        </span>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="py-2 rounded-lg text-slate-400 hover:text-white transition">
-                                Sign Up
-                            </a>
-                        @else
-                            <span class="py-2 rounded-lg text-slate-600 cursor-not-allowed">
-                                Sign Up
-                            </span>
-                        @endif
                     </div>
 
                     {{ $slot }}
