@@ -7,7 +7,7 @@
             <div class="flex items-center gap-3">
                 <!-- Logo Monogram & Name: ProWave Technologies -->
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 group">
-                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-indigo-700 border border-sky-400/40 flex items-center justify-center font-black text-white text-xs shadow-md shadow-blue-500/20 group-hover:border-sky-300 transition">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-[#0056d2] border border-sky-400/40 flex items-center justify-center font-black text-white text-xs shadow-md shadow-blue-500/20 group-hover:border-sky-300 transition">
                         PW
                     </div>
                     <div class="flex flex-col leading-tight">
@@ -62,7 +62,7 @@
 
                 @auth
                     <!-- Quick Bill CTA Button (Vibrant 3D Gradient) -->
-                    <a href="{{ route('bills.create') }}" class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white text-xs sm:text-[12.5px] font-bold transition shadow-sm border border-indigo-400/30 whitespace-nowrap">
+                    <a href="{{ route('bills.create') }}" class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-[#0056d2] hover:from-blue-500 hover:to-[#0056d2] text-white text-xs sm:text-[12.5px] font-bold transition shadow-sm border border-blue-400/30 whitespace-nowrap">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         <span>Generate Bill</span>
                     </a>
@@ -168,7 +168,7 @@
                             <!-- Footer -->
                             <div class="p-2.5 bg-slate-50 border-t border-slate-100 text-center">
                                 <a href="{{ route('notifications.index') }}" 
-                                   class="text-xs font-bold text-indigo-700 hover:text-indigo-800 transition inline-flex items-center gap-1">
+                                   class="text-xs font-bold text-[#0056d2] hover:text-[#0b327b] transition inline-flex items-center gap-1">
                                     <span>View All Notifications & History</span>
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                                 </a>
@@ -180,7 +180,7 @@
                     <x-dropdown align="right" width="56">
                         <x-slot name="trigger">
                             <button class="flex items-center justify-center p-0.5 rounded-full text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 focus:outline-none transition">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-800 to-indigo-950 border border-slate-600 flex items-center justify-center text-slate-200">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-800 to-slate-900 border border-slate-600 flex items-center justify-center text-slate-200">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                     </svg>
@@ -212,7 +212,7 @@
 
                             @if(Auth::user()->isAdmin() || Auth::user()->hasPermission('users.view'))
                                 <x-dropdown-link :href="route('users.index')" class="flex items-center gap-2 text-sm">
-                                    <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                    <svg class="w-4 h-4 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                                     {{ __('Users & Roles') }}
                                 </x-dropdown-link>
                             @endif
@@ -262,7 +262,7 @@
                     @auth
                         <!-- 1. Dashboard -->
                         <a href="{{ route('dashboard') }}" 
-                           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-indigo-900' : 'text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/70 font-semibold' }}">
+                           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                             <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-slate-400' }}" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                             </svg>
@@ -272,7 +272,7 @@
                         <!-- 2. Tenders & EPAD 2.0 Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('tenders.*') ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-indigo-900' : 'text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/70 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('tenders.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
@@ -297,7 +297,7 @@
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('tenders.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.index') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                                         </div>
@@ -308,7 +308,7 @@
                                     </a>
 
                                     <a href="{{ route('tenders.create') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.create') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                         </div>
@@ -322,7 +322,7 @@
                                     </a>
 
                                     <a href="{{ route('tenders.reports') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.reports') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.reports') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                                         </div>
@@ -341,7 +341,7 @@
                         <!-- 3. Billing & Cheques Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-indigo-900' : 'text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/70 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-400' }}" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                                 </svg>
@@ -365,7 +365,7 @@
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('bills.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('bills.index') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('bills.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
                                         </div>
@@ -376,7 +376,7 @@
                                     </a>
 
                                     <a href="{{ route('bills.create') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('bills.create') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('bills.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                         </div>
@@ -387,7 +387,7 @@
                                     </a>
 
                                     <a href="{{ route('cheques.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('cheques.index') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('cheques.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>
                                         </div>
@@ -401,7 +401,7 @@
                                     </a>
 
                                     <a href="{{ route('cheques.create') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('cheques.create') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('cheques.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-orange-100 text-orange-800 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                         </div>
@@ -420,7 +420,7 @@
                         <!-- 4. Budget & Finance Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-indigo-900' : 'text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/70 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -444,7 +444,7 @@
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('releases.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('releases.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('releases.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path></svg>
                                         </div>
@@ -455,7 +455,7 @@
                                     </a>
 
                                     <a href="{{ route('finance.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('finance.index') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('finance.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-teal-100 text-teal-800 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                         </div>
@@ -466,7 +466,7 @@
                                     </a>
 
                                     <a href="{{ route('banks.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('banks.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('banks.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
                                         </div>
@@ -477,7 +477,7 @@
                                     </a>
 
                                     <a href="{{ route('expenses.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('expenses.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('expenses.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" /></svg>
                                         </div>
@@ -493,7 +493,7 @@
                         <!-- 5. Setup & Master Data Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-indigo-900' : 'text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/70 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -518,7 +518,7 @@
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('departments.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('departments.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('departments.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"></path></svg>
                                         </div>
@@ -529,8 +529,8 @@
                                     </a>
 
                                     <a href="{{ route('companies.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.index') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-7 h-7 rounded-lg bg-blue-100 text-[#0056d2] flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                                         </div>
                                         <div>
@@ -540,7 +540,7 @@
                                     </a>
 
                                     <a href="{{ route('companies.letterheads') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.letterhead*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.letterhead*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                         </div>
@@ -551,7 +551,7 @@
                                     </a>
 
                                     <a href="{{ route('companies.invoice-gallery') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.invoice-gallery') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.invoice-gallery') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
                                         </div>
@@ -562,7 +562,7 @@
                                     </a>
 
                                     <a href="{{ route('products.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('products.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('products.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                                         </div>
@@ -574,7 +574,7 @@
 
                                     @if(Auth::user()->isAdmin() || Auth::user()->hasPermission('users.view'))
                                         <a href="{{ route('users.index') }}" @click="open = false" 
-                                           class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                           class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                             <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                                             </div>
@@ -590,7 +590,7 @@
 
                                     @if(Auth::user()->isAdmin() || Auth::user()->hasPermission('activity_logs.view'))
                                         <a href="{{ route('activity-logs.index') }}" @click="open = false" 
-                                           class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('activity-logs.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
+                                           class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('activity-logs.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                             <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                             </div>
@@ -609,7 +609,7 @@
 
                         <!-- 6. To-Do List & Tasks -->
                         <a href="{{ route('todos.index') }}" 
-                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('todos.*') ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-700 text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-indigo-900' : 'text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/70 font-semibold' }}">
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('todos.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                             <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('todos.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                             </svg>
@@ -628,7 +628,7 @@
 
                 <!-- Right Quick CTA Action Buttons -->
                 <div class="hidden lg:flex items-center gap-2 shrink-0">
-                    <a href="{{ route('tenders.create') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-700 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/90 px-3 py-1.5 rounded-xl transition shadow-2xs whitespace-nowrap">
+                    <a href="{{ route('tenders.create') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#0056d2] hover:text-[#0b327b] bg-blue-50 hover:bg-blue-100 border border-blue-200/90 px-3 py-1.5 rounded-xl transition shadow-2xs whitespace-nowrap">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         <span>+ New Tender</span>
                     </a>
@@ -650,13 +650,13 @@
              style="display: none;">
             @auth
                 <!-- Dashboard -->
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold {{ request()->routeIs('dashboard') ? 'bg-indigo-50 text-indigo-900 border border-indigo-200' : 'text-slate-700 hover:bg-slate-100' }}">
-                    <svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-[#0056d2] border border-blue-200' : 'text-slate-700 hover:bg-slate-100' }}">
+                    <svg class="w-4 h-4 text-[#0056d2]" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
                     <span>{{ __('Dashboard') }}</span>
                 </a>
 
                 <!-- To-Do List -->
-                <a href="{{ route('todos.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold {{ request()->routeIs('todos.*') ? 'bg-indigo-50 text-indigo-900 border border-indigo-200' : 'text-slate-700 hover:bg-slate-100' }}">
+                <a href="{{ route('todos.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold {{ request()->routeIs('todos.*') ? 'bg-blue-50 text-[#0056d2] border border-blue-200' : 'text-slate-700 hover:bg-slate-100' }}">
                     <div class="flex items-center gap-2.5">
                         <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
                         <span>{{ __('To-Do List & Reminders') }}</span>
@@ -753,14 +753,14 @@
 
                 <!-- Actions -->
                 <div class="pt-3 border-t border-slate-200 space-y-2">
-                    <a href="{{ route('notifications.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-indigo-800 bg-indigo-50 hover:bg-indigo-100">
+                    <a href="{{ route('notifications.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-[#0056d2] bg-blue-50 hover:bg-blue-100">
                         <span>🔔 {{ __('Notifications') }}</span>
                         @if($userUnreadCount > 0)
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-500 text-white">{{ $userUnreadCount }}</span>
                         @endif
                     </a>
                     <div class="flex items-center justify-between pt-1">
-                        <a href="{{ route('bills.create') }}" class="text-xs font-bold text-indigo-700 hover:text-indigo-800">
+                        <a href="{{ route('bills.create') }}" class="text-xs font-bold text-[#0056d2] hover:text-[#0b327b]">
                             + {{ __('Generate New Bill') }}
                         </a>
                         <form method="POST" action="{{ route('logout') }}">

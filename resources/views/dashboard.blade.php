@@ -131,7 +131,7 @@
             box-shadow: 0 24px 44px -8px rgba(5, 150, 105, 0.38);
         }
 
-        .card-theme-indigo {
+        .card-theme-tasks {
             background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%, #ffffff 100%);
             border-radius: 1.5rem;
             border: 1.5px solid rgba(147, 197, 253, 0.6);
@@ -143,7 +143,7 @@
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
-        .card-theme-indigo:hover {
+        .card-theme-tasks:hover {
             transform: translateY(-4px);
             border-bottom: 7px solid #0b327b;
             box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
@@ -307,21 +307,21 @@
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
 
-        /* 3. Sunset Orange Card (TOTAL OUTSTANDING) - Exact Match to media_1795214156221_e8a1cb50 */
+        /* 3. Sunset Orange Card (TOTAL OUTSTANDING) - Exact Match to #cd3805 */
         .stat-card-orange {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff7ed 100%);
-            border: 3px solid #fa7a1f;
+            border: 3px solid #cd3805;
             border-bottom: 6.5px solid #9a3412;
             box-shadow:
-                0 16px 32px -6px rgba(250, 122, 31, 0.35),
+                0 16px 32px -6px rgba(205, 56, 5, 0.35),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-orange {
-            border-color: #fa7a1f;
+            border-color: #cd3805;
             border-bottom-width: 8px;
             box-shadow:
-                0 22px 42px -6px rgba(250, 122, 31, 0.48),
+                0 22px 42px -6px rgba(205, 56, 5, 0.48),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
@@ -389,8 +389,8 @@
         /* High-Contrast Card Typography */
         .stat-card-label {
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-            font-size: 0.88rem !important;
-            font-weight: 700;
+            font-size: 0.9rem !important;
+            font-weight: 800;
             letter-spacing: 0.04em;
             text-transform: uppercase;
             display: block;
@@ -398,13 +398,13 @@
         }
 
         .stat-card-blue .stat-card-label {
-            color: #2563eb !important; /* Elegant medium royal blue */
+            color: #0056d2 !important; /* Exact 0056d2 theme */
         }
         .stat-card-green .stat-card-label {
             color: #059669 !important; /* Elegant medium emerald */
         }
         .stat-card-orange .stat-card-label {
-            color: #fa7a1f !important; /* Exact warm orange */
+            color: #ea580c !important; /* Vibrant orange */
         }
         .stat-card-maroon .stat-card-label {
             color: #9f1239 !important; /* Elegant deep maroon */
@@ -431,25 +431,25 @@
             letter-spacing: 0.01em;
         }
 
-        /* 1. Deep Dark Blue Amount & Currency */
+        /* 1. Deep Electric Blue Amount & Currency (#0056d2) */
         .stat-card-blue .stat-card-value,
         .stat-card-blue .stat-card-currency {
-            color: #0b327b !important;
+            color: #0056d2 !important;
         }
 
-        /* 2. Deep Dark Green Amount & Currency */
+        /* 2. Deep Dark Green Amount & Currency (#064e3b) */
         .stat-card-green .stat-card-value,
         .stat-card-green .stat-card-currency {
             color: #064e3b !important;
         }
 
-        /* 3. Deep Dark Orange Amount & Currency */
+        /* 3. Deep Dark Orange Amount & Currency (#cd3805) */
         .stat-card-orange .stat-card-value,
         .stat-card-orange .stat-card-currency {
-            color: #9a3412 !important;
+            color: #cd3805 !important;
         }
 
-        /* 4. Deep Dark Red / Maroon Amount & Currency */
+        /* 4. Deep Dark Red / Maroon Amount & Currency (#4c0519) */
         .stat-card-maroon .stat-card-value,
         .stat-card-maroon .stat-card-currency {
             color: #4c0519 !important;
@@ -837,7 +837,7 @@
                         <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
                             <span class="w-1.5 rounded-full bg-orange-300" style="height: 75%;"></span>
                             <span class="w-1.5 rounded-full bg-orange-400" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full" style="background-color: #fa7a1f; height: 60%;"></span>
+                            <span class="w-1.5 rounded-full" style="background-color: #cd3805; height: 60%;"></span>
                         </div>
                     </div>
                 </div>
@@ -1070,17 +1070,17 @@
 
                 <!-- COLUMN 3: Recent Activities (Timeline List - Dynamic Activities) -->
                 <div class="card-theme-orange p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-700 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                    <div class="h-1.5 w-full bg-gradient-to-r from-orange-400 via-[#fa7a1f] to-[#cd3805] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-orange-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
-                            <span class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+                            <span class="w-8 h-8 rounded-xl bg-[#cd3805] text-white flex items-center justify-center font-bold shadow-xs shrink-0">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
                             </span>
                             <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Recent Activities</h2>
                         </div>
-                        <a href="{{ route('bills.index') }}" class="text-xs font-black text-amber-600 hover:text-amber-800 shrink-0 whitespace-nowrap">View All ›</a>
+                        <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#cd3805] hover:text-[#9a3412] shrink-0 whitespace-nowrap">View All ›</a>
                     </div>
 
                     <!-- Activities List (Dynamic with Smooth Fallback) -->
@@ -1089,7 +1089,7 @@
                             @foreach($recentActivities->take(4) as $act)
                                 <div class="flex items-center justify-between gap-2">
                                     <div class="flex items-center gap-2 min-w-0 flex-1">
-                                        <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                        <div class="w-8 h-8 rounded-xl bg-[#cd3805] text-white flex items-center justify-center shrink-0 shadow-xs">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                         </div>
                                         <div class="min-w-0 flex-1">
@@ -1116,7 +1116,7 @@
 
                             <div class="flex items-center justify-between gap-2">
                                 <div class="flex items-center gap-2 min-w-0">
-                                    <div class="w-8 h-8 rounded-xl bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                    <div class="w-8 h-8 rounded-xl bg-[#0056d2] text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                                     </div>
                                     <div class="min-w-0">
@@ -1129,7 +1129,7 @@
 
                             <div class="flex items-center justify-between gap-2">
                                 <div class="flex items-center gap-2 min-w-0">
-                                    <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                    <div class="w-8 h-8 rounded-xl bg-[#cd3805] text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                     </div>
                                     <div class="min-w-0">
@@ -1412,7 +1412,7 @@
 
                 <!-- CARD 3: Financial Overview (Electric Sky Blue Theme) -->
                 <div class="card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-sky-400 to-indigo-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                    <div class="h-1.5 w-full bg-gradient-to-r from-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <div class="flex items-center justify-between pb-3 border-b border-sky-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
@@ -1462,7 +1462,7 @@
                 </div>
 
                 <!-- CARD 4: Upcoming Tasks (Electric Blue Theme - Dynamic from Todos) -->
-                <div class="card-theme-indigo p-4 sm:p-5 flex flex-col justify-between min-w-0">
+                <div class="card-theme-tasks p-4 sm:p-5 flex flex-col justify-between min-w-0">
                     <div class="h-1.5 w-full bg-gradient-to-r from-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <div class="flex items-center justify-between pb-3 border-b border-blue-100 min-w-0">
