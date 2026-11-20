@@ -307,21 +307,21 @@
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
 
-        /* 3. Sunset Orange Card (TOTAL BILL AMOUNT) - #cd3805 */
+        /* 3. Sunset Orange Card (TOTAL OUTSTANDING) - Exact Match to media_1795214156221_e8a1cb50 */
         .stat-card-orange {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff7ed 100%);
-            border: 3px solid #cd3805;
-            border-bottom: 6.5px solid #a62800;
+            border: 3px solid #fa7a1f;
+            border-bottom: 6.5px solid #9a3412;
             box-shadow:
-                0 16px 32px -6px rgba(205, 56, 5, 0.35),
+                0 16px 32px -6px rgba(250, 122, 31, 0.35),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-orange {
-            border-color: #cd3805;
+            border-color: #fa7a1f;
             border-bottom-width: 8px;
             box-shadow:
-                0 22px 42px -6px rgba(205, 56, 5, 0.48),
+                0 22px 42px -6px rgba(250, 122, 31, 0.48),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
@@ -374,10 +374,10 @@
             box-shadow: 0 8px 18px rgba(16, 185, 129, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
         .candy-icon-orange {
-            background: linear-gradient(135deg, #ea580c 0%, #cd3805 60%, #8c2200 100%);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.7);
-            border-bottom: 4px solid #7c2203;
-            box-shadow: 0 8px 18px rgba(205, 56, 5, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            background: linear-gradient(135deg, #fa8228 0%, #fa7a1f 60%, #f77015 100%);
+            border-top: 1.5px solid rgba(255, 255, 255, 0.75);
+            border-bottom: 4px solid #9a3412;
+            box-shadow: 0 8px 18px rgba(250, 122, 31, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
         .candy-icon-maroon {
             background: linear-gradient(135deg, #e11d48 0%, #9f1239 60%, #4c0519 100%);
@@ -404,7 +404,7 @@
             color: #059669 !important; /* Elegant medium emerald */
         }
         .stat-card-orange .stat-card-label {
-            color: #cd3805 !important; /* Elegant burnt orange */
+            color: #fa7a1f !important; /* Exact warm orange */
         }
         .stat-card-maroon .stat-card-label {
             color: #9f1239 !important; /* Elegant deep maroon */
@@ -443,10 +443,10 @@
             color: #064e3b !important;
         }
 
-        /* 3. Deep Dark Orange (#cd3805) Amount & Currency */
+        /* 3. Deep Dark Orange Amount & Currency */
         .stat-card-orange .stat-card-value,
         .stat-card-orange .stat-card-currency {
-            color: #cd3805 !important;
+            color: #9a3412 !important;
         }
 
         /* 4. Deep Dark Red / Maroon Amount & Currency */
@@ -711,7 +711,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL COMMSION</span>
+                            <span class="stat-card-label">TOTAL BUDGET AMOUNT</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
@@ -781,18 +781,19 @@
                 <!-- CARD 3: TOTAL BILL AMOUNT (Sunset Orange 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-orange">
-                        <!-- Left: 3D Candy Icon Button -->
+                        <!-- Left: 3D Candy Icon Button (Exact to media_1795214156221_e8a1cb50) -->
                         <div class="stat-candy-icon candy-icon-orange">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="23 4 23 10 17 10"></polyline>
-                                <polyline points="1 20 1 14 7 14"></polyline>
-                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8.5 11.5a5.5 5.5 0 0 1 9.5-3.5h.5"/>
+                                <polyline points="15 5 18.5 8 15 11"/>
+                                <path d="M15.5 12.5a5.5 5.5 0 0 1-9.5 3.5H5.5"/>
+                                <polyline points="9 13 5.5 16 9 19"/>
                             </svg>
                         </div>
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL BILL AMOUNT</span>
+                            <span class="stat-card-label">TOTAL OUTSTANDING</span>
                             @php
                                 $billedAmount = $stats['total_billed'] > 0 ? (float)$stats['total_billed'] : 8030837.90;
                             @endphp
@@ -803,7 +804,7 @@
                                 </span>
                             </div>
                             <div class="mt-1 flex items-center">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-50/90 text-orange-900 border border-orange-100">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-50/90 text-orange-950 border border-orange-200">
                                     <span class="text-rose-600 font-bold flex items-center">
                                         <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
                                         -2.1%
@@ -817,7 +818,7 @@
                         <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
                             <span class="w-1.5 rounded-full bg-orange-300" style="height: 75%;"></span>
                             <span class="w-1.5 rounded-full bg-orange-400" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full" style="background-color: #cd3805; height: 60%;"></span>
+                            <span class="w-1.5 rounded-full" style="background-color: #fa7a1f; height: 60%;"></span>
                         </div>
                     </div>
                 </div>
