@@ -369,23 +369,23 @@
                         <ellipse cx="230" cy="180" rx="74" ry="30" transform="rotate(18 230 180)" 
                                  fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
 
-                        <!-- 8. Glowing Spherical Bulb with Intense Core Light (Seamlessly centered in dish) -->
-                        <circle cx="234" cy="170" r="42" id="bulbHalo" fill="url(#bulbCenterGlow)" pointer-events="none"/>
-                        <circle cx="234" cy="168" r="19" id="lampBulb" fill="#ffffff" filter="drop-shadow(0 0 14px #fef08a) drop-shadow(0 0 26px #f59e0b)"/>
+                        <!-- 8. Glowing Spherical Bulb - Recessed Inside the Cavity of the Lamp Shade -->
+                        <ellipse cx="225" cy="175" rx="30" ry="24" id="bulbHalo" fill="url(#bulbCenterGlow)" pointer-events="none"/>
+                        <ellipse cx="225" cy="174" rx="14" ry="12" id="lampBulb" fill="#ffffff" filter="drop-shadow(0 0 10px #fef08a) drop-shadow(0 0 20px #f59e0b)"/>
 
                         <!-- 9. Interactive Glowing Pull Cord Hanging Down from Bulb Center -->
                         <g class="cord-pull" onclick="toggleLamp()" title="Click to Switch Lamp ON/OFF">
                             <!-- Golden hanging stem wire -->
-                            <line x1="234" y1="187" x2="234" y2="295" stroke="#fef08a" stroke-width="3.5" stroke-linecap="round" filter="drop-shadow(0 0 5px #f59e0b)"/>
+                            <line x1="225" y1="186" x2="225" y2="295" stroke="#fef08a" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 0 5px #f59e0b)"/>
                             
                             <!-- Glowing Golden Pull Capsule Bead with Light Reflection -->
-                            <circle cx="234" cy="302" r="24" fill="#f59e0b" opacity="0.3" filter="blur(7px)"/>
-                            <ellipse cx="234" cy="304" rx="11" ry="14" fill="url(#goldBrassGrad)" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 0 10px #f59e0b)"/>
-                            <ellipse cx="231" cy="300" rx="4" ry="5.5" fill="#ffffff" opacity="0.9"/>
+                            <circle cx="225" cy="302" r="24" fill="#f59e0b" opacity="0.3" filter="blur(7px)"/>
+                            <ellipse cx="225" cy="304" rx="11" ry="14" fill="url(#goldBrassGrad)" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 0 10px #f59e0b)"/>
+                            <ellipse cx="222" cy="300" rx="4" ry="5.5" fill="#ffffff" opacity="0.9"/>
 
                             <!-- Interactive Tooltip Capsule Pill -->
-                            <rect x="258" y="290" width="88" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
-                            <text x="302" y="308" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">Click Cord</text>
+                            <rect x="250" y="290" width="88" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+                            <text x="294" y="308" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">Click Cord</text>
                         </g>
                     </svg>
 
