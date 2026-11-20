@@ -20,7 +20,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(255, 255, 255, 0.95);
             border-bottom: 5.5px solid #cbd5e1;
-            box-shadow: 
+            box-shadow:
                 0 18px 36px -8px rgba(100, 116, 139, 0.18),
                 0 6px 14px -3px rgba(100, 116, 139, 0.08),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -31,7 +31,7 @@
         .glass-panel:hover {
             transform: translateY(-4px);
             border-bottom: 6.5px solid #94a3b8;
-            box-shadow: 
+            box-shadow:
                 0 26px 46px -10px rgba(100, 116, 139, 0.25),
                 0 10px 20px -4px rgba(100, 116, 139, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -45,7 +45,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(56, 189, 248, 0.45);
             border-bottom: 6px solid #0284c7;
-            box-shadow: 
+            box-shadow:
                 0 18px 38px -8px rgba(2, 132, 199, 0.28),
                 0 6px 14px -3px rgba(2, 132, 199, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -63,7 +63,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(192, 132, 252, 0.45);
             border-bottom: 6px solid #9333ea;
-            box-shadow: 
+            box-shadow:
                 0 18px 38px -8px rgba(147, 51, 234, 0.28),
                 0 6px 14px -3px rgba(147, 51, 234, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -81,7 +81,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(251, 146, 60, 0.45);
             border-bottom: 6px solid #ea580c;
-            box-shadow: 
+            box-shadow:
                 0 18px 38px -8px rgba(234, 88, 12, 0.28),
                 0 6px 14px -3px rgba(234, 88, 12, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -99,7 +99,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(250, 204, 21, 0.5);
             border-bottom: 6px solid #ca8a04;
-            box-shadow: 
+            box-shadow:
                 0 16px 34px -8px rgba(202, 138, 4, 0.25),
                 0 4px 12px -2px rgba(202, 138, 4, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -117,7 +117,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(52, 211, 153, 0.5);
             border-bottom: 6px solid #059669;
-            box-shadow: 
+            box-shadow:
                 0 16px 34px -8px rgba(5, 150, 105, 0.25),
                 0 4px 12px -2px rgba(5, 150, 105, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -135,7 +135,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(129, 140, 248, 0.5);
             border-bottom: 6px solid #4f46e5;
-            box-shadow: 
+            box-shadow:
                 0 16px 34px -8px rgba(79, 70, 229, 0.25),
                 0 4px 12px -2px rgba(79, 70, 229, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
@@ -210,7 +210,7 @@
             border-radius: 1.5rem;
             border: 1.5px solid rgba(196, 181, 253, 0.45);
             border-bottom: 6px solid #312e81;
-            box-shadow: 
+            box-shadow:
                 0 18px 40px -6px rgba(79, 70, 229, 0.45),
                 0 6px 14px -2px rgba(79, 70, 229, 0.25),
                 inset 0 1.5px 2px rgba(255, 255, 255, 0.35);
@@ -269,19 +269,19 @@
             transition: all 0.25s ease;
         }
 
-        /* 1. Electric Blue Card (Total Budget Ceiling) */
+        /* 1. Electric Blue Card (TOTAL BUDGET AMOUNT) */
         .stat-card-blue {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0f9ff 100%);
             border: 3px solid #0284c7;
             border-bottom: 6.5px solid #0369a1;
-            box-shadow: 
+            box-shadow:
                 0 16px 32px -6px rgba(2, 132, 199, 0.32),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-blue {
             border-bottom-width: 8px;
-            box-shadow: 
+            box-shadow:
                 0 22px 42px -6px rgba(2, 132, 199, 0.45),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
@@ -292,14 +292,14 @@
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0fdf4 100%);
             border: 3px solid #10b981;
             border-bottom: 6.5px solid #059669;
-            box-shadow: 
+            box-shadow:
                 0 16px 32px -6px rgba(16, 185, 129, 0.32),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-green {
             border-bottom-width: 8px;
-            box-shadow: 
+            box-shadow:
                 0 22px 42px -6px rgba(16, 185, 129, 0.45),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
@@ -310,14 +310,14 @@
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff7ed 100%);
             border: 3px solid #f97316;
             border-bottom: 6.5px solid #ea580c;
-            box-shadow: 
+            box-shadow:
                 0 16px 32px -6px rgba(234, 88, 12, 0.35),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-orange {
             border-bottom-width: 8px;
-            box-shadow: 
+            box-shadow:
                 0 22px 42px -6px rgba(234, 88, 12, 0.48),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
@@ -328,14 +328,14 @@
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #faf5ff 100%);
             border: 3px solid #a855f7;
             border-bottom: 6.5px solid #9333ea;
-            box-shadow: 
+            box-shadow:
                 0 16px 32px -6px rgba(147, 51, 234, 0.32),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-purple {
             border-bottom-width: 8px;
-            box-shadow: 
+            box-shadow:
                 0 22px 42px -6px rgba(147, 51, 234, 0.45),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
@@ -575,8 +575,8 @@
         $userRole = auth()->check() ? (auth()->user()->role ?? 'Administrator') : 'Admin';
     @endphp
 
-    <div class="dashboard-canvas py-6 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto space-y-6">
+    <div class="dashboard-canvas py-6 px-4 sm:px-6 lg:px-8 xl:px-10">
+        <div class="w-full space-y-6">
 
             <!-- 1. TOP HEADER BAR WITH DYNAMIC TIME-OF-DAY GREETING -->
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 glass-panel p-4 sm:p-5">
@@ -585,7 +585,7 @@
 
                 <!-- Left: Dynamic Time Greeting, 3D Icon & Live Info -->
                 <div class="flex items-center gap-3.5 pt-0.5">
-                    <div id="dynamicGreetingIconWrap" 
+                    <div id="dynamicGreetingIconWrap"
                          class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-md transition-all duration-500 relative"
                          style="background: {{ $timeGradient }}; box-shadow: 0 8px 20px -2px rgba(99, 102, 241, 0.45);">
                         <span id="dynamicGreetingIcon" class="text-2xl select-none filter drop-shadow">{{ $timeEmoji }}</span>
@@ -626,7 +626,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </span>
-                    <input type="text" 
+                    <input type="text"
                            placeholder="Search bills, vouchers, inventory..."
                            class="w-full pl-10 pr-12 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-white transition-all shadow-inner">
                     <span class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
@@ -655,8 +655,8 @@
 
             <!-- 2. TOP 4 VIBRANT 3D STAT CARDS (EXACT MATCH TO media_1794960037908_15a2248a) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-                
-                <!-- CARD 1: Total Budget Ceiling (Electric Blue 3D Theme) -->
+
+                <!-- CARD 1: TOTAL BUDGET AMOUNT (Electric Blue 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-blue">
                         <!-- Left: 3D Candy Icon Button -->
@@ -670,7 +670,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL BUDGET CEILING</span>
+                            <span class="stat-card-label">TOTAL BUDGET AMOUNT</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
@@ -818,7 +818,7 @@
 
             <!-- 3. ROW 2: 3 COLUMNS (Rock-Solid Row 2 Grid: 50% / 25% / 25% with Vibrant 3D Color Themes) -->
             <div class="row2-grid">
-                
+
                 <!-- COLUMN 1 (50%): Sales & Purchases Overview (Dual Wave Chart - Vibrant Blue / Cyan Theme) -->
                 <div class="card-theme-blue p-5 flex flex-col justify-between">
                     <div class="h-1.5 w-full bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
@@ -831,7 +831,7 @@
                             </span>
                             <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Sales & Purchases Overview</h2>
                         </div>
-                        
+
                         <div class="flex items-center gap-2 shrink-0">
                             <div class="hidden sm:flex items-center gap-2 text-[11px] font-bold">
                                 <span class="flex items-center gap-1 text-sky-600"><span class="w-2 h-2 rounded-full bg-sky-500"></span> Sales</span>
@@ -1140,8 +1140,8 @@
 
                 <!-- Dynamic Tenders Grid (3D Micro-Cards) -->
                 @php
-                    $displayTenders = isset($recentTenders) && $recentTenders->count() > 0 
-                        ? $recentTenders 
+                    $displayTenders = isset($recentTenders) && $recentTenders->count() > 0
+                        ? $recentTenders
                         : (isset($openTenders) && $openTenders->count() > 0 ? $openTenders : (isset($evaluationTenders) ? $evaluationTenders : collect()));
                 @endphp
 
@@ -1211,7 +1211,7 @@
 
             <!-- 4. ROW 3: 4 CARDS (Rock-Solid 4-Column Grid with Vibrant 3D Color Themes) -->
             <div class="row3-grid">
-                
+
                 <!-- CARD 1: Top Selling Products (Golden Amber Theme - Dynamic from BillItems) -->
                 <div class="card-theme-amber p-4 sm:p-5 flex flex-col justify-between min-w-0">
                     <div class="h-1.5 w-full bg-gradient-to-r from-amber-400 to-yellow-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
@@ -1449,7 +1449,7 @@
 
             <!-- 5. ROW 4: 3 PANELS matching media_1794961202820_b9f1955f (Dept Performance, Recent Invoices, AI Smart Insight) -->
             <div class="row4-grid">
-                
+
                 <!-- PANEL 1: Department Performance (4 Circular Ring Gauges - 45% width) -->
                 <div class="card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
                     <div class="h-1.5 w-full bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
