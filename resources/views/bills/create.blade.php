@@ -428,78 +428,6 @@
                     </div>
                 </div>
 
-                <!-- Modal: Quick Add New Company -->
-                <div id="new-company-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-                    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
-                        <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <span class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                                </span>
-                                <div>
-                                    <h3 class="text-sm font-bold tracking-tight">Register New Company / Supplier</h3>
-                                    <p class="text-[10px] text-slate-300">Add company details for instant bill selection</p>
-                                </div>
-                            </div>
-                            <button type="button" onclick="closeNewCompanyModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
-                        </div>
-
-                        <form id="quick-company-form" onsubmit="handleQuickCompanySubmit(event)" class="p-5 space-y-3.5">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company Name <span class="text-rose-500">*</span></label>
-                                <input type="text" id="quick_comp_name" required placeholder="e.g. M/S. Apex Tech Solutions" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Vendor No (AGPR)</label>
-                                    <input type="text" id="quick_comp_vendor_no" placeholder="e.g. 30368984" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NTN Number</label>
-                                    <input type="text" id="quick_comp_ntn" placeholder="e.g. 3437101-0" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">GST / STRN Number</label>
-                                    <input type="text" id="quick_comp_gst" placeholder="e.g. 3277876289057" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">SST / SRB Number</label>
-                                    <input type="text" id="quick_comp_sst" placeholder="e.g. S3437101-2" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Contact Phone</label>
-                                    <input type="text" id="quick_comp_phone" placeholder="e.g. 0331-2449892" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email</label>
-                                    <input type="email" id="quick_comp_email" placeholder="e.g. info@company.com" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company Address</label>
-                                <input type="text" id="quick_comp_address" placeholder="e.g. Office # 1/2 Block # 6, PECHS Karachi" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
-                            </div>
-
-                            <div id="quick-comp-error" class="text-xs text-rose-600 font-semibold hidden"></div>
-
-                            <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
-                                <button type="button" onclick="closeNewCompanyModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
-                                <button type="submit" id="quick-comp-btn" class="px-5 py-2 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition shadow-sm flex items-center gap-1.5">
-                                    <span>Save & Use Company</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
                 <!-- CARD 3: Calculations & Live Budget Compliance Guard -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     <!-- Left: Budget Compliance Guard Alert Box -->
@@ -650,6 +578,78 @@
                     <button type="submit" id="submit-btn" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-2">
                         <span>Confirm & Submit Bill</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Quick Add New Company (Placed cleanly outside main bill-form) -->
+    <div id="new-company-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+            <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    </span>
+                    <div>
+                        <h3 class="text-sm font-bold tracking-tight">Register New Company / Supplier</h3>
+                        <p class="text-[10px] text-slate-300">Add company details for instant bill selection</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeNewCompanyModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
+            </div>
+
+            <form id="quick-company-form" onsubmit="handleQuickCompanySubmit(event)" class="p-5 space-y-3.5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company Name <span class="text-rose-500">*</span></label>
+                    <input type="text" id="quick_comp_name" required placeholder="e.g. M/S. Apex Tech Solutions" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Vendor No (AGPR)</label>
+                        <input type="text" id="quick_comp_vendor_no" placeholder="e.g. 30368984" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NTN Number</label>
+                        <input type="text" id="quick_comp_ntn" placeholder="e.g. 3437101-0" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">GST / STRN Number</label>
+                        <input type="text" id="quick_comp_gst" placeholder="e.g. 3277876289057" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">SST / SRB Number</label>
+                        <input type="text" id="quick_comp_sst" placeholder="e.g. S3437101-2" class="w-full text-xs font-mono font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Contact Phone</label>
+                        <input type="text" id="quick_comp_phone" placeholder="e.g. 0331-2449892" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email</label>
+                        <input type="email" id="quick_comp_email" placeholder="e.g. info@company.com" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Company Address</label>
+                    <input type="text" id="quick_comp_address" placeholder="e.g. Office # 1/2 Block # 6, PECHS Karachi" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2">
+                </div>
+
+                <div id="quick-comp-error" class="text-xs text-rose-600 font-semibold hidden"></div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                    <button type="button" onclick="closeNewCompanyModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
+                    <button type="submit" id="quick-comp-btn" class="px-5 py-2 text-xs font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition shadow-sm flex items-center gap-1.5">
+                        <span>Save & Use Company</span>
                     </button>
                 </div>
             </form>
