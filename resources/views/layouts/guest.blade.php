@@ -350,44 +350,51 @@
                         <!-- Upper Neck Pivot Joint Socket -->
                         <circle cx="176" cy="150" r="7" fill="url(#goldBrassGrad)" stroke="#0f172a" stroke-width="2"/>
 
-                        <!-- 7. Lamp Shade Head (Egg-Dome Shape in Elevated Standing Position) -->
-                        <!-- Matte Dark Charcoal Outer Shell -->
-                        <path d="M154 140 C146 45, 274 38, 308 172 C285 182, 172 178, 154 140 Z" 
+                        <!-- 7. Lamp Shade Head (Egg-Dome Shape with Curved Circular Rim Mouth matching screenshot exactly) -->
+                        <!-- Matte Dark Charcoal Outer Shell with Natural Bulbous Dome Curvature -->
+                        <path d="M145 158 C135 52, 260 40, 316 172 C285 208, 175 195, 145 158 Z" 
                               fill="url(#outerHoodGrad)" stroke="#475569" stroke-width="2"/>
 
-                        <!-- Curved Glossy Light Highlight on Dome Crest -->
-                        <path d="M178 72 C210 50, 258 58, 278 94" stroke="#e2e8f0" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
+                        <!-- Curved Glossy Light Highlight across the Dome Crest -->
+                        <path d="M168 85 C202 56, 252 64, 276 102" stroke="#e2e8f0" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
 
-                        <!-- Interior Golden Illuminated Dish -->
-                        <ellipse cx="230" cy="148" rx="80" ry="34" transform="rotate(16 230 148)" 
+                        <!-- Interior Golden Cup Cavity (Concave inner chamber) -->
+                        <ellipse cx="230" cy="158" rx="76" ry="32" transform="rotate(22 230 158)" 
                                  id="lampShadeInner"
                                  fill="url(#innerShadeGrad)" 
-                                 stroke="#fef08a" stroke-width="2.5"
+                                 stroke="#fef08a" stroke-width="2"
                                  filter="drop-shadow(0 0 20px rgba(245, 158, 11, 1))"/>
 
-                        <!-- Inner Lip Highlight Rim -->
-                        <ellipse cx="230" cy="146" rx="72" ry="28" transform="rotate(16 230 146)" 
-                                 fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+                        <!-- Golden Circular Mouth Rim Ring (The distinct curved gold border ring from user screenshot) -->
+                        <ellipse cx="230" cy="158" rx="80" ry="34" transform="rotate(22 230 158)" 
+                                 fill="none" 
+                                 stroke="url(#goldBrassGrad)" 
+                                 stroke-width="5" 
+                                 filter="drop-shadow(0 0 6px #f59e0b)"/>
 
-                        <!-- 8. Glowing Spherical Bulb - Recessed Inside the Cavity of the Lamp Shade -->
-                        <ellipse cx="228" cy="142" rx="28" ry="22" id="bulbHalo" fill="url(#bulbCenterGlow)" pointer-events="none"/>
-                        <ellipse cx="228" cy="140" rx="14" ry="12" id="lampBulb" fill="#ffffff" filter="drop-shadow(0 0 10px #fef08a) drop-shadow(0 0 20px #f59e0b)"/>
+                        <!-- 8. Bulb Socket Fixture Base -->
+                        <rect x="223" y="148" width="10" height="7" rx="2" fill="#d97706" transform="rotate(12 228 151)"/>
 
-                        <!-- 9. Interactive Glowing Pull Cord Hanging Down from Bulb Center -->
+                        <!-- 9. Glowing Spherical Bulb - Recessed Deep Inside the Cavity (Matching Screenshot) -->
+                        <ellipse cx="228" cy="148" rx="28" ry="22" id="bulbHalo" fill="url(#bulbCenterGlow)" pointer-events="none"/>
+                        <circle cx="228" cy="146" r="14" id="lampBulb" fill="#ffffff" filter="drop-shadow(0 0 12px #fef08a) drop-shadow(0 0 22px #f59e0b)"/>
+                        <!-- Bulb Filament Specular Reflection -->
+                        <ellipse cx="225" cy="143" rx="4.5" ry="3" fill="#ffffff" opacity="0.9"/>
+
+                        <!-- 10. Interactive Glowing Pull Cord Hanging Down from Bulb Center -->
                         <g class="cord-pull" onclick="toggleLamp()" title="Click to Switch Lamp ON/OFF">
                             <!-- Golden hanging stem wire -->
-                            <line x1="228" y1="152" x2="228" y2="265" stroke="#fef08a" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 0 5px #f59e0b)"/>
+                            <line x1="228" y1="160" x2="228" y2="275" stroke="#fef08a" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 0 5px #f59e0b)"/>
                             
                             <!-- Glowing Golden Pull Capsule Bead with Light Reflection -->
-                            <circle cx="228" cy="272" r="24" fill="#f59e0b" opacity="0.3" filter="blur(7px)"/>
-                            <ellipse cx="228" cy="274" rx="11" ry="14" fill="url(#goldBrassGrad)" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 0 10px #f59e0b)"/>
-                            <ellipse cx="225" cy="270" rx="4" ry="5.5" fill="#ffffff" opacity="0.9"/>
+                            <circle cx="228" cy="282" r="24" fill="#f59e0b" opacity="0.3" filter="blur(7px)"/>
+                            <ellipse cx="228" cy="284" rx="11" ry="14" fill="url(#goldBrassGrad)" stroke="#ffffff" stroke-width="1.8" filter="drop-shadow(0 0 10px #f59e0b)"/>
+                            <ellipse cx="225" cy="280" rx="4" ry="5.5" fill="#ffffff" opacity="0.9"/>
 
                             <!-- Interactive Tooltip Capsule Pill -->
-                            <rect x="252" y="260" width="88" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
-                            <text x="296" y="278" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">Click Cord</text>
+                            <rect x="252" y="270" width="88" height="28" rx="14" fill="#0f172a" stroke="#f59e0b" stroke-width="1.8"/>
+                            <text x="296" y="288" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">Click Cord</text>
                         </g>
-                    </svg>
                     </svg>
 
                     <!-- Lamp Info Text -->
