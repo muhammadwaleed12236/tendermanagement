@@ -18,8 +18,8 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased text-slate-800 bg-[#f0f3fa]">
-        <div class="min-h-screen flex flex-col bg-[#f0f3fa]">
+    <body class="font-sans antialiased text-slate-800 bg-[#e6e0d4]">
+        <div class="min-h-screen flex flex-col bg-[#e6e0d4]">
             <!-- Professional Navigation Header -->
             @include('layouts.navigation')
 

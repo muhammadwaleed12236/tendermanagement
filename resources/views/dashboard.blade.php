@@ -1,15 +1,13 @@
 <x-app-layout>
     <!-- Funky, Colorful, Ultra-Attractive 3D SaaS Stylesheet matching media_1794958310999_435bfd77 -->
     <style>
+        body {
+            background-color: #e6e0d4 !important;
+        }
+
         .dashboard-canvas {
-            background-color: #f1f5f9;
-            background-image: 
-                radial-gradient(circle at 6% 8%, rgba(168, 85, 247, 0.25) 0%, transparent 40%),
-                radial-gradient(circle at 94% 6%, rgba(236, 72, 153, 0.22) 0%, transparent 42%),
-                radial-gradient(circle at 50% 25%, rgba(56, 189, 248, 0.20) 0%, transparent 45%),
-                radial-gradient(circle at 88% 85%, rgba(16, 185, 129, 0.20) 0%, transparent 42%),
-                radial-gradient(circle at 12% 88%, rgba(249, 115, 22, 0.20) 0%, transparent 38%),
-                radial-gradient(circle at 50% 90%, rgba(99, 102, 241, 0.18) 0%, transparent 48%);
+            background-color: #e6e0d4;
+            background-image: none;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
