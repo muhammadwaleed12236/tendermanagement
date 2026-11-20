@@ -281,17 +281,18 @@
             box-shadow: 0 22px 42px -6px rgba(205, 56, 5, 0.38);
         }
 
-        /* 4. Deep Maroon / Dark Red Card (VENDOR PROFIT) */
-        .stat-card-maroon {
+        /* 4. Deep Purple 3D Card (VENDOR PROFIT / AVAILABLE SURPLUS) */
+        .stat-card-purple, .stat-card-maroon {
             background: #ffffff;
-            border: 2.5px solid #881337;
-            border-bottom: 6px solid #4c0519;
-            box-shadow: 0 16px 32px -6px rgba(136, 19, 55, 0.25);
+            border: 2.5px solid #7c3aed;
+            border-bottom: 6px solid #5b21b6;
+            box-shadow: 0 16px 32px -6px rgba(124, 58, 237, 0.25);
         }
+        .stat-card-3d-wrap:hover .stat-card-purple,
         .stat-card-3d-wrap:hover .stat-card-maroon {
-            border-color: #881337;
+            border-color: #7c3aed;
             border-bottom-width: 7.5px;
-            box-shadow: 0 22px 42px -6px rgba(136, 19, 55, 0.38);
+            box-shadow: 0 22px 42px -6px rgba(124, 58, 237, 0.38);
         }
 
         /* 3D Extruded Candy Icon Tile on Left */
@@ -328,11 +329,11 @@
             border-bottom: 4px solid #9a3412;
             box-shadow: 0 8px 18px rgba(205, 56, 5, 0.35);
         }
-        .candy-icon-maroon {
-            background: #881337;
+        .candy-icon-purple, .candy-icon-maroon {
+            background: #7c3aed;
             border-top: 1.5px solid rgba(255, 255, 255, 0.4);
-            border-bottom: 4px solid #4c0519;
-            box-shadow: 0 8px 18px rgba(136, 19, 55, 0.35);
+            border-bottom: 4px solid #5b21b6;
+            box-shadow: 0 8px 18px rgba(124, 58, 237, 0.35);
         }
 
         /* High-Contrast Card Typography */
@@ -355,8 +356,8 @@
         .stat-card-orange .stat-card-label {
             color: #ea580c !important; /* Vibrant orange */
         }
-        .stat-card-maroon .stat-card-label {
-            color: #9f1239 !important; /* Elegant deep maroon */
+        .stat-card-purple .stat-card-label, .stat-card-maroon .stat-card-label {
+            color: #7c3aed !important; /* Vibrant Purple */
         }
 
         .stat-card-value {
@@ -398,10 +399,12 @@
             color: #cd3805 !important;
         }
 
-        /* 4. Deep Dark Red / Maroon Amount & Currency (#4c0519) */
+        /* 4. Deep Purple Amount & Currency (#5b21b6) */
+        .stat-card-purple .stat-card-value,
+        .stat-card-purple .stat-card-currency,
         .stat-card-maroon .stat-card-value,
         .stat-card-maroon .stat-card-currency {
-            color: #4c0519 !important;
+            color: #5b21b6 !important;
         }
 
         /* 3D Elevated Filter Pill Dropdowns */
@@ -462,13 +465,13 @@
             border-bottom: 2.5px solid #9a3412;
         }
         .tag-pill-inventory {
-            background: #881337;
+            background: #7c3aed;
             color: #ffffff;
             border-radius: 9999px;
             font-size: 0.65rem;
             font-weight: 900;
             padding: 0.22rem 0.7rem;
-            border-bottom: 2.5px solid #4c0519;
+            border-bottom: 2.5px solid #5b21b6;
         }
 
         /* 3D Action Buttons with Keycap Push - Flat Solid Themes */
@@ -791,9 +794,9 @@
 
                 <!-- CARD 4: Available Surplus (Deep Maroon / Dark Red 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
-                    <div class="stat-card-3d stat-card-maroon">
+                    <div class="stat-card-3d stat-card-purple">
                         <!-- Left: 3D Candy Icon Button -->
-                        <div class="stat-candy-icon candy-icon-maroon">
+                        <div class="stat-candy-icon candy-icon-purple">
                             <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                                 <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
@@ -811,7 +814,7 @@
                                 </span>
                             </div>
                             <div class="mt-1 flex items-center">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50/90 text-rose-900 border border-rose-100">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-purple-50/90 text-purple-900 border border-purple-100">
                                     <span class="text-emerald-600 font-bold flex items-center">
                                         <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
                                         +15.6%
@@ -823,9 +826,9 @@
 
                         <!-- Right: Mini 3-bar indicator -->
                         <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
-                            <span class="w-1.5 rounded-full bg-rose-200" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full bg-rose-400" style="height: 80%;"></span>
-                            <span class="w-1.5 rounded-full" style="background-color: #881337; height: 100%;"></span>
+                            <span class="w-1.5 rounded-full bg-purple-200" style="height: 45%;"></span>
+                            <span class="w-1.5 rounded-full bg-purple-400" style="height: 80%;"></span>
+                            <span class="w-1.5 rounded-full" style="background-color: #7c3aed; height: 100%;"></span>
                         </div>
                     </div>
                 </div>
@@ -919,13 +922,13 @@
                     </div>
                 </div>
 
-                <!-- COLUMN 2: Business Analytics (Donut + Totals - Deep Maroon Theme) -->
-                <div class="card-theme-maroon p-4 sm:p-5 flex flex-col justify-between min-w-0">
+                <!-- COLUMN 2: Business Analytics (Donut + Totals - Deep Purple Theme) -->
+                <div class="card-theme-purple p-4 sm:p-5 flex flex-col justify-between min-w-0">
 
                     <!-- Header -->
-                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-rose-100 min-w-0">
+                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-purple-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
-                            <span class="w-8 h-8 rounded-xl bg-[#881337] text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+                            <span class="w-8 h-8 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #7c3aed;">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             </span>
                             <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Business Analytics</h2>
@@ -942,7 +945,7 @@
                         <div class="relative shrink-0 flex items-center justify-center" style="width: 105px; height: 105px;">
                             <svg width="105" height="105" viewBox="0 0 100 100" class="-rotate-90">
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="13"/>
-                                <circle cx="50" cy="50" r="38" fill="none" stroke="#cd3805" stroke-width="13"
+                                <circle cx="50" cy="50" r="38" fill="none" stroke="#7c3aed" stroke-width="13"
                                         stroke-dasharray="238.7" stroke-dashoffset="162" stroke-linecap="round"/>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#0056d2" stroke-width="13"
                                         stroke-dasharray="238.7" stroke-dashoffset="76" stroke-linecap="round"/>
@@ -963,7 +966,7 @@
                                 <span class="font-mono text-slate-900 ml-1.5 font-black">68%</span>
                             </div>
                             <div class="flex items-center gap-1.5">
-                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #cd3805;"></span>
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #7c3aed;"></span>
                                 <span class="text-slate-600">Purchases</span>
                                 <span class="font-mono text-slate-900 ml-1.5 font-black">32%</span>
                             </div>
@@ -982,12 +985,12 @@
                             </div>
                         </div>
 
-                        <div class="bg-rose-50/80 border border-rose-200 rounded-xl p-2.5 flex items-center gap-2">
-                            <div class="w-7 h-7 rounded-lg bg-[#881337] text-white flex items-center justify-center shrink-0">
+                        <div class="bg-purple-50/80 border border-purple-200 rounded-xl p-2.5 flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-lg text-white flex items-center justify-center shrink-0" style="background-color: #7c3aed;">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             </div>
                             <div class="min-w-0">
-                                <span class="text-[9px] font-bold text-rose-900 uppercase block leading-none">Expenses</span>
+                                <span class="text-[9px] font-bold text-purple-900 uppercase block leading-none">Expenses</span>
                                 <span class="text-[11px] font-black font-mono text-slate-900 truncate block mt-0.5" data-counter-target="18.1" data-counter-float data-counter-suffix="M">18.1M</span>
                             </div>
                         </div>
@@ -1503,7 +1506,7 @@
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path stroke-width="3.5" stroke-dasharray="95, 100" stroke-linecap="round" stroke="#881337" fill="none"
+                                    <path stroke-width="3.5" stroke-dasharray="95, 100" stroke-linecap="round" stroke="#7c3aed" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="95" data-counter-suffix="%">95%</span>
@@ -1515,17 +1518,17 @@
                 </div>
 
                 <!-- PANEL 2: Recent Invoices (30% width) -->
-                <div class="card-theme-maroon p-4 sm:p-5 flex flex-col justify-between min-w-0">
+                <div class="card-theme-purple p-4 sm:p-5 flex flex-col justify-between min-w-0">
 
                     <!-- Header -->
-                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-rose-100 min-w-0">
+                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-purple-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-8 h-8 rounded-xl bg-[#881337] text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+                            <span class="w-8 h-8 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #7c3aed;">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </span>
                             <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Recent Invoices</h2>
                         </div>
-                        <a href="{{ route('bills.index') }}" class="text-xs font-black text-rose-700 hover:text-rose-900 shrink-0 whitespace-nowrap">View All →</a>
+                        <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#7c3aed] hover:text-[#5b21b6] shrink-0 whitespace-nowrap">View All →</a>
                     </div>
 
                     <!-- Invoices List -->
