@@ -250,14 +250,37 @@
                 
                 <!-- LEFT COLUMN: Animated Desk Lamp & Cord -->
                 <div class="lamp-wrapper">
-                    <!-- Light Beam Cone -->
-                    <div class="lamp-cone" id="lampBeam"></div>
+                    <!-- SVG Lamp Vector Graphic with Integrated Light Beam from Bulb -->
+                    <svg viewBox="0 0 340 440" class="w-[300px] h-[390px] select-none" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                        <defs>
+                            <!-- Light beam gradient radiating outwards from the bulb -->
+                            <linearGradient id="bulbBeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.45"/>
+                                <stop offset="40%" stop-color="#f59e0b" stop-opacity="0.22"/>
+                                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
+                            </linearGradient>
 
-                    <!-- Ambient Glow Behind Bulb -->
-                    <div id="lampBulbGlow" class="absolute top-[80px] left-[150px] w-24 h-24 rounded-full bg-amber-400/40 blur-2xl pointer-events-none transition-opacity duration-300"></div>
+                            <!-- Radial glow around bulb -->
+                            <radialGradient id="bulbRadialGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+                                <stop offset="35%" stop-color="#fbbf24" stop-opacity="0.8"/>
+                                <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.4"/>
+                                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+                            </radialGradient>
 
-                    <!-- SVG Lamp Vector Graphic -->
-                    <svg viewBox="0 0 340 440" class="w-[300px] h-[390px] select-none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <filter id="bulbGlowFilter" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="6" result="blur"/>
+                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+                        </defs>
+
+                        <!-- Realistic Angled Light Beam Projection Originating Exactly at Bulb (230, 150) -->
+                        <polygon id="lampBeamPolygon" 
+                                 points="192,162 272,138 720,380 400,560" 
+                                 fill="url(#bulbBeamGrad)" 
+                                 pointer-events="none"
+                                 style="transition: opacity 0.4s ease; filter: blur(3px);"/>
+
                         <!-- Shadow -->
                         <ellipse cx="140" cy="405" rx="85" ry="14" fill="#000000" opacity="0.6" filter="blur(4px)"/>
                         
@@ -293,6 +316,9 @@
                                  id="lampShadeInner"
                                  fill="#f59e0b" opacity="0.95" stroke="#fbbf24" stroke-width="2"
                                  filter="drop-shadow(0 0 12px rgba(245, 158, 11, 0.9))"/>
+
+                        <!-- Soft Bulb Glow Halo -->
+                        <circle cx="230" cy="150" r="28" id="bulbHalo" fill="url(#bulbRadialGlow)" pointer-events="none" style="transition: opacity 0.4s ease;"/>
 
                         <!-- Bulb -->
                         <ellipse cx="230" cy="150" rx="14" ry="11" 
@@ -430,8 +456,8 @@
                 playClickSound(lampState);
 
                 const body = document.body;
-                const beam = document.getElementById('lampBeam');
-                const bulbGlow = document.getElementById('lampBulbGlow');
+                const beamPolygon = document.getElementById('lampBeamPolygon');
+                const bulbHalo = document.getElementById('bulbHalo');
                 const shadeInner = document.getElementById('lampShadeInner');
                 const bulb = document.getElementById('lampBulb');
                 const statusTxt = document.getElementById('lampStatusText');
@@ -440,8 +466,8 @@
                 if (lampState) {
                     body.classList.remove('lamp-off');
                     body.classList.add('lamp-lit');
-                    if (beam) beam.style.opacity = '1';
-                    if (bulbGlow) bulbGlow.style.opacity = '1';
+                    if (beamPolygon) beamPolygon.style.opacity = '1';
+                    if (bulbHalo) bulbHalo.style.opacity = '1';
                     if (shadeInner) shadeInner.setAttribute('fill', '#f59e0b');
                     if (bulb) bulb.setAttribute('fill', '#ffffff');
                     if (statusTxt) statusTxt.textContent = 'Desk Lamp is ON';
@@ -449,8 +475,8 @@
                 } else {
                     body.classList.remove('lamp-lit');
                     body.classList.add('lamp-off');
-                    if (beam) beam.style.opacity = '0';
-                    if (bulbGlow) bulbGlow.style.opacity = '0';
+                    if (beamPolygon) beamPolygon.style.opacity = '0';
+                    if (bulbHalo) bulbHalo.style.opacity = '0';
                     if (shadeInner) shadeInner.setAttribute('fill', '#1e2430');
                     if (bulb) bulb.setAttribute('fill', '#334155');
                     if (statusTxt) statusTxt.textContent = 'Desk Lamp is OFF';
