@@ -19,21 +19,21 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased text-slate-800 bg-[#e6e0d4]">
-        <div class="min-h-screen flex flex-col bg-[#e6e0d4]">
+        <div class="min-h-screen flex flex-col bg-[#e6e0d4] w-full">
             <!-- Professional Navigation Header -->
             @include('layouts.navigation')
 
             <!-- Page Heading (if set) -->
             @isset($header)
                 <header class="bg-[#fcfaf7] border-b border-[#e5ded4] shadow-xs">
-                    <div class="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
+                    <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-10 py-5">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
-            <main class="flex-1">
+            <main class="flex-1 w-full">
                 {{ $slot }}
             </main>
         </div>

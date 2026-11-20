@@ -9,6 +9,7 @@
             background-color: #e6e0d4;
             background-image: none;
             min-height: 100vh;
+            width: 100%;
             position: relative;
             overflow-x: hidden;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -271,18 +272,19 @@
 
         /* 1. Electric Blue Card (TOTAL BUDGET AMOUNT) */
         .stat-card-blue {
-            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0f9ff 100%);
-            border: 3px solid #0284c7;
-            border-bottom: 6.5px solid #0369a1;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0f7ff 100%);
+            border: 3px solid #0056d2;
+            border-bottom: 6.5px solid #0056d2;
             box-shadow:
-                0 16px 32px -6px rgba(2, 132, 199, 0.32),
+                0 16px 32px -6px rgba(0, 86, 210, 0.32),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-blue {
+            border-color: #0056d2;
             border-bottom-width: 8px;
             box-shadow:
-                0 22px 42px -6px rgba(2, 132, 199, 0.45),
+                0 22px 42px -6px rgba(0, 86, 210, 0.45),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
@@ -358,10 +360,10 @@
         }
 
         .candy-icon-blue {
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 60%, #0369a1 100%);
+            background: linear-gradient(135deg, #1d72fe 0%, #0056d2 60%, #003ea1 100%);
             border-top: 1.5px solid rgba(255, 255, 255, 0.7);
-            border-bottom: 4px solid #075985;
-            box-shadow: 0 8px 18px rgba(2, 132, 199, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            border-bottom: 4px solid #00358a;
+            box-shadow: 0 8px 18px rgba(0, 86, 210, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
         .candy-icon-green {
             background: linear-gradient(135deg, #34d399 0%, #10b981 60%, #059669 100%);
@@ -385,12 +387,16 @@
         /* High-Contrast Card Typography */
         .stat-card-label {
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-            font-size: 0.7rem;
+            font-size: 0.9rem !important;
             font-weight: 700;
             letter-spacing: 0.05em;
             color: #64748b;
             text-transform: uppercase;
             display: block;
+        }
+
+        .stat-card-blue .stat-card-label {
+            color: #0056d2 !important;
         }
 
         .stat-card-value {
@@ -670,7 +676,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL BUDGET AMOUNT</span>
+                            <span class="stat-card-label" style="color: #0056d2; font-size: 0.9rem;">TOTAL BUDGET AMOUNT</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
@@ -690,7 +696,7 @@
                         <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
                             <span class="w-1.5 rounded-full bg-blue-300" style="height: 45%;"></span>
                             <span class="w-1.5 rounded-full bg-blue-400" style="height: 70%;"></span>
-                            <span class="w-1.5 rounded-full bg-blue-600" style="height: 100%;"></span>
+                            <span class="w-1.5 rounded-full" style="background-color: #0056d2; height: 100%;"></span>
                         </div>
                     </div>
                 </div>
@@ -708,7 +714,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">SANCTIONED INCOME</span>
+                            <span class="stat-card-label" style="font-size: 0.9rem;">SANCTIONED INCOME</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}">
@@ -747,7 +753,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL OUTSTANDING</span>
+                            <span class="stat-card-label" style="font-size: 0.9rem;">TOTAL OUTSTANDING</span>
                             @php
                                 $billedAmount = $stats['total_billed'] > 0 ? (float)$stats['total_billed'] : 8030837.90;
                             @endphp
@@ -789,7 +795,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">AVAILABLE SURPLUS</span>
+                            <span class="stat-card-label" style="font-size: 0.9rem;">AVAILABLE SURPLUS</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}">
