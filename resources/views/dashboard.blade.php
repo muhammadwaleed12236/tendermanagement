@@ -132,21 +132,21 @@
         }
 
         .card-theme-indigo {
-            background: linear-gradient(180deg, #eef2ff 0%, #ffffff 42%, #ffffff 100%);
+            background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%, #ffffff 100%);
             border-radius: 1.5rem;
-            border: 1.5px solid rgba(129, 140, 248, 0.5);
-            border-bottom: 6px solid #4f46e5;
+            border: 1.5px solid rgba(147, 197, 253, 0.6);
+            border-bottom: 6px solid #0056d2;
             box-shadow:
-                0 16px 34px -8px rgba(79, 70, 229, 0.25),
-                0 4px 12px -2px rgba(79, 70, 229, 0.12),
+                0 16px 34px -8px rgba(0, 86, 210, 0.22),
+                0 4px 12px -2px rgba(0, 86, 210, 0.1),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-indigo:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #3730a3;
-            box-shadow: 0 24px 44px -8px rgba(79, 70, 229, 0.38);
+            border-bottom: 7px solid #0b327b;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
         }
 
         /* Explicit Grid Definitions that NEVER break or collapse */
@@ -205,15 +205,15 @@
             }
         }
 
-        /* 3D Cyberpunk AI Smart Insight Widget matching media_1794961202820_b9f1955f */
+        /* 3D Cyberpunk AI Smart Insight Widget matching Electric Blue theme */
         .card-theme-ai {
-            background: linear-gradient(135deg, #3730a3 0%, #4f46e5 35%, #7c3aed 70%, #9333ea 100%);
+            background: linear-gradient(135deg, #07255e 0%, #0056d2 40%, #0284c7 80%, #0ea5e9 100%);
             border-radius: 1.5rem;
-            border: 1.5px solid rgba(196, 181, 253, 0.45);
-            border-bottom: 6px solid #312e81;
+            border: 1.5px solid rgba(56, 189, 248, 0.45);
+            border-bottom: 6px solid #061e47;
             box-shadow:
-                0 18px 40px -6px rgba(79, 70, 229, 0.45),
-                0 6px 14px -2px rgba(79, 70, 229, 0.25),
+                0 18px 40px -6px rgba(0, 86, 210, 0.45),
+                0 6px 14px -2px rgba(0, 86, 210, 0.25),
                 inset 0 1.5px 2px rgba(255, 255, 255, 0.35);
             color: #ffffff;
             position: relative;
@@ -222,8 +222,8 @@
         }
         .card-theme-ai:hover {
             transform: translateY(-4px);
-            box-shadow: 0 26px 52px -8px rgba(79, 70, 229, 0.65);
-            border-bottom: 7px solid #1e1b4b;
+            box-shadow: 0 26px 52px -8px rgba(0, 86, 210, 0.65);
+            border-bottom: 7px solid #031535;
         }
 
         /* 3D Elevated Tender Micro-Card */
@@ -516,22 +516,22 @@
             box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
         }
         .tag-pill-inventory {
-            background: linear-gradient(135deg, #c084fc 0%, #9333ea 100%);
+            background: linear-gradient(135deg, #be123c 0%, #881337 100%);
             color: #ffffff;
             border-radius: 9999px;
             font-size: 0.65rem;
             font-weight: 900;
             padding: 0.22rem 0.7rem;
-            border-bottom: 2.5px solid #581c87;
-            box-shadow: 0 4px 10px rgba(147, 51, 234, 0.35);
+            border-bottom: 2.5px solid #4c0519;
+            box-shadow: 0 4px 10px rgba(136, 19, 55, 0.35);
         }
 
         /* 3D Action Buttons with Keycap Push */
         .btn-funky-voucher {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            border-bottom: 4.5px solid #581c87;
-            box-shadow: 0 10px 24px -2px rgba(139, 92, 246, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #fb923c 0%, #fa7a1f 50%, #cd3805 100%);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-bottom: 4.5px solid #9a3412;
+            box-shadow: 0 10px 24px -2px rgba(250, 122, 31, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
             border-radius: 1rem;
             color: #ffffff;
             font-weight: 900;
@@ -539,7 +539,7 @@
         }
         .btn-funky-voucher:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px -2px rgba(236, 72, 153, 0.6);
+            box-shadow: 0 14px 28px -2px rgba(205, 56, 5, 0.55);
         }
         .btn-funky-voucher:active {
             transform: translateY(2px);
@@ -547,10 +547,10 @@
         }
 
         .btn-funky-bill {
-            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #4f46e5 100%);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            border-bottom: 4.5px solid #1e3a8a;
-            box-shadow: 0 10px 24px -2px rgba(37, 99, 235, 0.5), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #38bdf8 0%, #0056d2 50%, #0b327b 100%);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-bottom: 4.5px solid #07255e;
+            box-shadow: 0 10px 24px -2px rgba(0, 86, 210, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
             border-radius: 1rem;
             color: #ffffff;
             font-weight: 900;
@@ -558,9 +558,28 @@
         }
         .btn-funky-bill:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px -2px rgba(14, 165, 233, 0.6);
+            box-shadow: 0 14px 28px -2px rgba(11, 50, 123, 0.55);
         }
         .btn-funky-bill:active {
+            transform: translateY(2px);
+            border-bottom-width: 1.5px;
+        }
+
+        .btn-funky-tender {
+            background: linear-gradient(135deg, #34d399 0%, #0d9467 50%, #064e3b 100%);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-bottom: 4.5px solid #064e3b;
+            box-shadow: 0 10px 24px -2px rgba(13, 148, 103, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+            border-radius: 1rem;
+            color: #ffffff;
+            font-weight: 900;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-funky-tender:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px -2px rgba(6, 78, 59, 0.55);
+        }
+        .btn-funky-tender:active {
             transform: translateY(2px);
             border-bottom-width: 1.5px;
         }
@@ -602,13 +621,13 @@
             $timeGreeting = 'Good Evening';
             $timeEmoji = '🌆';
             $timeBadge = 'Evening Review';
-            $timeGradient = 'linear-gradient(135deg, #6366f1 0%, #9333ea 50%, #ec4899 100%)';
+            $timeGradient = 'linear-gradient(135deg, #fa7a1f 0%, #ea580c 50%, #cd3805 100%)';
             $timeSubtitle = "Wrapping up today's fiscal clearance, pending tender sanctions & audit logs.";
         } else {
             $timeGreeting = 'Good Night';
             $timeEmoji = '🌙';
             $timeBadge = 'Night Monitoring';
-            $timeGradient = 'linear-gradient(135deg, #334155 0%, #1e1b4b 50%, #4c1d95 100%)';
+            $timeGradient = 'linear-gradient(135deg, #07255e 0%, #0056d2 50%, #0284c7 100%)';
             $timeSubtitle = "Late-night automated settlement pipeline & treasury balance monitoring.";
         }
 
@@ -621,14 +640,14 @@
 
             <!-- 1. TOP HEADER BAR WITH DYNAMIC TIME-OF-DAY GREETING -->
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 glass-panel p-4 sm:p-5">
-                <!-- Top holographic accent line -->
-                <div class="h-1.5 w-full bg-gradient-to-r from-sky-400 via-indigo-500 to-pink-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                <!-- Top 4-Color Accent Line Matching the 4 Stat Cards -->
+                <div class="h-1.5 w-full bg-gradient-to-r from-[#0056d2] via-[#0d9467] via-[#fa7a1f] to-[#881337] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                 <!-- Left: Dynamic Time Greeting, 3D Icon & Live Info -->
                 <div class="flex items-center gap-3.5 pt-0.5">
                     <div id="dynamicGreetingIconWrap"
                          class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-md transition-all duration-500 relative"
-                         style="background: {{ $timeGradient }}; box-shadow: 0 8px 20px -2px rgba(99, 102, 241, 0.45);">
+                         style="background: {{ $timeGradient }}; box-shadow: 0 8px 20px -2px rgba(0, 86, 210, 0.35);">
                         <span id="dynamicGreetingIcon" class="text-2xl select-none filter drop-shadow">{{ $timeEmoji }}</span>
                         <!-- Pulsing live indicator dot -->
                         <span class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white animate-pulse"></span>
@@ -649,11 +668,11 @@
                                 <svg class="w-3 h-3 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                 <span id="dynamicLiveDate">{{ now()->format('l, d M Y') }}</span>
                                 <span class="text-slate-300">•</span>
-                                <span id="dynamicLiveClock" class="font-mono font-bold text-indigo-600">{{ now()->format('h:i A') }}</span>
+                                <span id="dynamicLiveClock" class="font-mono font-bold text-[#0056d2]">{{ now()->format('h:i A') }}</span>
                             </span>
                         </div>
                         <p id="dynamicGreetingSubtitle" class="text-xs font-semibold text-slate-400 mt-0.5 flex items-center gap-1.5 flex-wrap">
-                            <span class="text-indigo-600 font-extrabold uppercase text-[10px] tracking-wider bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">{{ ucfirst($userRole) }}</span>
+                            <span class="text-[#0056d2] font-extrabold uppercase text-[10px] tracking-wider bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">{{ ucfirst($userRole) }}</span>
                             <span class="text-slate-300">•</span>
                             <span id="dynamicSubtitleText">{{ $timeSubtitle }}</span>
                         </p>
@@ -669,16 +688,16 @@
                     </span>
                     <input type="text"
                            placeholder="Search bills, vouchers, inventory..."
-                           class="w-full pl-10 pr-12 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-white transition-all shadow-inner">
+                           class="w-full pl-10 pr-12 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-inner">
                     <span class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
                         <kbd class="px-1.5 py-0.5 text-[9px] font-black text-slate-400 bg-white rounded border border-slate-200 shadow-xs">⌘ K</kbd>
                     </span>
                 </div>
 
-                <!-- Right: Action Buttons -->
+                <!-- Right: Action Buttons (Sunset Orange & Electric Blue 3D Keys) -->
                 <div class="flex items-center flex-wrap gap-2.5 justify-end">
                     <a href="{{ route('bills.create') }}" class="btn-funky-voucher px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-4 h-4 text-blue-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <svg class="w-4 h-4 text-orange-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                             <line x1="2" y1="10" x2="22" y2="10"></line>
                         </svg>
@@ -686,7 +705,7 @@
                     </a>
 
                     <a href="{{ route('bills.create') }}" class="btn-funky-bill px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-4 h-4 text-sky-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 text-sky-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
                         </svg>
                         <span>Generate Bill</span>
@@ -871,7 +890,7 @@
 
                 <!-- COLUMN 1 (50%): Sales & Purchases Overview (Dual Wave Chart - Vibrant Blue / Cyan Theme) -->
                 <div class="card-theme-blue p-5 flex flex-col justify-between">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-500 via-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-2 pb-3 border-b border-sky-100 min-w-0">
@@ -987,13 +1006,13 @@
                             <svg width="105" height="105" viewBox="0 0 100 100" class="-rotate-90">
                                 <defs>
                                     <linearGradient id="donutSalesGrad" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#06b6d4"/>
-                                        <stop offset="50%" stop-color="#3b82f6"/>
-                                        <stop offset="100%" stop-color="#8b5cf6"/>
+                                        <stop offset="0%" stop-color="#38bdf8"/>
+                                        <stop offset="50%" stop-color="#0056d2"/>
+                                        <stop offset="100%" stop-color="#0b327b"/>
                                     </linearGradient>
                                     <linearGradient id="donutPurchGrad" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#ec4899"/>
-                                        <stop offset="100%" stop-color="#f59e0b"/>
+                                        <stop offset="0%" stop-color="#fb923c"/>
+                                        <stop offset="100%" stop-color="#cd3805"/>
                                     </linearGradient>
                                 </defs>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="13"/>
@@ -1013,12 +1032,12 @@
                         <!-- Right Legend -->
                         <div class="space-y-2 text-xs font-bold shrink-0">
                             <div class="flex items-center gap-1.5">
-                                <span class="w-3 h-3 rounded-full bg-blue-500 shrink-0"></span>
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #0056d2;"></span>
                                 <span class="text-slate-600">Sales</span>
                                 <span class="font-mono text-slate-900 ml-1.5 font-black">68%</span>
                             </div>
                             <div class="flex items-center gap-1.5">
-                                <span class="w-3 h-3 rounded-full bg-pink-500 shrink-0"></span>
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #cd3805;"></span>
                                 <span class="text-slate-600">Purchases</span>
                                 <span class="font-mono text-slate-900 ml-1.5 font-black">32%</span>
                             </div>
@@ -1142,13 +1161,13 @@
             <!-- 3.5 ACTIVE TENDERS & PROCUREMENT CENTRAL BOARD -->
             <div class="glass-panel p-5 sm:p-6 min-w-0">
                 <!-- Top holographic accent line -->
-                <div class="h-1.5 w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                <div class="h-1.5 w-full bg-gradient-to-r from-[#0056d2] via-[#0d9467] to-teal-400 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                 <!-- Section Header -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm"
-                             style="background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 50%, #4f46e5 100%);">
+                             style="background: linear-gradient(135deg, #0ea5e9 0%, #0056d2 100%);">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
@@ -1178,7 +1197,7 @@
                                 <span>{{ $stats['total_bids'] ?? 3 }} Bids Filed</span>
                             </span>
                         </div>
-                        <a href="{{ route('tenders.create') }}" class="btn-funky-bill px-3 py-1.5 text-xs flex items-center gap-1.5 shadow-sm">
+                        <a href="{{ route('tenders.create') }}" class="btn-funky-tender px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                             <span>+ Float Tender</span>
                         </a>
@@ -1202,8 +1221,8 @@
                             <div>
                                 <div class="flex items-center justify-between gap-2 mb-2">
                                     <div class="flex items-center gap-1.5 min-w-0">
-                                        <span class="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></span>
-                                        <span class="text-[10px] font-black uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 truncate">
+                                        <span class="w-2 h-2 rounded-full bg-[#0056d2] shrink-0"></span>
+                                        <span class="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 truncate">
                                             {{ $tender->department->name ?? 'General Department' }}
                                         </span>
                                     </div>
@@ -1217,7 +1236,7 @@
                                 </div>
 
                                 <!-- Tender Title -->
-                                <a href="{{ route('tenders.show', $tender->id) }}" class="text-xs sm:text-sm font-extrabold text-slate-800 hover:text-indigo-600 transition-colors line-clamp-2 block mb-1">
+                                <a href="{{ route('tenders.show', $tender->id) }}" class="text-xs sm:text-sm font-extrabold text-slate-800 hover:text-[#0056d2] transition-colors line-clamp-2 block mb-1">
                                     {{ $tender->title }}
                                 </a>
 
@@ -1245,7 +1264,7 @@
                                     </span>
                                 </div>
 
-                                <a href="{{ route('tenders.show', $tender->id) }}" class="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-600 transition-colors shadow-2xs" title="View Tender">
+                                <a href="{{ route('tenders.show', $tender->id) }}" class="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#0056d2] transition-colors shadow-2xs" title="View Tender">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
                                 </a>
                             </div>
@@ -1442,26 +1461,26 @@
                     </div>
                 </div>
 
-                <!-- CARD 4: Upcoming Tasks (Vibrant Indigo / Violet Theme - Dynamic from Todos) -->
+                <!-- CARD 4: Upcoming Tasks (Electric Blue Theme - Dynamic from Todos) -->
                 <div class="card-theme-indigo p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-400 to-indigo-600 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                    <div class="h-1.5 w-full bg-gradient-to-r from-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
-                    <div class="flex items-center justify-between pb-3 border-b border-indigo-100 min-w-0">
+                    <div class="flex items-center justify-between pb-3 border-b border-blue-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-5 h-5 rounded-full bg-indigo-500 text-white flex items-center justify-center text-[10px] font-black shrink-0">✔</span>
+                            <span class="w-5 h-5 rounded-full bg-[#0056d2] text-white flex items-center justify-center text-[10px] font-black shrink-0">✔</span>
                             <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Upcoming Tasks</h2>
                         </div>
-                        <a href="{{ route('todos.index') }}" class="text-xs font-black text-indigo-600 hover:text-indigo-800 shrink-0 whitespace-nowrap">View All ›</a>
+                        <a href="{{ route('todos.index') }}" class="text-xs font-black text-[#0056d2] hover:text-blue-900 shrink-0 whitespace-nowrap">View All ›</a>
                     </div>
 
                     <div class="space-y-2.5 py-1">
                         @if(isset($upcomingTodos) && $upcomingTodos->count() > 0)
                             @foreach($upcomingTodos->take(3) as $todo)
                                 <div class="flex items-start gap-2">
-                                    <input type="checkbox" class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-400 border-indigo-300" {{ $todo->is_completed ? 'checked' : '' }}>
+                                    <input type="checkbox" class="mt-0.5 rounded text-[#0056d2] focus:ring-blue-400 border-blue-300" {{ $todo->is_completed ? 'checked' : '' }}>
                                     <div class="min-w-0 flex-1">
                                         <span class="text-xs font-bold text-slate-800 block truncate">{{ $todo->title }}</span>
-                                        <span class="text-[8px] font-black {{ $todo->is_overdue ? 'text-rose-600 bg-rose-50 border-rose-200' : 'text-indigo-600 bg-indigo-50 border-indigo-200' }} px-1.5 py-0.5 rounded border inline-block mt-0.5">
+                                        <span class="text-[8px] font-black {{ $todo->is_overdue ? 'text-rose-600 bg-rose-50 border-rose-200' : 'text-[#0056d2] bg-blue-50 border-blue-200' }} px-1.5 py-0.5 rounded border inline-block mt-0.5">
                                             {{ $todo->due_date ? $todo->due_date->format('M d') : 'Active' }} • {{ ucfirst($todo->priority) }}
                                         </span>
                                     </div>
@@ -1469,7 +1488,7 @@
                             @endforeach
                         @else
                             <div class="flex items-start gap-2">
-                                <input type="checkbox" class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-400 border-indigo-300">
+                                <input type="checkbox" class="mt-0.5 rounded text-[#0056d2] focus:ring-blue-400 border-blue-300">
                                 <div class="min-w-0 flex-1">
                                     <span class="text-xs font-bold text-slate-800 block truncate">Call supplier for pending order</span>
                                     <span class="text-[8px] font-black text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200 inline-block mt-0.5">Today • High</span>
@@ -1477,7 +1496,7 @@
                             </div>
 
                             <div class="flex items-start gap-2">
-                                <input type="checkbox" class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-400 border-indigo-300">
+                                <input type="checkbox" class="mt-0.5 rounded text-[#0056d2] focus:ring-blue-400 border-blue-300">
                                 <div class="min-w-0 flex-1">
                                     <span class="text-xs font-bold text-slate-800 block truncate">Verify sales tax format</span>
                                     <span class="text-[8px] font-black text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 inline-block mt-0.5">Tomorrow • Med</span>
@@ -1485,10 +1504,10 @@
                             </div>
 
                             <div class="flex items-start gap-2">
-                                <input type="checkbox" class="mt-0.5 rounded text-indigo-600 focus:ring-indigo-400 border-indigo-300">
+                                <input type="checkbox" class="mt-0.5 rounded text-[#0056d2] focus:ring-blue-400 border-blue-300">
                                 <div class="min-w-0 flex-1">
                                     <span class="text-xs font-bold text-slate-800 block truncate">Update tender documents</span>
-                                    <span class="text-[8px] font-black text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200 inline-block mt-0.5">Nov 25 • Low</span>
+                                    <span class="text-[8px] font-black text-[#0056d2] bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200 inline-block mt-0.5">Nov 25 • Low</span>
                                 </div>
                             </div>
                         @endif
@@ -1502,7 +1521,7 @@
 
                 <!-- PANEL 1: Department Performance (4 Circular Ring Gauges - 45% width) -->
                 <div class="card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-500 via-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-sky-100 min-w-0">
@@ -1734,7 +1753,7 @@
                                     </linearGradient>
                                     <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stop-color="#38bdf8"/>
-                                        <stop offset="100%" stop-color="#6366f1"/>
+                                        <stop offset="100%" stop-color="#0056d2"/>
                                     </linearGradient>
                                 </defs>
                                 <!-- 3D Ascending Bars at the bottom -->
@@ -1804,19 +1823,19 @@
                     emoji = '🌤️';
                     badge = 'Afternoon Session';
                     subtitle = "Mid-day pulse check on departmental procurement, budget releases & clearing vouchers.";
-                    bgGradient = 'linear-gradient(135deg, #38bdf8 0%, #2563eb 50%, #4f46e5 100%)';
+                    bgGradient = 'linear-gradient(135deg, #38bdf8 0%, #0056d2 50%, #0b327b 100%)';
                 } else if (hour >= 17 && hour < 21) {
                     greeting = 'Good Evening';
                     emoji = '🌆';
                     badge = 'Evening Review';
                     subtitle = "Wrapping up today's fiscal clearance, pending tender sanctions & audit logs.";
-                    bgGradient = 'linear-gradient(135deg, #6366f1 0%, #9333ea 50%, #ec4899 100%)';
+                    bgGradient = 'linear-gradient(135deg, #fa7a1f 0%, #ea580c 50%, #cd3805 100%)';
                 } else {
                     greeting = 'Good Night';
                     emoji = '🌙';
                     badge = 'Night Monitoring';
                     subtitle = "Late-night automated settlement pipeline & treasury balance monitoring.";
-                    bgGradient = 'linear-gradient(135deg, #334155 0%, #1e1b4b 50%, #4c1d95 100%)';
+                    bgGradient = 'linear-gradient(135deg, #07255e 0%, #0056d2 50%, #0284c7 100%)';
                 }
 
                 const userName = @json($userName);

@@ -726,7 +726,7 @@
             </select>
 
             @if($chosenCompany)
-                <a href="{{ route('companies.letterhead', $chosenCompany) }}" target="_blank" title="Customize Letterhead & Body Margins for {{ $chosenCompany->company_name }}" class="btn btn-outline" style="padding: 4px 8px; font-size: 11px; color: #7c3aed; border-color: #ddd6fe; background: #f5f3ff;">
+                <a href="{{ route('companies.letterhead', $chosenCompany) }}" target="_blank" title="Customize Letterhead & Body Margins for {{ $chosenCompany->company_name }}" class="btn btn-outline" style="padding: 4px 8px; font-size: 11px; color: #0056d2; border-color: #bfdbfe; background: #eff6ff;">
                     ⚙️ Setup Letterhead
                 </a>
             @endif
@@ -811,7 +811,7 @@
             </a>
             <a href="{{ route('bills.sales-tax-invoice', $bill) }}" class="btn btn-outline">Sales Tax Invoice</a>
             <a href="{{ route('bills.comparative-statement', $bill) }}" class="btn btn-outline" style="color: #047857; font-weight: bold;">Comparative Statement</a>
-            <a href="{{ route('bills.invoice-design', $bill) }}" class="btn btn-outline" style="color: #7c3aed; font-weight: bold;">🎨 Invoice Designs</a>
+            <a href="{{ route('bills.invoice-design', $bill) }}" class="btn btn-outline" style="color: #0056d2; font-weight: bold; border-color: #bfdbfe; background: #eff6ff;">🎨 Invoice Designs</a>
         </div>
     </div>
 

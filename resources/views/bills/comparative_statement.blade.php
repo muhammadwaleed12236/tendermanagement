@@ -225,7 +225,7 @@
             <a href="{{ route('bills.quotation', [$bill, 1]) }}" class="btn btn-outline">Quotation 1</a>
             <a href="{{ route('bills.quotation', [$bill, 2]) }}" class="btn btn-outline">Quotation 2</a>
             <a href="{{ route('bills.quotation', [$bill, 3]) }}" class="btn btn-outline">Quotation 3</a>
-            <a href="{{ route('bills.invoice-design', $bill) }}" class="btn btn-outline" style="color: #7c3aed; font-weight: bold;">🎨 Invoice Designs (7 Patterns)</a>
+            <a href="{{ route('bills.invoice-design', $bill) }}" class="btn btn-outline" style="color: #0056d2; font-weight: bold; border-color: #bfdbfe; background: #eff6ff;">🎨 Invoice Designs (7 Patterns)</a>
         </div>
     </div>
 
