@@ -7,7 +7,7 @@
             <div class="flex items-center gap-3">
                 <!-- Logo Monogram & Name: ProWave Technologies -->
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 group">
-                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-[#0056d2] border border-sky-400/40 flex items-center justify-center font-black text-white text-xs shadow-md shadow-blue-500/20 group-hover:border-sky-300 transition">
+                    <div class="w-8 h-8 rounded-xl bg-[#0056d2] border border-sky-400/40 flex items-center justify-center font-black text-white text-xs shadow-md shadow-blue-500/20 group-hover:border-sky-300 transition">
                         PW
                     </div>
                     <div class="flex flex-col leading-tight">
@@ -37,7 +37,7 @@
             <div class="flex items-center gap-3 sm:gap-3.5">
                 <!-- Phone Contact with Cyan Circular Icon -->
                 <a href="tel:+923259385085" class="inline-flex items-center gap-2 text-white font-bold text-xs sm:text-[13px] hover:text-sky-300 transition whitespace-nowrap">
-                    <span class="w-6 h-6 rounded-full bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <span class="w-6 h-6 rounded-full bg-[#0056d2] flex items-center justify-center text-white shrink-0 shadow-xs">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
@@ -62,7 +62,7 @@
 
                 @auth
                     <!-- Quick Bill CTA Button (Vibrant 3D Gradient) -->
-                    <a href="{{ route('bills.create') }}" class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-blue-600 to-[#0056d2] hover:from-blue-500 hover:to-[#0056d2] text-white text-xs sm:text-[12.5px] font-bold transition shadow-sm border border-blue-400/30 whitespace-nowrap">
+                    <a href="{{ route('bills.create') }}" class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0056d2] hover:bg-[#1a6fe3] text-white text-xs sm:text-[12.5px] font-bold transition shadow-sm border border-blue-400/30 whitespace-nowrap">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         <span>Generate Bill</span>
                     </a>
@@ -180,7 +180,7 @@
                     <x-dropdown align="right" width="56">
                         <x-slot name="trigger">
                             <button class="flex items-center justify-center p-0.5 rounded-full text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 focus:outline-none transition">
-                                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-slate-800 to-slate-900 border border-slate-600 flex items-center justify-center text-slate-200">
+                                <div class="w-8 h-8 rounded-full bg-[#0f172a] border border-slate-600 flex items-center justify-center text-slate-200">
                                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
                                     </svg>
@@ -262,7 +262,7 @@
                     @auth
                         <!-- 1. Dashboard -->
                         <a href="{{ route('dashboard') }}" 
-                           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                             <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-slate-400' }}" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                             </svg>
@@ -272,7 +272,7 @@
                         <!-- 2. Tenders & EPAD 2.0 Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('tenders.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('tenders.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
@@ -341,7 +341,7 @@
                         <!-- 3. Billing & Cheques Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-400' }}" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                                 </svg>
@@ -420,7 +420,7 @@
                         <!-- 4. Budget & Finance Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -493,7 +493,7 @@
                         <!-- 5. Setup & Master Data Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -609,7 +609,7 @@
 
                         <!-- 6. To-Do List & Tasks -->
                         <a href="{{ route('todos.index') }}" 
-                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('todos.*') ? 'bg-gradient-to-r from-blue-600 to-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('todos.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
                             <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('todos.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                             </svg>

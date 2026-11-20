@@ -17,136 +17,112 @@
 
         /* 3D Elevated SaaS Cards with Rich Physical Depth & Extruded Base */
         .glass-panel {
-            background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(255, 255, 255, 0.95);
-            border-bottom: 5.5px solid #cbd5e1;
-            box-shadow:
-                0 18px 36px -8px rgba(100, 116, 139, 0.18),
-                0 6px 14px -3px rgba(100, 116, 139, 0.08),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2px solid #0056d2;
+            border-bottom: 5.5px solid #0056d2;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.18), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
 
         .glass-panel:hover {
             transform: translateY(-4px);
-            border-bottom: 6.5px solid #94a3b8;
-            box-shadow:
-                0 26px 46px -10px rgba(100, 116, 139, 0.25),
-                0 10px 20px -4px rgba(100, 116, 139, 0.12),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            border-bottom: 7px solid #07255e;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.28);
         }
 
         /* ------------------------------------------------------------- */
         /* ROW 2 & ROW 3 COLORFUL THEMED 3D GLASS CARDS                  */
         /* ------------------------------------------------------------- */
         .card-theme-blue {
-            background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 42%, #ffffff 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(56, 189, 248, 0.45);
-            border-bottom: 6px solid #0284c7;
-            box-shadow:
-                0 18px 38px -8px rgba(2, 132, 199, 0.28),
-                0 6px 14px -3px rgba(2, 132, 199, 0.12),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2px solid #0056d2;
+            border-bottom: 5.5px solid #0056d2;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-blue:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #0369a1;
-            box-shadow: 0 26px 48px -10px rgba(2, 132, 199, 0.42);
+            border-bottom: 7px solid #07255e;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.32);
         }
 
         .card-theme-maroon {
-            background: linear-gradient(180deg, #fff1f2 0%, #ffffff 42%, #ffffff 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(244, 63, 94, 0.45);
-            border-bottom: 6px solid #881337;
-            box-shadow:
-                0 18px 38px -8px rgba(136, 19, 55, 0.28),
-                0 6px 14px -3px rgba(136, 19, 55, 0.12),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2px solid #881337;
+            border-bottom: 5.5px solid #881337;
+            box-shadow: 0 16px 32px -6px rgba(136, 19, 55, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-maroon:hover {
             transform: translateY(-4px);
             border-bottom: 7px solid #4c0519;
-            box-shadow: 0 26px 48px -10px rgba(136, 19, 55, 0.42);
+            box-shadow: 0 24px 44px -8px rgba(136, 19, 55, 0.32);
         }
 
         .card-theme-orange {
-            background: linear-gradient(180deg, #fff7ed 0%, #ffffff 42%, #ffffff 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(205, 56, 5, 0.45);
-            border-bottom: 6px solid #cd3805;
-            box-shadow:
-                0 18px 38px -8px rgba(205, 56, 5, 0.28),
-                0 6px 14px -3px rgba(205, 56, 5, 0.12),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2px solid #cd3805;
+            border-bottom: 5.5px solid #cd3805;
+            box-shadow: 0 16px 32px -6px rgba(205, 56, 5, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-orange:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #a62800;
-            box-shadow: 0 26px 48px -10px rgba(205, 56, 5, 0.42);
+            border-bottom: 7px solid #9a3412;
+            box-shadow: 0 24px 44px -8px rgba(205, 56, 5, 0.32);
         }
 
         .card-theme-amber {
-            background: linear-gradient(180deg, #fefce8 0%, #ffffff 42%, #ffffff 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(250, 204, 21, 0.5);
-            border-bottom: 6px solid #ca8a04;
-            box-shadow:
-                0 16px 34px -8px rgba(202, 138, 4, 0.25),
-                0 4px 12px -2px rgba(202, 138, 4, 0.12),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2px solid #0056d2;
+            border-bottom: 5.5px solid #0056d2;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-amber:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #a16207;
-            box-shadow: 0 24px 44px -8px rgba(202, 138, 4, 0.38);
+            border-bottom: 7px solid #07255e;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.32);
         }
 
         .card-theme-green {
-            background: linear-gradient(180deg, #ecfdf5 0%, #ffffff 42%, #ffffff 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(52, 211, 153, 0.5);
-            border-bottom: 6px solid #059669;
-            box-shadow:
-                0 16px 34px -8px rgba(5, 150, 105, 0.25),
-                0 4px 12px -2px rgba(5, 150, 105, 0.12),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2px solid #0d9467;
+            border-bottom: 5.5px solid #0d9467;
+            box-shadow: 0 16px 32px -6px rgba(13, 148, 103, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-green:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #047857;
-            box-shadow: 0 24px 44px -8px rgba(5, 150, 105, 0.38);
+            border-bottom: 7px solid #064e3b;
+            box-shadow: 0 24px 44px -8px rgba(13, 148, 103, 0.32);
         }
 
         .card-theme-tasks {
-            background: linear-gradient(180deg, #eff6ff 0%, #ffffff 42%, #ffffff 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(147, 197, 253, 0.6);
-            border-bottom: 6px solid #0056d2;
-            box-shadow:
-                0 16px 34px -8px rgba(0, 86, 210, 0.22),
-                0 4px 12px -2px rgba(0, 86, 210, 0.1),
-                inset 0 2px 3px rgba(255, 255, 255, 0.98);
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2px solid #0056d2;
+            border-bottom: 5.5px solid #0056d2;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-tasks:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #0b327b;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
+            border-bottom: 7px solid #07255e;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.32);
         }
 
         /* Explicit Grid Definitions that NEVER break or collapse */
@@ -205,16 +181,13 @@
             }
         }
 
-        /* 3D Cyberpunk AI Smart Insight Widget matching Electric Blue theme */
+        /* 3D Smart Insight Widget matching Electric Blue theme */
         .card-theme-ai {
-            background: linear-gradient(135deg, #07255e 0%, #0056d2 40%, #0284c7 80%, #0ea5e9 100%);
-            border-radius: 1.5rem;
-            border: 1.5px solid rgba(56, 189, 248, 0.45);
-            border-bottom: 6px solid #061e47;
-            box-shadow:
-                0 18px 40px -6px rgba(0, 86, 210, 0.45),
-                0 6px 14px -2px rgba(0, 86, 210, 0.25),
-                inset 0 1.5px 2px rgba(255, 255, 255, 0.35);
+            background: #0056d2;
+            border-radius: 1.45rem;
+            border: 2px solid #0056d2;
+            border-bottom: 5.5px solid #07255e;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.35);
             color: #ffffff;
             position: relative;
             overflow: hidden;
@@ -222,17 +195,17 @@
         }
         .card-theme-ai:hover {
             transform: translateY(-4px);
-            box-shadow: 0 26px 52px -8px rgba(0, 86, 210, 0.65);
             border-bottom: 7px solid #031535;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.45);
         }
 
         /* 3D Elevated Tender Micro-Card */
         .tender-card-3d {
-            background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+            background: #ffffff;
             border-radius: 1.25rem;
             border: 1.5px solid #e2e8f0;
             border-bottom: 4.5px solid #cbd5e1;
-            box-shadow: 0 10px 24px -4px rgba(100, 116, 139, 0.10), inset 0 1.5px 2px rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 18px -4px rgba(0, 0, 0, 0.06);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             padding: 1.15rem;
             display: flex;
@@ -270,79 +243,55 @@
             transition: all 0.25s ease;
         }
 
-        /* 1. Electric Blue Card (TOTAL BILL AMOUNT) */
+        /* 1. Electric Blue Card (TOTAL BUDGET AMOUNT) */
         .stat-card-blue {
-            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0f7ff 100%);
-            border: 3px solid #0056d2;
-            border-bottom: 6.5px solid #0056d2;
-            box-shadow:
-                0 16px 32px -6px rgba(0, 86, 210, 0.32),
-                0 4px 12px rgba(0, 0, 0, 0.05),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            background: #ffffff;
+            border: 2.5px solid #0056d2;
+            border-bottom: 6px solid #0056d2;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.25);
         }
         .stat-card-3d-wrap:hover .stat-card-blue {
             border-color: #0056d2;
-            border-bottom-width: 8px;
-            box-shadow:
-                0 22px 42px -6px rgba(0, 86, 210, 0.45),
-                0 8px 18px rgba(0, 0, 0, 0.08),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            border-bottom-width: 7.5px;
+            box-shadow: 0 22px 42px -6px rgba(0, 86, 210, 0.38);
         }
 
         /* 2. Emerald Green Card (TOTAL CHEQUE AMOUNT) */
         .stat-card-green {
-            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0fdf4 100%);
-            border: 3px solid #0d9467;
-            border-bottom: 6.5px solid #059669;
-            box-shadow:
-                0 16px 32px -6px rgba(16, 185, 129, 0.32),
-                0 4px 12px rgba(0, 0, 0, 0.05),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            background: #ffffff;
+            border: 2.5px solid #0d9467;
+            border-bottom: 6px solid #059669;
+            box-shadow: 0 16px 32px -6px rgba(13, 148, 103, 0.25);
         }
         .stat-card-3d-wrap:hover .stat-card-green {
-            border-bottom-width: 8px;
-            box-shadow:
-                0 22px 42px -6px rgba(16, 185, 129, 0.45),
-                0 8px 18px rgba(0, 0, 0, 0.08),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            border-bottom-width: 7.5px;
+            box-shadow: 0 22px 42px -6px rgba(13, 148, 103, 0.38);
         }
 
         /* 3. Sunset Orange Card (TOTAL OUTSTANDING) - Exact Match to #cd3805 */
         .stat-card-orange {
-            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff7ed 100%);
-            border: 3px solid #cd3805;
-            border-bottom: 6.5px solid #9a3412;
-            box-shadow:
-                0 16px 32px -6px rgba(205, 56, 5, 0.35),
-                0 4px 12px rgba(0, 0, 0, 0.05),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            background: #ffffff;
+            border: 2.5px solid #cd3805;
+            border-bottom: 6px solid #9a3412;
+            box-shadow: 0 16px 32px -6px rgba(205, 56, 5, 0.25);
         }
         .stat-card-3d-wrap:hover .stat-card-orange {
             border-color: #cd3805;
-            border-bottom-width: 8px;
-            box-shadow:
-                0 22px 42px -6px rgba(205, 56, 5, 0.48),
-                0 8px 18px rgba(0, 0, 0, 0.08),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            border-bottom-width: 7.5px;
+            box-shadow: 0 22px 42px -6px rgba(205, 56, 5, 0.38);
         }
 
-        /* 4. Deep Maroon / Dark Red Card (Available Surplus) */
+        /* 4. Deep Maroon / Dark Red Card (VENDOR PROFIT) */
         .stat-card-maroon {
-            background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff1f2 100%);
-            border: 3px solid #881337;
-            border-bottom: 6.5px solid #4c0519;
-            box-shadow:
-                0 16px 32px -6px rgba(136, 19, 55, 0.32),
-                0 4px 12px rgba(0, 0, 0, 0.05),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            background: #ffffff;
+            border: 2.5px solid #881337;
+            border-bottom: 6px solid #4c0519;
+            box-shadow: 0 16px 32px -6px rgba(136, 19, 55, 0.25);
         }
         .stat-card-3d-wrap:hover .stat-card-maroon {
             border-color: #881337;
-            border-bottom-width: 8px;
-            box-shadow:
-                0 22px 42px -6px rgba(136, 19, 55, 0.45),
-                0 8px 18px rgba(0, 0, 0, 0.08),
-                inset 0 2px 2px rgba(255, 255, 255, 0.95);
+            border-bottom-width: 7.5px;
+            box-shadow: 0 22px 42px -6px rgba(136, 19, 55, 0.38);
         }
 
         /* 3D Extruded Candy Icon Tile on Left */
@@ -362,28 +311,28 @@
         }
 
         .candy-icon-blue {
-            background: linear-gradient(135deg, #1d72fe 0%, #0056d2 60%, #003ea1 100%);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.7);
-            border-bottom: 4px solid #00358a;
-            box-shadow: 0 8px 18px rgba(0, 86, 210, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            background: #0056d2;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 4px solid #07255e;
+            box-shadow: 0 8px 18px rgba(0, 86, 210, 0.35);
         }
         .candy-icon-green {
-            background: linear-gradient(135deg, #34d399 0%, #10b981 60%, #059669 100%);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.7);
+            background: #0d9467;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.4);
             border-bottom: 4px solid #064e3b;
-            box-shadow: 0 8px 18px rgba(16, 185, 129, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 18px rgba(13, 148, 103, 0.35);
         }
         .candy-icon-orange {
-            background: linear-gradient(135deg, #fa8228 0%, #fa7a1f 60%, #f77015 100%);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.75);
+            background: #cd3805;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.4);
             border-bottom: 4px solid #9a3412;
-            box-shadow: 0 8px 18px rgba(250, 122, 31, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 18px rgba(205, 56, 5, 0.35);
         }
         .candy-icon-maroon {
-            background: linear-gradient(135deg, #e11d48 0%, #9f1239 60%, #4c0519 100%);
-            border-top: 1.5px solid rgba(255, 255, 255, 0.65);
-            border-bottom: 4px solid #360210;
-            box-shadow: 0 8px 18px rgba(136, 19, 55, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+            background: #881337;
+            border-top: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 4px solid #4c0519;
+            box-shadow: 0 8px 18px rgba(136, 19, 55, 0.35);
         }
 
         /* High-Contrast Card Typography */
@@ -486,52 +435,48 @@
 
         /* 3D Candy Status Pill Tags with Extrusion */
         .tag-pill-sale {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: #0d9467;
             color: #ffffff;
             border-radius: 9999px;
             font-size: 0.65rem;
             font-weight: 900;
             padding: 0.22rem 0.7rem;
-            border-bottom: 2.5px solid #047857;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+            border-bottom: 2.5px solid #064e3b;
         }
         .tag-pill-purchase {
-            background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+            background: #0056d2;
             color: #ffffff;
             border-radius: 9999px;
             font-size: 0.65rem;
             font-weight: 900;
             padding: 0.22rem 0.7rem;
-            border-bottom: 2.5px solid #1d4ed8;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+            border-bottom: 2.5px solid #07255e;
         }
         .tag-pill-payment {
-            background: linear-gradient(135deg, #fbbf24 0%, #ea580c 100%);
+            background: #cd3805;
             color: #ffffff;
             border-radius: 9999px;
             font-size: 0.65rem;
             font-weight: 900;
             padding: 0.22rem 0.7rem;
             border-bottom: 2.5px solid #9a3412;
-            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
         }
         .tag-pill-inventory {
-            background: linear-gradient(135deg, #be123c 0%, #881337 100%);
+            background: #881337;
             color: #ffffff;
             border-radius: 9999px;
             font-size: 0.65rem;
             font-weight: 900;
             padding: 0.22rem 0.7rem;
             border-bottom: 2.5px solid #4c0519;
-            box-shadow: 0 4px 10px rgba(136, 19, 55, 0.35);
         }
 
-        /* 3D Action Buttons with Keycap Push */
+        /* 3D Action Buttons with Keycap Push - Flat Solid Themes */
         .btn-funky-voucher {
-            background: linear-gradient(135deg, #fb923c 0%, #fa7a1f 50%, #cd3805 100%);
-            border: 1px solid rgba(255, 255, 255, 0.45);
+            background: #cd3805;
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-bottom: 4.5px solid #9a3412;
-            box-shadow: 0 10px 24px -2px rgba(250, 122, 31, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 18px -2px rgba(205, 56, 5, 0.35);
             border-radius: 1rem;
             color: #ffffff;
             font-weight: 900;
@@ -539,7 +484,8 @@
         }
         .btn-funky-voucher:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px -2px rgba(205, 56, 5, 0.55);
+            background: #e03e06;
+            box-shadow: 0 12px 24px -2px rgba(205, 56, 5, 0.45);
         }
         .btn-funky-voucher:active {
             transform: translateY(2px);
@@ -547,10 +493,10 @@
         }
 
         .btn-funky-bill {
-            background: linear-gradient(135deg, #38bdf8 0%, #0056d2 50%, #0b327b 100%);
-            border: 1px solid rgba(255, 255, 255, 0.45);
+            background: #0056d2;
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-bottom: 4.5px solid #07255e;
-            box-shadow: 0 10px 24px -2px rgba(0, 86, 210, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 18px -2px rgba(0, 86, 210, 0.35);
             border-radius: 1rem;
             color: #ffffff;
             font-weight: 900;
@@ -558,7 +504,8 @@
         }
         .btn-funky-bill:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px -2px rgba(11, 50, 123, 0.55);
+            background: #1a6fe3;
+            box-shadow: 0 12px 24px -2px rgba(0, 86, 210, 0.45);
         }
         .btn-funky-bill:active {
             transform: translateY(2px);
@@ -566,10 +513,10 @@
         }
 
         .btn-funky-tender {
-            background: linear-gradient(135deg, #34d399 0%, #0d9467 50%, #064e3b 100%);
-            border: 1px solid rgba(255, 255, 255, 0.45);
+            background: #0d9467;
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-bottom: 4.5px solid #064e3b;
-            box-shadow: 0 10px 24px -2px rgba(13, 148, 103, 0.45), inset 0 1.5px 2px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 18px -2px rgba(13, 148, 103, 0.35);
             border-radius: 1rem;
             color: #ffffff;
             font-weight: 900;
@@ -577,11 +524,13 @@
         }
         .btn-funky-tender:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px -2px rgba(6, 78, 59, 0.55);
+            background: #10b981;
+            box-shadow: 0 12px 24px -2px rgba(13, 148, 103, 0.45);
         }
         .btn-funky-tender:active {
             transform: translateY(2px);
             border-bottom-width: 1.5px;
+        }
         }
 
         /* Dynamic Hand Wave Animation */
@@ -609,25 +558,25 @@
             $timeGreeting = 'Good Morning';
             $timeEmoji = '☀️';
             $timeBadge = 'Morning Shift';
-            $timeGradient = 'linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #f43f5e 100%)';
+            $timeGradient = '#0056d2';
             $timeSubtitle = "Rise & shine! Here's what's happening with your tenders, bills & treasury today.";
         } elseif ($currentHour >= 12 && $currentHour < 17) {
             $timeGreeting = 'Good Afternoon';
             $timeEmoji = '🌤️';
             $timeBadge = 'Afternoon Session';
-            $timeGradient = 'linear-gradient(135deg, #38bdf8 0%, #2563eb 50%, #4f46e5 100%)';
+            $timeGradient = '#0056d2';
             $timeSubtitle = "Mid-day pulse check on departmental procurement, budget releases & clearing vouchers.";
         } elseif ($currentHour >= 17 && $currentHour < 21) {
             $timeGreeting = 'Good Evening';
             $timeEmoji = '🌆';
             $timeBadge = 'Evening Review';
-            $timeGradient = 'linear-gradient(135deg, #fa7a1f 0%, #ea580c 50%, #cd3805 100%)';
+            $timeGradient = '#cd3805';
             $timeSubtitle = "Wrapping up today's fiscal clearance, pending tender sanctions & audit logs.";
         } else {
             $timeGreeting = 'Good Night';
             $timeEmoji = '🌙';
             $timeBadge = 'Night Monitoring';
-            $timeGradient = 'linear-gradient(135deg, #07255e 0%, #0056d2 50%, #0284c7 100%)';
+            $timeGradient = '#0056d2';
             $timeSubtitle = "Late-night automated settlement pipeline & treasury balance monitoring.";
         }
 
@@ -640,8 +589,6 @@
 
             <!-- 1. TOP HEADER BAR WITH DYNAMIC TIME-OF-DAY GREETING -->
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 glass-panel p-4 sm:p-5">
-                <!-- Top 4-Color Accent Line Matching the 4 Stat Cards -->
-                <div class="h-1.5 w-full bg-gradient-to-r from-[#0056d2] via-[#0d9467] via-[#fa7a1f] to-[#881337] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                 <!-- Left: Dynamic Time Greeting, 3D Icon & Live Info -->
                 <div class="flex items-center gap-3.5 pt-0.5">
@@ -660,7 +607,7 @@
                                 <span class="animate-wave">👋</span>
                             </h1>
                             <span id="dynamicGreetingBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black text-white inline-flex items-center gap-1.5 shadow-xs"
-                                  style="background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);">
+                                  style="background: #0d9467;">
                                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                                 <span id="dynamicBadgeLabel">{{ $timeBadge }}</span>
                             </span>
@@ -890,7 +837,6 @@
 
                 <!-- COLUMN 1 (50%): Sales & Purchases Overview (Dual Wave Chart - Vibrant Blue / Cyan Theme) -->
                 <div class="card-theme-blue p-5 flex flex-col justify-between">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-500 via-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-2 pb-3 border-b border-sky-100 min-w-0">
@@ -928,21 +874,13 @@
                         <div style="position: absolute; left: 32px; right: 8px; top: 8px; bottom: 24px;">
                             <svg viewBox="0 0 600 160" class="w-full h-full overflow-visible" preserveAspectRatio="none">
                                 <defs>
-                                    <linearGradient id="fillBlueWave" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.48"/>
-                                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
-                                    </linearGradient>
-                                    <linearGradient id="fillOrangeWave" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#ea580c" stop-opacity="0.42"/>
-                                        <stop offset="100%" stop-color="#cd3805" stop-opacity="0.0"/>
-                                    </linearGradient>
                                     <filter id="waveGlowBlue" x="-10%" y="-10%" width="120%" height="120%">
                                         <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0284c7" flood-opacity="0.4"/>
                                     </filter>
                                 </defs>
 
-                                <path d="M 0 110 Q 75 120, 150 85 T 300 95 T 450 45 T 600 30 L 600 160 L 0 160 Z" fill="url(#fillBlueWave)"/>
-                                <path d="M 0 135 Q 75 145, 150 110 T 300 120 T 450 80 T 600 65 L 600 160 L 0 160 Z" fill="url(#fillOrangeWave)"/>
+                                <path d="M 0 110 Q 75 120, 150 85 T 300 95 T 450 45 T 600 30 L 600 160 L 0 160 Z" fill="#0056d2" fill-opacity="0.07"/>
+                                <path d="M 0 135 Q 75 145, 150 110 T 300 120 T 450 80 T 600 65 L 600 160 L 0 160 Z" fill="#cd3805" fill-opacity="0.07"/>
 
                                 <path d="M 0 135 Q 75 145, 150 110 T 300 120 T 450 80 T 600 65" fill="none" stroke="#cd3805" stroke-width="3" stroke-linecap="round"/>
                                 <path d="M 0 110 Q 75 120, 150 85 T 300 95 T 450 45 T 600 30" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round" filter="url(#waveGlowBlue)"/>
@@ -983,7 +921,6 @@
 
                 <!-- COLUMN 2: Business Analytics (Donut + Totals - Deep Maroon Theme) -->
                 <div class="card-theme-maroon p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-rose-500 via-rose-600 to-rose-900 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-rose-100 min-w-0">
@@ -1004,21 +941,10 @@
                         <!-- Donut SVG with strict bounded dimensions -->
                         <div class="relative shrink-0 flex items-center justify-center" style="width: 105px; height: 105px;">
                             <svg width="105" height="105" viewBox="0 0 100 100" class="-rotate-90">
-                                <defs>
-                                    <linearGradient id="donutSalesGrad" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#38bdf8"/>
-                                        <stop offset="50%" stop-color="#0056d2"/>
-                                        <stop offset="100%" stop-color="#0b327b"/>
-                                    </linearGradient>
-                                    <linearGradient id="donutPurchGrad" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#fb923c"/>
-                                        <stop offset="100%" stop-color="#cd3805"/>
-                                    </linearGradient>
-                                </defs>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="13"/>
-                                <circle cx="50" cy="50" r="38" fill="none" stroke="url(#donutPurchGrad)" stroke-width="13"
+                                <circle cx="50" cy="50" r="38" fill="none" stroke="#cd3805" stroke-width="13"
                                         stroke-dasharray="238.7" stroke-dashoffset="162" stroke-linecap="round"/>
-                                <circle cx="50" cy="50" r="38" fill="none" stroke="url(#donutSalesGrad)" stroke-width="13"
+                                <circle cx="50" cy="50" r="38" fill="none" stroke="#0056d2" stroke-width="13"
                                         stroke-dasharray="238.7" stroke-dashoffset="76" stroke-linecap="round"/>
                             </svg>
 
@@ -1070,7 +996,6 @@
 
                 <!-- COLUMN 3: Recent Activities (Timeline List - Dynamic Activities) -->
                 <div class="card-theme-orange p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-orange-400 via-[#fa7a1f] to-[#cd3805] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-orange-100 min-w-0">
@@ -1160,14 +1085,12 @@
 
             <!-- 3.5 ACTIVE TENDERS & PROCUREMENT CENTRAL BOARD -->
             <div class="glass-panel p-5 sm:p-6 min-w-0">
-                <!-- Top holographic accent line -->
-                <div class="h-1.5 w-full bg-gradient-to-r from-[#0056d2] via-[#0d9467] to-teal-400 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                 <!-- Section Header -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm"
-                             style="background: linear-gradient(135deg, #0ea5e9 0%, #0056d2 100%);">
+                             style="background: #0056d2;">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
@@ -1283,7 +1206,6 @@
 
                 <!-- CARD 1: Top Selling Products (Golden Amber Theme - Dynamic from BillItems) -->
                 <div class="card-theme-amber p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-amber-400 to-yellow-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <div class="flex items-center justify-between pb-3 border-b border-amber-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
@@ -1311,7 +1233,7 @@
                                         <span class="font-mono text-slate-900 font-extrabold shrink-0" data-counter-target="{{ (int)$prod->total_qty }}" data-counter-suffix=" Pcs">{{ number_format($prod->total_qty) }} Pcs</span>
                                     </div>
                                     <div class="w-full bg-amber-100/60 h-2 rounded-full overflow-hidden">
-                                        <div class="bg-gradient-to-r from-cyan-400 to-blue-600 h-full rounded-full transition-all duration-1000" style="width: {{ min(100, max(25, round(($prod->total_qty / $maxQty) * 100))) }}%;"></div>
+                                        <div class="bg-[#0056d2] h-full rounded-full transition-all duration-1000" style="width: {{ min(100, max(25, round(($prod->total_qty / $maxQty) * 100))) }}%;"></div>
                                     </div>
                                 </div>
                             @endforeach
@@ -1325,7 +1247,7 @@
                                     <span class="font-mono text-slate-900 font-extrabold shrink-0 ml-2" data-counter-target="8200" data-counter-suffix=" Pcs">8,200 Pcs</span>
                                 </div>
                                 <div class="w-full bg-amber-100/60 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-cyan-400 to-blue-600 h-full rounded-full" style="width: 82%;"></div>
+                                    <div class="bg-[#0056d2] h-full rounded-full" style="width: 82%;"></div>
                                 </div>
                             </div>
 
@@ -1338,7 +1260,7 @@
                                     <span class="font-mono text-slate-900 font-extrabold shrink-0 ml-2" data-counter-target="6400" data-counter-suffix=" Pcs">6,400 Pcs</span>
                                 </div>
                                 <div class="w-full bg-emerald-100/60 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-lime-400 to-green-600 h-full rounded-full" style="width: 64%;"></div>
+                                    <div class="bg-[#0d9467] h-full rounded-full" style="width: 64%;"></div>
                                 </div>
                             </div>
 
@@ -1351,7 +1273,7 @@
                                     <span class="font-mono text-slate-900 font-extrabold shrink-0 ml-2" data-counter-target="5200" data-counter-suffix=" Pcs">5,200 Pcs</span>
                                 </div>
                                 <div class="w-full bg-orange-100/60 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-amber-400 to-orange-500 h-full rounded-full" style="width: 52%;"></div>
+                                    <div class="bg-[#cd3805] h-full rounded-full" style="width: 52%;"></div>
                                 </div>
                             </div>
                         @endif
@@ -1360,7 +1282,6 @@
 
                 <!-- CARD 2: Stock Status (Lush Emerald Theme) -->
                 <div class="card-theme-green p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-emerald-400 to-teal-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <div class="flex items-center justify-between pb-3 border-b border-emerald-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
@@ -1412,7 +1333,6 @@
 
                 <!-- CARD 3: Financial Overview (Electric Sky Blue Theme) -->
                 <div class="card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <div class="flex items-center justify-between pb-3 border-b border-sky-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
@@ -1428,13 +1348,7 @@
                     <!-- Mini Wave Line Chart -->
                     <div class="w-full h-16 py-1 relative">
                         <svg viewBox="0 0 240 60" class="w-full h-full overflow-visible" preserveAspectRatio="none">
-                            <defs>
-                                <linearGradient id="finWaveGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.45"/>
-                                    <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
-                                </linearGradient>
-                            </defs>
-                            <path d="M 0 45 Q 30 50, 60 35 T 120 40 T 180 20 T 240 12 L 240 60 L 0 60 Z" fill="url(#finWaveGrad)"/>
+                            <path d="M 0 45 Q 30 50, 60 35 T 120 40 T 180 20 T 240 12 L 240 60 L 0 60 Z" fill="#0056d2" fill-opacity="0.07"/>
                             <path d="M 0 45 Q 30 50, 60 35 T 120 40 T 180 20 T 240 12" fill="none" stroke="#0284c7" stroke-width="2.5" stroke-linecap="round"/>
                             <circle cx="15" cy="46" r="3" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
                             <circle cx="60" cy="35" r="3" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
@@ -1463,7 +1377,6 @@
 
                 <!-- CARD 4: Upcoming Tasks (Electric Blue Theme - Dynamic from Todos) -->
                 <div class="card-theme-tasks p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <div class="flex items-center justify-between pb-3 border-b border-blue-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
@@ -1521,7 +1434,6 @@
 
                 <!-- PANEL 1: Department Performance (4 Circular Ring Gauges - 45% width) -->
                 <div class="card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-blue-500 via-sky-400 to-[#0056d2] absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-sky-100 min-w-0">
@@ -1539,26 +1451,6 @@
 
                     <!-- 4 Circular Ring Gauges -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 items-center justify-around">
-                        <svg class="hidden">
-                            <defs>
-                                <linearGradient id="ringGradBlue" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0%" stop-color="#38bdf8"/>
-                                    <stop offset="100%" stop-color="#2563eb"/>
-                                </linearGradient>
-                                <linearGradient id="ringGradCyan" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0%" stop-color="#06b6d4"/>
-                                    <stop offset="100%" stop-color="#10b981"/>
-                                </linearGradient>
-                                <linearGradient id="ringGradOrange" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0%" stop-color="#fbbf24"/>
-                                    <stop offset="100%" stop-color="#ea580c"/>
-                                </linearGradient>
-                                <linearGradient id="ringGradGreen" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0%" stop-color="#34d399"/>
-                                    <stop offset="100%" stop-color="#059669"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
 
                         <!-- Ring 1: Sales Dept -->
                         <div class="flex flex-col items-center text-center">
@@ -1566,7 +1458,7 @@
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path stroke-width="3.5" stroke-dasharray="92, 100" stroke-linecap="round" stroke="url(#ringGradBlue)" fill="none"
+                                    <path stroke-width="3.5" stroke-dasharray="92, 100" stroke-linecap="round" stroke="#0056d2" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="92" data-counter-suffix="%">92%</span>
@@ -1581,7 +1473,7 @@
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path stroke-width="3.5" stroke-dasharray="78, 100" stroke-linecap="round" stroke="url(#ringGradCyan)" fill="none"
+                                    <path stroke-width="3.5" stroke-dasharray="78, 100" stroke-linecap="round" stroke="#0d9467" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="78" data-counter-suffix="%">78%</span>
@@ -1596,7 +1488,7 @@
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path stroke-width="3.5" stroke-dasharray="65, 100" stroke-linecap="round" stroke="url(#ringGradOrange)" fill="none"
+                                    <path stroke-width="3.5" stroke-dasharray="65, 100" stroke-linecap="round" stroke="#cd3805" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="65" data-counter-suffix="%">65%</span>
@@ -1611,7 +1503,7 @@
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                    <path stroke-width="3.5" stroke-dasharray="95, 100" stroke-linecap="round" stroke="url(#ringGradGreen)" fill="none"
+                                    <path stroke-width="3.5" stroke-dasharray="95, 100" stroke-linecap="round" stroke="#881337" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="95" data-counter-suffix="%">95%</span>
@@ -1624,7 +1516,6 @@
 
                 <!-- PANEL 2: Recent Invoices (30% width) -->
                 <div class="card-theme-maroon p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-rose-500 via-rose-600 to-rose-900 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-rose-100 min-w-0">
@@ -1708,8 +1599,8 @@
                 <!-- PANEL 3: Smart Business Insight (3D Cyberpunk AI Widget - 25% width) -->
                 <div class="card-theme-ai p-4 sm:p-5 flex flex-col justify-between min-w-0">
                     <!-- Holographic Background Elements -->
-                    <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-cyan-400/20 blur-2xl pointer-events-none"></div>
-                    <div class="absolute -bottom-10 -left-10 w-44 h-44 rounded-full bg-pink-500/20 blur-2xl pointer-events-none"></div>
+                    <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-blue-400/10 blur-2xl pointer-events-none"></div>
+                    <div class="absolute -bottom-10 -left-10 w-44 h-44 rounded-full bg-blue-600/10 blur-2xl pointer-events-none"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-2 pb-2 relative z-10">
@@ -1742,24 +1633,10 @@
                         <!-- Right: Cute 3D Floating AI Robot Mascot -->
                         <div class="shrink-0 -mr-2">
                             <svg viewBox="0 0 140 140" class="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-2xl overflow-visible">
-                                <defs>
-                                    <linearGradient id="botBody" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#ffffff"/>
-                                        <stop offset="100%" stop-color="#cbd5e1"/>
-                                    </linearGradient>
-                                    <linearGradient id="botCyan" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#38bdf8"/>
-                                        <stop offset="100%" stop-color="#0284c7"/>
-                                    </linearGradient>
-                                    <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#38bdf8"/>
-                                        <stop offset="100%" stop-color="#0056d2"/>
-                                    </linearGradient>
-                                </defs>
                                 <!-- 3D Ascending Bars at the bottom -->
-                                <rect x="75" y="110" width="12" height="25" rx="3" fill="url(#barGrad)" opacity="0.6"/>
-                                <rect x="90" y="98" width="12" height="37" rx="3" fill="url(#barGrad)" opacity="0.8"/>
-                                <rect x="105" y="85" width="12" height="50" rx="3" fill="url(#barGrad)"/>
+                                <rect x="75" y="110" width="12" height="25" rx="3" fill="#ffffff" opacity="0.6"/>
+                                <rect x="90" y="98" width="12" height="37" rx="3" fill="#ffffff" opacity="0.8"/>
+                                <rect x="105" y="85" width="12" height="50" rx="3" fill="#ffffff"/>
                                 <rect x="120" y="70" width="12" height="65" rx="3" fill="#38bdf8"/>
                                 <!-- Floating Shadow -->
                                 <ellipse cx="60" cy="125" rx="28" ry="7" fill="#1e1b4b" opacity="0.45"/>
@@ -1767,7 +1644,7 @@
                                 <line x1="60" y1="28" x2="60" y2="15" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
                                 <circle cx="60" cy="13" r="5" fill="#38bdf8" filter="drop-shadow(0 0 4px #38bdf8)"/>
                                 <!-- Robot Head -->
-                                <rect x="30" y="26" width="60" height="46" rx="22" fill="url(#botBody)" stroke="#f1f5f9" stroke-width="2"/>
+                                <rect x="30" y="26" width="60" height="46" rx="22" fill="#ffffff" stroke="#f1f5f9" stroke-width="2"/>
                                 <!-- Face Screen -->
                                 <rect x="36" y="32" width="48" height="34" rx="14" fill="#0f172a"/>
                                 <!-- Glowing Cyan Eyes -->
@@ -1781,7 +1658,7 @@
                                 <rect x="23" y="38" width="8" height="22" rx="4" fill="#64748b"/>
                                 <rect x="89" y="38" width="8" height="22" rx="4" fill="#64748b"/>
                                 <!-- Body -->
-                                <path d="M 40 76 Q 60 72, 80 76 L 84 105 Q 60 110, 36 105 Z" fill="url(#botBody)"/>
+                                <path d="M 40 76 Q 60 72, 80 76 L 84 105 Q 60 110, 36 105 Z" fill="#ffffff"/>
                                 <!-- Chest Core -->
                                 <circle cx="60" cy="90" r="6" fill="#38bdf8" filter="drop-shadow(0 0 6px #38bdf8)"/>
                                 <!-- Waving Arm Left -->
@@ -1810,32 +1687,32 @@
                 let emoji = '☀️';
                 let badge = 'Morning Shift';
                 let subtitle = "Rise & shine! Here's what's happening with your tenders, bills & treasury today.";
-                let bgGradient = 'linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #f43f5e 100%)';
+                let bgGradient = '#0056d2';
 
                 if (hour >= 5 && hour < 12) {
                     greeting = 'Good Morning';
                     emoji = '☀️';
                     badge = 'Morning Shift';
                     subtitle = "Rise & shine! Here's what's happening with your tenders, bills & treasury today.";
-                    bgGradient = 'linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #f43f5e 100%)';
+                    bgGradient = '#0056d2';
                 } else if (hour >= 12 && hour < 17) {
                     greeting = 'Good Afternoon';
                     emoji = '🌤️';
                     badge = 'Afternoon Session';
                     subtitle = "Mid-day pulse check on departmental procurement, budget releases & clearing vouchers.";
-                    bgGradient = 'linear-gradient(135deg, #38bdf8 0%, #0056d2 50%, #0b327b 100%)';
+                    bgGradient = '#0056d2';
                 } else if (hour >= 17 && hour < 21) {
                     greeting = 'Good Evening';
                     emoji = '🌆';
                     badge = 'Evening Review';
                     subtitle = "Wrapping up today's fiscal clearance, pending tender sanctions & audit logs.";
-                    bgGradient = 'linear-gradient(135deg, #fa7a1f 0%, #ea580c 50%, #cd3805 100%)';
+                    bgGradient = '#cd3805';
                 } else {
                     greeting = 'Good Night';
                     emoji = '🌙';
                     badge = 'Night Monitoring';
                     subtitle = "Late-night automated settlement pipeline & treasury balance monitoring.";
-                    bgGradient = 'linear-gradient(135deg, #07255e 0%, #0056d2 50%, #0284c7 100%)';
+                    bgGradient = '#0056d2';
                 }
 
                 const userName = @json($userName);
