@@ -434,6 +434,32 @@
             letter-spacing: 0.01em;
         }
 
+        /* 1. Deep Dark Blue Amount & Currency */
+        .stat-card-blue .stat-card-value,
+        .stat-card-blue .stat-card-currency {
+            color: #0b327b !important;
+        }
+
+        /* 2. Deep Dark Green Amount & Currency */
+        .stat-card-green .stat-card-value,
+        .stat-card-green .stat-card-currency {
+            color: #064e3b !important;
+        }
+
+        /* 3. Deep Dark Orange / Rust Amount & Currency */
+        .stat-card-orange .stat-card-value,
+        .stat-card-orange .stat-card-currency {
+            color: #7c2d12 !important;
+        }
+
+        /* 4. Deep Dark Red / Maroon Amount & Currency */
+        .stat-card-maroon .stat-card-value,
+        .stat-card-maroon .stat-card-currency,
+        .stat-card-purple .stat-card-value,
+        .stat-card-purple .stat-card-currency {
+            color: #4c0519 !important;
+        }
+
         /* 3D Elevated Filter Pill Dropdowns */
         .filter-pill {
             background: #ffffff;
