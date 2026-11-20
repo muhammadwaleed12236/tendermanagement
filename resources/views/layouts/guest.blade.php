@@ -250,89 +250,122 @@
                 
                 <!-- LEFT COLUMN: Animated Desk Lamp & Cord -->
                 <div class="lamp-wrapper">
-                    <!-- SVG Lamp Vector Graphic with Integrated Light Beam from Bulb -->
-                    <svg viewBox="0 0 340 440" class="w-[300px] h-[390px] select-none" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                    <!-- SVG Lamp Vector Graphic Exactly Matching User Reference Image -->
+                    <svg viewBox="0 0 360 480" class="w-[310px] h-[430px] select-none" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
                         <defs>
-                            <!-- Light beam gradient radiating outwards from the bulb -->
-                            <linearGradient id="bulbBeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.45"/>
-                                <stop offset="40%" stop-color="#f59e0b" stop-opacity="0.22"/>
+                            <!-- Warm Golden Ambient Cone Projection -->
+                            <linearGradient id="lampConeGradient" x1="20%" y1="0%" x2="100%" y2="80%">
+                                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.55"/>
+                                <stop offset="30%" stop-color="#f59e0b" stop-opacity="0.30"/>
+                                <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.10"/>
                                 <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
                             </linearGradient>
 
-                            <!-- Radial glow around bulb -->
-                            <radialGradient id="bulbRadialGlow" cx="50%" cy="50%" r="50%">
+                            <!-- Bulb Intense Radial Glow -->
+                            <radialGradient id="bulbCenterGlow" cx="50%" cy="50%" r="50%">
                                 <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
-                                <stop offset="35%" stop-color="#fbbf24" stop-opacity="0.8"/>
-                                <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.4"/>
+                                <stop offset="45%" stop-color="#fef08a" stop-opacity="0.95"/>
+                                <stop offset="75%" stop-color="#f59e0b" stop-opacity="0.6"/>
                                 <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
                             </radialGradient>
 
-                            <filter id="bulbGlowFilter" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="6" result="blur"/>
-                                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                            </filter>
+                            <!-- Lamp Head Golden Inner Shade Gradient -->
+                            <linearGradient id="innerShadeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#fffbeb"/>
+                                <stop offset="35%" stop-color="#fef08a"/>
+                                <stop offset="70%" stop-color="#f59e0b"/>
+                                <stop offset="100%" stop-color="#d97706"/>
+                            </linearGradient>
+
+                            <!-- Matte Dark Charcoal Lamp Outer Hood Gradient -->
+                            <linearGradient id="outerHoodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#374151"/>
+                                <stop offset="50%" stop-color="#1f2937"/>
+                                <stop offset="100%" stop-color="#111827"/>
+                            </linearGradient>
+
+                            <!-- Brass Gold Rings Gradient -->
+                            <linearGradient id="goldBrassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fef08a"/>
+                                <stop offset="50%" stop-color="#eab308"/>
+                                <stop offset="100%" stop-color="#a16207"/>
+                            </linearGradient>
                         </defs>
 
-                        <!-- Realistic Angled Light Beam Projection Originating Exactly at Bulb (230, 150) -->
+                        <!-- Outer Ambient Halo Behind Hood When Lit -->
+                        <ellipse cx="230" cy="180" rx="100" ry="85" id="hoodOuterHalo" 
+                                 fill="#f59e0b" opacity="0.35" filter="blur(22px)" pointer-events="none" 
+                                 style="transition: opacity 0.4s ease;"/>
+
+                        <!-- Light Cone Beam Projecting Down and Across to the Right Card -->
                         <polygon id="lampBeamPolygon" 
-                                 points="192,162 272,138 720,380 400,560" 
-                                 fill="url(#bulbBeamGrad)" 
+                                 points="155,160 295,190 740,400 420,580" 
+                                 fill="url(#lampConeGradient)" 
                                  pointer-events="none"
-                                 style="transition: opacity 0.4s ease; filter: blur(3px);"/>
+                                 style="transition: opacity 0.4s ease; filter: blur(4px);"/>
 
-                        <!-- Shadow -->
-                        <ellipse cx="140" cy="405" rx="85" ry="14" fill="#000000" opacity="0.6" filter="blur(4px)"/>
-                        
-                        <!-- Base -->
-                        <ellipse cx="140" cy="395" rx="70" ry="12" fill="#1e2430" stroke="#f59e0b" stroke-width="2.5"/>
-                        <ellipse cx="140" cy="392" rx="58" ry="9" fill="#2d3545"/>
-                        <circle cx="140" cy="392" r="10" fill="#f59e0b" stroke="#111827" stroke-width="2"/>
+                        <!-- 1. Deep Floor Shadow -->
+                        <ellipse cx="160" cy="425" rx="105" ry="16" fill="#000000" opacity="0.75" filter="blur(5px)"/>
 
-                        <!-- Lower Arm -->
-                        <path d="M140 392 L120 280" stroke="#252d3d" stroke-width="12" stroke-linecap="round"/>
-                        <path d="M140 392 L120 280" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 8"/>
+                        <!-- 2. Lamp Circular Matte Base with Chamfered Ring -->
+                        <ellipse cx="160" cy="415" rx="84" ry="15" fill="#111827" stroke="#374151" stroke-width="2"/>
+                        <ellipse cx="160" cy="412" rx="74" ry="11" fill="#1f2937"/>
+                        <ellipse cx="160" cy="410" rx="64" ry="8" fill="#111827"/>
 
-                        <!-- Lower Pivot Joint -->
-                        <circle cx="120" cy="280" r="12" fill="#111827" stroke="#f59e0b" stroke-width="4"/>
-                        <circle cx="120" cy="280" r="4" fill="#fbbf24"/>
+                        <!-- 3. Lower Brass Joint with Washer Ring -->
+                        <circle cx="160" cy="405" r="18" fill="url(#goldBrassGrad)" stroke="#111827" stroke-width="2"/>
+                        <circle cx="160" cy="405" r="10" fill="#111827"/>
+                        <circle cx="160" cy="405" r="5" fill="url(#goldBrassGrad)"/>
 
-                        <!-- Upper Arm -->
-                        <path d="M120 280 L185 155" stroke="#252d3d" stroke-width="10" stroke-linecap="round"/>
+                        <!-- 4. Lower Arm Segment (Double Telescopic Tubes with Center Spring Line) -->
+                        <path d="M160 405 L125 265" stroke="#1f2937" stroke-width="9" stroke-linecap="round"/>
+                        <path d="M157 405 L122 265" stroke="#4b5563" stroke-width="2"/>
+                        <path d="M162 405 L127 265" stroke="#111827" stroke-width="2"/>
 
-                        <!-- Upper Pivot Joint -->
-                        <circle cx="185" cy="155" r="10" fill="#111827" stroke="#f59e0b" stroke-width="3"/>
-                        <circle cx="185" cy="155" r="3.5" fill="#fbbf24"/>
+                        <!-- Center Coiled Spring Line along lower arm -->
+                        <path d="M158 390 L127 280" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3 4"/>
 
-                        <!-- Neck -->
-                        <path d="M185 155 L215 130" stroke="#1e2430" stroke-width="8" stroke-linecap="round"/>
+                        <!-- 5. Elbow Joint with Dual Brass Pivot Ring -->
+                        <circle cx="125" cy="265" r="16" fill="url(#goldBrassGrad)" stroke="#111827" stroke-width="2"/>
+                        <circle cx="125" cy="265" r="9" fill="#111827"/>
+                        <circle cx="125" cy="265" r="4.5" fill="url(#goldBrassGrad)"/>
 
-                        <!-- Lamp Shade Hood -->
-                        <path d="M175 125 C185 65, 275 90, 275 155 C250 175, 190 170, 175 125 Z" 
-                              fill="#181e29" stroke="#334155" stroke-width="2"/>
-                        
-                        <!-- Inner Golden Cup Lip -->
-                        <ellipse cx="230" cy="152" rx="46" ry="20" transform="rotate(-18 230 152)" 
+                        <!-- 6. Upper Arm Segment -->
+                        <path d="M125 265 L175 180" stroke="#1f2937" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M124 265 L174 180" stroke="#4b5563" stroke-width="1.5"/>
+
+                        <!-- 7. Lamp Shade Head (Egg-Dome Shape exactly as in reference image) -->
+                        <!-- Matte Charcoal Upper Egg Dome -->
+                        <path d="M150 155 C150 70, 260 70, 298 185 C265 205, 175 195, 150 155 Z" 
+                              fill="url(#outerHoodGrad)" stroke="#4b5563" stroke-width="1.5"/>
+
+                        <!-- Glossy curved highlight on upper shell -->
+                        <path d="M175 105 C200 80, 240 85, 260 115" stroke="#9ca3af" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+
+                        <!-- Interior Golden Illuminated Dish -->
+                        <ellipse cx="225" cy="172" rx="76" ry="32" transform="rotate(16 225 172)" 
                                  id="lampShadeInner"
-                                 fill="#f59e0b" opacity="0.95" stroke="#fbbf24" stroke-width="2"
-                                 filter="drop-shadow(0 0 12px rgba(245, 158, 11, 0.9))"/>
+                                 fill="url(#innerShadeGrad)" 
+                                 stroke="#fef08a" stroke-width="2"
+                                 filter="drop-shadow(0 0 16px rgba(245, 158, 11, 0.95))"/>
 
-                        <!-- Soft Bulb Glow Halo -->
-                        <circle cx="230" cy="150" r="28" id="bulbHalo" fill="url(#bulbRadialGlow)" pointer-events="none" style="transition: opacity 0.4s ease;"/>
+                        <!-- 8. Glowing Spherical Bulb (Centered Inside Dish) -->
+                        <circle cx="230" cy="162" r="32" id="bulbHalo" fill="url(#bulbCenterGlow)" pointer-events="none"/>
+                        <circle cx="230" cy="160" r="16" id="lampBulb" fill="#ffffff" filter="drop-shadow(0 0 10px #fef08a) drop-shadow(0 0 20px #f59e0b)"/>
 
-                        <!-- Bulb -->
-                        <ellipse cx="230" cy="150" rx="14" ry="11" 
-                                 id="lampBulb"
-                                 fill="#ffffff" 
-                                 filter="drop-shadow(0 0 15px #f59e0b) drop-shadow(0 0 25px #fbbf24)"/>
-
-                        <!-- Interactive Pull Cord -->
+                        <!-- 9. Interactive Glowing Pull Cord Hanging Down from Bulb -->
                         <g class="cord-pull" onclick="toggleLamp()" title="Click to Switch Lamp ON/OFF">
-                            <line x1="225" y1="168" x2="225" y2="245" stroke="#fbbf24" stroke-width="2.5" stroke-dasharray="3 3"/>
-                            <circle cx="225" cy="252" r="8" fill="#fbbf24" stroke="#d97706" stroke-width="2" filter="drop-shadow(0 0 6px #f59e0b)"/>
-                            <circle cx="223" cy="250" r="2.5" fill="#ffffff" opacity="0.8"/>
-                            <rect x="242" y="240" width="84" height="24" rx="12" fill="#1e2430" stroke="#f59e0b" stroke-width="1.2"/>
-                            <text x="284" y="256" fill="#fbbf24" font-size="10" font-weight="bold" text-anchor="middle">Click Cord</text>
+                            <!-- Golden hanging stem wire -->
+                            <line x1="228" y1="176" x2="228" y2="280" stroke="#fef08a" stroke-width="3" stroke-linecap="round" filter="drop-shadow(0 0 4px #f59e0b)"/>
+                            
+                            <!-- Glowing Golden Pull Capsule Bead with Inner Ring -->
+                            <circle cx="228" cy="285" r="20" fill="#f59e0b" opacity="0.25" filter="blur(6px)"/>
+                            <ellipse cx="228" cy="288" rx="10" ry="12" fill="url(#goldBrassGrad)" stroke="#ffffff" stroke-width="1.5" filter="drop-shadow(0 0 8px #f59e0b)"/>
+                            <ellipse cx="226" cy="285" rx="3.5" ry="4.5" fill="#ffffff" opacity="0.85"/>
+
+                            <!-- Interactive Tooltip Capsule Pill -->
+                            <rect x="250" y="274" width="88" height="28" rx="14" fill="#181e29" stroke="#f59e0b" stroke-width="1.8"/>
+                            <text x="294" y="292" fill="#fbbf24" font-size="11" font-weight="800" text-anchor="middle" font-family="system-ui, sans-serif">Click Cord</text>
                         </g>
                     </svg>
 
@@ -458,6 +491,7 @@
                 const body = document.body;
                 const beamPolygon = document.getElementById('lampBeamPolygon');
                 const bulbHalo = document.getElementById('bulbHalo');
+                const hoodOuterHalo = document.getElementById('hoodOuterHalo');
                 const shadeInner = document.getElementById('lampShadeInner');
                 const bulb = document.getElementById('lampBulb');
                 const statusTxt = document.getElementById('lampStatusText');
@@ -468,7 +502,8 @@
                     body.classList.add('lamp-lit');
                     if (beamPolygon) beamPolygon.style.opacity = '1';
                     if (bulbHalo) bulbHalo.style.opacity = '1';
-                    if (shadeInner) shadeInner.setAttribute('fill', '#f59e0b');
+                    if (hoodOuterHalo) hoodOuterHalo.style.opacity = '0.35';
+                    if (shadeInner) shadeInner.setAttribute('fill', 'url(#innerShadeGrad)');
                     if (bulb) bulb.setAttribute('fill', '#ffffff');
                     if (statusTxt) statusTxt.textContent = 'Desk Lamp is ON';
                     if (dot) dot.className = 'w-2 h-2 rounded-full bg-amber-400';
@@ -477,6 +512,7 @@
                     body.classList.add('lamp-off');
                     if (beamPolygon) beamPolygon.style.opacity = '0';
                     if (bulbHalo) bulbHalo.style.opacity = '0';
+                    if (hoodOuterHalo) hoodOuterHalo.style.opacity = '0';
                     if (shadeInner) shadeInner.setAttribute('fill', '#1e2430');
                     if (bulb) bulb.setAttribute('fill', '#334155');
                     if (statusTxt) statusTxt.textContent = 'Desk Lamp is OFF';
