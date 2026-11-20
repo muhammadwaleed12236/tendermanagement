@@ -59,40 +59,40 @@
             box-shadow: 0 26px 48px -10px rgba(2, 132, 199, 0.42);
         }
 
-        .card-theme-purple {
-            background: linear-gradient(180deg, #faf5ff 0%, #ffffff 42%, #ffffff 100%);
+        .card-theme-maroon {
+            background: linear-gradient(180deg, #fff1f2 0%, #ffffff 42%, #ffffff 100%);
             border-radius: 1.5rem;
-            border: 1.5px solid rgba(192, 132, 252, 0.45);
-            border-bottom: 6px solid #9333ea;
+            border: 1.5px solid rgba(244, 63, 94, 0.45);
+            border-bottom: 6px solid #881337;
             box-shadow:
-                0 18px 38px -8px rgba(147, 51, 234, 0.28),
-                0 6px 14px -3px rgba(147, 51, 234, 0.12),
+                0 18px 38px -8px rgba(136, 19, 55, 0.28),
+                0 6px 14px -3px rgba(136, 19, 55, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
-        .card-theme-purple:hover {
+        .card-theme-maroon:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #7e22ce;
-            box-shadow: 0 26px 48px -10px rgba(147, 51, 234, 0.42);
+            border-bottom: 7px solid #4c0519;
+            box-shadow: 0 26px 48px -10px rgba(136, 19, 55, 0.42);
         }
 
         .card-theme-orange {
             background: linear-gradient(180deg, #fff7ed 0%, #ffffff 42%, #ffffff 100%);
             border-radius: 1.5rem;
-            border: 1.5px solid rgba(251, 146, 60, 0.45);
-            border-bottom: 6px solid #ea580c;
+            border: 1.5px solid rgba(205, 56, 5, 0.45);
+            border-bottom: 6px solid #cd3805;
             box-shadow:
-                0 18px 38px -8px rgba(234, 88, 12, 0.28),
-                0 6px 14px -3px rgba(234, 88, 12, 0.12),
+                0 18px 38px -8px rgba(205, 56, 5, 0.28),
+                0 6px 14px -3px rgba(205, 56, 5, 0.12),
                 inset 0 2px 3px rgba(255, 255, 255, 0.98);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-orange:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #c2410c;
-            box-shadow: 0 26px 48px -10px rgba(234, 88, 12, 0.42);
+            border-bottom: 7px solid #a62800;
+            box-shadow: 0 26px 48px -10px rgba(205, 56, 5, 0.42);
         }
 
         .card-theme-amber {
@@ -270,7 +270,7 @@
             transition: all 0.25s ease;
         }
 
-        /* 1. Electric Blue Card (TOTAL BUDGET AMOUNT) */
+        /* 1. Electric Blue Card (TOTAL BILL AMOUNT) */
         .stat-card-blue {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0f7ff 100%);
             border: 3px solid #0056d2;
@@ -289,7 +289,7 @@
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
 
-        /* 2. Emerald Green Card (Sanctioned Income) */
+        /* 2. Emerald Green Card (TOTAL CHEQUE AMOUNT) */
         .stat-card-green {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #f0fdf4 100%);
             border: 3px solid #0d9467;
@@ -307,27 +307,27 @@
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
 
-        /* 3. Sunset Orange Card (Total Outstanding) */
+        /* 3. Sunset Orange Card (TOTAL BILL AMOUNT) - #cd3805 */
         .stat-card-orange {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff7ed 100%);
-            border: 3px solid #f97316;
-            border-bottom: 6.5px solid #ea580c;
+            border: 3px solid #cd3805;
+            border-bottom: 6.5px solid #a62800;
             box-shadow:
-                0 16px 32px -6px rgba(234, 88, 12, 0.35),
+                0 16px 32px -6px rgba(205, 56, 5, 0.35),
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
         .stat-card-3d-wrap:hover .stat-card-orange {
+            border-color: #cd3805;
             border-bottom-width: 8px;
             box-shadow:
-                0 22px 42px -6px rgba(234, 88, 12, 0.48),
+                0 22px 42px -6px rgba(205, 56, 5, 0.48),
                 0 8px 18px rgba(0, 0, 0, 0.08),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
 
         /* 4. Deep Maroon / Dark Red Card (Available Surplus) */
-        .stat-card-maroon,
-        .stat-card-purple {
+        .stat-card-maroon {
             background: linear-gradient(135deg, #ffffff 0%, #ffffff 80%, #fff1f2 100%);
             border: 3px solid #881337;
             border-bottom: 6.5px solid #4c0519;
@@ -336,8 +336,7 @@
                 0 4px 12px rgba(0, 0, 0, 0.05),
                 inset 0 2px 2px rgba(255, 255, 255, 0.95);
         }
-        .stat-card-3d-wrap:hover .stat-card-maroon,
-        .stat-card-3d-wrap:hover .stat-card-purple {
+        .stat-card-3d-wrap:hover .stat-card-maroon {
             border-color: #881337;
             border-bottom-width: 8px;
             box-shadow:
@@ -375,13 +374,12 @@
             box-shadow: 0 8px 18px rgba(16, 185, 129, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
         .candy-icon-orange {
-            background: linear-gradient(135deg, #fb923c 0%, #f97316 60%, #ea580c 100%);
+            background: linear-gradient(135deg, #ea580c 0%, #cd3805 60%, #8c2200 100%);
             border-top: 1.5px solid rgba(255, 255, 255, 0.7);
-            border-bottom: 4px solid #9a3412;
-            box-shadow: 0 8px 18px rgba(234, 88, 12, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+            border-bottom: 4px solid #7c2203;
+            box-shadow: 0 8px 18px rgba(205, 56, 5, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
         }
-        .candy-icon-maroon,
-        .candy-icon-purple {
+        .candy-icon-maroon {
             background: linear-gradient(135deg, #e11d48 0%, #9f1239 60%, #4c0519 100%);
             border-top: 1.5px solid rgba(255, 255, 255, 0.65);
             border-bottom: 4px solid #360210;
@@ -406,10 +404,9 @@
             color: #059669 !important; /* Elegant medium emerald */
         }
         .stat-card-orange .stat-card-label {
-            color: #ea580c !important; /* Elegant medium orange */
+            color: #cd3805 !important; /* Elegant burnt orange */
         }
-        .stat-card-maroon .stat-card-label,
-        .stat-card-purple .stat-card-label {
+        .stat-card-maroon .stat-card-label {
             color: #9f1239 !important; /* Elegant deep maroon */
         }
 
@@ -446,17 +443,15 @@
             color: #064e3b !important;
         }
 
-        /* 3. Deep Dark Orange / Rust Amount & Currency */
+        /* 3. Deep Dark Orange (#cd3805) Amount & Currency */
         .stat-card-orange .stat-card-value,
         .stat-card-orange .stat-card-currency {
-            color: #7c2d12 !important;
+            color: #cd3805 !important;
         }
 
         /* 4. Deep Dark Red / Maroon Amount & Currency */
         .stat-card-maroon .stat-card-value,
-        .stat-card-maroon .stat-card-currency,
-        .stat-card-purple .stat-card-value,
-        .stat-card-purple .stat-card-currency {
+        .stat-card-maroon .stat-card-currency {
             color: #4c0519 !important;
         }
 
@@ -683,7 +678,7 @@
                 <!-- Right: Action Buttons -->
                 <div class="flex items-center flex-wrap gap-2.5 justify-end">
                     <a href="{{ route('bills.create') }}" class="btn-funky-voucher px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-4 h-4 text-purple-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <svg class="w-4 h-4 text-blue-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                             <line x1="2" y1="10" x2="22" y2="10"></line>
                         </svg>
@@ -702,7 +697,7 @@
             <!-- 2. TOP 4 VIBRANT 3D STAT CARDS (EXACT MATCH TO media_1794960037908_15a2248a) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
 
-                <!-- CARD 1: TOTAL BUDGET AMOUNT (Electric Blue 3D Theme) -->
+                <!-- CARD 1: TOTAL BILL AMOUNT (Electric Blue 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-blue">
                         <!-- Left: 3D Candy Icon Button -->
@@ -716,7 +711,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL BUDGET AMOUNT</span>
+                            <span class="stat-card-label">TOTAL COMMSION</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
@@ -743,7 +738,7 @@
                     </div>
                 </div>
 
-                <!-- CARD 2: Sanctioned Income (Emerald Green 3D Theme) -->
+                <!-- CARD 2: TOTAL CHEQUE AMOUNT (Emerald Green 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-green">
                         <!-- Left: 3D Candy Icon Button -->
@@ -756,7 +751,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">SANCTIONED INCOME</span>
+                            <span class="stat-card-label">TOTAL CHEQUE AMOUNT</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}">
@@ -783,7 +778,7 @@
                     </div>
                 </div>
 
-                <!-- CARD 3: Total Outstanding (Sunset Orange 3D Theme) -->
+                <!-- CARD 3: TOTAL BILL AMOUNT (Sunset Orange 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-orange">
                         <!-- Left: 3D Candy Icon Button -->
@@ -797,7 +792,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL OUTSTANDING</span>
+                            <span class="stat-card-label">TOTAL BILL AMOUNT</span>
                             @php
                                 $billedAmount = $stats['total_billed'] > 0 ? (float)$stats['total_billed'] : 8030837.90;
                             @endphp
@@ -822,7 +817,7 @@
                         <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
                             <span class="w-1.5 rounded-full bg-orange-300" style="height: 75%;"></span>
                             <span class="w-1.5 rounded-full bg-orange-400" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full bg-orange-600" style="height: 60%;"></span>
+                            <span class="w-1.5 rounded-full" style="background-color: #cd3805; height: 60%;"></span>
                         </div>
                     </div>
                 </div>
@@ -841,7 +836,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">AVAILABLE SURPLUS</span>
+                            <span class="stat-card-label">VENDOR PROFIT</span>
                             <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}">
@@ -889,7 +884,7 @@
                         <div class="flex items-center gap-2 shrink-0">
                             <div class="hidden sm:flex items-center gap-2 text-[11px] font-bold">
                                 <span class="flex items-center gap-1 text-sky-600"><span class="w-2 h-2 rounded-full bg-sky-500"></span> Sales</span>
-                                <span class="flex items-center gap-1 text-purple-600"><span class="w-2 h-2 rounded-full bg-purple-500"></span> Purchases</span>
+                                <span class="flex items-center gap-1 text-[#cd3805]"><span class="w-2 h-2 rounded-full" style="background-color: #cd3805;"></span> Purchases</span>
                             </div>
                             <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2.5 py-1">
                                 <span>This Month</span>
@@ -917,9 +912,9 @@
                                         <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.48"/>
                                         <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
                                     </linearGradient>
-                                    <linearGradient id="fillPurpleWave" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#c084fc" stop-opacity="0.42"/>
-                                        <stop offset="100%" stop-color="#c084fc" stop-opacity="0.0"/>
+                                    <linearGradient id="fillOrangeWave" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#ea580c" stop-opacity="0.42"/>
+                                        <stop offset="100%" stop-color="#cd3805" stop-opacity="0.0"/>
                                     </linearGradient>
                                     <filter id="waveGlowBlue" x="-10%" y="-10%" width="120%" height="120%">
                                         <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0284c7" flood-opacity="0.4"/>
@@ -927,9 +922,9 @@
                                 </defs>
 
                                 <path d="M 0 110 Q 75 120, 150 85 T 300 95 T 450 45 T 600 30 L 600 160 L 0 160 Z" fill="url(#fillBlueWave)"/>
-                                <path d="M 0 135 Q 75 145, 150 110 T 300 120 T 450 80 T 600 65 L 600 160 L 0 160 Z" fill="url(#fillPurpleWave)"/>
+                                <path d="M 0 135 Q 75 145, 150 110 T 300 120 T 450 80 T 600 65 L 600 160 L 0 160 Z" fill="url(#fillOrangeWave)"/>
 
-                                <path d="M 0 135 Q 75 145, 150 110 T 300 120 T 450 80 T 600 65" fill="none" stroke="#9333ea" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M 0 135 Q 75 145, 150 110 T 300 120 T 450 80 T 600 65" fill="none" stroke="#cd3805" stroke-width="3" stroke-linecap="round"/>
                                 <path d="M 0 110 Q 75 120, 150 85 T 300 95 T 450 45 T 600 30" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round" filter="url(#waveGlowBlue)"/>
 
                                 <!-- Nodes on Blue Curve (Sales) -->
@@ -939,12 +934,12 @@
                                 <circle cx="450" cy="45" r="5.5" fill="#ffffff" stroke="#0284c7" stroke-width="3.5"/>
                                 <circle cx="585" cy="32" r="4.5" fill="#ffffff" stroke="#0284c7" stroke-width="3"/>
 
-                                <!-- Nodes on Purple Curve (Purchases) -->
-                                <circle cx="20" cy="136" r="3.5" fill="#ffffff" stroke="#9333ea" stroke-width="2.5"/>
-                                <circle cx="150" cy="110" r="3.5" fill="#ffffff" stroke="#9333ea" stroke-width="2.5"/>
-                                <circle cx="300" cy="120" r="3.5" fill="#ffffff" stroke="#9333ea" stroke-width="2.5"/>
-                                <circle cx="450" cy="80" r="4" fill="#ffffff" stroke="#9333ea" stroke-width="2.5"/>
-                                <circle cx="585" cy="67" r="3.5" fill="#ffffff" stroke="#9333ea" stroke-width="2.5"/>
+                                <!-- Nodes on Orange Curve (Purchases) -->
+                                <circle cx="20" cy="136" r="3.5" fill="#ffffff" stroke="#cd3805" stroke-width="2.5"/>
+                                <circle cx="150" cy="110" r="3.5" fill="#ffffff" stroke="#cd3805" stroke-width="2.5"/>
+                                <circle cx="300" cy="120" r="3.5" fill="#ffffff" stroke="#cd3805" stroke-width="2.5"/>
+                                <circle cx="450" cy="80" r="4" fill="#ffffff" stroke="#cd3805" stroke-width="2.5"/>
+                                <circle cx="585" cy="67" r="3.5" fill="#ffffff" stroke="#cd3805" stroke-width="2.5"/>
                             </svg>
 
                             <!-- Tooltip at 21 Nov (450/600 = 75%) -->
@@ -966,14 +961,14 @@
                     </div>
                 </div>
 
-                <!-- COLUMN 2: Business Analytics (Donut + Totals - Vibrant Purple / Magenta Theme) -->
-                <div class="card-theme-purple p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-purple-400 via-pink-500 to-amber-400 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                <!-- COLUMN 2: Business Analytics (Donut + Totals - Deep Maroon Theme) -->
+                <div class="card-theme-maroon p-4 sm:p-5 flex flex-col justify-between min-w-0">
+                    <div class="h-1.5 w-full bg-gradient-to-r from-rose-500 via-rose-600 to-rose-900 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
-                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-purple-100 min-w-0">
+                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-rose-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
-                            <span class="w-8 h-8 rounded-xl bg-purple-500 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+                            <span class="w-8 h-8 rounded-xl bg-[#881337] text-white flex items-center justify-center font-bold shadow-xs shrink-0">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             </span>
                             <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Business Analytics</h2>
@@ -1041,12 +1036,12 @@
                             </div>
                         </div>
 
-                        <div class="bg-purple-50/80 border border-purple-200 rounded-xl p-2.5 flex items-center gap-2">
-                            <div class="w-7 h-7 rounded-lg bg-purple-500 text-white flex items-center justify-center shrink-0">
+                        <div class="bg-rose-50/80 border border-rose-200 rounded-xl p-2.5 flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-lg bg-[#881337] text-white flex items-center justify-center shrink-0">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             </div>
                             <div class="min-w-0">
-                                <span class="text-[9px] font-bold text-purple-800 uppercase block leading-none">Expenses</span>
+                                <span class="text-[9px] font-bold text-rose-900 uppercase block leading-none">Expenses</span>
                                 <span class="text-[11px] font-black font-mono text-slate-900 truncate block mt-0.5" data-counter-target="18.1" data-counter-float data-counter-suffix="M">18.1M</span>
                             </div>
                         </div>
@@ -1055,7 +1050,7 @@
 
                 <!-- COLUMN 3: Recent Activities (Timeline List - Dynamic Activities) -->
                 <div class="card-theme-orange p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-amber-400 via-rose-500 to-purple-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                    <div class="h-1.5 w-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-700 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-orange-100 min-w-0">
@@ -1127,7 +1122,7 @@
 
                             <div class="flex items-center justify-between gap-2">
                                 <div class="flex items-center gap-2 min-w-0">
-                                    <div class="w-8 h-8 rounded-xl bg-purple-500 text-white flex items-center justify-center shrink-0 shadow-xs">
+                                    <div class="w-8 h-8 rounded-xl bg-[#881337] text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                     </div>
                                     <div class="min-w-0">
@@ -1439,9 +1434,9 @@
                             <span class="text-[10px] font-black font-mono text-rose-900 block truncate" data-counter-target="2.00" data-counter-float data-counter-suffix="M">2.00M</span>
                             <span class="text-[8px] font-bold text-rose-700 uppercase">Expense</span>
                         </div>
-                        <div class="bg-purple-50 rounded-lg p-1.5 border border-purple-200">
-                            <span class="text-[10px] font-black font-mono text-purple-900 block truncate" data-counter-target="1.42" data-counter-float data-counter-suffix="M">1.42M</span>
-                            <span class="text-[8px] font-bold text-purple-700 uppercase">Profit</span>
+                        <div class="bg-amber-50 rounded-lg p-1.5 border border-amber-200">
+                            <span class="text-[10px] font-black font-mono text-amber-900 block truncate" data-counter-target="1.42" data-counter-float data-counter-suffix="M">1.42M</span>
+                            <span class="text-[8px] font-bold text-amber-700 uppercase">Profit</span>
                         </div>
                     </div>
                 </div>
@@ -1608,18 +1603,18 @@
                 </div>
 
                 <!-- PANEL 2: Recent Invoices (30% width) -->
-                <div class="card-theme-purple p-4 sm:p-5 flex flex-col justify-between min-w-0">
-                    <div class="h-1.5 w-full bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-500 absolute top-0 inset-x-0 rounded-t-2xl"></div>
+                <div class="card-theme-maroon p-4 sm:p-5 flex flex-col justify-between min-w-0">
+                    <div class="h-1.5 w-full bg-gradient-to-r from-rose-500 via-rose-600 to-rose-900 absolute top-0 inset-x-0 rounded-t-2xl"></div>
 
                     <!-- Header -->
-                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-purple-100 min-w-0">
+                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-rose-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-8 h-8 rounded-xl bg-purple-500 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
+                            <span class="w-8 h-8 rounded-xl bg-[#881337] text-white flex items-center justify-center font-bold shadow-xs shrink-0">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </span>
                             <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Recent Invoices</h2>
                         </div>
-                        <a href="{{ route('bills.index') }}" class="text-xs font-black text-indigo-600 hover:text-indigo-800 shrink-0 whitespace-nowrap">View All →</a>
+                        <a href="{{ route('bills.index') }}" class="text-xs font-black text-rose-700 hover:text-rose-900 shrink-0 whitespace-nowrap">View All →</a>
                     </div>
 
                     <!-- Invoices List -->

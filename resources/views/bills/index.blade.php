@@ -168,12 +168,12 @@
                                                         <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                                         <span>Sales Tax Invoice</span>
                                                     </a>
-                                                    <a href="{{ route('bills.invoice-design', $bill) }}" target="_blank" class="flex items-center justify-between px-3 py-1.5 rounded-lg text-purple-700 bg-purple-50/60 hover:bg-purple-100 font-bold transition mt-0.5">
+                                                    <a href="{{ route('bills.invoice-design', $bill) }}" target="_blank" class="flex items-center justify-between px-3 py-1.5 rounded-lg text-rose-700 bg-rose-50/60 hover:bg-rose-100 font-bold transition mt-0.5">
                                                         <span class="flex items-center gap-2">
-                                                            <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                                                            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
                                                             <span>Invoice Designs</span>
                                                         </span>
-                                                        <span class="text-[9px] bg-purple-100 text-purple-700 px-1 py-0.2 rounded font-extrabold uppercase">7 Patterns</span>
+                                                        <span class="text-[9px] bg-rose-100 text-rose-700 px-1 py-0.2 rounded font-extrabold uppercase">7 Patterns</span>
                                                     </a>
                                                 </div>
 

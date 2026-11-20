@@ -12,7 +12,7 @@
                     </span>
                     <span class="text-stone-300">•</span>
                     @if($tender->isEpad())
-                        <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-purple-100 text-purple-900 border border-purple-300">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-300">
                             EPAD 2.0
                         </span>
                     @else
@@ -1059,14 +1059,14 @@
                             @if($tender->isEpad())
                                 <div class="pt-2 flex justify-between items-center">
                                     <span class="text-stone-500 font-medium">Platform Mode</span>
-                                    <span class="text-[11px] font-black text-purple-900 bg-purple-100 px-2.5 py-0.5 rounded-full border border-purple-200">
+                                    <span class="text-[11px] font-black text-rose-900 bg-rose-100 px-2.5 py-0.5 rounded-full border border-rose-200">
                                         EPAD 2.0 (Digital E-Procurement)
                                     </span>
                                 </div>
 
                                 <div class="pt-2 flex justify-between">
                                     <span class="text-stone-500 font-medium">Closing Date & Time</span>
-                                    <span class="font-extrabold text-purple-950 text-right">
+                                    <span class="font-extrabold text-rose-950 text-right">
                                         {{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y \a\t h:i A') ?: '-' }}
                                     </span>
                                 </div>

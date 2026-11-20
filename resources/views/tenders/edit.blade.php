@@ -27,7 +27,7 @@
                             <label class="block text-xs font-black uppercase tracking-wider text-stone-900">
                                 Procurement System / Mode <span class="text-rose-500">*</span>
                             </label>
-                            <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full {{ $tender->isEpad() ? 'bg-purple-100 text-purple-900 border border-purple-300' : 'bg-stone-200 text-stone-800' }}">
+                            <span class="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full {{ $tender->isEpad() ? 'bg-rose-100 text-rose-900 border border-rose-300' : 'bg-stone-200 text-stone-800' }}">
                                 {{ $tender->type_label }}
                             </span>
                         </div>
@@ -44,13 +44,13 @@
                                 </div>
                             </label>
 
-                            <label class="flex items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition {{ old('tender_type', $tender->tender_type) === 'epad' ? 'border-purple-600 bg-purple-50/50' : 'border-[#e5ded4] bg-white' }}"
+                            <label class="flex items-center gap-2 p-3 rounded-xl border-2 cursor-pointer transition {{ old('tender_type', $tender->tender_type) === 'epad' ? 'border-rose-600 bg-rose-50/50' : 'border-[#e5ded4] bg-white' }}"
                                    onclick="toggleEditTenderType('epad')">
                                 <input type="radio" name="tender_type" id="edit_type_epad" value="epad" 
                                        {{ old('tender_type', $tender->tender_type) === 'epad' ? 'checked' : '' }}
-                                       class="text-purple-600 focus:ring-purple-500 border-stone-300">
+                                       class="text-rose-600 focus:ring-rose-500 border-stone-300">
                                 <div>
-                                    <div class="font-black text-xs text-purple-950">EPAD 2.0 (E-Procurement)</div>
+                                    <div class="font-black text-xs text-rose-950">EPAD 2.0 (E-Procurement)</div>
                                     <div class="text-[11px] text-stone-500">Only Closing Date & Time needed</div>
                                 </div>
                             </label>
@@ -116,9 +116,9 @@
                         </div>
 
                         <div id="edit_closing_wrapper" class="{{ $tender->isEpad() ? '' : 'hidden' }}">
-                            <label class="block text-xs font-black text-purple-950 mb-1">Closing Date & Time <span class="text-rose-500">*</span></label>
+                            <label class="block text-xs font-black text-rose-950 mb-1">Closing Date & Time <span class="text-rose-500">*</span></label>
                             <input type="datetime-local" name="closing_date" value="{{ old('closing_date', $tender->closing_date ? $tender->closing_date->format('Y-m-d\TH:i') : ($tender->submission_deadline ? $tender->submission_deadline->format('Y-m-d\TH:i') : '')) }}" 
-                                   class="w-full text-xs font-black rounded-xl border-purple-300 bg-purple-50/30 text-purple-950 focus:border-purple-600 focus:ring-purple-500">
+                                   class="w-full text-xs font-black rounded-xl border-rose-300 bg-rose-50/30 text-rose-950 focus:border-rose-600 focus:ring-rose-500">
                         </div>
 
                         <div>

@@ -219,7 +219,7 @@
 
                             @if(Auth::user()->isAdmin() || Auth::user()->hasPermission('activity_logs.view'))
                                 <x-dropdown-link :href="route('activity-logs.index')" class="flex items-center gap-2 text-sm">
-                                    <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     {{ __('Activity Log (Audit Trail)') }}
                                 </x-dropdown-link>
                             @endif
@@ -277,7 +277,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
                                 <span>{{ __('Tenders') }}</span>
-                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase {{ request()->routeIs('tenders.*') ? 'bg-white/20 text-white border border-white/30' : 'bg-purple-100 text-purple-900 border border-purple-200' }}">EPAD</span>
+                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase {{ request()->routeIs('tenders.*') ? 'bg-white/20 text-white border border-white/30' : 'bg-rose-100 text-rose-900 border border-rose-200' }}">EPAD</span>
                                 <svg class="w-3.5 h-3.5 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
@@ -309,13 +309,13 @@
 
                                     <a href="{{ route('tenders.create') }}" @click="open = false" 
                                        class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.create') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0 mt-0.5">
+                                        <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                         </div>
                                         <div>
                                             <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
                                                 <span>+ Publish Tender</span>
-                                                <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-purple-100 text-purple-900 border border-purple-200">EPAD 2.0</span>
+                                                <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-rose-100 text-rose-900 border border-rose-200">EPAD 2.0</span>
                                             </div>
                                             <div class="text-[11px] text-slate-500 font-normal">Publish new tender or EPAD e-tender</div>
                                         </div>
@@ -552,7 +552,7 @@
 
                                     <a href="{{ route('companies.invoice-gallery') }}" @click="open = false" 
                                        class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.invoice-gallery') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0 mt-0.5">
+                                        <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
                                         </div>
                                         <div>
@@ -591,13 +591,13 @@
                                     @if(Auth::user()->isAdmin() || Auth::user()->hasPermission('activity_logs.view'))
                                         <a href="{{ route('activity-logs.index') }}" @click="open = false" 
                                            class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('activity-logs.*') ? 'bg-indigo-50 text-indigo-950 font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-indigo-900' }}">
-                                            <div class="w-7 h-7 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center shrink-0 mt-0.5">
+                                            <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                             </div>
                                             <div>
                                                 <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
                                                     <span>Activity Log</span>
-                                                    <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-purple-100 text-purple-800">Audit</span>
+                                                    <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-rose-100 text-rose-800">Audit</span>
                                                 </div>
                                                 <div class="text-[11px] text-slate-500 font-normal">Live user audit trail & activity history</div>
                                             </div>
@@ -677,7 +677,7 @@
                     </a>
                     <a href="{{ route('tenders.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>+ Publish Tender / EPAD 2.0</span>
-                        <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-purple-100 text-purple-900 border border-purple-200">EPAD</span>
+                        <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-rose-100 text-rose-900 border border-rose-200">EPAD</span>
                     </a>
                     <a href="{{ route('tenders.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>Tenders & Work Orders Report</span>

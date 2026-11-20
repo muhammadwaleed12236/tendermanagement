@@ -215,7 +215,7 @@
                                         {{ $t->effective_tender_no }}
                                         <div class="mt-0.5">
                                             @if($t->isEpad())
-                                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider bg-purple-100 text-purple-900 border border-purple-200">
+                                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-200">
                                                     EPAD 2.0
                                                 </span>
                                             @endif
@@ -282,7 +282,7 @@
                                                 @endif
                                             </div>
                                         @elseif($t->tender_type === 'epad')
-                                            <span class="text-purple-700 font-bold text-[10px] bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">EPAD (Free)</span>
+                                            <span class="text-rose-700 font-bold text-[10px] bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">EPAD (Free)</span>
                                         @else
                                             <span class="text-stone-400 font-mono text-[11px]">No Fee</span>
                                         @endif

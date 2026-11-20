@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <div class="flex items-center gap-2 text-xs font-semibold text-purple-600 mb-1">
+                <div class="flex items-center gap-2 text-xs font-semibold text-rose-600 mb-1">
                     <a href="{{ route('companies.index') }}" class="hover:underline flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                         <span>Companies</span>
@@ -13,7 +13,7 @@
                     <span class="text-slate-400">{{ $company->company_name }}</span>
                 </div>
                 <h2 class="font-extrabold text-2xl text-slate-900 tracking-tight flex items-center gap-2.5">
-                    <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-7 h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     Letterhead & Inner Body Designer: {{ $company->company_name }}
@@ -45,7 +45,7 @@
                 @if($bill)
                     <a href="{{ route('bills.quotation', [$bill, 1]) }}?company_id={{ $company->id }}" 
                        target="_blank" 
-                       class="inline-flex items-center gap-2 px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
+                       class="inline-flex items-center gap-2 px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs transition">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                         <span>Test in Quotation View ↗</span>
                     </a>
@@ -404,35 +404,35 @@
                         <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-600"></span>
                                     <span>1. Letterhead Mode</span>
                                 </h3>
-                                <span class="text-[11px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-md">
+                                <span class="text-[11px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md">
                                     A4 Format
                                 </span>
                             </div>
 
                             <div class="grid grid-cols-3 gap-2">
                                 <label class="cursor-pointer border-2 rounded-xl p-3 text-center transition flex flex-col items-center justify-between"
-                                       :class="form.letterhead_type === 'header_footer' ? 'border-purple-600 bg-purple-50/50 text-purple-900 shadow-2xs' : 'border-slate-200 hover:border-slate-300 text-slate-700'">
+                                       :class="form.letterhead_type === 'header_footer' ? 'border-rose-600 bg-rose-50/50 text-rose-900 shadow-2xs' : 'border-slate-200 hover:border-slate-300 text-slate-700'">
                                     <input type="radio" name="letterhead_type" value="header_footer" x-model="form.letterhead_type" class="sr-only">
-                                    <svg class="w-5 h-5 mb-1 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 19h16M4 12h16"/></svg>
+                                    <svg class="w-5 h-5 mb-1 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 19h16M4 12h16"/></svg>
                                     <div class="text-[11px] font-extrabold leading-tight">Header & Footer</div>
                                     <div class="text-[9px] text-slate-400 mt-0.5">2 Banners</div>
                                 </label>
 
                                 <label class="cursor-pointer border-2 rounded-xl p-3 text-center transition flex flex-col items-center justify-between"
-                                       :class="form.letterhead_type === 'full_page' ? 'border-purple-600 bg-purple-50/50 text-purple-900 shadow-2xs' : 'border-slate-200 hover:border-slate-300 text-slate-700'">
+                                       :class="form.letterhead_type === 'full_page' ? 'border-rose-600 bg-rose-50/50 text-rose-900 shadow-2xs' : 'border-slate-200 hover:border-slate-300 text-slate-700'">
                                     <input type="radio" name="letterhead_type" value="full_page" x-model="form.letterhead_type" class="sr-only">
-                                    <svg class="w-5 h-5 mb-1 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    <svg class="w-5 h-5 mb-1 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                     <div class="text-[11px] font-extrabold leading-tight">Full A4 Sheet</div>
                                     <div class="text-[9px] text-slate-400 mt-0.5">1 Full Image</div>
                                 </label>
 
                                 <label class="cursor-pointer border-2 rounded-xl p-3 text-center transition flex flex-col items-center justify-between"
-                                       :class="form.letterhead_type === 'system_default' ? 'border-purple-600 bg-purple-50/50 text-purple-900 shadow-2xs' : 'border-slate-200 hover:border-slate-300 text-slate-700'">
+                                       :class="form.letterhead_type === 'system_default' ? 'border-rose-600 bg-rose-50/50 text-rose-900 shadow-2xs' : 'border-slate-200 hover:border-slate-300 text-slate-700'">
                                     <input type="radio" name="letterhead_type" value="system_default" x-model="form.letterhead_type" class="sr-only">
-                                    <svg class="w-5 h-5 mb-1 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                                    <svg class="w-5 h-5 mb-1 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                                     <div class="text-[11px] font-extrabold leading-tight">Built-in Layout</div>
                                     <div class="text-[9px] text-slate-400 mt-0.5">Classic HTML</div>
                                 </label>
@@ -538,7 +538,7 @@
                                                name="full_letterhead_image_file" 
                                                accept="image/*" 
                                                @change="onFileChange($event, 'full_page')"
-                                               class="block w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100 cursor-pointer">
+                                               class="block w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100 cursor-pointer">
                                         <p class="text-[10px] text-slate-400 mt-1">Full A4 scan (e.g. 2480x3508px). The inner body will print right inside the margins.</p>
                                     </div>
                                 </div>
@@ -573,43 +573,43 @@
                                 <div x-show="form.letterhead_type === 'header_footer'">
                                     <label class="flex items-center justify-between text-xs font-bold text-slate-700 mb-1">
                                         <span>Header Height</span>
-                                        <span class="text-purple-600 font-mono" x-text="form.header_height + 'px'"></span>
+                                        <span class="text-rose-600 font-mono" x-text="form.header_height + 'px'"></span>
                                     </label>
-                                    <input type="range" min="40" max="300" step="5" x-model.number="form.header_height" name="header_height" class="w-full accent-purple-600">
+                                    <input type="range" min="40" max="300" step="5" x-model.number="form.header_height" name="header_height" class="w-full accent-rose-600">
                                 </div>
 
                                 <div x-show="form.letterhead_type === 'header_footer'">
                                     <label class="flex items-center justify-between text-xs font-bold text-slate-700 mb-1">
                                         <span>Footer Height</span>
-                                        <span class="text-purple-600 font-mono" x-text="form.footer_height + 'px'"></span>
+                                        <span class="text-rose-600 font-mono" x-text="form.footer_height + 'px'"></span>
                                     </label>
-                                    <input type="range" min="20" max="250" step="5" x-model.number="form.footer_height" name="footer_height" class="w-full accent-purple-600">
+                                    <input type="range" min="20" max="250" step="5" x-model.number="form.footer_height" name="footer_height" class="w-full accent-rose-600">
                                 </div>
 
                                 <div>
                                     <label class="flex items-center justify-between text-xs font-bold text-slate-700 mb-1">
                                         <span>Body Top Margin</span>
-                                        <span class="text-purple-600 font-mono" x-text="form.body_top_margin + 'px'"></span>
+                                        <span class="text-rose-600 font-mono" x-text="form.body_top_margin + 'px'"></span>
                                     </label>
-                                    <input type="range" min="30" max="400" step="5" x-model.number="form.body_top_margin" name="body_top_margin" class="w-full accent-purple-600">
+                                    <input type="range" min="30" max="400" step="5" x-model.number="form.body_top_margin" name="body_top_margin" class="w-full accent-rose-600">
                                     <p class="text-[9px] text-slate-400">Prevents body from overlapping header.</p>
                                 </div>
 
                                 <div>
                                     <label class="flex items-center justify-between text-xs font-bold text-slate-700 mb-1">
                                         <span>Body Bottom Margin</span>
-                                        <span class="text-purple-600 font-mono" x-text="form.body_bottom_margin + 'px'"></span>
+                                        <span class="text-rose-600 font-mono" x-text="form.body_bottom_margin + 'px'"></span>
                                     </label>
-                                    <input type="range" min="20" max="300" step="5" x-model.number="form.body_bottom_margin" name="body_bottom_margin" class="w-full accent-purple-600">
+                                    <input type="range" min="20" max="300" step="5" x-model.number="form.body_bottom_margin" name="body_bottom_margin" class="w-full accent-rose-600">
                                     <p class="text-[9px] text-slate-400">Prevents body from overlapping footer.</p>
                                 </div>
 
                                 <div class="col-span-2">
                                     <label class="flex items-center justify-between text-xs font-bold text-slate-700 mb-1">
                                         <span>Left & Right Side Margin</span>
-                                        <span class="text-purple-600 font-mono" x-text="form.body_side_margin + 'px'"></span>
+                                        <span class="text-rose-600 font-mono" x-text="form.body_side_margin + 'px'"></span>
                                     </label>
-                                    <input type="range" min="15" max="100" step="5" x-model.number="form.body_side_margin" name="body_side_margin" class="w-full accent-purple-600">
+                                    <input type="range" min="15" max="100" step="5" x-model.number="form.body_side_margin" name="body_side_margin" class="w-full accent-rose-600">
                                 </div>
                             </div>
                         </div>
@@ -715,7 +715,7 @@
                                        name="default_subject" 
                                        x-model="form.default_subject" 
                                        placeholder="e.g. Quotation for the Supply of Procurement / Store Items"
-                                       class="w-full rounded-xl border-slate-300 text-xs font-bold text-slate-900 py-2 px-3 focus:ring-purple-500 focus:border-purple-500 shadow-2xs">
+                                       class="w-full rounded-xl border-slate-300 text-xs font-bold text-slate-900 py-2 px-3 focus:ring-rose-500 focus:border-rose-500 shadow-2xs">
                             </div>
 
                             <div>
@@ -726,7 +726,7 @@
                                           rows="3" 
                                           x-model="form.default_terms" 
                                           placeholder="1. Prices are inclusive of all applicable Government Taxes & 18% GST.&#10;2. Delivery period: 7-10 days."
-                                          class="w-full rounded-xl border-slate-300 text-xs text-slate-900 py-2 px-3 focus:ring-purple-500 focus:border-purple-500 shadow-2xs font-mono"></textarea>
+                                          class="w-full rounded-xl border-slate-300 text-xs text-slate-900 py-2 px-3 focus:ring-rose-500 focus:border-rose-500 shadow-2xs font-mono"></textarea>
                             </div>
 
                             <div>
@@ -737,7 +737,7 @@
                                        name="signatory_title" 
                                        x-model="form.signatory_title" 
                                        placeholder="e.g. Authorized Signatory & Stamp / Proprietor"
-                                       class="w-full rounded-xl border-slate-300 text-xs font-bold text-slate-900 py-2 px-3 focus:ring-purple-500 focus:border-purple-500 shadow-2xs">
+                                       class="w-full rounded-xl border-slate-300 text-xs font-bold text-slate-900 py-2 px-3 focus:ring-rose-500 focus:border-rose-500 shadow-2xs">
                             </div>
 
                             <!-- Stationary Print Mode Checkbox -->
@@ -747,7 +747,7 @@
                                        id="show_on_print" 
                                        value="1" 
                                        x-model="form.show_on_print"
-                                       class="rounded text-purple-600 focus:ring-purple-500 mt-0.5">
+                                       class="rounded text-rose-600 focus:ring-rose-500 mt-0.5">
                                 <label for="show_on_print" class="text-xs text-slate-700 font-semibold cursor-pointer">
                                     <strong>Print Letterhead Images on Paper:</strong> Checked rakhein agar plain white paper ya PDF download karna hai. Uncheck karein agar office k pehle se printed stationary letterhead paper per print nikalna hai (sirf body text print hoga).
                                 </label>
@@ -760,7 +760,7 @@
                                 Changes are saved per company.
                             </div>
                             <button type="submit" 
-                                    class="inline-flex items-center gap-2 px-6 py-2.5 bg-purple-600 hover:bg-purple-700 active:scale-95 text-white font-extrabold text-xs rounded-xl shadow-md transition">
+                                    class="inline-flex items-center gap-2 px-6 py-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-extrabold text-xs rounded-xl shadow-md transition">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                                 <span>Save Letterhead Settings</span>
                             </button>
@@ -788,13 +788,13 @@
                         <div class="flex items-center gap-2">
                             <button type="button" 
                                     @click="previewPaperMode = 'digital'"
-                                    :class="previewPaperMode === 'digital' ? 'bg-purple-600 text-white font-bold' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+                                    :class="previewPaperMode === 'digital' ? 'bg-rose-600 text-white font-bold' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
                                     class="px-2.5 py-1 text-xs rounded-lg transition">
                                 📄 Digital / Plain Paper
                             </button>
                             <button type="button" 
                                     @click="previewPaperMode = 'stationary'"
-                                    :class="previewPaperMode === 'stationary' ? 'bg-purple-600 text-white font-bold' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+                                    :class="previewPaperMode === 'stationary' ? 'bg-rose-600 text-white font-bold' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
                                     class="px-2.5 py-1 text-xs rounded-lg transition">
                                 🖨️ Stationary (Body Only)
                             </button>

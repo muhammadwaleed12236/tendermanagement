@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <div class="flex items-center gap-2 text-xs font-semibold text-purple-600 mb-1">
+                <div class="flex items-center gap-2 text-xs font-semibold text-rose-600 mb-1">
                     <a href="{{ route('companies.index') }}" class="hover:underline flex items-center gap-1">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                         <span>Back to Companies</span>
@@ -11,7 +11,7 @@
                     <span class="text-slate-400">Invoice Designs Gallery</span>
                 </div>
                 <h2 class="font-extrabold text-2xl text-slate-900 tracking-tight flex items-center gap-2.5">
-                    <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-7 h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                     </svg>
                     Invoice Designs Gallery (2 A4 Pages Per Row)
@@ -53,7 +53,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
             <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center shrink-0">
+                    <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
                     </div>
                     <div>
@@ -75,7 +75,7 @@
                         <span class="w-2 h-2 rounded-full bg-slate-300"></span>
                         <span>○ Unassigned</span>
                     </span>
-                    <span class="text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200">
+                    <span class="text-rose-600 bg-rose-50 px-2.5 py-1 rounded-lg border border-rose-200">
                         Total 7 Patterns
                     </span>
                 </div>
@@ -105,7 +105,7 @@
 
                 @foreach($templateOptions as $tplKey => $tplMeta)
                     <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-200 overflow-hidden flex flex-col group"
-                         :class="isAssigned('{{ $tplKey }}') ? 'ring-2 ring-emerald-500/40 border-emerald-300' : 'hover:border-purple-300'">
+                         :class="isAssigned('{{ $tplKey }}') ? 'ring-2 ring-emerald-500/40 border-emerald-300' : 'hover:border-rose-300'">
                         
                         <!-- Top Mini Header: Pattern Name & Double Click Badge -->
                         <div class="px-4 py-2.5 bg-slate-50/80 border-b border-slate-100 flex items-center justify-between">
@@ -117,7 +117,7 @@
                             </div>
                             
                             <div class="flex items-center gap-2">
-                                <span class="text-[10px] text-slate-400 font-semibold group-hover:text-purple-600 transition flex items-center gap-1">
+                                <span class="text-[10px] text-slate-400 font-semibold group-hover:text-rose-600 transition flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
                                     Double-click to Assign
                                 </span>
@@ -143,7 +143,7 @@
                                 <div class="opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-200 pointer-events-auto flex items-center gap-2">
                                     <button type="button" 
                                             @click.stop="openAssignModal('{{ $tplKey }}', '{{ addslashes($tplMeta['name']) }}', '{{ $tplMeta['color'] }}')"
-                                            class="px-4 py-2 bg-purple-600 hover:bg-purple-700 active:scale-95 text-white text-xs font-bold rounded-xl shadow-xl flex items-center gap-1.5 transition">
+                                            class="px-4 py-2 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white text-xs font-bold rounded-xl shadow-xl flex items-center gap-1.5 transition">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                         <span>Assign Company</span>
                                     </button>
@@ -184,7 +184,7 @@
 
                             <button type="button" 
                                     @click.stop="openAssignModal('{{ $tplKey }}', '{{ addslashes($tplMeta['name']) }}', '{{ $tplMeta['color'] }}')"
-                                    class="text-xs font-bold text-purple-600 hover:text-purple-700 hover:underline shrink-0 flex items-center gap-1">
+                                    class="text-xs font-bold text-rose-600 hover:text-rose-700 hover:underline shrink-0 flex items-center gap-1">
                                 <span>Assign / Change</span>
                                 <span>&rarr;</span>
                             </button>
@@ -255,7 +255,7 @@
                                 Ye design kis company ko assign karna hai? *
                             </label>
                             <select x-model="modal.companyId" 
-                                    class="w-full rounded-xl border-slate-300 text-sm font-bold text-slate-900 focus:ring-purple-500 focus:border-purple-500 shadow-2xs py-2 px-3">
+                                    class="w-full rounded-xl border-slate-300 text-sm font-bold text-slate-900 focus:ring-rose-500 focus:border-rose-500 shadow-2xs py-2 px-3">
                                 <option value="">-- Choose Company --</option>
                                 <template x-for="c in companies" :key="c.id">
                                     <option :value="c.id" x-text="c.company_name + (c.invoice_template === modal.templateKey ? ' (Already this design)' : '')"></option>
@@ -274,7 +274,7 @@
                         <button type="button" 
                                 @click="submitAssignment()" 
                                 :disabled="modal.saving || !modal.companyId"
-                                class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition">
+                                class="inline-flex items-center gap-1.5 px-4 py-2 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             <span x-text="modal.saving ? 'Saving...' : 'Assign Design'"></span>
                         </button>

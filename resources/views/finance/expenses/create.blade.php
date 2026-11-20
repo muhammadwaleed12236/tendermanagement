@@ -146,7 +146,7 @@
                 <!-- CARD 3: Context, Department/Company & Receipt Attachment -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
                     <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                        <span class="w-6 h-6 rounded-full bg-purple-50 text-purple-700 font-bold text-xs flex items-center justify-center">3</span>
+                        <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-700 font-bold text-xs flex items-center justify-center">3</span>
                         <div>
                             <h3 class="text-sm font-black text-slate-900 uppercase tracking-wider">Optional Context & Receipt Attachment</h3>
                             <p class="text-[11px] text-slate-400">Tag expense to a specific tender department or supplier company and attach receipt</p>

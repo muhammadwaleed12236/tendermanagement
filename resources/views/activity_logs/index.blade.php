@@ -5,11 +5,11 @@
                 <div class="flex items-center gap-2 mb-1">
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Accountability & Compliance</span>
                     <span class="text-slate-300">•</span>
-                    <span class="text-xs font-semibold text-purple-600">Audit Trail</span>
+                    <span class="text-xs font-semibold text-rose-600">Audit Trail</span>
                 </div>
                 <h2 class="font-black text-2xl text-slate-900 leading-tight flex items-center gap-2.5">
                     <span>{{ __('Activity Log & Audit Trail') }}</span>
-                    <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-200">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-200">
                         Kis ne konsa kaam kiya
                     </span>
                 </h2>
@@ -52,7 +52,7 @@
                         <div class="text-2xl font-black text-slate-900 mt-1 font-mono">{{ number_format($totalCount) }}</div>
                         <div class="text-[10px] text-slate-400 mt-0.5">Historical audit entries</div>
                     </div>
-                    <div class="w-11 h-11 rounded-xl bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600 font-bold">
+                    <div class="w-11 h-11 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 font-bold">
                         📋
                     </div>
                 </div>

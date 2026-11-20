@@ -81,14 +81,14 @@
                 <div id="epad_stepper_row" class="{{ old('tender_type', 'tender') === 'epad' ? '' : 'hidden' }} grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <!-- EPAD Step 1 Indicator -->
                     <button type="button" onclick="goToStep(1)" id="epad_step_indicator_1" 
-                            class="flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-purple-600 bg-purple-50/60 ring-2 ring-purple-200">
-                        <span id="epad_step_num_1" class="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-purple-600 text-white shrink-0">1</span>
+                            class="flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-rose-600 bg-rose-50/60 ring-2 ring-rose-200">
+                        <span id="epad_step_num_1" class="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-rose-600 text-white shrink-0">1</span>
                         <div class="min-w-0">
-                            <div class="text-[10px] font-black uppercase tracking-wider text-purple-900 flex items-center gap-1.5">
+                            <div class="text-[10px] font-black uppercase tracking-wider text-rose-900 flex items-center gap-1.5">
                                 <span>EPAD 2.0 Step 1</span>
-                                <span class="px-1.5 py-0.2 bg-purple-200 text-purple-900 rounded font-black text-[9px]">E-Procurement</span>
+                                <span class="px-1.5 py-0.2 bg-rose-200 text-rose-900 rounded font-black text-[9px]">E-Procurement</span>
                             </div>
-                            <div class="text-xs font-black text-purple-950 truncate">Basic Details, Closing Date & Budget</div>
+                            <div class="text-xs font-black text-rose-950 truncate">Basic Details, Closing Date & Budget</div>
                         </div>
                     </button>
 
@@ -151,8 +151,8 @@
                                                class="flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50">
                                             <input type="radio" name="tender_type" id="type_epad" value="epad" 
                                                    {{ old('tender_type') === 'epad' ? 'checked' : '' }}
-                                                   class="w-3.5 h-3.5 text-purple-600 focus:ring-purple-500">
-                                            <span class="text-purple-950 font-black truncate">EPAD 2.0</span>
+                                                   class="w-3.5 h-3.5 text-rose-600 focus:ring-rose-500">
+                                            <span class="text-rose-950 font-black truncate">EPAD 2.0</span>
                                         </label>
                                     </div>
                                 </div>
@@ -245,13 +245,13 @@
 
                             <!-- EPAD 2.0: Closing Date & Time (Replaces Category) -->
                             <div id="epad_closing_wrapper" class="hidden">
-                                <label class="block text-xs font-black text-purple-950 mb-1 flex items-center justify-between">
+                                <label class="block text-xs font-black text-rose-950 mb-1 flex items-center justify-between">
                                     <span>Closing Date & Time <span class="text-rose-500">*</span></span>
-                                    <span class="text-[9px] font-bold text-purple-700 bg-purple-50 px-1 py-0.2 rounded border border-purple-200">EPAD</span>
+                                    <span class="text-[9px] font-bold text-rose-700 bg-rose-50 px-1 py-0.2 rounded border border-rose-200">EPAD</span>
                                 </label>
                                 <input type="datetime-local" name="closing_date" id="input_closing_date" value="{{ old('closing_date') }}"
                                        oninput="syncEpadDates()"
-                                       class="w-full text-xs font-black rounded-xl border-purple-300 bg-purple-50/40 text-purple-950 focus:border-purple-600 focus:ring-purple-500">
+                                       class="w-full text-xs font-black rounded-xl border-rose-300 bg-rose-50/40 text-rose-950 focus:border-rose-600 focus:ring-rose-500">
                             </div>
 
                             <!-- EPAD 2.0: Estimated Budget (Directly in Row 4) -->
@@ -297,13 +297,13 @@
                         </div>
 
                         <!-- EPAD Notice in Step 2 -->
-                        <div id="epad_step2_banner" class="hidden p-4 rounded-2xl bg-purple-50 border border-purple-200">
+                        <div id="epad_step2_banner" class="hidden p-4 rounded-2xl bg-rose-50 border border-rose-200">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                 <div class="flex items-center gap-2">
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-purple-200 text-purple-900">EPAD 2.0 Mode Active</span>
-                                    <span class="text-xs text-purple-900 font-bold">Physical collection dates eliminated. Unified under Closing Date.</span>
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-rose-200 text-rose-900">EPAD 2.0 Mode Active</span>
+                                    <span class="text-xs text-rose-900 font-bold">Physical collection dates eliminated. Unified under Closing Date.</span>
                                 </div>
-                                <button type="button" onclick="goToStep(3)" class="px-4 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold rounded-xl shadow-xs transition shrink-0">
+                                <button type="button" onclick="goToStep(3)" class="px-4 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs transition shrink-0">
                                     Proceed to Fees & Security &rarr;
                                 </button>
                             </div>
@@ -570,7 +570,7 @@
                     <div id="wizard_step_4" class="hidden space-y-6">
                         <div class="flex items-center justify-between border-b border-[#e5ded4] pb-3">
                             <div class="flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
                                 <h3 id="step4_header_title" class="font-black text-sm uppercase tracking-wider text-stone-900">Step 4: Scope of Work, Technical Requirements & Official RFP Dossier</h3>
                             </div>
                             <span id="step4_page_tag" class="text-[11px] font-bold text-stone-500">Page 4 of 4</span>
@@ -654,14 +654,14 @@
             if (type === 'epad') {
                 if (radioEpad) radioEpad.checked = true;
                 if (cardEpad) {
-                    cardEpad.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-purple-600 bg-purple-50 text-purple-950 ring-2 ring-purple-200';
+                    cardEpad.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-rose-600 bg-rose-50 text-rose-950 ring-2 ring-rose-200';
                 }
                 if (cardTender) {
                     cardTender.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
                 }
                 if (badgeLabel) {
                     badgeLabel.innerText = 'EPAD 2.0 (E-Procurement)';
-                    badgeLabel.className = 'text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-purple-100 text-purple-900 border border-purple-300';
+                    badgeLabel.className = 'text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-rose-100 text-rose-900 border border-rose-300';
                 }
 
                 // Show EPAD Stepper (2 Steps), hide Traditional Stepper (4 Steps)
@@ -856,15 +856,15 @@
 
             if (epadInd1 && epadNum1 && epadInd2 && epadNum2) {
                 if (step === 1) {
-                    epadInd1.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-purple-600 bg-purple-50/60 ring-2 ring-purple-200';
-                    epadNum1.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-purple-600 text-white shrink-0';
+                    epadInd1.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-rose-600 bg-rose-50/60 ring-2 ring-rose-200';
+                    epadNum1.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-rose-600 text-white shrink-0';
                     epadInd2.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40';
                     epadNum2.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0';
                 } else if (step === 4) {
                     epadInd1.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-emerald-400 bg-emerald-50/50';
                     epadNum1.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-emerald-600 text-white shrink-0';
-                    epadInd2.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-purple-600 bg-purple-50/60 ring-2 ring-purple-200';
-                    epadNum2.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-purple-600 text-white shrink-0';
+                    epadInd2.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-rose-600 bg-rose-50/60 ring-2 ring-rose-200';
+                    epadNum2.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-rose-600 text-white shrink-0';
                 }
             }
 

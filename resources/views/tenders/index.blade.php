@@ -230,7 +230,7 @@
                                         {{ $tender->effective_tender_no }}
                                         <div class="mt-0.5">
                                             @if($tender->isEpad())
-                                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider bg-purple-100 text-purple-900 border border-purple-200">
+                                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-200">
                                                     EPAD 2.0
                                                 </span>
                                             @else
@@ -268,7 +268,7 @@
                                     <!-- Tender Collection (Start Date) -->
                                     <td class="py-3 px-3 border-r border-[#e5ded4]">
                                         @if($tender->isEpad())
-                                            <span class="text-[10px] text-purple-700 font-bold bg-purple-50 px-2 py-0.5 rounded border border-purple-200">Digital Portal</span>
+                                            <span class="text-[10px] text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded border border-rose-200">Digital Portal</span>
                                         @elseif($tender->collection_start_date)
                                             <div class="font-bold text-stone-900">{{ $tender->collection_start_date->format('d/m/Y') }}</div>
                                             <div class="text-[10px] text-stone-500">{{ $tender->collection_start_notes ?: '(During working hours)' }}</div>
@@ -292,8 +292,8 @@
                                     <!-- Tender Submission Date/Time -->
                                     <td class="py-3 px-3 border-r border-[#e5ded4]">
                                         @if($tender->isEpad())
-                                            <div class="font-black text-purple-950">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }}</div>
-                                            <div class="text-[10px] font-bold text-purple-700">
+                                            <div class="font-black text-rose-950">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }}</div>
+                                            <div class="text-[10px] font-bold text-rose-700">
                                                 Closing: {{ ($tender->closing_date ?: $tender->submission_deadline)?->format('h:i A') }}
                                             </div>
                                         @else
@@ -308,7 +308,7 @@
                                     <td class="py-3 px-3 border-r border-[#e5ded4]">
                                         @if($tender->isEpad())
                                             <div class="font-bold text-stone-900">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }}</div>
-                                            <div class="text-[10px] font-semibold text-purple-700">Digital Auto-Open</div>
+                                            <div class="text-[10px] font-semibold text-rose-700">Digital Auto-Open</div>
                                         @elseif($tender->isTwoEnvelope())
                                             <!-- Technical Opening Date -->
                                             <div class="text-[11px]">
