@@ -509,14 +509,26 @@
                             <label class="block text-xs font-bold text-slate-800">
                                 Detail Object Head Allocation
                             </label>
-                            <div id="modal-heads-quick-btns" class="hidden flex items-center gap-1.5">
-                                <button type="button" onclick="autoFillModalHeads(0.25)" class="px-2 py-0.5 text-[10px] font-semibold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded border border-indigo-200 transition">
+                            <div id="modal-heads-quick-btns" class="hidden flex flex-wrap items-center gap-1.5">
+                                <div class="inline-flex items-center rounded border border-slate-300 bg-white shadow-2xs overflow-hidden focus-within:border-emerald-500 focus-within:ring-1 focus-within:ring-emerald-500">
+                                    <span class="px-1.5 py-0.5 text-[10px] font-bold text-slate-500 bg-slate-50 border-r border-slate-200 select-none">Auto %</span>
+                                    <input type="number" 
+                                           id="modal-custom-release-pct" 
+                                           step="0.01" 
+                                           min="0" 
+                                           max="100" 
+                                           placeholder="25" 
+                                           class="w-12 px-1 py-0.5 text-[11px] font-mono font-bold text-slate-800 text-right border-0 focus:ring-0 focus:outline-none"
+                                           oninput="applyCustomModalPercentage(this.value)">
+                                    <span class="px-1 py-0.5 text-[10px] font-bold text-slate-500 select-none">%</span>
+                                </div>
+                                <button type="button" onclick="setCustomModalPercentage(25)" class="px-2 py-0.5 text-[10px] font-semibold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded border border-indigo-200 transition">
                                     Auto 25% (Q1)
                                 </button>
-                                <button type="button" onclick="autoFillModalHeads(0.3875)" class="px-2 py-0.5 text-[10px] font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded border border-emerald-200 transition">
+                                <button type="button" onclick="setCustomModalPercentage(38.75)" class="px-2 py-0.5 text-[10px] font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded border border-emerald-200 transition">
                                     Auto 38.75%
                                 </button>
-                                <button type="button" onclick="clearModalHeads()" class="px-2 py-0.5 text-[10px] font-semibold text-slate-400 hover:text-slate-700 transition">
+                                <button type="button" onclick="clearModalHeads()" class="px-2 py-0.5 text-[10px] font-semibold text-rose-500 hover:text-rose-700 transition">
                                     Clear
                                 </button>
                             </div>
@@ -830,18 +842,38 @@
             }
         }
 
-        function autoFillModalHeads(percentage) {
+        function applyCustomModalPercentage(val) {
+            const pct = parseFloat(val);
+            if (isNaN(pct) || pct < 0) {
+                clearModalHeads(false);
+                return;
+            }
+            const ratio = pct / 100;
             const inputs = document.querySelectorAll('.modal-head-release-input');
             inputs.forEach(inp => {
                 const orig = parseFloat(inp.getAttribute('data-orig')) || 0;
                 if (orig > 0) {
-                    inp.value = Math.round(orig * percentage);
+                    inp.value = Math.round(orig * ratio);
                 }
             });
             recalculateModalReleaseTotal();
         }
 
-        function clearModalHeads() {
+        function setCustomModalPercentage(pct) {
+            const input = document.getElementById('modal-custom-release-pct');
+            if (input) input.value = pct;
+            applyCustomModalPercentage(pct);
+        }
+
+        function autoFillModalHeads(percentage) {
+            setCustomModalPercentage(percentage * 100);
+        }
+
+        function clearModalHeads(clearPctInput = true) {
+            if (clearPctInput) {
+                const input = document.getElementById('modal-custom-release-pct');
+                if (input) input.value = '';
+            }
             const inputs = document.querySelectorAll('.modal-head-release-input');
             inputs.forEach(inp => {
                 inp.value = '';
