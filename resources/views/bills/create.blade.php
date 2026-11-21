@@ -361,7 +361,7 @@
                         <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
                             <div class="flex items-center gap-2.5">
                                 <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
-                                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                                    <svg width="20" height="20" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                                 </span>
                                 <div>
                                     <h4 class="text-sm font-bold text-slate-900">Select Products from Catalog</h4>

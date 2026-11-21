@@ -78,6 +78,22 @@
     .nav-pill-item {
         transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+    .nav-pill-item svg.nav-main-icon {
+        width: 17px !important;
+        height: 17px !important;
+        min-width: 17px !important;
+        max-width: 17px !important;
+        flex-shrink: 0 !important;
+        display: inline-block !important;
+    }
+    .nav-pill-item svg.nav-chevron-icon {
+        width: 13px !important;
+        height: 13px !important;
+        min-width: 13px !important;
+        max-width: 13px !important;
+        flex-shrink: 0 !important;
+        display: inline-block !important;
+    }
     .nav-pill-item:hover:not(.nav-pill-active) {
         transform: translateY(-2px);
         background-color: #eff6ff;
@@ -403,7 +419,7 @@
                         <!-- 1. Dashboard -->
                         <a href="{{ route('dashboard') }}" 
                            class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('dashboard') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
-                            <svg class="w-4.5 h-4.5 shrink-0 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-[#0056d2]' }}" fill="currentColor" viewBox="0 0 20 20">
+                            <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-[#0056d2]' }}" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                             </svg>
                             <span>{{ __('Dashboard') }}</span>
@@ -413,12 +429,12 @@
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
                                     class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('tenders.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
-                                <svg class="w-4.5 h-4.5 shrink-0 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
                                 <span>{{ __('Tenders') }}</span>
                                 <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider {{ request()->routeIs('tenders.*') ? 'bg-white/20 text-white border border-white/30' : 'bg-rose-100 text-[#881337] border border-rose-200' }}">EPAD</span>
-                                <svg class="w-3.5 h-3.5 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
                             <div x-show="open"
@@ -505,11 +521,11 @@
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
                                     class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
-                                <svg class="w-4.5 h-4.5 shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-500' }}" fill="currentColor" viewBox="0 0 20 20">
+                                <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-500' }}" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                                 </svg>
                                 <span>{{ __('Billing & Cheques') }}</span>
-                                <svg class="w-3.5 h-3.5 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
                             <div x-show="open"
@@ -596,11 +612,11 @@
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
                                     class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
-                                <svg class="w-4.5 h-4.5 shrink-0 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <span>{{ __('Budget & Finance') }}</span>
-                                <svg class="w-3.5 h-3.5 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
                             <div x-show="open"
@@ -681,12 +697,12 @@
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
                                     class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
-                                <svg class="w-4.5 h-4.5 shrink-0 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                                 <span>{{ __('Master Setup') }}</span>
-                                <svg class="w-3.5 h-3.5 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
                             <div x-show="open"
@@ -809,7 +825,7 @@
                         <!-- 6. To-Do List & Tasks -->
                         <a href="{{ route('todos.index') }}" 
                            class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('todos.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
-                            <svg class="w-4.5 h-4.5 shrink-0 {{ request()->routeIs('todos.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('todos.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                             </svg>
                             <span>{{ __('To-Do List') }}</span>
@@ -828,12 +844,12 @@
                 <!-- Right Quick CTA Action Buttons (Solid 3D Tactile Buttons) -->
                 <div class="hidden lg:flex items-center gap-2 shrink-0">
                     <a href="{{ route('tenders.create') }}" class="nav-btn-tender px-3.5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-[13px] font-black tracking-tight inline-flex items-center gap-1.5 whitespace-nowrap">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                        <svg width="16" height="16" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         <span>New Tender</span>
                     </a>
 
                     <a href="{{ route('bills.create') }}" class="nav-btn-bill px-3.5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-[13px] font-black tracking-tight inline-flex items-center gap-1.5 whitespace-nowrap">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                        <svg width="16" height="16" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         <span>New Bill</span>
                     </a>
                 </div>
