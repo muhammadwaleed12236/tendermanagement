@@ -59,6 +59,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bills/daily-report/export', [BillController::class, 'exportDailyReport'])->name('bills.daily-report.export');
     Route::post('/bills/{bill}/quick-update-dispatch', [BillController::class, 'quickUpdateDispatch'])->name('bills.quick-update-dispatch');
     Route::get('/bills/{bill}', [BillController::class, 'show'])->name('bills.show');
+    Route::get('/bills/{bill}/edit', [BillController::class, 'edit'])->name('bills.edit');
+    Route::put('/bills/{bill}', [BillController::class, 'update'])->name('bills.update');
+    Route::delete('/bills/{bill}', [BillController::class, 'destroy'])->name('bills.destroy');
     Route::get('/bills/{bill}/print', [BillController::class, 'print'])->name('bills.print');
     Route::get('/bills/{bill}/sales-tax-invoice', [BillController::class, 'salesTaxInvoice'])->name('bills.sales-tax-invoice');
     Route::get('/bills/{bill}/quotation/{vendor_num?}', [BillController::class, 'quotation'])->name('bills.quotation');

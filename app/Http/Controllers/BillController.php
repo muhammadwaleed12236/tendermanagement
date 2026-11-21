@@ -121,6 +121,7 @@ class BillController extends Controller
             'ntn_number' => 'nullable|string|max:50',
             'sst_number' => 'nullable|string|max:50',
             'attachment' => 'nullable|file|mimes:pdf,docx,zip,jpg,png|max:20480',
+            'status' => 'nullable|string|in:pending,draft,approved,confirmed,paid',
             'items' => 'required|array|min:1',
             'items.*.item_name' => 'required|string|max:255',
             'items.*.unit' => 'nullable|string|max:50',
@@ -260,7 +261,7 @@ class BillController extends Controller
             'remarks' => $validated['remarks'] ?? null,
             'milestone_description' => $milestoneDesc,
             'attachment_path' => $docPath,
-            'status' => 'pending',
+            'status' => in_array($request->input('status'), ['approved', 'confirmed']) ? 'approved' : ($request->input('status') === 'draft' || $request->input('status') === 'pending' ? 'pending' : 'approved'),
             'created_by' => $user->id,
         ]);
 
@@ -303,10 +304,244 @@ class BillController extends Controller
             abort(403, 'Unauthorized.');
         }
 
-        $bill->load(['tender', 'vendor', 'company', 'department', 'creator', 'items']);
+        $bill->load(['tender', 'vendor', 'company', 'department', 'creator', 'items', 'budgetHead']);
         $companies = \App\Models\Company::where('status', 'active')->orderBy('company_name')->get();
 
         return view('bills.show', compact('bill', 'companies'));
+    }
+
+    public function edit(Bill $bill)
+    {
+        $user = Auth::user();
+        if ($user && $user->isVendor() && $bill->vendor_id !== $user->id) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $bill->load(['items', 'department', 'company', 'budgetHead', 'vendor']);
+
+        if ($user->isVendor()) {
+            $vendors = collect([$user]);
+        } else {
+            $vendors = User::where('role', 'vendor')->get();
+        }
+
+        $departments = Department::where('status', 'active')->with(['releases', 'bills', 'budgetHeads'])->get();
+        $tenders = Tender::with('department')->get();
+        $products = \App\Models\Product::orderBy('description')->get(['id', 'description', 'unit', 'default_price']);
+        $companies = \App\Models\Company::where('status', 'active')->orderBy('company_name')->get();
+
+        return view('bills.edit', compact('bill', 'departments', 'companies', 'products', 'vendors', 'tenders'));
+    }
+
+    public function update(Request $request, Bill $bill)
+    {
+        $user = Auth::user();
+        if ($user && $user->isVendor() && $bill->vendor_id !== $user->id) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $validated = $request->validate([
+            'department_id' => 'required|exists:departments,id',
+            'budget_head_id' => 'nullable|exists:department_budget_heads,id',
+            'company_id' => 'nullable|exists:companies,id',
+            'vendor_id' => 'nullable|exists:users,id',
+            'tender_id' => 'nullable|exists:tenders,id',
+            'bill_number' => 'required|string|max:50',
+            'quarter' => 'nullable|string|max:50',
+            'head_of_account' => 'nullable|string|max:255',
+            'head_code' => 'nullable|string|max:50',
+            'head_description' => 'nullable|string|max:255',
+            'cost_center' => 'nullable|string|max:50',
+            'gst_rate' => 'nullable|numeric|min:0',
+            'gst_amount' => 'nullable|numeric|min:0',
+            'invoice_date' => 'required|date',
+            'due_date' => 'nullable|date',
+            'dispatch_date' => 'nullable|date',
+            'remarks' => 'nullable|string|max:255',
+            'milestone_description' => 'nullable|string',
+            'tax_deduction' => 'nullable|numeric|min:0',
+            'agpr_vendor_no' => 'nullable|string|max:50',
+            'strn_number' => 'nullable|string|max:50',
+            'ntn_number' => 'nullable|string|max:50',
+            'sst_number' => 'nullable|string|max:50',
+            'attachment' => 'nullable|file|mimes:pdf,docx,zip,jpg,png|max:20480',
+            'status' => 'nullable|string|in:pending,draft,approved,confirmed,paid',
+            'items' => 'required|array|min:1',
+            'items.*.item_name' => 'required|string|max:255',
+            'items.*.unit' => 'nullable|string|max:50',
+            'items.*.quantity' => 'required|numeric|min:0.01',
+            'items.*.unit_price' => 'required|numeric|min:0',
+        ]);
+
+        $department = Department::findOrFail($validated['department_id']);
+
+        // Calculate gross total from line items
+        $gross = 0;
+        $itemsData = [];
+        foreach ($validated['items'] as $item) {
+            $qty = (float) $item['quantity'];
+            $price = (float) $item['unit_price'];
+            $total = $qty * $price;
+            $gross += $total;
+
+            $itemsData[] = [
+                'item_name' => $item['item_name'],
+                'unit' => $item['unit'] ?? 'Nos',
+                'quantity' => $qty,
+                'unit_price' => $price,
+                'total_price' => $total,
+            ];
+        }
+
+        if ($gross <= 0) {
+            return back()->withInput()->with('error', 'Invoice must have at least one product with a valid price and quantity.');
+        }
+
+        // GST Calculation
+        if ($request->filled('gst_amount') && (float) $request->gst_amount > 0) {
+            $gstAmount = round((float) $request->gst_amount, 2);
+            $gstRate = $gross > 0 ? round(($gstAmount / $gross) * 100, 2) : (float) ($validated['gst_rate'] ?? 18.00);
+        } else {
+            $gstRate = isset($validated['gst_rate']) ? (float) $validated['gst_rate'] : 0.00;
+            $gstAmount = round(($gross * $gstRate) / 100, 2);
+        }
+
+        $taxDeduction = (float) ($validated['tax_deduction'] ?? 0);
+        $totalPayable = max(0, $gross + $gstAmount - $taxDeduction);
+
+        // Manage budget head expenditure adjustment
+        $oldHeadId = $bill->budget_head_id;
+        $newHeadId = $validated['budget_head_id'] ?? null;
+        $oldNetAmount = (float) $bill->net_amount;
+
+        if ($oldHeadId && $oldHeadId != $newHeadId) {
+            $oldHead = \App\Models\DepartmentBudgetHead::find($oldHeadId);
+            if ($oldHead) {
+                $oldHead->decrement('expenditure', min($oldHead->expenditure, $oldNetAmount));
+            }
+        }
+        if ($newHeadId) {
+            $newHead = \App\Models\DepartmentBudgetHead::find($newHeadId);
+            if ($newHead) {
+                if ($oldHeadId == $newHeadId) {
+                    $diff = $totalPayable - $oldNetAmount;
+                    if ($diff > 0) {
+                        $newHead->increment('expenditure', $diff);
+                    } elseif ($diff < 0) {
+                        $newHead->decrement('expenditure', min($newHead->expenditure, abs($diff)));
+                    }
+                } else {
+                    $newHead->increment('expenditure', $totalPayable);
+                }
+            }
+        }
+
+        $docPath = $bill->attachment_path;
+        if ($request->hasFile('attachment')) {
+            $docPath = $request->file('attachment')->store('bills_invoices', 'public');
+        }
+
+        $companyId = $validated['company_id'] ?? $bill->company_id;
+        $company = $companyId ? \App\Models\Company::find($companyId) : null;
+
+        $agprVendorNo = !empty($validated['agpr_vendor_no']) ? $validated['agpr_vendor_no'] : ($company?->vendor_no ?? $bill->agpr_vendor_no);
+        $strnNumber = !empty($validated['strn_number']) ? $validated['strn_number'] : ($company?->gst ?? $bill->strn_number);
+        $ntnNumber = !empty($validated['ntn_number']) ? $validated['ntn_number'] : ($company?->ntn ?? $bill->ntn_number);
+        $sstNumber = !empty($validated['sst_number']) ? $validated['sst_number'] : ($company?->sst ?? $bill->sst_number);
+
+        $headCode = !empty($validated['head_code']) ? trim($validated['head_code']) : null;
+        $headDesc = !empty($validated['head_description']) ? trim($validated['head_description']) : null;
+        $headOfAccount = $headCode 
+            ? ($headCode . ($headDesc ? ' - ' . $headDesc : '')) 
+            : (!empty($validated['head_of_account']) ? $validated['head_of_account'] : $bill->head_of_account);
+
+        $billQuarter = !empty($validated['quarter']) 
+            ? $validated['quarter'] 
+            : ($bill->quarter ?: Bill::determineQuarter($validated['invoice_date']));
+
+        $costCenter = !empty($validated['cost_center']) 
+            ? trim($validated['cost_center']) 
+            : ($department->code ?: 'KA-8914');
+
+        $rawStatus = $request->input('status', $bill->status);
+        $newStatus = in_array($rawStatus, ['approved', 'confirmed']) ? 'approved' : (in_array($rawStatus, ['draft', 'pending']) ? 'pending' : $rawStatus);
+
+        $bill->update([
+            'bill_number' => trim($validated['bill_number']),
+            'quarter' => $billQuarter,
+            'department_id' => $department->id,
+            'budget_head_id' => $newHeadId,
+            'tender_id' => $validated['tender_id'] ?? $bill->tender_id,
+            'company_id' => $companyId,
+            'head_of_account' => $headOfAccount,
+            'head_code' => $headCode,
+            'head_description' => $headDesc,
+            'cost_center' => $costCenter,
+            'gross_amount' => $gross,
+            'gst_rate' => $gstRate,
+            'gst_amount' => $gstAmount,
+            'tax_deduction' => $taxDeduction,
+            'net_amount' => $totalPayable,
+            'agpr_vendor_no' => $agprVendorNo,
+            'strn_number' => $strnNumber,
+            'ntn_number' => $ntnNumber,
+            'sst_number' => $sstNumber,
+            'invoice_date' => $validated['invoice_date'],
+            'due_date' => $validated['due_date'] ?? $bill->due_date,
+            'dispatch_date' => $validated['dispatch_date'] ?? null,
+            'remarks' => $validated['remarks'] ?? null,
+            'milestone_description' => !empty($validated['milestone_description']) ? trim($validated['milestone_description']) : $bill->milestone_description,
+            'attachment_path' => $docPath,
+            'status' => $newStatus,
+        ]);
+
+        // Replace product items
+        $bill->items()->delete();
+        foreach ($itemsData as $item) {
+            $bill->items()->create($item);
+        }
+
+        \App\Models\ActivityLog::record(
+            action: 'updated',
+            module: 'Bills',
+            description: "Updated Bill #{$bill->bill_number} for {$department->name} (Total: PKR " . number_format($bill->net_amount) . ").",
+            subject: $bill,
+            properties: [
+                'bill_id' => $bill->id,
+                'bill_number' => $bill->bill_number,
+                'net_amount' => $bill->net_amount,
+            ]
+        );
+
+        return redirect()->route('bills.show', $bill)->with('success', "Bill #{$bill->bill_number} has been updated successfully!");
+    }
+
+    public function destroy(Bill $bill)
+    {
+        $user = Auth::user();
+        if ($user && $user->isVendor() && $bill->vendor_id !== $user->id) {
+            abort(403, 'Unauthorized.');
+        }
+
+        if ($bill->budget_head_id) {
+            $head = \App\Models\DepartmentBudgetHead::find($bill->budget_head_id);
+            if ($head) {
+                $head->decrement('expenditure', min($head->expenditure, (float) $bill->net_amount));
+            }
+        }
+
+        $billNo = $bill->bill_number;
+        $bill->items()->delete();
+        $bill->delete();
+
+        \App\Models\ActivityLog::record(
+            action: 'deleted',
+            module: 'Bills',
+            description: "Deleted Bill #{$billNo}.",
+            properties: ['bill_number' => $billNo]
+        );
+
+        return redirect()->route('bills.index')->with('success', "Bill #{$billNo} deleted successfully.");
     }
 
     public function print(Bill $bill)
@@ -642,15 +877,21 @@ class BillController extends Controller
         }
 
         $validated = $request->validate([
-            'status' => 'required|in:pending,verified_by_dept,approved,paid,rejected',
+            'status' => 'required|in:pending,draft,approved,confirmed,verified_by_dept,paid,rejected',
             'payment_reference' => 'nullable|string|max:100',
         ]);
 
-        $updateData = ['status' => $validated['status']];
+        $st = $validated['status'];
+        if ($st === 'draft') $st = 'pending';
+        if ($st === 'confirmed') $st = 'approved';
 
-        if ($validated['status'] === 'paid') {
+        $updateData = ['status' => $st];
+
+        if ($st === 'paid') {
             $updateData['paid_at'] = now();
             $updateData['payment_reference'] = $validated['payment_reference'] ?? ('PAY-' . strtoupper(Str::random(8)));
+        } else {
+            $updateData['paid_at'] = null;
         }
 
         $oldStatus = $bill->status;
@@ -659,19 +900,20 @@ class BillController extends Controller
         \App\Models\ActivityLog::record(
             action: 'status_changed',
             module: 'Bills',
-            description: "Updated Bill #{$bill->bill_number} status from [{$oldStatus}] to [{$validated['status']}].",
+            description: "Updated Bill #{$bill->bill_number} status from [{$oldStatus}] to [{$st}].",
             subject: $bill,
             properties: [
                 'bill_number' => $bill->bill_number,
                 'old_status' => $oldStatus,
-                'new_status' => $validated['status'],
+                'new_status' => $st,
                 'payment_reference' => $updateData['payment_reference'] ?? null,
             ]
         );
 
-        \App\Services\NotificationService::billStatusChanged($bill, $oldStatus, $validated['status']);
+        \App\Services\NotificationService::billStatusChanged($bill, $oldStatus, $st);
 
-        return back()->with('success', 'Bill status updated to: ' . ucfirst(str_replace('_', ' ', $validated['status'])));
+        $statusLabel = $st === 'approved' ? 'Confirmed' : ($st === 'pending' ? 'Draft' : ucfirst($st));
+        return back()->with('success', 'Bill status updated to: ' . $statusLabel);
     }
 
     /**

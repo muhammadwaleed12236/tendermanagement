@@ -14,6 +14,7 @@ class Product extends Model
         'description',
         'item_code',
         'head_of_account',
+        'head_description',
         'unit',
         'default_price',
         'created_by',

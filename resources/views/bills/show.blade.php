@@ -144,6 +144,10 @@
                     <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     <span>Comparative Statement</span>
                 </a>
+                <a href="{{ route('bills.edit', $bill) }}" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    <span>Edit Bill</span>
+                </a>
                 <a href="{{ route('bills.print', $bill) }}" target="_blank" class="px-4 py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-lg shadow-sm flex items-center gap-1.5 transition">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                     <span>Print Bill / Memo</span>
@@ -192,10 +196,12 @@
                             <span class="text-slate-500 font-semibold">NTN #:</span>
                             <span class="font-bold text-slate-800">{{ $bill->ntn_number ?: ($bill->company?->ntn ?: ($bill->vendor?->tax_number ?: '2128115-7')) }}</span>
                         </div>
+                        @if(((float)$bill->gst_amount > 0 || (float)$bill->gst_rate > 0) && ($bill->strn_number ?: ($bill->company?->gst ?: $bill->vendor?->strn_number)))
                         <div class="flex justify-between">
                             <span class="text-slate-500 font-semibold">Sale Tax (GST) #:</span>
                             <span class="font-bold text-slate-800">{{ $bill->strn_number ?: ($bill->company?->gst ?: ($bill->vendor?->strn_number ?: '1700212811518')) }}</span>
                         </div>
+                        @endif
                         @if($bill->sst_number ?: $bill->company?->sst)
                         <div class="flex justify-between">
                             <span class="text-slate-500 font-semibold">SST / SRB #:</span>
@@ -255,10 +261,12 @@
                             <span class="text-slate-700">Amount</span>
                             <span class="text-slate-900 font-black text-sm">{{ number_format($bill->gross_amount) }}</span>
                         </div>
+                        @if((float)$bill->gst_amount > 0 || (float)$bill->gst_rate > 0)
                         <div class="flex justify-between p-2.5 bg-slate-50">
-                            <span class="text-slate-700">{{ $bill->gst_rate > 0 ? (int)$bill->gst_rate . '%' : '18%' }} GST</span>
+                            <span class="text-slate-700">{{ (float)$bill->gst_rate > 0 ? (int)$bill->gst_rate . '%' : '18%' }} GST</span>
                             <span class="text-slate-900 font-black text-sm">{{ number_format($bill->gst_amount) }}</span>
                         </div>
+                        @endif
                         @if($bill->tax_deduction > 0)
                             <div class="flex justify-between p-2.5 bg-slate-50 text-rose-600">
                                 <span>Withholding Deduction</span>
@@ -272,43 +280,67 @@
                     </div>
                 </div>
 
-                <!-- 6. Status and Audit Workflow Actions -->
+                <!-- 6. Status and Actions -->
                 <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div>
+                    <div class="flex items-center gap-2">
                         <span class="text-xs text-slate-400 uppercase font-bold">Voucher Status:</span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black ms-2
-                            @if($bill->status === 'paid') bg-emerald-50 text-emerald-700 border border-emerald-300
-                            @elseif($bill->status === 'approved') bg-indigo-50 text-indigo-700 border border-indigo-300
-                            @elseif($bill->status === 'verified_by_dept') bg-blue-50 text-blue-700 border border-blue-300
-                            @elseif($bill->status === 'rejected') bg-rose-50 text-rose-700 border border-rose-300
-                            @else bg-amber-50 text-amber-700 border border-amber-300 @endif">
-                            ● {{ strtoupper(str_replace('_', ' ', $bill->status)) }}
-                        </span>
+                        @if($bill->status === 'paid')
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-emerald-50 text-emerald-700 border border-emerald-300">
+                                ● PAID
+                            </span>
+                        @elseif($bill->status === 'approved' || $bill->status === 'confirmed')
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                ● CONFIRMED BILL
+                            </span>
+                        @elseif($bill->status === 'draft' || $bill->status === 'pending')
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-amber-50 text-amber-700 border border-amber-300">
+                                ● DRAFT BILL
+                            </span>
+                        @elseif($bill->status === 'rejected')
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-rose-50 text-rose-700 border border-rose-300">
+                                ● REJECTED
+                            </span>
+                        @else
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-slate-100 text-slate-700 border border-slate-300">
+                                ● {{ strtoupper(str_replace('_', ' ', $bill->status)) }}
+                            </span>
+                        @endif
                     </div>
 
                     @if(Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isEvaluator()))
-                        <form method="POST" action="{{ route('bills.status', $bill) }}" class="flex flex-wrap items-center gap-2">
-                            @csrf
-                            @method('PATCH')
+                        <div class="flex items-center gap-2">
+                            <a href="{{ route('bills.edit', $bill) }}" class="px-3.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold rounded-lg transition flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                <span>Edit Bill</span>
+                            </a>
 
-                            @if($bill->status === 'pending')
-                                <button type="submit" name="status" value="verified_by_dept" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg transition">
-                                    Verify by Dept
-                                </button>
-                            @endif
+                            <form method="POST" action="{{ route('bills.status', $bill) }}" class="inline-flex items-center gap-2">
+                                @csrf
+                                @method('PATCH')
 
-                            @if(in_array($bill->status, ['pending', 'verified_by_dept']))
-                                <button type="submit" name="status" value="approved" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition">
-                                    Approve for Payment
-                                </button>
-                            @endif
+                                @if($bill->status !== 'approved' && $bill->status !== 'confirmed' && $bill->status !== 'paid')
+                                    <button type="submit" name="status" value="approved" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition shadow-2xs">
+                                        ✓ Mark as Confirmed Bill
+                                    </button>
+                                @endif
 
-                            @if($bill->status === 'approved')
-                                <button type="submit" name="status" value="paid" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition">
-                                    Mark as Paid
-                                </button>
-                            @endif
-                        </form>
+                                @if($bill->status !== 'draft' && $bill->status !== 'pending' && $bill->status !== 'paid')
+                                    <button type="submit" name="status" value="pending" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-xs font-bold rounded-lg transition">
+                                        Mark as Draft
+                                    </button>
+                                @endif
+
+                                @if($bill->status !== 'paid')
+                                    <button type="submit" name="status" value="paid" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-lg transition shadow-2xs">
+                                        Mark as Paid
+                                    </button>
+                                @else
+                                    <button type="submit" name="status" value="approved" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold rounded-lg transition">
+                                        Revert from Paid
+                                    </button>
+                                @endif
+                            </form>
+                        </div>
                     @endif
                 </div>
 

@@ -136,14 +136,27 @@
                                         PKR {{ number_format($bill->net_amount, 2) }}
                                     </td>
                                     <td class="p-4">
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
-                                            @if($bill->status === 'paid') bg-emerald-50 text-emerald-700 border border-emerald-200
-                                            @elseif($bill->status === 'approved') bg-indigo-50 text-indigo-700 border border-indigo-200
-                                            @elseif($bill->status === 'verified_by_dept') bg-blue-50 text-blue-700 border border-blue-200
-                                            @elseif($bill->status === 'rejected') bg-rose-50 text-rose-700 border border-rose-200
-                                            @else bg-amber-50 text-amber-700 border border-amber-200 @endif">
-                                            ● {{ ucfirst(str_replace('_', ' ', $bill->status)) }}
-                                        </span>
+                                        @if($bill->status === 'paid')
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-300">
+                                                ● Paid
+                                            </span>
+                                        @elseif($bill->status === 'approved' || $bill->status === 'confirmed')
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                                ● Confirmed
+                                            </span>
+                                        @elseif($bill->status === 'draft' || $bill->status === 'pending')
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-300">
+                                                ● Draft
+                                            </span>
+                                        @elseif($bill->status === 'rejected')
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                                ● Rejected
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                                                ● {{ ucfirst(str_replace('_', ' ', $bill->status)) }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td class="p-4 text-right">
                                         <div class="relative inline-block text-left" x-data="{ open: false }" @click.outside="open = false">
@@ -162,6 +175,10 @@
                                                  class="absolute right-0 z-30 mt-1.5 w-60 rounded-xl bg-white p-1.5 shadow-xl border border-slate-200 divide-y divide-slate-100 text-left font-sans text-xs" 
                                                  style="display: none;">
                                                 <div class="py-1">
+                                                    <a href="{{ route('bills.edit', $bill) }}" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-emerald-700 bg-emerald-50/70 hover:bg-emerald-100 font-bold transition mb-0.5">
+                                                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                                        <span>Edit Bill</span>
+                                                    </a>
                                                     <a href="{{ route('bills.show', $bill) }}" class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 font-semibold transition">
                                                         <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                         <span>View Bill Voucher</span>

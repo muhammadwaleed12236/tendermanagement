@@ -134,10 +134,23 @@
                             @error('bill_number') 
                                 <span class="text-[11px] text-rose-600 font-semibold block mt-1">{{ $message }}</span>
                             @else
-                                <div class="mt-1.5 text-[11px] text-slate-400">
+                                <div class="mt-1 text-[11px] text-slate-400">
                                     Voucher number & invoice creation date
                                 </div>
                             @enderror
+                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between">
+                                <span class="text-[11px] font-bold text-slate-700 uppercase">Bill Status:</span>
+                                <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 text-[11px] font-bold">
+                                    <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-emerald-800 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                                        <input type="radio" name="status" value="approved" class="sr-only" checked>
+                                        <span>✓ Confirmed</span>
+                                    </label>
+                                    <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-slate-600 has-[:checked]:bg-amber-500 has-[:checked]:text-white transition">
+                                        <input type="radio" name="status" value="pending" class="sr-only">
+                                        <span>Draft</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -879,10 +892,17 @@
                 }
                 if (match.head_of_account) {
                     const headInput = document.getElementById('head_of_account');
-                    const headDescInput = document.getElementById('head_description');
                     if (headInput && !headInput.dataset.manualEdit) {
                         headInput.value = match.head_of_account;
                     }
+                }
+                if (match.head_description) {
+                    const headDescInput = document.getElementById('head_description');
+                    if (headDescInput && (!headDescInput.value || headDescInput.value === 'Others')) {
+                        headDescInput.value = match.head_description;
+                    }
+                } else if (match.head_of_account) {
+                    const headDescInput = document.getElementById('head_description');
                     if (headDescInput && (!headDescInput.value || headDescInput.value === 'Others')) {
                         headDescInput.value = match.head_of_account;
                     }
