@@ -268,7 +268,7 @@
             box-shadow: 0 22px 42px -6px rgba(13, 148, 103, 0.38);
         }
 
-        /* 3. Sunset Orange Card (TOTAL OUTSTANDING) - Exact Match to #cd3805 */
+        /* 3. Sunset Orange Card (TOTAL COMMISSION) - Exact Match to #cd3805 */
         .stat-card-orange {
             background: #ffffff;
             border: 2.5px solid #cd3805;
@@ -752,23 +752,23 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL OUTSTANDING</span>
+                            <span class="stat-card-label">TOTAL COMMISSION</span>
                             @php
-                                $billedAmount = $stats['total_billed'] > 0 ? (float)$stats['total_billed'] : 8030837.90;
+                                $commissionAmount = (float)($stats['total_commission'] ?? 0);
                             @endphp
                             <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
-                                <span data-counter-target="{{ $billedAmount }}" data-counter-decimals="2">
-                                    {{ number_format($billedAmount, 2) }}
+                                <span data-counter-target="{{ $commissionAmount }}" data-counter-decimals="2">
+                                    {{ number_format($commissionAmount, 2) }}
                                 </span>
                             </div>
                             <div class="mt-1 flex items-center">
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-50/90 text-orange-950 border border-orange-200">
-                                    <span class="text-rose-600 font-bold flex items-center">
-                                        <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
-                                        -2.1%
+                                    <span class="text-emerald-700 font-bold flex items-center">
+                                        <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        Cheques
                                     </span>
-                                    <span class="text-slate-600 font-medium">vs last month</span>
+                                    <span class="text-slate-600 font-medium">all time</span>
                                 </span>
                             </div>
                         </div>

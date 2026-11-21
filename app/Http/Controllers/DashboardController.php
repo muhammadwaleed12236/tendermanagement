@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bid;
 use App\Models\Bill;
+use App\Models\Cheque;
 use App\Models\Department;
 use App\Models\Evaluation;
 use App\Models\Tender;
@@ -26,11 +27,22 @@ class DashboardController extends Controller
         $availableBalance = max(0, $totalReleased - $totalBilled);
         $complianceRate = $totalReleased > 0 ? round(($availableBalance / $totalReleased) * 100, 1) : 90.0;
 
+        // Cheques, Commission & Vendor Profit
+        $totalCheques = (float) Cheque::sum('cheque_amount');
+        $totalCommission = (float) Cheque::sum('xyz_commission');
+        if ($totalCommission <= 0) {
+            $totalCommission = (float) Cheque::sum('our_commission') + (float) Cheque::sum('other_commission');
+        }
+        $totalVendorProfit = (float) Cheque::sum('vendor_profit');
+
         // System-wide Global Financial & Operational Stats
         $stats = [
             'total_departments' => Department::count(),
             'total_budget' => $totalBudget,
             'total_released' => $totalReleased,
+            'total_cheques' => $totalCheques,
+            'total_commission' => $totalCommission,
+            'total_vendor_profit' => $totalVendorProfit,
             'total_billed' => $totalBilled,
             'total_paid' => $totalPaid,
             'total_pending_amount' => $pendingBillsAmount,
