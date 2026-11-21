@@ -403,50 +403,50 @@
                                  x-transition:leave="transition ease-in duration-100"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 translate-y-1 scale-95"
-                                 class="absolute left-0 mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-xl shadow-slate-900/10 p-2 z-50 divide-y divide-slate-100"
+                                 class="absolute left-0 mt-2.5 w-84 sm:w-[350px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-2.5 z-50 divide-y divide-slate-100 nav-dropdown-enter"
                                  style="display: none;">
                                 
-                                <div class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                                <div class="px-3 py-2 text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500">
                                     Procurement & Bidding
                                 </div>
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('tenders.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('tenders.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Tenders Register</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Single Stage 1E & 2E, schedule tracking</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Tenders Register</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Single Stage 1E & 2E, schedule tracking</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('tenders.create') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('tenders.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-100 text-rose-700 border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2] flex items-center gap-2">
                                                 <span>+ Publish Tender</span>
-                                                <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-rose-100 text-rose-900 border border-rose-200">EPAD 2.0</span>
+                                                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-rose-100 text-rose-900 border border-rose-200">EPAD 2.0</span>
                                             </div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Publish new tender or EPAD e-tender</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Publish new tender or EPAD e-tender</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('tenders.reports') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('tenders.reports') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('tenders.reports') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-100 text-emerald-700 border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2] flex items-center gap-2">
                                                 <span>Tenders & Work Orders Report</span>
-                                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800">Audit</span>
+                                                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Audit</span>
                                             </div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Won contracts, CDR security & fees</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Won contracts, CDR security & fees</div>
                                         </div>
                                     </a>
                                 </div>
@@ -471,61 +471,61 @@
                                  x-transition:leave="transition ease-in duration-100"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 translate-y-1 scale-95"
-                                 class="absolute left-0 mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-xl shadow-slate-900/10 p-2 z-50 divide-y divide-slate-100"
+                                 class="absolute left-0 mt-2.5 w-84 sm:w-[350px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-2.5 z-50 divide-y divide-slate-100 nav-dropdown-enter"
                                  style="display: none;">
                                 
-                                <div class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                                <div class="px-3 py-2 text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500">
                                     Invoices, Cheques & AGPR
                                 </div>
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('bills.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('bills.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('bills.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Bills & Invoices Ledger</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Department bills, tax breakdowns & items</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Bills & Invoices Ledger</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Department bills, tax breakdowns & items</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('bills.create') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('bills.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('bills.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-100 text-emerald-700 border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">+ Create New Bill</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Generate official invoice with letterhead</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">+ Create New Bill</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Generate official invoice with letterhead</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('cheques.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('cheques.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('cheques.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-100 text-amber-800 border-b-2 border-amber-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2] flex items-center gap-2">
                                                 <span>Cheque Details</span>
-                                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800">GST / SST</span>
+                                                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-amber-100 text-amber-800">GST / SST</span>
                                             </div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Cheque payments, deductions & profit</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Cheque payments, deductions & profit</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('cheques.create') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('cheques.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-orange-100 text-orange-800 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('cheques.create') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-orange-100 text-[#cd3805] border-b-2 border-orange-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2] flex items-center gap-2">
                                                 <span>+ New Cheque / AGPR</span>
-                                                <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-orange-200 text-orange-900">AGPR</span>
+                                                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-orange-200 text-orange-900">AGPR</span>
                                             </div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Token #, 2-fraction split & AGPR deduction</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Token #, 2-fraction split & AGPR deduction</div>
                                         </div>
                                     </a>
                                 </div>
@@ -550,55 +550,55 @@
                                  x-transition:leave="transition ease-in duration-100"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 translate-y-1 scale-95"
-                                 class="absolute left-0 mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-xl shadow-slate-900/10 p-2 z-50 divide-y divide-slate-100"
+                                 class="absolute left-0 mt-2.5 w-84 sm:w-[350px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-2.5 z-50 divide-y divide-slate-100 nav-dropdown-enter"
                                  style="display: none;">
                                 
-                                <div class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                                <div class="px-3 py-2 text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500">
                                     Financial Management
                                 </div>
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('releases.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('releases.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('releases.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-100 text-emerald-700 border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Budget Releases</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Fiscal grants, allocations & head breakdown</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Budget Releases</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Fiscal grants, allocations & head breakdown</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('finance.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('finance.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-teal-100 text-teal-800 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('finance.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-teal-100 text-teal-800 border-b-2 border-teal-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Finance Overview</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Income, expenses & net cash position</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Finance Overview</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Income, expenses & net cash position</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('banks.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('banks.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('banks.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Bank Accounts & Vaults</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Manage company bank balances & cash</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Bank Accounts & Vaults</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Manage company bank balances & cash</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('expenses.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('expenses.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('expenses.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-100 text-rose-700 border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l4-2 4 2 4-2 4 2z" /></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Operational Expenses</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Petty cash, vendor payments & vouchers</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Operational Expenses</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Petty cash, vendor payments & vouchers</div>
                                         </div>
                                     </a>
                                 </div>
@@ -624,97 +624,97 @@
                                  x-transition:leave="transition ease-in duration-100"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 translate-y-1 scale-95"
-                                 class="absolute left-0 mt-2 w-80 rounded-2xl bg-white border border-slate-200 shadow-xl shadow-slate-900/10 p-2 z-50 divide-y divide-slate-100"
+                                 class="absolute left-0 mt-2.5 w-84 sm:w-[365px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-2.5 z-50 divide-y divide-slate-100 nav-dropdown-enter"
                                  style="display: none;">
                                 
-                                <div class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                                <div class="px-3 py-2 text-[11px] sm:text-xs font-black uppercase tracking-wider text-slate-500">
                                     Agencies, Companies & System Settings
                                 </div>
 
                                 <div class="py-1 space-y-0.5">
                                     <a href="{{ route('departments.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('departments.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('departments.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"></path></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Departments & Cost Centers</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Client agencies, head codes & offices</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Departments & Cost Centers</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Client agencies, head codes & offices</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('companies.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('companies.index') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-blue-100 text-[#0056d2] flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Bidding Companies / Firms</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Our contractor entities & profiles</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Bidding Companies / Firms</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Our contractor entities & profiles</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('companies.letterheads') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.letterhead*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('companies.letterhead*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Official Letterheads</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Header images, body font & signatures</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Official Letterheads</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Header images, body font & signatures</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('companies.invoice-gallery') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('companies.invoice-gallery') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                        <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('companies.invoice-gallery') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-100 text-rose-700 border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Invoice Templates Gallery</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Preview print formats & styling</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Invoice Templates Gallery</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Preview print formats & styling</div>
                                         </div>
                                     </a>
 
                                     <a href="{{ route('products.index') }}" @click="open = false" 
-                                       class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('products.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                       class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('products.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
                                         <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 mt-0.5">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                                         </div>
                                         <div>
-                                            <div class="text-xs font-bold leading-tight">Products & Items Catalog</div>
-                                            <div class="text-[11px] text-slate-500 font-normal">Standard inventory & supply item rates</div>
+                                            <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2]">Products & Items Catalog</div>
+                                            <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Standard inventory & supply item rates</div>
                                         </div>
                                     </a>
 
                                     @if(Auth::user()->isAdmin() || Auth::user()->hasPermission('users.view'))
                                         <a href="{{ route('users.index') }}" @click="open = false" 
-                                           class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                            <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
+                                           class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-100 text-rose-700 border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                                             </div>
                                             <div>
-                                                <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
+                                                <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2] flex items-center gap-2">
                                                     <span>Users & Roles</span>
-                                                    <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-rose-100 text-rose-800">RBAC</span>
+                                                    <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-rose-100 text-rose-800">RBAC</span>
                                                 </div>
-                                                <div class="text-[11px] text-slate-500 font-normal">Granular role permissions & accounts</div>
+                                                <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Granular role permissions & accounts</div>
                                             </div>
                                         </a>
                                     @endif
 
                                     @if(Auth::user()->isAdmin() || Auth::user()->hasPermission('activity_logs.view'))
                                         <a href="{{ route('activity-logs.index') }}" @click="open = false" 
-                                           class="flex items-start gap-2.5 p-2 rounded-xl transition {{ request()->routeIs('activity-logs.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
-                                            <div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 mt-0.5">
+                                           class="flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition group {{ request()->routeIs('activity-logs.*') ? 'bg-blue-50 text-[#0056d2] font-bold' : 'text-slate-700 hover:bg-slate-50 hover:text-[#0056d2]' }}">
+                                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-100 text-rose-700 border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                             </div>
                                             <div>
-                                                <div class="text-xs font-bold leading-tight flex items-center gap-1.5">
+                                                <div class="text-sm font-black leading-snug tracking-tight text-slate-900 group-hover:text-[#0056d2] flex items-center gap-2">
                                                     <span>Activity Log</span>
-                                                    <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-rose-100 text-rose-800">Audit</span>
+                                                    <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-rose-100 text-rose-800">Audit</span>
                                                 </div>
-                                                <div class="text-[11px] text-slate-500 font-normal">Live user audit trail & activity history</div>
+                                                <div class="text-xs font-semibold text-slate-500 leading-tight mt-0.5">Live user audit trail & activity history</div>
                                             </div>
                                         </a>
                                     @endif
@@ -788,15 +788,15 @@
                     <div class="px-3 text-[10px] font-black uppercase tracking-wider text-slate-400">Tenders & Bidding</div>
                     <a href="{{ route('tenders.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>Tenders Register (Directory)</span>
-                        <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-slate-200 text-slate-700">1E / 2E</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-slate-200 text-slate-700">1E / 2E</span>
                     </a>
                     <a href="{{ route('tenders.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>+ Publish Tender / EPAD 2.0</span>
-                        <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-rose-100 text-rose-900 border border-rose-200">EPAD</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-rose-100 text-rose-900 border border-rose-200">EPAD</span>
                     </a>
                     <a href="{{ route('tenders.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>Tenders & Work Orders Report</span>
-                        <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-800">Audit</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Audit</span>
                     </a>
                 </div>
 
@@ -811,11 +811,11 @@
                     </a>
                     <a href="{{ route('cheques.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>Cheque Details Register</span>
-                        <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-100 text-amber-800">GST / SST</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-amber-100 text-amber-800">GST / SST</span>
                     </a>
                     <a href="{{ route('cheques.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>+ New Cheque / AGPR Form</span>
-                        <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-orange-200 text-orange-900">AGPR</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-orange-200 text-orange-900">AGPR</span>
                     </a>
                 </div>
 
