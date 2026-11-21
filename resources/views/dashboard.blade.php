@@ -339,8 +339,9 @@
         /* High-Contrast Card Typography */
         .stat-card-label {
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-            font-size: 0.9rem !important;
-            font-weight: 800;
+            font-size: 0.92rem !important;
+            font-weight: 900;
+            letter-spacing: 0.05em;
             letter-spacing: 0.04em;
             text-transform: uppercase;
             display: block;
@@ -590,76 +591,68 @@
     <div class="dashboard-canvas py-6 px-4 sm:px-6 lg:px-8 xl:px-10">
         <div class="w-full space-y-6">
 
-            <!-- 1. TOP HEADER BAR WITH DYNAMIC TIME-OF-DAY GREETING -->
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 glass-panel p-4 sm:p-5">
+            <!-- 1. TOP HEADER BAR WITH DYNAMIC TIME-OF-DAY GREETING & EXECUTIVE TIME DISPLAY -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-panel p-5 sm:p-6">
 
                 <!-- Left: Dynamic Time Greeting, 3D Icon & Live Info -->
-                <div class="flex items-center gap-3.5 pt-0.5">
+                <div class="flex items-center gap-4 min-w-0">
                     <div id="dynamicGreetingIconWrap"
-                         class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-md transition-all duration-500 relative"
-                         style="background: {{ $timeGradient }}; box-shadow: 0 8px 20px -2px rgba(0, 86, 210, 0.35);">
-                        <span id="dynamicGreetingIcon" class="text-2xl select-none filter drop-shadow">{{ $timeEmoji }}</span>
+                         class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 relative"
+                         style="background: {{ $timeGradient }}; border-bottom: 4px solid #07255e; box-shadow: 0 10px 24px -4px rgba(0, 86, 210, 0.35);">
+                        <span id="dynamicGreetingIcon" class="text-3xl select-none filter drop-shadow">{{ $timeEmoji }}</span>
                         <!-- Pulsing live indicator dot -->
-                        <span class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white animate-pulse"></span>
+                        <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-white animate-pulse"></span>
                     </div>
 
-                    <div>
-                        <div class="flex items-center flex-wrap gap-2">
-                            <h1 class="text-lg sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-1.5">
+                    <div class="min-w-0">
+                        <div class="flex items-center flex-wrap gap-2.5">
+                            <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                                 <span id="dynamicGreetingText">{{ $timeGreeting }}, {{ $userName }}</span>
                                 <span class="animate-wave">👋</span>
                             </h1>
-                            <span id="dynamicGreetingBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black text-white inline-flex items-center gap-1.5 shadow-xs"
-                                  style="background: #0d9467;">
+                            <span id="dynamicGreetingBadge" class="px-3 py-1 rounded-full text-xs font-black text-white inline-flex items-center gap-1.5 shadow-xs"
+                                  style="background: #0d9467; border-bottom: 2px solid #064e3b;">
                                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                                 <span id="dynamicBadgeLabel">{{ $timeBadge }}</span>
                             </span>
-                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold text-slate-500 bg-slate-100 border border-slate-200 hidden sm:inline-flex items-center gap-1.5 shadow-xs">
-                                <svg class="w-3 h-3 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                <span id="dynamicLiveDate">{{ now()->format('l, d M Y') }}</span>
-                                <span class="text-slate-300">•</span>
-                                <span id="dynamicLiveClock" class="font-mono font-bold text-[#0056d2]">{{ now()->format('h:i A') }}</span>
-                            </span>
                         </div>
-                        <p id="dynamicGreetingSubtitle" class="text-xs font-semibold text-slate-400 mt-0.5 flex items-center gap-1.5 flex-wrap">
-                            <span class="text-[#0056d2] font-extrabold uppercase text-[10px] tracking-wider bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">{{ ucfirst($userRole) }}</span>
+                        <p id="dynamicGreetingSubtitle" class="text-xs sm:text-sm font-semibold text-slate-500 mt-1 flex items-center gap-2 flex-wrap">
+                            <span class="text-[#0056d2] font-black uppercase text-[11px] tracking-wider bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 shadow-xs">{{ ucfirst($userRole) }}</span>
                             <span class="text-slate-300">•</span>
                             <span id="dynamicSubtitleText">{{ $timeSubtitle }}</span>
                         </p>
                     </div>
                 </div>
 
-                <!-- Center: Clean Neumorphic Search Bar -->
-                <div class="w-full lg:max-w-sm relative">
-                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                    </span>
-                    <input type="text"
-                           placeholder="Search bills, vouchers, inventory..."
-                           class="w-full pl-10 pr-12 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-inner">
-                    <span class="absolute inset-y-0 right-0 pr-2.5 flex items-center pointer-events-none">
-                        <kbd class="px-1.5 py-0.5 text-[9px] font-black text-slate-400 bg-white rounded border border-slate-200 shadow-xs">⌘ K</kbd>
-                    </span>
-                </div>
-
-                <!-- Right: Action Buttons (Sunset Orange & Electric Blue 3D Keys) -->
-                <div class="flex items-center flex-wrap gap-2.5 justify-end">
-                    <a href="{{ route('bills.create') }}" class="btn-funky-voucher px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-4 h-4 text-orange-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-                            <line x1="2" y1="10" x2="22" y2="10"></line>
-                        </svg>
-                        <span>+ Issue Voucher</span>
-                    </a>
-
-                    <a href="{{ route('bills.create') }}" class="btn-funky-bill px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
-                        <svg class="w-4 h-4 text-sky-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        <span>Generate Bill</span>
-                    </a>
+                <!-- Right: Executive 3D Time & Date Display Card -->
+                <div class="flex items-center gap-3 shrink-0 self-start md:self-auto">
+                    <div class="flex items-center gap-3.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-sm hover:border-[#0056d2] transition-all">
+                        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white shrink-0 shadow-xs"
+                             style="background-color: #0056d2; border-bottom: 3px solid #07255e;">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex items-center gap-2">
+                                <span id="dynamicLiveClock" class="font-mono font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none">
+                                    {{ now()->format('h:i:s A') }}
+                                </span>
+                                <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    <span>Live</span>
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mt-1">
+                                <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <span id="dynamicLiveDate" class="font-extrabold uppercase tracking-wider text-[11px] text-slate-600">
+                                    {{ now()->format('l, d M Y') }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -681,7 +674,7 @@
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
                             <span class="stat-card-label">TOTAL BUDGET AMOUNT</span>
-                            <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
+                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
                                     {{ number_format($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}
@@ -721,7 +714,7 @@
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
                             <span class="stat-card-label">TOTAL CHEQUE AMOUNT</span>
-                            <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
+                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}">
                                     {{ number_format($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}
@@ -766,7 +759,7 @@
                             @php
                                 $billedAmount = $stats['total_billed'] > 0 ? (float)$stats['total_billed'] : 8030837.90;
                             @endphp
-                            <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
+                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ $billedAmount }}" data-counter-decimals="2">
                                     {{ number_format($billedAmount, 2) }}
@@ -807,7 +800,7 @@
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
                             <span class="stat-card-label">VENDOR PROFIT</span>
-                            <div class="text-lg xl:text-xl 2xl:text-2xl stat-card-value my-0.5 whitespace-nowrap">
+                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}">
                                     {{ number_format($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}
@@ -844,10 +837,10 @@
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-2 pb-3 border-b border-sky-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
-                            <span class="w-8 h-8 rounded-xl bg-blue-500 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
+                            <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #0056d2; border-bottom: 2.5px solid #07255e;">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
                             </span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Sales & Purchases Overview</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Sales & Purchases Overview</h2>
                         </div>
 
                         <div class="flex items-center gap-2 shrink-0">
@@ -928,10 +921,10 @@
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-purple-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
-                            <span class="w-8 h-8 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #7c3aed;">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #7c3aed; border-bottom: 2.5px solid #5b21b6;">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             </span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Business Analytics</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Business Analytics</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2.5 py-1">
                             <span>This Year</span>
@@ -1003,10 +996,10 @@
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-orange-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0 flex-1">
-                            <span class="w-8 h-8 rounded-xl bg-[#cd3805] text-white flex items-center justify-center font-bold shadow-xs shrink-0">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+                            <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #cd3805; border-bottom: 2.5px solid #9a3412;">
+                                <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
                             </span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Recent Activities</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Activities</h2>
                         </div>
                         <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#cd3805] hover:text-[#9a3412] shrink-0 whitespace-nowrap">View All ›</a>
                     </div>
@@ -1213,7 +1206,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-amber-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="text-base shrink-0">🏆</span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Top Selling Products</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Top Selling Products</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2 py-1">
                             <span>This Month</span>
@@ -1289,7 +1282,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-emerald-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="text-base shrink-0">🧊</span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Stock Status</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Stock Status</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2 py-1">
                             <span>All</span>
@@ -1340,7 +1333,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-sky-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="text-base shrink-0">🧮</span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Financial Overview</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Financial Overview</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2 py-1">
                             <span>This Month</span>
@@ -1384,7 +1377,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-blue-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="w-5 h-5 rounded-full bg-[#0056d2] text-white flex items-center justify-center text-[10px] font-black shrink-0">✔</span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Upcoming Tasks</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Upcoming Tasks</h2>
                         </div>
                         <a href="{{ route('todos.index') }}" class="text-xs font-black text-[#0056d2] hover:text-blue-900 shrink-0 whitespace-nowrap">View All ›</a>
                     </div>
@@ -1441,10 +1434,10 @@
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-sky-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-8 h-8 rounded-xl bg-blue-500 text-white flex items-center justify-center font-bold shadow-xs shrink-0">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #0056d2; border-bottom: 2.5px solid #07255e;">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                             </span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Department Performance</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Department Performance</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2.5 py-1">
                             <span>This Year</span>
@@ -1523,10 +1516,10 @@
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-1 pb-3 border-b border-purple-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-8 h-8 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #7c3aed;">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #7c3aed; border-bottom: 2.5px solid #5b21b6;">
+                                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </span>
-                            <h2 class="text-xs sm:text-sm font-black text-slate-800 whitespace-nowrap truncate">Recent Invoices</h2>
+                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Invoices</h2>
                         </div>
                         <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#7c3aed] hover:text-[#5b21b6] shrink-0 whitespace-nowrap">View All →</a>
                     </div>
@@ -1742,12 +1735,12 @@
 
                 const clockEl = document.getElementById('dynamicLiveClock');
                 if (clockEl) {
-                    clockEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+                    clockEl.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
                 }
             }
 
             updateGreetingAndClock();
-            setInterval(updateGreetingAndClock, 30000); // Live sync every 30 seconds
+            setInterval(updateGreetingAndClock, 1000); // Live sync every 1 second for live clock
 
             // 2. LIVE ROLLING NUMBER COUNTERS
             const counters = document.querySelectorAll('[data-counter-target]');
