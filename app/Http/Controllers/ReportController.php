@@ -102,15 +102,26 @@ class ReportController extends Controller
 
         // Dropdown data for filters
         $departments = Department::orderBy('name')->get();
-        $availableYears = Bill::selectRaw('YEAR(COALESCE(invoice_date, created_at)) as bill_year')
-            ->distinct()
-            ->orderBy('bill_year', 'desc')
-            ->pluck('bill_year')
+        $availableYears = Bill::query()
+            ->select(['invoice_date', 'created_at'])
+            ->get()
+            ->map(function ($b) {
+                if ($b->invoice_date) {
+                    return (int) $b->invoice_date->format('Y');
+                }
+                if ($b->created_at) {
+                    return (int) $b->created_at->format('Y');
+                }
+                return null;
+            })
             ->filter()
+            ->unique()
+            ->sortDesc()
             ->values();
 
         if ($availableYears->isEmpty()) {
-            $availableYears = collect([2026, 2025]);
+            $currentYear = (int) date('Y');
+            $availableYears = collect([$currentYear, $currentYear - 1]);
         }
 
         return view('reports.master_data', compact(

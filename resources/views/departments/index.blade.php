@@ -41,8 +41,8 @@
                     <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6 hover:border-slate-300 transition flex flex-col justify-between space-y-6">
                         <div>
                             <div class="flex items-center justify-between">
-                                <span class="font-mono text-xs font-bold bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded">
-                                    {{ $dept->code }}
+                                <span class="font-mono text-xs font-bold bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded" title="Cost Center">
+                                    Cost Center: {{ $dept->code }}
                                 </span>
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold
                                     {{ $dept->status === 'active' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500' }}">
@@ -57,7 +57,7 @@
                             </h3>
 
                             <div class="text-xs text-slate-500 mt-1">
-                                Head: <strong class="text-slate-700">{{ $dept->head_of_department ?: 'Unassigned' }}</strong>
+                                Contact Person: <strong class="text-slate-700">{{ $dept->head_of_department ?: 'Unassigned' }}</strong>
                             </div>
 
                             <p class="text-xs text-slate-600 mt-2 line-clamp-2">
@@ -68,7 +68,7 @@
                         <!-- Budget Utilization Bar -->
                         <div class="space-y-2 pt-4 border-t border-slate-100">
                             <div class="flex justify-between text-xs">
-                                <span class="text-slate-500 font-medium">Budget Ceiling:</span>
+                                <span class="text-slate-500 font-medium">Annual Budget:</span>
                                 <span class="font-bold text-slate-900">PKR {{ number_format($dept->budget_allocated, 2) }}</span>
                             </div>
                             <div class="flex justify-between text-xs">

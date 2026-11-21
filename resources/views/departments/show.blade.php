@@ -5,12 +5,12 @@
                 <div class="flex items-center gap-2 mb-1">
                     <a href="{{ route('departments.index') }}" class="text-xs font-semibold text-indigo-600 hover:underline">&larr; Back to Departments</a>
                     <span class="text-slate-300">•</span>
-                    <span class="font-mono text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">{{ $department->code }}</span>
+                    <span class="font-mono text-xs font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded">Cost Center: {{ $department->code }}</span>
                 </div>
                 <h2 class="font-extrabold text-2xl text-slate-900 leading-tight">
                     {{ $department->name }}
                 </h2>
-                <p class="text-xs text-slate-500 mt-1">Head of Department: <span class="font-semibold text-slate-700">{{ $department->head_of_department ?: 'Unassigned' }}</span></p>
+                <p class="text-xs text-slate-500 mt-1">Contact Person: <span class="font-semibold text-slate-700">{{ $department->head_of_department ?: 'Unassigned' }}</span></p>
             </div>
             <div class="flex flex-wrap gap-2">
                 <button type="button" 
@@ -56,7 +56,7 @@
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm relative group cursor-pointer hover:border-indigo-300 transition"
                      onclick="openBudgetDetailModal({{ $department->id }}, '{{ addslashes($department->name) }}', '{{ $department->code }}', {{ $totalAllocated }})">
                     <div class="flex items-center justify-between">
-                        <div class="text-[11px] font-bold text-slate-500">Original Budget</div>
+                        <div class="text-[11px] font-bold text-slate-500">Annual Budget</div>
                         <span class="text-[10px] font-bold text-indigo-600 group-hover:underline">Click for Heads &rarr;</span>
                     </div>
                     <div class="text-xl font-black text-slate-900 mt-1">PKR {{ number_format($totalAllocated, 2) }}</div>

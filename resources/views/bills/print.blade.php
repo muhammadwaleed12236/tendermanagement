@@ -268,7 +268,7 @@
                     <td class="val">: {{ $bill->department ? $bill->department->name : 'N/A' }}</td>
                 </tr>
                 <tr>
-                    <td class="lbl">CONTACT HEAD</td>
+                    <td class="lbl">CONTACT PERSON</td>
                     <td class="val">: {{ $bill->department ? ($bill->department->head_of_department ?: 'Directorate') : 'Directorate' }}</td>
                 </tr>
             </table>

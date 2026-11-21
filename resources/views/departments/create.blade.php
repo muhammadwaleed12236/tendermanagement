@@ -32,10 +32,10 @@
 
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                Code / Acronym <span class="text-rose-500">*</span>
+                                Cost Center <span class="text-rose-500">*</span>
                             </label>
                             <input type="text" name="code" value="{{ old('code') }}" required 
-                                   placeholder="e.g. DIT, CWD, HMS" 
+                                   placeholder="e.g. KA-8914, AGPR, DIT" 
                                    class="w-full text-xs sm:text-sm rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 uppercase py-2">
                             @error('code') <span class="text-[11px] text-rose-500">{{ $message }}</span> @enderror
                         </div>
@@ -64,24 +64,24 @@
                         </div>
                     </div>
 
-                    <!-- Row 3: Head of Dept + Annual Budget + Status (3 equal cols) -->
+                    <!-- Row 3: Contact Person + Annual Budget + Status (3 equal cols) -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                Head of Department / Director
+                                Contact Person
                             </label>
                             <input type="text" name="head_of_department" value="{{ old('head_of_department') }}" 
-                                   placeholder="e.g. Engr. Ahmad Nawaz" 
+                                   placeholder="e.g. Engr. Ahmad Nawaz / Director" 
                                    class="w-full text-xs sm:text-sm rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 py-2">
                             @error('head_of_department') <span class="text-[11px] text-rose-500">{{ $message }}</span> @enderror
                         </div>
 
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                Annual Budget Ceiling (PKR) <span class="text-rose-500">*</span>
+                                Annual Budget (PKR) <span class="text-rose-500">*</span>
                             </label>
-                            <input type="number" step="0.01" name="budget_allocated" value="{{ old('budget_allocated', '50000000') }}" required 
-                                   placeholder="e.g. 50000000" 
+                            <input type="number" step="0.01" min="0" name="budget_allocated" value="{{ old('budget_allocated', '0') }}" required 
+                                   placeholder="0" 
                                    class="w-full text-xs sm:text-sm rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 py-2">
                             @error('budget_allocated') <span class="text-[11px] text-rose-500">{{ $message }}</span> @enderror
                         </div>
