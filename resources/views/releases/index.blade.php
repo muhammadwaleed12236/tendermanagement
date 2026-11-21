@@ -75,9 +75,9 @@
                         <div class="text-[10px] text-indigo-500 mt-0.5 whitespace-nowrap">Authorized releases</div>
                     </div>
 
-                    <!-- 4. Released Bud. Balance -->
+                    <!-- 4. Released Budget Balance -->
                     <div style="flex: 1; min-width: 150px; padding: 0 14px; border-right: 1px solid #e2e8f0;">
-                        <div class="text-[11px] font-bold text-emerald-800 whitespace-nowrap">Released Bud. Balance</div>
+                        <div class="text-[11px] font-bold text-emerald-800 whitespace-nowrap">Released Budget Balance</div>
                         <div class="text-base xl:text-lg font-black text-emerald-700 mt-0.5 whitespace-nowrap">PKR {{ number_format($totalReleasedBalance, 2) }}</div>
                         <div class="text-[10px] text-emerald-700 font-semibold mt-0.5 whitespace-nowrap">✓ Available for invoices</div>
                     </div>
@@ -142,7 +142,7 @@
                                 <th class="py-3 px-4 text-right">Original Budget</th>
                                 <th class="py-3 px-4 text-right">Expenditure</th>
                                 <th class="py-3 px-4 text-right">Released Budget</th>
-                                <th class="py-3 px-4 text-right">Released Bud. Balance</th>
+                                <th class="py-3 px-4 text-right">Released Budget Balance</th>
                                 <th class="py-3 px-4 text-center w-28 no-print">Actions</th>
                             </tr>
                         </thead>
@@ -197,7 +197,7 @@
                                         {{ number_format($row['released_budget']) }}
                                     </td>
 
-                                    <!-- Released Bud. Balance -->
+                                    <!-- Released Budget Balance -->
                                     <td class="py-3.5 px-4 text-right font-black text-emerald-700 font-mono bg-emerald-50/20">
                                         {{ number_format($row['released_balance']) }}
                                     </td>
@@ -292,7 +292,7 @@
                                     <th class="py-3 px-4 text-right">Original Budget</th>
                                     <th class="py-3 px-4 text-right">Expenditure</th>
                                     <th class="py-3 px-4 text-right">Released Budget</th>
-                                    <th class="py-3 px-4 text-right">Released Bud. Balance</th>
+                                    <th class="py-3 px-4 text-right">Released Budget Balance</th>
                                     <th class="py-3 px-4 text-center w-20 no-print">Action</th>
                                 </tr>
                             </thead>
@@ -620,7 +620,7 @@
                                 <th class="py-2.5 px-3 text-right">Original Budget</th>
                                 <th class="py-2.5 px-3 text-right">Expenditure</th>
                                 <th class="py-2.5 px-3 text-right">Released Budget</th>
-                                <th class="py-2.5 px-3 text-right">Released Bud. Balance</th>
+                                <th class="py-2.5 px-3 text-right">Released Budget Balance</th>
                                 <th class="py-2.5 px-3 text-center w-14">Action</th>
                             </tr>
                         </thead>
@@ -775,19 +775,25 @@
                                 <tr>
                                     <th class="py-2 px-3">Detail Object Desc</th>
                                     <th class="py-2 px-3 text-right">Original Budget</th>
-                                    <th class="py-2 px-3 text-right">Already Released</th>
-                                    <th class="py-2 px-3 text-right w-36">Release Amount (PKR)</th>
+                                    <th class="py-2 px-3 text-right">Expenditure</th>
+                                    <th class="py-2 px-3 text-right">Released Budget</th>
+                                    <th class="py-2 px-3 text-right">Released Budget Balance</th>
+                                    <th class="py-2 px-3 text-right w-36">Tranche Release (PKR)</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 font-sans">
                     `;
                     heads.forEach(h => {
-                        const unrel = Math.max(0, (parseFloat(h.original_budget) || 0) - (parseFloat(h.released_budget) || 0));
+                        const exp = parseFloat(h.expenditure) || 0;
+                        const rel = parseFloat(h.released_budget) || 0;
+                        const bal = Math.max(0, rel - exp);
                         html += `
                             <tr class="hover:bg-slate-50 transition">
                                 <td class="py-1.5 px-3 font-mono font-bold text-slate-800">${escapeHtml(h.head_name)}</td>
                                 <td class="py-1.5 px-3 text-right font-mono text-slate-600">${Number(h.original_budget).toLocaleString()}</td>
-                                <td class="py-1.5 px-3 text-right font-mono text-indigo-700">${Number(h.released_budget).toLocaleString()}</td>
+                                <td class="py-1.5 px-3 text-right font-mono ${exp > 0 ? 'text-rose-600' : 'text-slate-400'}">${exp.toLocaleString()}</td>
+                                <td class="py-1.5 px-3 text-right font-mono text-indigo-700 font-semibold">${rel.toLocaleString()}</td>
+                                <td class="py-1.5 px-3 text-right font-mono text-emerald-700 font-bold bg-emerald-50/40">${bal.toLocaleString()}</td>
                                 <td class="py-1.5 px-3 text-right">
                                     <input type="number" step="0.01" min="0" 
                                            name="heads[${h.id}][amount]" 

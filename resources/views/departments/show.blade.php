@@ -80,9 +80,9 @@
                     <div class="text-[11px] text-slate-500 mt-1">{{ $department->releases->count() }} Release Tranches (Unreleased: PKR {{ number_format($unreleased, 2) }})</div>
                 </div>
 
-                <!-- 4. Released Bud. Balance -->
+                <!-- 4. Released Budget Balance -->
                 <div class="bg-emerald-50/60 p-5 rounded-xl border border-emerald-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-emerald-800">Released Bud. Balance</div>
+                    <div class="text-[11px] font-bold text-emerald-800">Released Budget Balance</div>
                     <div class="text-2xl font-black text-emerald-700 mt-1">PKR {{ number_format($availableReleased, 2) }}</div>
                     <div class="text-[11px] text-emerald-800 font-semibold mt-1">✓ Available for new product invoices</div>
                 </div>
@@ -123,7 +123,7 @@
                                 <th class="py-3 px-4 text-right">Original Budget</th>
                                 <th class="py-3 px-4 text-right">Expenditure</th>
                                 <th class="py-3 px-4 text-right">Released Budget</th>
-                                <th class="py-3 px-4 text-right">Released Bud. Balance</th>
+                                <th class="py-3 px-4 text-right">Released Budget Balance</th>
                                 <th class="py-3 px-4 text-center w-20 no-print">Action</th>
                             </tr>
                         </thead>
@@ -287,8 +287,9 @@
                                                 <tr>
                                                     <th class="py-2.5 px-3">Detail Object Desc</th>
                                                     <th class="py-2.5 px-3 text-right">Original Budget</th>
-                                                    <th class="py-2.5 px-3 text-right">Already Released</th>
-                                                    <th class="py-2.5 px-3 text-right">Unreleased Ceiling</th>
+                                                    <th class="py-2.5 px-3 text-right">Expenditure</th>
+                                                    <th class="py-2.5 px-3 text-right">Released Budget</th>
+                                                    <th class="py-2.5 px-3 text-right">Released Budget Balance</th>
                                                     <th class="py-2.5 px-3 text-right w-44">Tranche Release (PKR)</th>
                                                 </tr>
                                             </thead>
@@ -296,6 +297,7 @@
                                                 @foreach($budgetHeads as $h)
                                                     @php
                                                         $headUnreleased = max(0, (float) $h->original_budget - (float) $h->released_budget);
+                                                        $headBalance = max(0, (float) $h->released_budget - (float) $h->expenditure);
                                                     @endphp
                                                     <tr class="hover:bg-slate-50 transition">
                                                         <td class="py-2 px-3 font-mono font-bold text-slate-800">
@@ -304,11 +306,14 @@
                                                         <td class="py-2 px-3 text-right font-mono text-slate-600 font-semibold" data-orig="{{ (float) $h->original_budget }}">
                                                             {{ number_format($h->original_budget) }}
                                                         </td>
+                                                        <td class="py-2 px-3 text-right font-mono font-semibold {{ $h->expenditure > 0 ? 'text-rose-600' : 'text-slate-400' }}">
+                                                            {{ number_format($h->expenditure) }}
+                                                        </td>
                                                         <td class="py-2 px-3 text-right font-mono text-indigo-700 font-semibold">
                                                             {{ number_format($h->released_budget) }}
                                                         </td>
-                                                        <td class="py-2 px-3 text-right font-mono text-amber-700 font-semibold">
-                                                            {{ number_format($headUnreleased) }}
+                                                        <td class="py-2 px-3 text-right font-mono text-emerald-700 font-bold bg-emerald-50/40">
+                                                            {{ number_format($headBalance) }}
                                                         </td>
                                                         <td class="py-2 px-3 text-right">
                                                             <div class="relative">
@@ -328,7 +333,7 @@
                                             </tbody>
                                             <tfoot class="bg-slate-100 border-t-2 border-slate-300 font-bold text-xs sticky bottom-0 z-10">
                                                 <tr>
-                                                    <td colspan="4" class="py-2.5 px-3 text-slate-800 font-bold">Total Tranche Release:</td>
+                                                    <td colspan="5" class="py-2.5 px-3 text-slate-800 font-bold">Total Tranche Release:</td>
                                                     <td class="py-2.5 px-3 text-right font-mono font-black text-emerald-700 text-sm" id="table-total-release">
                                                         PKR 0.00
                                                     </td>
@@ -596,7 +601,7 @@
                                 <th class="py-2.5 px-3 text-right">Original Budget</th>
                                 <th class="py-2.5 px-3 text-right">Expenditure</th>
                                 <th class="py-2.5 px-3 text-right">Released Budget</th>
-                                <th class="py-2.5 px-3 text-right">Released Bud. Balance</th>
+                                <th class="py-2.5 px-3 text-right">Released Budget Balance</th>
                                 <th class="py-2.5 px-3 text-center w-14">Action</th>
                             </tr>
                         </thead>
