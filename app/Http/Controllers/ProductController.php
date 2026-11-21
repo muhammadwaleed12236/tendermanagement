@@ -18,13 +18,16 @@ class ProductController extends Controller
         $query = Product::query()->latest();
 
         if ($search) {
-            $query->where('description', 'like', "%{$search}%")
-                  ->orWhere('item_code', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('description', 'like', "%{$search}%")
+                  ->orWhere('item_code', 'like', "%{$search}%")
+                  ->orWhere('head_of_account', 'like', "%{$search}%");
+            });
         }
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([
-                'products' => $query->take(100)->get(['id', 'description', 'unit', 'default_price']),
+                'products' => $query->take(100)->get(['id', 'description', 'unit', 'default_price', 'head_of_account', 'item_code']),
             ]);
         }
 
@@ -41,6 +44,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'description' => 'required|string|max:1000',
+            'head_of_account' => 'nullable|string|max:255',
             'unit' => 'nullable|string|max:50',
             'default_price' => 'nullable|numeric|min:0',
             'item_code' => 'nullable|string|max:100',
@@ -48,6 +52,7 @@ class ProductController extends Controller
 
         $product = Product::create([
             'description' => trim($validated['description']),
+            'head_of_account' => !empty($validated['head_of_account']) ? trim($validated['head_of_account']) : null,
             'unit' => $validated['unit'] ?: 'Nos',
             'default_price' => $validated['default_price'] ?? 0,
             'item_code' => $validated['item_code'] ?? null,
@@ -57,7 +62,7 @@ class ProductController extends Controller
         \App\Models\ActivityLog::record(
             action: 'created',
             module: 'Products',
-            description: "Added product [{$product->description}] to catalog (Unit: {$product->unit}, Price: PKR " . number_format($product->default_price, 2) . ").",
+            description: "Added product [{$product->description}] to catalog (Head: {$product->head_of_account}, Unit: {$product->unit}, Price: PKR " . number_format($product->default_price, 2) . ").",
             subject: $product
         );
 
@@ -70,6 +75,45 @@ class ProductController extends Controller
         }
 
         return redirect()->route('products.index')->with('success', "Product '{$product->description}' created successfully!");
+    }
+
+    /**
+     * Update an existing product
+     */
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'description' => 'required|string|max:1000',
+            'head_of_account' => 'nullable|string|max:255',
+            'unit' => 'nullable|string|max:50',
+            'default_price' => 'nullable|numeric|min:0',
+            'item_code' => 'nullable|string|max:100',
+        ]);
+
+        $product->update([
+            'description' => trim($validated['description']),
+            'head_of_account' => !empty($validated['head_of_account']) ? trim($validated['head_of_account']) : null,
+            'unit' => $validated['unit'] ?: 'Nos',
+            'default_price' => $validated['default_price'] ?? 0,
+            'item_code' => $validated['item_code'] ?? null,
+        ]);
+
+        \App\Models\ActivityLog::record(
+            action: 'updated',
+            module: 'Products',
+            description: "Updated product [{$product->description}] (Head: {$product->head_of_account}, Unit: {$product->unit}, Price: PKR " . number_format($product->default_price, 2) . ").",
+            subject: $product
+        );
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Product updated successfully!',
+                'product' => $product,
+            ]);
+        }
+
+        return redirect()->route('products.index')->with('success', "Product '{$product->description}' updated successfully!");
     }
 
     /**
@@ -108,25 +152,48 @@ class ProductController extends Controller
                     $desc = $parts[0] ?? '';
                     if (empty($desc)) continue;
 
+                    $headOfAccount = null;
+                    $unit = $defaultUnit;
                     $price = 0;
-                    if (count($parts) >= 3) {
-                        // Col 0: Description | Col 1: Qty | Col 2: Price
-                        $priceStr = str_replace([',', 'PKR', 'Rs', ' '], '', $parts[2] ?? '');
+
+                    if (count($parts) >= 4) {
+                        // Col 0: Description | Col 1: Head of Account | Col 2: Unit/Qty | Col 3: Price
+                        $headOfAccount = $parts[1] ?: null;
+                        $unit = $parts[2] ?: $defaultUnit;
+                        $priceStr = str_replace([',', 'PKR', 'Rs', ' '], '', $parts[3] ?? '');
                         $price = is_numeric($priceStr) ? (float) $priceStr : 0;
+                    } elseif (count($parts) === 3) {
+                        // Check if middle column is text (Head of Account) or numeric (Qty)
+                        $middle = $parts[1] ?? '';
+                        $third = str_replace([',', 'PKR', 'Rs', ' '], '', $parts[2] ?? '');
+                        if (!is_numeric($middle) && is_numeric($third)) {
+                            // Col 0: Description | Col 1: Head of Account | Col 2: Price
+                            $headOfAccount = $middle ?: null;
+                            $price = (float) $third;
+                        } else {
+                            // Col 0: Description | Col 1: Qty | Col 2: Price
+                            $price = is_numeric($third) ? (float) $third : 0;
+                        }
                     } elseif (count($parts) === 2) {
-                        // Col 0: Description | Col 1: Price or Qty
+                        // Col 0: Description | Col 1: Price or Head of Account
                         $valStr = str_replace([',', 'PKR', 'Rs', ' '], '', $parts[1] ?? '');
-                        $price = is_numeric($valStr) ? (float) $valStr : 0;
+                        if (is_numeric($valStr)) {
+                            $price = (float) $valStr;
+                        } else {
+                            $headOfAccount = $parts[1] ?: null;
+                        }
                     }
 
                     $descriptions[] = [
                         'description' => $desc,
-                        'unit' => $defaultUnit,
+                        'head_of_account' => $headOfAccount,
+                        'unit' => $unit,
                         'default_price' => $price,
                     ];
                 } else {
                     $descriptions[] = [
                         'description' => $line,
+                        'head_of_account' => null,
                         'unit' => $defaultUnit,
                         'default_price' => 0,
                     ];
@@ -158,6 +225,7 @@ class ProductController extends Controller
 
             Product::create([
                 'description' => $desc,
+                'head_of_account' => !empty($item['head_of_account']) ? trim($item['head_of_account']) : null,
                 'unit' => $item['unit'] ?: $defaultUnit,
                 'default_price' => $item['default_price'] ?? 0,
                 'created_by' => Auth::id(),
@@ -197,12 +265,12 @@ class ProductController extends Controller
 
         $callback = function () {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['description', 'unit', 'default_price']);
-            fputcsv($handle, ['Cat6 Shielded Ethernet Cable 305m Roll', 'Nos', '18500.00']);
-            fputcsv($handle, ['A4 Photocopy Paper 80gsm 500 Sheets', 'Box', '1450.00']);
-            fputcsv($handle, ['Heavy Duty Office Executive Chair', 'Nos', '24000.00']);
-            fputcsv($handle, ['Ballpoint Pens Blue Box of 10', 'Pack', '450.00']);
-            fputcsv($handle, ['Laserjet Toner Cartridge Black 85A', 'Units', '6500.00']);
+            fputcsv($handle, ['description', 'head_of_account', 'unit', 'default_price']);
+            fputcsv($handle, ['Cat6 Shielded Ethernet Cable 305m Roll', 'A03901 - Stationary & General', 'Nos', '18500.00']);
+            fputcsv($handle, ['A4 Photocopy Paper 80gsm 500 Sheets', 'A03901 - Office Supplies', 'Box', '1450.00']);
+            fputcsv($handle, ['Fresh Apples & Fruit Basket', 'FRUIT HEADS OF ACCOUNTS 00343', 'Kg', '250.00']);
+            fputcsv($handle, ['Heavy Duty Office Executive Chair', 'A09601 - Purchase of Furniture', 'Nos', '24000.00']);
+            fputcsv($handle, ['Laserjet Toner Cartridge Black 85A', 'A03901 - Computer Consumables', 'Units', '6500.00']);
             fclose($handle);
         };
 
@@ -243,6 +311,7 @@ class ProductController extends Controller
         if (($handle = fopen($path, 'r')) !== false) {
             $header = null;
             $descIndex = 0;
+            $headIndex = null;
             $unitIndex = null;
             $priceIndex = null;
             $isFirstRow = true;
@@ -261,6 +330,8 @@ class ProductController extends Controller
                         foreach ($lowered as $idx => $colName) {
                             if (str_contains($colName, 'desc') || str_contains($colName, 'item') || str_contains($colName, 'product') || str_contains($colName, 'title') || str_contains($colName, 'name')) {
                                 $descIndex = $idx;
+                            } elseif (str_contains($colName, 'head') || str_contains($colName, 'account')) {
+                                $headIndex = $idx;
                             } elseif (str_contains($colName, 'unit') || str_contains($colName, 'uom')) {
                                 $unitIndex = $idx;
                             } elseif (str_contains($colName, 'price') || str_contains($colName, 'rate')) {
@@ -273,10 +344,12 @@ class ProductController extends Controller
 
                 $desc = isset($row[$descIndex]) ? trim($row[$descIndex]) : '';
                 if (!empty($desc)) {
+                    $headOfAccount = ($headIndex !== null && isset($row[$headIndex]) && trim($row[$headIndex]) !== '') ? trim($row[$headIndex]) : null;
                     $unit = ($unitIndex !== null && isset($row[$unitIndex]) && trim($row[$unitIndex]) !== '') ? trim($row[$unitIndex]) : $defaultUnit;
                     $price = ($priceIndex !== null && isset($row[$priceIndex])) ? (float) preg_replace('/[^0-9.]/', '', $row[$priceIndex]) : 0;
                     $items[] = [
                         'description' => $desc,
+                        'head_of_account' => $headOfAccount,
                         'unit' => $unit,
                         'default_price' => $price,
                     ];
@@ -332,10 +405,28 @@ class ProductController extends Controller
                         }
 
                         if (!empty($firstCell)) {
+                            $headOfAccount = null;
+                            $unit = $defaultUnit;
+                            $price = 0;
+
+                            if (count($rowCells) >= 4) {
+                                $headOfAccount = trim($rowCells[1] ?? '') ?: null;
+                                $unit = trim($rowCells[2] ?? '') ?: $defaultUnit;
+                                $price = isset($rowCells[3]) ? (float) preg_replace('/[^0-9.]/', '', $rowCells[3]) : 0;
+                            } elseif (count($rowCells) === 3) {
+                                $c1 = trim($rowCells[1] ?? '');
+                                $c2 = isset($rowCells[2]) ? (float) preg_replace('/[^0-9.]/', '', $rowCells[2]) : 0;
+                                $unit = $c1 ?: $defaultUnit;
+                                $price = $c2;
+                            } elseif (count($rowCells) === 2) {
+                                $price = isset($rowCells[1]) ? (float) preg_replace('/[^0-9.]/', '', $rowCells[1]) : 0;
+                            }
+
                             $items[] = [
                                 'description' => $firstCell,
-                                'unit' => trim($rowCells[1] ?? '') ?: $defaultUnit,
-                                'default_price' => isset($rowCells[2]) ? (float) preg_replace('/[^0-9.]/', '', $rowCells[2]) : 0,
+                                'head_of_account' => $headOfAccount,
+                                'unit' => $unit,
+                                'default_price' => $price,
                             ];
                         }
                     }

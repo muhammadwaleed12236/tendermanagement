@@ -77,18 +77,23 @@
                             @error('department_id') <span class="text-[11px] text-rose-500 block mt-1">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- 2. Head of Account (Code & Description) -->
+                        <!-- 2. Department Budget Head (Product) -->
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-xs font-bold text-slate-700 uppercase">Head of Account & Description</label>
+                                <label class="text-xs font-bold text-slate-700 uppercase flex items-center gap-1">
+                                    <span>Head / Product</span>
+                                    <span class="text-indigo-600 font-extrabold text-[10px] bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">Dept Budget</span>
+                                </label>
+                                <button type="button" onclick="openNewHeadModal()" class="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-0.5">
+                                    <span>+ New Head</span>
+                                </button>
                             </div>
-                            <div class="grid grid-cols-5 gap-1.5">
-                                <input type="text" name="head_code" id="head_code" value="{{ old('head_code', 'A03970') }}" placeholder="Code (e.g. A13801)" class="col-span-2 text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                                <input type="text" name="head_description" id="head_description" value="{{ old('head_description') }}" placeholder="Description (e.g. Others)" class="col-span-3 text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                            </div>
-                            <input type="hidden" name="head_of_account" id="head_of_account" value="{{ old('head_of_account') }}">
-                            <div class="mt-1.5 text-[11px] text-slate-400">
-                                Head code & budget line description
+                            <select name="budget_head_id" id="budget_head_select" onchange="handleBudgetHeadChange()" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 text-slate-800 bg-white">
+                                <option value="">-- Select Product / Head --</option>
+                            </select>
+                            <div class="mt-1.5 flex items-center justify-between text-[11px]">
+                                <span class="text-slate-500 font-medium">Head Balance:</span>
+                                <span id="head-badge-val" class="font-mono font-bold text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">Select Dept</span>
                             </div>
                         </div>
 
@@ -134,6 +139,49 @@
                                 </div>
                             @enderror
                         </div>
+                    </div>
+
+                    <!-- Active Head of Account & 1-Click Auto-Fill Bar -->
+                    <div id="head-active-banner" class="hidden p-3.5 bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-emerald-50/80 rounded-xl border-2 border-blue-200 mt-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xs">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-xl bg-[#0056d2] text-white flex items-center justify-center font-black text-base shrink-0 shadow-xs">
+                                🎯
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <span class="text-xs font-black text-slate-900" id="banner-head-name">Transport</span>
+                                    <span class="font-mono text-[11px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-900 border border-blue-200" id="banner-head-code">A03806</span>
+                                    <span class="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300" id="banner-head-balance-pill">Available: PKR 20,000</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 mt-1 flex items-center gap-2.5 flex-wrap">
+                                    <span>Sanctioned / Released: <strong class="text-slate-800 font-mono" id="banner-head-released">PKR 20,000</strong></span>
+                                    <span>•</span>
+                                    <span>Already Spent: <strong class="text-slate-800 font-mono" id="banner-head-spent">PKR 0.00</strong></span>
+                                    <span>•</span>
+                                    <span class="text-emerald-700 font-bold">You can create bill up to this sanctioned amount</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 shrink-0 self-start md:self-auto">
+                            <button type="button" onclick="autoFillBillFromHead()" class="px-4 py-2 rounded-xl text-xs font-black text-white bg-emerald-600 hover:bg-emerald-700 shadow-sm transition flex items-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                <span>⚡ 1-Click: Create Bill for this Head (<span id="btn-head-amount">PKR 20,000</span>)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Head Details Inputs (Code & Description - Auto-Synced with dropdown, editable) -->
+                    <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head of Account Code <span class="text-slate-400 font-normal">(e.g. A03806)</span></label>
+                            <input type="text" name="head_code" id="head_code" value="{{ old('head_code', 'A03970') }}" placeholder="e.g. A03806" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2 bg-white">
+                        </div>
+                        <div class="sm:col-span-1 lg:col-span-2">
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head Description / Product Title <span class="text-slate-400 font-normal">(e.g. Transportation of Goods)</span></label>
+                            <input type="text" name="head_description" id="head_description" value="{{ old('head_description', 'Others') }}" placeholder="e.g. Transportation of Goods" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2 bg-white">
+                        </div>
+                        <input type="hidden" name="head_of_account" id="head_of_account" value="{{ old('head_of_account') }}">
                     </div>
 
                     <!-- Company / Supplier Setup Selection -->
@@ -415,15 +463,23 @@
                         <div class="p-2 overflow-y-auto flex-1 divide-y divide-slate-100" id="catalog-list">
                             @if(isset($products) && $products->isNotEmpty())
                                 @foreach($products as $p)
-                                    <label class="catalog-item flex items-center justify-between p-3 rounded-xl hover:bg-blue-50/50 cursor-pointer transition select-none" data-search="{{ strtolower($p->description) }}">
+                                    <label class="catalog-item flex items-center justify-between p-3 rounded-xl hover:bg-blue-50/50 cursor-pointer transition select-none" data-search="{{ strtolower($p->description . ' ' . $p->head_of_account) }}">
                                         <div class="flex items-center gap-3">
                                             <input type="checkbox" class="catalog-check rounded text-blue-600 focus:ring-blue-500" 
                                                    data-description="{{ $p->description }}" 
+                                                   data-head="{{ $p->head_of_account }}"
                                                    data-unit="{{ $p->unit ?: 'Nos' }}" 
                                                    data-price="{{ $p->default_price ?: 0 }}">
                                             <div>
                                                 <p class="text-xs font-semibold text-slate-800">{{ $p->description }}</p>
-                                                <span class="text-[10px] text-slate-400">Unit: {{ $p->unit ?: 'Nos' }}</span>
+                                                <div class="flex items-center gap-2 mt-0.5">
+                                                    <span class="text-[10px] text-slate-400">Unit: {{ $p->unit ?: 'Nos' }}</span>
+                                                    @if($p->head_of_account)
+                                                        <span class="text-[9px] font-mono font-semibold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
+                                                            {{ $p->head_of_account }}
+                                                        </span>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                         @if($p->default_price > 0)
@@ -476,6 +532,18 @@
                             <div class="flex justify-between items-center pt-2 border-t border-slate-100">
                                 <span class="font-semibold text-slate-700">Estimated Balance After Bill:</span>
                                 <span id="comp-rem" class="font-black text-indigo-700 font-mono">PKR 0.00</span>
+                            </div>
+
+                            <!-- Head of Account Budget Compliance Details -->
+                            <div id="comp-head-box" class="hidden pt-2 border-t border-blue-100 space-y-1.5 bg-blue-50/50 p-2.5 rounded-lg border border-blue-100">
+                                <div class="flex justify-between items-center text-blue-900 font-bold">
+                                    <span>Head (<span id="comp-head-name">Transport</span>) Ceiling:</span>
+                                    <span id="comp-head-avail" class="font-mono">PKR 0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-700">
+                                    <span>Head Balance After Bill:</span>
+                                    <span id="comp-head-rem" class="font-bold font-mono">PKR 0.00</span>
+                                </div>
                             </div>
                         </div>
 
@@ -625,6 +693,70 @@
         </div>
     </div>
 
+    <!-- Modal: Quick Add New Budget Head / Product (Placed cleanly outside main bill-form) -->
+    <div id="new-head-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+            <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">
+                        🎯
+                    </span>
+                    <div>
+                        <h3 class="text-sm font-bold tracking-tight">Add Budget Head / Product</h3>
+                        <p class="text-[10px] text-slate-300" id="quick-head-dept-name">Department Head Allocation</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeNewHeadModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
+            </div>
+
+            <form id="quick-head-form" onsubmit="handleNewHeadSubmit(event)" class="p-5 space-y-3.5">
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="col-span-1">
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head Code</label>
+                        <input type="text" id="quick_head_code" placeholder="e.g. A03806" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head Name / Product <span class="text-rose-500">*</span></label>
+                        <input type="text" id="quick_head_name" required placeholder="e.g. Transportation of Goods" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Released / Sanctioned (PKR) <span class="text-rose-500">*</span></label>
+                        <input type="number" step="0.01" min="0" id="quick_head_released" required placeholder="e.g. 20000" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2" oninput="if(!document.getElementById('quick_head_original').dataset.manual) document.getElementById('quick_head_original').value = this.value">
+                        <p class="text-[10px] text-slate-400 mt-1">Available funds allocated for this product/head</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Total / Original Grant (PKR)</label>
+                        <input type="number" step="0.01" min="0" id="quick_head_original" placeholder="e.g. 20000" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2" oninput="this.dataset.manual = 'true'">
+                        <p class="text-[10px] text-slate-400 mt-1">Full financial year allocation (defaults to released)</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Financial Year</label>
+                        <input type="text" id="quick_head_year" value="2026" placeholder="2026" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Notes / Remarks</label>
+                        <input type="text" id="quick_head_notes" placeholder="e.g. Sanctioned grant for transport" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                    </div>
+                </div>
+
+                <div id="quick-head-error" class="text-xs text-rose-600 font-semibold hidden"></div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                    <button type="button" onclick="closeNewHeadModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Cancel</button>
+                    <button type="submit" id="quick-head-btn" class="px-5 py-2 text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm flex items-center gap-1.5">
+                        <span>Save & Use Head</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal: Quick Add New Company (Placed cleanly outside main bill-form) -->
     <div id="new-company-modal" style="display: none;" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
@@ -702,6 +834,25 @@
         let rowCount = 1;
         const catalogProducts = @json(isset($products) ? $products : []);
 
+        // Department Budget Heads mapped by Department ID
+        const departmentBudgetHeads = {
+            @foreach($departments as $dept)
+                "{{ $dept->id }}": [
+                    @foreach($dept->budgetHeads as $head)
+                    {
+                        id: {{ $head->id }},
+                        code: @json($head->head_code ?? ''),
+                        name: @json($head->head_name ?? ''),
+                        original: {{ (float) $head->original_budget }},
+                        released: {{ (float) $head->released_budget }},
+                        expenditure: {{ (float) $head->expenditure }},
+                        balance: {{ (float) $head->released_balance }}
+                    },
+                    @endforeach
+                ],
+            @endforeach
+        };
+
         function handleProductSelect(input) {
             const val = (input.value || '').trim().toLowerCase();
             if (!val) return;
@@ -724,6 +875,16 @@
                     if (!priceInput.value || parseFloat(priceInput.value) === 0) {
                         priceInput.value = match.default_price;
                         calcRow(priceInput);
+                    }
+                }
+                if (match.head_of_account) {
+                    const headInput = document.getElementById('head_of_account');
+                    const headDescInput = document.getElementById('head_description');
+                    if (headInput && !headInput.dataset.manualEdit) {
+                        headInput.value = match.head_of_account;
+                    }
+                    if (headDescInput && (!headDescInput.value || headDescInput.value === 'Others')) {
+                        headDescInput.value = match.head_of_account;
                     }
                 }
             }
@@ -1194,6 +1355,9 @@
         function checkBudgetCompliance(netPayable) {
             const deptSelect = document.getElementById('department_select');
             const selectedOpt = deptSelect.options[deptSelect.selectedIndex];
+            const headSelect = document.getElementById('budget_head_select');
+            const selectedHeadOpt = headSelect ? headSelect.options[headSelect.selectedIndex] : null;
+
             const alertBox = document.getElementById('budget-alert-box');
             const alertText = document.getElementById('budget-alert-text');
             const statusPill = document.getElementById('budget-status-pill');
@@ -1219,10 +1383,28 @@
             const avail = parseFloat(selectedOpt.getAttribute('data-available')) || 0;
             const remaining = avail - netPayable;
 
+            // Head budget compliance check
+            let isHeadExceeded = false;
+            let headBalance = 0;
+            let headName = '';
+            if (headSelect && headSelect.value && selectedHeadOpt && selectedHeadOpt.value) {
+                headBalance = parseFloat(selectedHeadOpt.getAttribute('data-balance')) || 0;
+                headName = selectedHeadOpt.getAttribute('data-name') || 'Selected Head';
+                if (netPayable > headBalance) {
+                    isHeadExceeded = true;
+                }
+            }
+
             compAvail.textContent = 'PKR ' + avail.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             compRem.textContent = 'PKR ' + Math.max(0, remaining).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-            if (netPayable > avail) {
+            if (isHeadExceeded) {
+                alertBox.className = 'bg-amber-50/70 p-5 rounded-2xl border-2 border-amber-300 shadow-sm space-y-3';
+                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900';
+                statusPill.textContent = 'Head Budget Exceeded';
+                alertText.innerHTML = `<strong class="text-amber-800">Head Budget Warning:</strong> Bill payable (PKR ${netPayable.toLocaleString('en-US', { minimumFractionDigits: 2 })}) exceeds available balance in head <strong class="text-indigo-800 font-bold">${escapeHtml(headName)}</strong> (PKR ${headBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}) by <strong class="text-rose-700 font-mono">PKR ${(netPayable - headBalance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>. Bill can still be submitted for tranche clearance.`;
+                submitBtn.disabled = false;
+            } else if (netPayable > avail) {
                 alertBox.className = 'bg-amber-50/70 p-5 rounded-2xl border-2 border-amber-300 shadow-sm space-y-3';
                 statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900';
                 statusPill.textContent = 'Tranche Release Required';
@@ -1233,7 +1415,8 @@
                 alertBox.className = 'bg-emerald-50/60 p-5 rounded-2xl border-2 border-emerald-300 shadow-sm space-y-3';
                 statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800';
                 statusPill.textContent = '✓ Budget Compliant';
-                alertText.innerHTML = '<strong class="text-emerald-700">Budget Verified!</strong> Invoice amount is fully covered by authorized released funds. PKR ' + remaining.toLocaleString('en-US', { minimumFractionDigits: 2 }) + ' will remain available in this department.';
+                const headNote = headSelect && headSelect.value ? ` and head <strong class="text-indigo-800">${escapeHtml(headName)}</strong> (PKR ${(headBalance - netPayable).toLocaleString('en-US', { minimumFractionDigits: 2 })} remaining)` : '';
+                alertText.innerHTML = `<strong class="text-emerald-700">Budget Verified!</strong> Invoice amount is fully covered by authorized released funds${headNote}. PKR ` + remaining.toLocaleString('en-US', { minimumFractionDigits: 2 }) + ' will remain available in this department.';
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
@@ -1244,8 +1427,11 @@
             const selectedOpt = deptSelect.options[deptSelect.selectedIndex];
             const badgeVal = document.getElementById('budget-badge-val');
             const headInput = document.getElementById('head_of_account');
+            const headSelect = document.getElementById('budget_head_select');
 
-            if (deptSelect.value && selectedOpt) {
+            const deptId = deptSelect.value;
+
+            if (deptId && selectedOpt) {
                 const avail = parseFloat(selectedOpt.getAttribute('data-available')) || 0;
                 const costCenter = selectedOpt.getAttribute('data-cost-center') || selectedOpt.getAttribute('data-name') || '';
 
@@ -1269,10 +1455,265 @@
                 if (headDescInput && !headDescInput.value) {
                     headDescInput.value = costCenter;
                 }
+
+                // Populate budget heads dropdown for this department
+                const heads = departmentBudgetHeads[deptId] || [];
+                const previousSelectedHeadId = headSelect.value || "{{ old('budget_head_id', '') }}";
+                
+                headSelect.innerHTML = '';
+                const defaultOpt = document.createElement('option');
+                defaultOpt.value = '';
+                defaultOpt.textContent = heads.length > 0 ? `-- Select Product / Head (${heads.length} Available) --` : '-- No heads defined (+ Click "+ New Head") --';
+                headSelect.appendChild(defaultOpt);
+
+                heads.forEach(h => {
+                    const opt = document.createElement('option');
+                    opt.value = h.id;
+                    opt.setAttribute('data-code', h.code || '');
+                    opt.setAttribute('data-name', h.name || '');
+                    opt.setAttribute('data-released', h.released || 0);
+                    opt.setAttribute('data-spent', h.expenditure || 0);
+                    opt.setAttribute('data-balance', h.balance || 0);
+                    const codeLabel = h.code ? `[${h.code}] ` : '';
+                    opt.textContent = `${codeLabel}${h.name} — Avail: PKR ${parseFloat(h.balance).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+                    if (String(h.id) === String(previousSelectedHeadId)) {
+                        opt.selected = true;
+                    }
+                    headSelect.appendChild(opt);
+                });
+
+                // Trigger head change to update banner
+                handleBudgetHeadChange();
             } else {
                 if (badgeVal) {
                     badgeVal.textContent = 'Avail: PKR 0.00';
                 }
+                headSelect.innerHTML = '<option value="">-- Select Product / Head --</option>';
+                handleBudgetHeadChange();
+            }
+        }
+
+        function handleBudgetHeadChange() {
+            const headSelect = document.getElementById('budget_head_select');
+            if (!headSelect) return;
+            const selectedOpt = headSelect.options[headSelect.selectedIndex];
+            const banner = document.getElementById('head-active-banner');
+            const headBadgeVal = document.getElementById('head-badge-val');
+
+            if (headSelect.value && selectedOpt && selectedOpt.value) {
+                const code = selectedOpt.getAttribute('data-code') || '';
+                const name = selectedOpt.getAttribute('data-name') || '';
+                const released = parseFloat(selectedOpt.getAttribute('data-released')) || 0;
+                const spent = parseFloat(selectedOpt.getAttribute('data-spent')) || 0;
+                const balance = parseFloat(selectedOpt.getAttribute('data-balance')) || 0;
+
+                // Update banner
+                document.getElementById('banner-head-name').textContent = name || 'Selected Head';
+                document.getElementById('banner-head-code').textContent = code || 'HEAD';
+                document.getElementById('banner-head-released').textContent = 'PKR ' + released.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                document.getElementById('banner-head-spent').textContent = 'PKR ' + spent.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                document.getElementById('banner-head-balance-pill').textContent = 'Available: PKR ' + balance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                document.getElementById('btn-head-amount').textContent = 'PKR ' + balance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+
+                if (headBadgeVal) {
+                    headBadgeVal.textContent = 'Avail: PKR ' + balance.toLocaleString('en-US', { minimumFractionDigits: 0 });
+                    headBadgeVal.className = 'font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200';
+                }
+
+                // Auto-fill head code & description
+                const headCodeInput = document.getElementById('head_code');
+                if (headCodeInput && code) headCodeInput.value = code;
+
+                const headDescInput = document.getElementById('head_description');
+                if (headDescInput && name) headDescInput.value = name;
+
+                const headOfAccountInput = document.getElementById('head_of_account');
+                if (headOfAccountInput) {
+                    headOfAccountInput.value = code ? (code + ' - ' + name) : name;
+                }
+
+                if (banner) banner.classList.remove('hidden');
+            } else {
+                if (banner) banner.classList.add('hidden');
+                if (headBadgeVal) {
+                    headBadgeVal.textContent = 'None selected';
+                    headBadgeVal.className = 'font-mono font-bold text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-200';
+                }
+            }
+            calcTotals();
+        }
+
+        function autoFillBillFromHead() {
+            const headSelect = document.getElementById('budget_head_select');
+            const selectedOpt = headSelect ? headSelect.options[headSelect.selectedIndex] : null;
+            if (!headSelect || !headSelect.value || !selectedOpt) {
+                alert('Please select a Head / Product first.');
+                return;
+            }
+
+            const balance = parseFloat(selectedOpt.getAttribute('data-balance')) || parseFloat(selectedOpt.getAttribute('data-released')) || 0;
+            const headName = selectedOpt.getAttribute('data-name') || 'Sanctioned Budget Services';
+            const headCode = selectedOpt.getAttribute('data-code') || '';
+
+            if (balance <= 0) {
+                alert('This head currently has PKR 0.00 available balance.');
+                return;
+            }
+
+            // Current GST rate and Deduction rate
+            const gstRate = parseFloat(document.getElementById('gst_rate').value) || 0;
+            const deductionRate = parseFloat(document.getElementById('deduction_rate').value) || 0;
+
+            // Target Net Amount = balance (e.g. 20,000)
+            // Net = Gross + (Gross * gstRate / 100) - (Gross * deductionRate / 100)
+            // Net = Gross * (1 + gstRate/100 - deductionRate/100)
+            const factor = 1 + (gstRate / 100) - (deductionRate / 100);
+            const unitPrice = factor > 0 ? (balance / factor) : balance;
+
+            // Populate Item Row 0
+            const tbody = document.getElementById('items-body');
+            tbody.innerHTML = ''; // reset so ONLY this head's bill is generated
+            rowCount = 0;
+
+            // Clean item description
+            let cleanDesc = headName.replace(/^[A-Z0-9]+\s*[-:]\s*/i, '').trim();
+            if (!cleanDesc) cleanDesc = headName;
+
+            addProductRow(cleanDesc, 'LumpSum', unitPrice.toFixed(2), 1);
+
+            // Also set milestone description
+            const milestoneInput = document.querySelector('textarea[name="milestone_description"]');
+            if (milestoneInput && (!milestoneInput.value || milestoneInput.value.includes('Procurement of goods'))) {
+                milestoneInput.value = `Execution of services / delivery under head [${headCode}] ${headName} as per sanctioned grant.`;
+            }
+
+            calcTotals();
+
+            // Flash visual confirmation
+            const banner = document.getElementById('head-active-banner');
+            if (banner) {
+                banner.classList.add('ring-4', 'ring-emerald-400');
+                setTimeout(() => banner.classList.remove('ring-4', 'ring-emerald-400'), 1500);
+            }
+        }
+
+        /* Quick Add Budget Head Modal Functions */
+        function openNewHeadModal() {
+            const deptSelect = document.getElementById('department_select');
+            if (!deptSelect || !deptSelect.value) {
+                alert('Please select a Target Department first.');
+                deptSelect.focus();
+                return;
+            }
+            const deptName = deptSelect.options[deptSelect.selectedIndex].text.split('(')[0].trim();
+            const deptNameEl = document.getElementById('quick-head-dept-name');
+            if (deptNameEl) deptNameEl.textContent = 'Department: ' + deptName;
+
+            const modal = document.getElementById('new-head-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('quick_head_name').focus();
+            }
+        }
+
+        function closeNewHeadModal() {
+            const modal = document.getElementById('new-head-modal');
+            if (modal) modal.style.display = 'none';
+            const err = document.getElementById('quick-head-error');
+            if (err) {
+                err.textContent = '';
+                err.classList.add('hidden');
+            }
+        }
+
+        async function handleNewHeadSubmit(e) {
+            e.preventDefault();
+            const deptSelect = document.getElementById('department_select');
+            const deptId = deptSelect.value;
+            if (!deptId) {
+                alert('Please select a Target Department.');
+                return;
+            }
+
+            const btn = document.getElementById('quick-head-btn');
+            const errEl = document.getElementById('quick-head-error');
+            errEl.classList.add('hidden');
+            btn.disabled = true;
+            btn.innerHTML = '<span>Saving...</span>';
+
+            const released = parseFloat(document.getElementById('quick_head_released').value) || 0;
+            const originalVal = document.getElementById('quick_head_original').value;
+            const original = originalVal ? (parseFloat(originalVal) || 0) : released;
+
+            const payload = {
+                head_code: document.getElementById('quick_head_code').value.trim(),
+                head_name: document.getElementById('quick_head_name').value.trim(),
+                released_budget: released,
+                original_budget: original,
+                year: document.getElementById('quick_head_year').value.trim() || '2026',
+                notes: document.getElementById('quick_head_notes').value.trim(),
+            };
+
+            try {
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') 
+                    || document.querySelector('input[name="_token"]')?.value;
+
+                const url = `/departments/${deptId}/budget-heads`;
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                if (!res.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to save budget head.');
+                }
+
+                const head = data.head;
+                // Add to client-side data
+                if (!departmentBudgetHeads[deptId]) {
+                    departmentBudgetHeads[deptId] = [];
+                }
+                const newHeadObj = {
+                    id: head.id,
+                    code: head.head_code || '',
+                    name: head.head_name || '',
+                    original: parseFloat(head.original_budget) || 0,
+                    released: parseFloat(head.released_budget) || 0,
+                    expenditure: parseFloat(head.expenditure) || 0,
+                    balance: Math.max(0, (parseFloat(head.released_budget) || 0) - (parseFloat(head.expenditure) || 0)),
+                };
+                departmentBudgetHeads[deptId].push(newHeadObj);
+
+                // Add to dropdown and select it
+                const headSelect = document.getElementById('budget_head_select');
+                const opt = document.createElement('option');
+                opt.value = head.id;
+                opt.setAttribute('data-code', newHeadObj.code);
+                opt.setAttribute('data-name', newHeadObj.name);
+                opt.setAttribute('data-released', newHeadObj.released);
+                opt.setAttribute('data-spent', newHeadObj.expenditure);
+                opt.setAttribute('data-balance', newHeadObj.balance);
+                const codeLabel = newHeadObj.code ? `[${newHeadObj.code}] ` : '';
+                opt.textContent = `${codeLabel}${newHeadObj.name} — Avail: PKR ${newHeadObj.balance.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+                opt.selected = true;
+                headSelect.appendChild(opt);
+
+                handleBudgetHeadChange();
+                closeNewHeadModal();
+                document.getElementById('quick-head-form').reset();
+            } catch (err) {
+                errEl.textContent = err.message || 'An error occurred while saving the budget head.';
+                errEl.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>Save & Use Head</span>';
             }
         }
 

@@ -17,6 +17,7 @@ class Bill extends Model
         'vendor_id',
         'company_id',
         'department_id',
+        'budget_head_id',
         'head_of_account',
         'head_code',
         'head_description',
@@ -75,6 +76,11 @@ class Bill extends Model
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function budgetHead(): BelongsTo
+    {
+        return $this->belongsTo(DepartmentBudgetHead::class, 'budget_head_id');
     }
 
     public function creator(): BelongsTo

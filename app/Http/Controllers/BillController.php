@@ -67,8 +67,8 @@ class BillController extends Controller
             $vendors = User::where('role', 'vendor')->get();
         }
 
-        // Load departments with released budget info
-        $departments = Department::where('status', 'active')->with(['releases', 'bills'])->get();
+        // Load departments with released budget info and their budget heads
+        $departments = Department::where('status', 'active')->with(['releases', 'bills', 'budgetHeads'])->get();
         $tenders = Tender::with('department')->get();
         $selectedTenderId = $request->get('tender_id');
         $selectedDeptId = $request->get('department_id');
@@ -98,6 +98,7 @@ class BillController extends Controller
 
         $validated = $request->validate([
             'department_id' => 'required|exists:departments,id',
+            'budget_head_id' => 'nullable|exists:department_budget_heads,id',
             'company_id' => 'nullable|exists:companies,id',
             'vendor_id' => 'nullable|exists:users,id',
             'tender_id' => 'nullable|exists:tenders,id',
@@ -236,6 +237,7 @@ class BillController extends Controller
             'bill_number' => $billNumber,
             'quarter' => $billQuarter,
             'department_id' => $department->id,
+            'budget_head_id' => $validated['budget_head_id'] ?? null,
             'tender_id' => $validated['tender_id'] ?? null,
             'vendor_id' => $vendorId,
             'company_id' => $companyId,
@@ -265,6 +267,14 @@ class BillController extends Controller
         // Save multiple product line items
         foreach ($itemsData as $item) {
             $bill->items()->create($item);
+        }
+
+        // Record expenditure on selected budget head if provided
+        if (!empty($validated['budget_head_id'])) {
+            $budgetHead = \App\Models\DepartmentBudgetHead::find($validated['budget_head_id']);
+            if ($budgetHead) {
+                $budgetHead->increment('expenditure', $totalPayable);
+            }
         }
 
         \App\Models\ActivityLog::record(

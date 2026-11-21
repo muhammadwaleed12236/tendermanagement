@@ -80,6 +80,23 @@
                                 @enderror
                             </div>
 
+                            <!-- Head of Account Field -->
+                            <div>
+                                <label for="head_of_account" class="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+                                    <span class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                                        <span>Head of Account</span>
+                                    </span>
+                                    <span class="text-[10px] text-slate-400 font-normal">Optional</span>
+                                </label>
+                                <input type="text" name="head_of_account" id="head_of_account" value="{{ old('head_of_account') }}"
+                                       placeholder="e.g. FRUIT HEADS OF ACCOUNTS 00343 / A03901"
+                                       class="w-full text-xs rounded-xl border-slate-300 focus:border-blue-500 focus:ring-blue-500 font-medium placeholder-slate-400">
+                                @error('head_of_account')
+                                    <p class="text-rose-600 text-[11px] mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label for="unit" class="block text-xs font-bold text-slate-700 mb-1">Unit (Optional)</label>
@@ -150,7 +167,7 @@
                                            class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-slate-200 rounded-xl cursor-pointer">
                                 </div>
                                 <p class="text-[11px] text-slate-500 leading-relaxed">
-                                    Column Header: <code class="bg-slate-100 px-1 py-0.5 rounded text-blue-600 font-mono">Description</code> (ya first column me product ka naam/description).
+                                    Supported Columns: <code class="bg-slate-100 px-1 py-0.5 rounded text-blue-600 font-mono">Description</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-amber-700 font-mono">Head of Account</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-slate-700 font-mono">Unit</code>, <code class="bg-slate-100 px-1 py-0.5 rounded text-emerald-700 font-mono">Default Price</code>.
                                 </p>
                             </div>
 
@@ -158,14 +175,14 @@
                             <div x-show="tab === 'paste'" style="display: none;" class="space-y-3">
                                 <div>
                                     <label for="paste_text" class="block text-xs font-bold text-slate-700 mb-1.5">
-                                        Paste from Excel or Text (Description, Qty, Default Price)
+                                        Paste from Excel or Text (Description, Head of Account, Unit/Qty, Price)
                                     </label>
                                     <textarea name="paste_text" id="paste_text" rows="5"
-                                              placeholder="Cat6 Shielded Ethernet Cable 305m Roll&#9;12&#9;18500&#10;A4 Photocopy Paper 80gsm 500 Sheets&#9;&#9;1450&#10;Heavy Duty Office Executive Chair&#9;&#9;24000&#10;Ballpoint Pens Blue Box of 10&#9;&#9;450"
+                                              placeholder="Fresh Apples & Fruit Basket&#9;FRUIT HEADS OF ACCOUNTS 00343&#9;Kg&#9;250&#10;Cat6 Ethernet Cable 305m&#9;A03901 - Stationary&#9;Nos&#9;18500&#10;A4 Photocopy Paper 80gsm&#9;A03901 - Supplies&#9;Box&#9;1450"
                                               class="w-full text-xs rounded-xl border-slate-300 focus:border-blue-500 font-mono placeholder-slate-400"></textarea>
                                 </div>
                                 <p class="text-[11px] text-slate-500 leading-relaxed">
-                                    💡 <strong>Excel Support:</strong> Excel sheet ke columns (description, qty, default_price) select karke copy (Ctrl+C) aur yahan paste (Ctrl+V) kar sakte hain. Tab-separated values khud ba khud parse ho jayengi.
+                                    💡 <strong>Excel Support:</strong> Excel sheet ke columns (description, head of account, unit/qty, price) select karke copy (Ctrl+C) aur yahan paste (Ctrl+V) kar sakte hain.
                                 </p>
                             </div>
 
@@ -230,11 +247,12 @@
                             <table class="w-full text-left text-xs border-collapse">
                                 <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
                                     <tr>
-                                        <th class="p-3 w-12 text-center">#</th>
+                                        <th class="p-3 w-10 text-center">#</th>
                                         <th class="p-3">Product Description</th>
+                                        <th class="p-3">Head of Account</th>
                                         <th class="p-3 w-20">Unit</th>
                                         <th class="p-3 w-28 text-right">Default Price</th>
-                                        <th class="p-3 w-16 text-center">Action</th>
+                                        <th class="p-3 w-20 text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100">
@@ -246,6 +264,16 @@
                                             <td class="p-3 font-semibold text-slate-800">
                                                 {{ $prod->description }}
                                             </td>
+                                            <td class="p-3">
+                                                @if($prod->head_of_account)
+                                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono font-semibold bg-amber-50 text-amber-800 border border-amber-200 shadow-2xs">
+                                                        <svg class="w-3 h-3 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                                                        <span>{{ $prod->head_of_account }}</span>
+                                                    </span>
+                                                @else
+                                                    <span class="text-slate-300 text-xs italic">—</span>
+                                                @endif
+                                            </td>
                                             <td class="p-3 text-slate-500">
                                                 <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-medium">
                                                     {{ $prod->unit ?: 'Nos' }}
@@ -255,13 +283,21 @@
                                                 {{ $prod->default_price > 0 ? number_format($prod->default_price, 2) : '-' }}
                                             </td>
                                             <td class="p-3 text-center">
-                                                <form method="POST" action="{{ route('products.destroy', $prod) }}" onsubmit="return confirm('Delete this product item?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-slate-300 hover:text-rose-600 transition" title="Delete product">
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                <div class="flex items-center justify-center gap-1.5">
+                                                    <button type="button" 
+                                                            onclick="openEditProductModal({{ json_encode($prod) }})"
+                                                            class="text-slate-400 hover:text-blue-600 transition" 
+                                                            title="Edit Product & Head of Account">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                                                     </button>
-                                                </form>
+                                                    <form method="POST" action="{{ route('products.destroy', $prod) }}" onsubmit="return confirm('Delete this product item?');">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="text-slate-300 hover:text-rose-600 transition" title="Delete product">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -276,6 +312,99 @@
                 </div>
 
             </div>
+
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="edit-product-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-xs p-4 hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl w-full max-w-lg p-6 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 font-bold text-xs flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </span>
+                    <h3 class="text-sm font-bold text-slate-800">Edit Product & Head of Account</h3>
+                </div>
+                <button type="button" onclick="closeEditProductModal()" class="text-slate-400 hover:text-slate-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <form id="edit-product-form" method="POST" action="" class="space-y-4">
+                @csrf
+                @method('PUT')
+
+                <div>
+                    <label for="edit-description" class="block text-xs font-bold text-slate-700 mb-1">
+                        Product Description <span class="text-rose-500">*</span>
+                    </label>
+                    <textarea name="description" id="edit-description" rows="3" required
+                              class="w-full text-xs rounded-xl border-slate-300 focus:border-blue-500 focus:ring-blue-500"></textarea>
+                </div>
+
+                <div>
+                    <label for="edit-head-of-account" class="block text-xs font-bold text-slate-700 mb-1 flex items-center justify-between">
+                        <span class="flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            <span>Head of Account</span>
+                        </span>
+                        <span class="text-[10px] text-slate-400 font-normal">Optional</span>
+                    </label>
+                    <input type="text" name="head_of_account" id="edit-head-of-account"
+                           placeholder="e.g. FRUIT HEADS OF ACCOUNTS 00343 / A03901"
+                           class="w-full text-xs rounded-xl border-slate-300 focus:border-blue-500 focus:ring-blue-500 font-medium">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="edit-unit" class="block text-xs font-bold text-slate-700 mb-1">Unit</label>
+                        <select name="unit" id="edit-unit" class="w-full text-xs rounded-xl border-slate-300 focus:border-blue-500">
+                            <option value="Nos">Nos</option>
+                            <option value="Units">Units</option>
+                            <option value="Pcs">Pcs</option>
+                            <option value="Box">Box</option>
+                            <option value="Pack">Pack</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Meters">Meters</option>
+                            <option value="Set">Set</option>
+                            <option value="LumpSum">LumpSum</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="edit-default-price" class="block text-xs font-bold text-slate-700 mb-1">Default Price (PKR)</label>
+                        <input type="number" step="0.01" min="0" name="default_price" id="edit-default-price"
+                               class="w-full text-xs rounded-xl border-slate-300 focus:border-blue-500 font-mono text-right">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+                    <button type="button" onclick="closeEditProductModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-sm transition">
+                        Update Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openEditProductModal(product) {
+            const form = document.getElementById('edit-product-form');
+            form.action = `/products/${product.id}`;
+            document.getElementById('edit-description').value = product.description || '';
+            document.getElementById('edit-head-of-account').value = product.head_of_account || '';
+            document.getElementById('edit-unit').value = product.unit || 'Nos';
+            document.getElementById('edit-default-price').value = product.default_price || 0;
+            document.getElementById('edit-product-modal').classList.remove('hidden');
+        }
+
+        function closeEditProductModal() {
+            document.getElementById('edit-product-modal').classList.add('hidden');
+        }
+    </script>
 
         </div>
     </div>

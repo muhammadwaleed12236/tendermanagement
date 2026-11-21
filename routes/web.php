@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     // Products Catalog & Bill Import System
     Route::get('/products', [\App\Http\Controllers\ProductController::class, 'index'])->name('products.index');
     Route::post('/products', [\App\Http\Controllers\ProductController::class, 'store'])->name('products.store');
+    Route::put('/products/{product}', [\App\Http\Controllers\ProductController::class, 'update'])->name('products.update');
     Route::post('/products/import', [\App\Http\Controllers\ProductController::class, 'import'])->name('products.import');
     Route::get('/products/sample-csv', [\App\Http\Controllers\ProductController::class, 'sampleCsv'])->name('products.sample-csv');
     Route::delete('/products/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])->name('products.destroy');
