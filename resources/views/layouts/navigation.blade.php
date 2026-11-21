@@ -725,7 +725,129 @@
                             </div>
                         </div>
 
-                        <!-- 5. Setup & Master Data (2-Column Mega Dropdown - Exact to Reference Image) -->
+                        <!-- 5. Reports & Analytics (2-Column Mega Dropdown) -->
+                        <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
+                            <button @click="open = !open" type="button"
+                                    class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('reports.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
+                                <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('reports.*') ? 'text-white' : 'text-slate-500' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                <span>{{ __('Reports & Analytics') }}</span>
+                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('reports.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+
+                            <div x-show="open"
+                                 x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-200"
+                                 x-transition:enter-start="opacity-0 -translate-y-2 scale-95"
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-120"
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
+                                 class="absolute left-0 mt-2 w-[550px] sm:w-[580px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
+                                 style="display: none; width: 570px; min-width: 530px; max-width: calc(100vw - 2rem);">
+                                
+                                <div class="grid grid-cols-2 mega-dropdown-grid divide-x divide-slate-100 gap-x-2">
+                                    <!-- Column 1: Core Procurement Reports -->
+                                    <div class="pr-2 space-y-1 mega-dropdown-col">
+                                        <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-amber-700 border-b border-amber-50 flex items-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                            <span>Master & Procurement</span>
+                                        </div>
+
+                                        <!-- Master Data Management -->
+                                        <a href="{{ route('reports.master-data') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('reports.master-data') ? 'bg-amber-50 text-amber-900 font-black' : 'text-slate-700 hover:text-amber-800' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-amber-100 text-amber-800 border-b-2 border-amber-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-amber-800 flex items-center gap-1.5 truncate">
+                                                    <span>Master Data Management</span>
+                                                    <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 border border-amber-200">CORE</span>
+                                                </div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Years, heads, cost center & item breakdown</div>
+                                            </div>
+                                        </a>
+
+                                        <!-- Daily Billing Report -->
+                                        <a href="{{ route('bills.daily-report') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('bills.daily-report') ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Daily Billing Report</div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Day-to-day processing ledger & totals</div>
+                                            </div>
+                                        </a>
+
+                                        <!-- Tenders & Work Orders -->
+                                        <a href="{{ route('tenders.reports') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.reports') ? 'bg-emerald-50 text-[#0d9467] font-black' : 'text-slate-700 hover:text-[#0d9467]' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0d9467] flex items-center gap-1.5 truncate">
+                                                    <span>Tenders & Work Orders</span>
+                                                    <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-emerald-100 text-[#0d9467] border border-emerald-200">Audit</span>
+                                                </div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Won contracts, CDR security & fees</div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <!-- Column 2: Financial Compliance & Overview Hub -->
+                                    <div class="pl-2 space-y-1 mega-dropdown-col">
+                                        <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0056d2] border-b border-blue-50 flex items-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                            <span>Finance & Directory</span>
+                                        </div>
+
+                                        <!-- Budget Releases -->
+                                        <a href="{{ route('releases.index') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('releases.*') ? 'bg-indigo-50 text-[#312e81] font-black' : 'text-slate-700 hover:text-[#312e81]' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-indigo-100 text-[#312e81] border-b-2 border-indigo-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#312e81] truncate">Budget & Releases</div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Ceiling, expenditure & released balances</div>
+                                            </div>
+                                        </a>
+
+                                        <!-- Cheques & AGPR Register -->
+                                        <a href="{{ route('cheques.index') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('cheques.*') ? 'bg-amber-50 text-[#854d0e] font-black' : 'text-slate-700 hover:text-[#854d0e]' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-amber-100 text-[#854d0e] border-b-2 border-amber-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#854d0e] flex items-center gap-1.5 truncate">
+                                                    <span>Cheques Register</span>
+                                                    <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-amber-100 text-[#854d0e] border border-amber-200">GST/SST</span>
+                                                </div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Deductions, status & AGPR delivery</div>
+                                            </div>
+                                        </a>
+
+                                        <!-- Reports Hub -->
+                                        <a href="{{ route('reports.index') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('reports.index') ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">All Reports Hub</div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Comprehensive analytics directory</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Setup & Master Data (2-Column Mega Dropdown - Exact to Reference Image) -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
                                     class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
@@ -965,6 +1087,32 @@
                     </a>
                     <a href="{{ route('expenses.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>Operational Expenses</span>
+                    </a>
+                </div>
+
+                <!-- Reports & Analytics Section -->
+                <div class="space-y-1">
+                    <div class="px-3 text-[10px] font-black uppercase tracking-wider text-amber-700 flex items-center justify-between">
+                        <span>Reports & Analytics</span>
+                        <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 border border-amber-200">CORE</span>
+                    </div>
+                    <a href="{{ route('reports.master-data') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                        <span>Master Data Management</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 font-bold">MDM</span>
+                    </a>
+                    <a href="{{ route('bills.daily-report') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                        <span>Daily Billing Report</span>
+                    </a>
+                    <a href="{{ route('tenders.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                        <span>Tenders & Work Orders Report</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Audit</span>
+                    </a>
+                    <a href="{{ route('releases.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                        <span>Budget & Releases Report</span>
+                    </a>
+                    <a href="{{ route('reports.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                        <span>All Reports & Analytics Hub</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-blue-100 text-blue-800">Hub</span>
                     </a>
                 </div>
 

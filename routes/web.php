@@ -102,6 +102,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/activity-logs', [\App\Http\Controllers\ActivityLogController::class, 'index'])->name('activity-logs.index');
     Route::post('/activity-logs/purge', [\App\Http\Controllers\ActivityLogController::class, 'purge'])->name('activity-logs.purge');
 
+    // Reports & Analytics Hub & Master Data Management
+    Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/master-data', [\App\Http\Controllers\ReportController::class, 'masterData'])->name('reports.master-data');
+    Route::get('/reports/master-data/export', [\App\Http\Controllers\ReportController::class, 'exportMasterData'])->name('reports.master-data.export');
+
     // Finance, Cashbook & Bank Accounts
     Route::get('/finance', [\App\Http\Controllers\FinanceController::class, 'index'])->name('finance.index');
     Route::get('/finance/cashbook', [\App\Http\Controllers\FinanceController::class, 'cashbook'])->name('finance.cashbook');
