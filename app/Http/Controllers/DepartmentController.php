@@ -43,6 +43,12 @@ class DepartmentController extends Controller
             'budget_allocated' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'status' => 'required|in:active,inactive',
+        ], [
+            'name.required' => 'Department Name enter karna lazmi hai.',
+            'code.required' => 'Cost Center enter karna lazmi hai.',
+            'code.unique' => 'Yeh Cost Center pehle se registered hai.',
+            'budget_allocated.required' => 'Annual Budget enter karna lazmi hai.',
+            'budget_allocated.min' => 'Annual Budget 0 ya us se zyada hona chahiye.',
         ]);
 
         $dept = Department::create($validated);
@@ -94,6 +100,12 @@ class DepartmentController extends Controller
             'budget_allocated' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'status' => 'required|in:active,inactive',
+        ], [
+            'name.required' => 'Department Name enter karna lazmi hai.',
+            'code.required' => 'Cost Center enter karna lazmi hai.',
+            'code.unique' => 'Yeh Cost Center pehle se registered hai.',
+            'budget_allocated.required' => 'Annual Budget enter karna lazmi hai.',
+            'budget_allocated.min' => 'Annual Budget 0 ya us se zyada hona chahiye.',
         ]);
 
         $department->update($validated);
