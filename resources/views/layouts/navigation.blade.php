@@ -546,17 +546,6 @@
                                             <span>Bills & Invoices</span>
                                         </div>
 
-                                        <a href="{{ route('bills.index') }}" @click="open = false" 
-                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('bills.index') ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
-                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
-                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Bills & Invoices Ledger</div>
-                                                <div class="text-[11px] font-medium text-slate-500 truncate">Department bills, taxes & items</div>
-                                            </div>
-                                        </a>
-
                                         <a href="{{ route('bills.create') }}" @click="open = false" 
                                            class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('bills.create') ? 'bg-emerald-50 text-[#0d9467] font-black' : 'text-slate-700 hover:text-[#0d9467]' }}">
                                             <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
@@ -565,6 +554,17 @@
                                             <div class="flex-1 min-w-0">
                                                 <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0d9467] truncate">+ Create New Bill</div>
                                                 <div class="text-[11px] font-medium text-slate-500 truncate">Official invoice with letterhead</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="{{ route('bills.index') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('bills.index') ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Bills & Invoices Ledger</div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Department bills, taxes & items</div>
                                             </div>
                                         </a>
                                     </div>
