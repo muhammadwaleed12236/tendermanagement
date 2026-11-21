@@ -688,11 +688,15 @@
                             </div>
                         </div>
 
-                        <!-- Right: Mini 3-bar indicator -->
-                        <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
-                            <span class="w-1.5 rounded-full bg-blue-300" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full bg-blue-400" style="height: 70%;"></span>
-                            <span class="w-1.5 rounded-full" style="background-color: #0056d2; height: 100%;"></span>
+                        <!-- Right: Dynamic Donut Circle -->
+                        @php $bPct = (int)($stats['billed_pct'] ?? 68); @endphp
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $bPct }}% Billed">
+                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $bPct)) / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[10px] font-black font-mono text-[#0056d2]">{{ $bPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -728,25 +732,29 @@
                             </div>
                         </div>
 
-                        <!-- Right: Mini 3-bar indicator -->
-                        <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
-                            <span class="w-1.5 rounded-full bg-emerald-300" style="height: 50%;"></span>
-                            <span class="w-1.5 rounded-full bg-emerald-400" style="height: 75%;"></span>
-                            <span class="w-1.5 rounded-full bg-emerald-600" style="height: 100%;"></span>
+                        <!-- Right: Dynamic Donut Circle -->
+                        @php $cValPct = (int)($stats['cheque_pct'] ?? 82); @endphp
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $cValPct }}% Cleared">
+                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $cValPct)) / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[10px] font-black font-mono text-[#0d9467]">{{ $cValPct }}%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- CARD 3: TOTAL BILL AMOUNT (Sunset Orange 3D Theme) -->
+                <!-- CARD 3: TOTAL COMMISSION (Sunset Orange 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-orange">
-                        <!-- Left: 3D Candy Icon Button (Exact to media_1795215304621_e107bf6f) -->
+                        <!-- Left: Dedicated Commission Icon Button -->
                         <div class="stat-candy-icon candy-icon-orange">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                                <path d="M21 3v5h-5"/>
-                                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-                                <path d="M8 16H3v5"/>
+                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="9.5"></circle>
+                                <path d="M15 8.5l-6 7"></path>
+                                <circle cx="9.5" cy="9.5" r="1.5" fill="currentColor"></circle>
+                                <circle cx="14.5" cy="14.5" r="1.5" fill="currentColor"></circle>
                             </svg>
                         </div>
 
@@ -773,16 +781,20 @@
                             </div>
                         </div>
 
-                        <!-- Right: Mini 3-bar indicator -->
-                        <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
-                            <span class="w-1.5 rounded-full bg-orange-300" style="height: 75%;"></span>
-                            <span class="w-1.5 rounded-full bg-orange-400" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full" style="background-color: #cd3805; height: 60%;"></span>
+                        <!-- Right: Dynamic Donut Circle -->
+                        @php $commPct = (int)($stats['commission_pct'] ?? 45); @endphp
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $commPct }}% Commission Rate">
+                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $commPct)) / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[10px] font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- CARD 4: Available Surplus (Deep Maroon / Dark Red 3D Theme) -->
+                <!-- CARD 4: VENDOR PROFIT (Deep Maroon / Dark Red 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-maroon">
                         <!-- Left: 3D Candy Icon Button -->
@@ -794,13 +806,34 @@
                             </svg>
                         </div>
 
-                        <!-- Center: Content -->
-                        <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">VENDOR PROFIT</span>
-                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
+                        <!-- Center: Content with Eye Toggle Button -->
+                        <div x-data="{ showProfit: false }" class="min-w-0 flex-1 px-1">
+                            <div class="flex items-center gap-1.5">
+                                <span class="stat-card-label">VENDOR PROFIT</span>
+                                <button type="button" 
+                                        @click="showProfit = !showProfit" 
+                                        class="p-0.5 rounded text-rose-900/60 hover:text-[#881337] hover:bg-rose-100/60 transition focus:outline-none" 
+                                        :title="showProfit ? 'Hide Balance' : 'Show Balance'">
+                                    <svg x-show="showProfit" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    <svg x-show="!showProfit" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            @php
+                                $profitVal = (float)($stats['total_vendor_profit'] > 0 ? $stats['total_vendor_profit'] : ($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588));
+                            @endphp
+                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap select-none">
                                 <span class="stat-card-currency">Rs.</span>
-                                <span data-counter-target="{{ (int)($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}">
-                                    {{ number_format($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588) }}
+                                <span x-show="showProfit" data-counter-target="{{ (int)$profitVal }}">
+                                    {{ number_format($profitVal) }}
+                                </span>
+                                <span x-show="!showProfit" class="tracking-widest font-mono text-rose-950 font-black cursor-pointer" @click="showProfit = true">
+                                    ••••••••
                                 </span>
                             </div>
                             <div class="mt-1 flex items-center">
@@ -814,11 +847,15 @@
                             </div>
                         </div>
 
-                        <!-- Right: Mini 3-bar indicator -->
-                        <div class="flex items-end gap-1 h-7 opacity-80 self-center pl-0.5 shrink-0">
-                            <span class="w-1.5 rounded-full bg-rose-200" style="height: 45%;"></span>
-                            <span class="w-1.5 rounded-full bg-rose-400" style="height: 80%;"></span>
-                            <span class="w-1.5 rounded-full" style="background-color: #881337; height: 100%;"></span>
+                        <!-- Right: Dynamic Donut Circle -->
+                        @php $profPct = (int)($stats['profit_pct'] ?? 88); @endphp
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $profPct }}% Profit Margin">
+                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $profPct)) / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[10px] font-black font-mono text-[#881337]">{{ $profPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -930,20 +967,25 @@
                     </div>
 
                     <!-- Middle: Donut Chart with fixed explicit sizing + Legend -->
+                    @php
+                        $baSalesPct = (int)($stats['sales_pct'] ?? 68);
+                        $baPurchPct = (int)($stats['purchases_pct'] ?? 32);
+                        $baSalesOffset = round(238.76 - (238.76 * $baSalesPct / 100), 1);
+                    @endphp
                     <div class="flex items-center justify-center gap-3 sm:gap-4 py-2">
                         <!-- Donut SVG with strict bounded dimensions -->
                         <div class="relative shrink-0 flex items-center justify-center" style="width: 105px; height: 105px;">
                             <svg width="105" height="105" viewBox="0 0 100 100" class="-rotate-90">
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="13"/>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#881337" stroke-width="13"
-                                        stroke-dasharray="238.7" stroke-dashoffset="162" stroke-linecap="round"/>
+                                        stroke-dasharray="238.76" stroke-dashoffset="0" stroke-linecap="round"/>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#0056d2" stroke-width="13"
-                                        stroke-dasharray="238.7" stroke-dashoffset="76" stroke-linecap="round"/>
+                                        stroke-dasharray="238.76" stroke-dashoffset="{{ $baSalesOffset }}" stroke-linecap="round"/>
                             </svg>
 
                             <!-- Center Text -->
                             <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                                <span class="text-xl font-black font-mono text-slate-900 leading-none" data-counter-target="68" data-counter-suffix="%">68%</span>
+                                <span class="text-xl font-black font-mono text-slate-900 leading-none" data-counter-target="{{ $baSalesPct }}" data-counter-suffix="%">{{ $baSalesPct }}%</span>
                                 <span class="text-[9px] font-bold text-slate-400 mt-0.5">Growth</span>
                             </div>
                         </div>
@@ -953,12 +995,12 @@
                             <div class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #0056d2;"></span>
                                 <span class="text-slate-600">Sales</span>
-                                <span class="font-mono text-slate-900 ml-1.5 font-black">68%</span>
+                                <span class="font-mono text-slate-900 ml-1.5 font-black">{{ $baSalesPct }}%</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #881337;"></span>
                                 <span class="text-slate-600">Purchases</span>
-                                <span class="font-mono text-slate-900 ml-1.5 font-black">32%</span>
+                                <span class="font-mono text-slate-900 ml-1.5 font-black">{{ $baPurchPct }}%</span>
                             </div>
                         </div>
                     </div>

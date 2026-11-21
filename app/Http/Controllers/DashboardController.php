@@ -35,6 +35,17 @@ class DashboardController extends Controller
         }
         $totalVendorProfit = (float) Cheque::sum('vendor_profit');
 
+        // Dynamic Percentages for Donut Indicators
+        $billedPct = $totalBudget > 0 ? min(100, max(5, round(($totalBilled / $totalBudget) * 100))) : 68;
+        $chequePct = $totalBilled > 0 ? min(100, max(5, round(($totalCheques / $totalBilled) * 100))) : 82;
+        $commissionPct = $totalCheques > 0 ? min(100, max(1, round(($totalCommission / $totalCheques) * 100))) : 35;
+        $profitPct = $totalCheques > 0 ? min(100, max(1, round(($totalVendorProfit / $totalCheques) * 100))) : 74;
+
+        // Analytics Donut Flow
+        $analyticsFlow = $totalBilled + $totalCheques;
+        $salesPct = $analyticsFlow > 0 ? round(($totalBilled / $analyticsFlow) * 100) : 68;
+        $purchasesPct = 100 - $salesPct;
+
         // System-wide Global Financial & Operational Stats
         $stats = [
             'total_departments' => Department::count(),
@@ -48,6 +59,12 @@ class DashboardController extends Controller
             'total_pending_amount' => $pendingBillsAmount,
             'available_balance' => $availableBalance,
             'compliance_rate' => $complianceRate,
+            'billed_pct' => $billedPct,
+            'cheque_pct' => $chequePct,
+            'commission_pct' => $commissionPct,
+            'profit_pct' => $profitPct,
+            'sales_pct' => $salesPct,
+            'purchases_pct' => $purchasesPct,
             'total_tenders' => Tender::count(),
             'active_tenders' => Tender::where('status', 'published')
                 ->where('submission_deadline', '>=', now())
