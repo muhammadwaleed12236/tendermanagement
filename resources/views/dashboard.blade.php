@@ -38,91 +38,91 @@
         .card-theme-blue {
             background: #ffffff;
             border-radius: 1.45rem;
-            border: 2px solid #0056d2;
-            border-bottom: 5.5px solid #0056d2;
-            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2.5px solid #0056d2;
+            border-bottom: 6px solid #07255e;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-blue:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #07255e;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.32);
+            border-bottom: 7.5px solid #07255e;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
         }
 
-        .card-theme-maroon {
+        .card-theme-purple, .card-theme-maroon {
             background: #ffffff;
             border-radius: 1.45rem;
-            border: 2px solid #881337;
-            border-bottom: 5.5px solid #881337;
-            box-shadow: 0 16px 32px -6px rgba(136, 19, 55, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2.5px solid #7c3aed;
+            border-bottom: 6px solid #5b21b6;
+            box-shadow: 0 16px 32px -6px rgba(124, 58, 237, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
-        .card-theme-maroon:hover {
+        .card-theme-purple:hover, .card-theme-maroon:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #4c0519;
-            box-shadow: 0 24px 44px -8px rgba(136, 19, 55, 0.32);
+            border-bottom: 7.5px solid #4c1d95;
+            box-shadow: 0 24px 44px -8px rgba(124, 58, 237, 0.35);
         }
 
         .card-theme-orange {
             background: #ffffff;
             border-radius: 1.45rem;
-            border: 2px solid #cd3805;
-            border-bottom: 5.5px solid #cd3805;
-            box-shadow: 0 16px 32px -6px rgba(205, 56, 5, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2.5px solid #cd3805;
+            border-bottom: 6px solid #9a3412;
+            box-shadow: 0 16px 32px -6px rgba(205, 56, 5, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-orange:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #9a3412;
-            box-shadow: 0 24px 44px -8px rgba(205, 56, 5, 0.32);
-        }
-
-        .card-theme-amber {
-            background: #ffffff;
-            border-radius: 1.45rem;
-            border: 2px solid #0056d2;
-            border-bottom: 5.5px solid #0056d2;
-            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-        .card-theme-amber:hover {
-            transform: translateY(-4px);
-            border-bottom: 7px solid #07255e;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.32);
+            border-bottom: 7.5px solid #7c2d12;
+            box-shadow: 0 24px 44px -8px rgba(205, 56, 5, 0.35);
         }
 
         .card-theme-green {
             background: #ffffff;
             border-radius: 1.45rem;
-            border: 2px solid #0d9467;
-            border-bottom: 5.5px solid #0d9467;
-            box-shadow: 0 16px 32px -6px rgba(13, 148, 103, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2.5px solid #0d9467;
+            border-bottom: 6px solid #064e3b;
+            box-shadow: 0 16px 32px -6px rgba(13, 148, 103, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-green:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #064e3b;
-            box-shadow: 0 24px 44px -8px rgba(13, 148, 103, 0.32);
+            border-bottom: 7.5px solid #064e3b;
+            box-shadow: 0 24px 44px -8px rgba(13, 148, 103, 0.35);
+        }
+
+        .card-theme-amber {
+            background: #ffffff;
+            border-radius: 1.45rem;
+            border: 2.5px solid #0056d2;
+            border-bottom: 6px solid #07255e;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+        .card-theme-amber:hover {
+            transform: translateY(-4px);
+            border-bottom: 7.5px solid #07255e;
+            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
         }
 
         .card-theme-tasks {
             background: #ffffff;
             border-radius: 1.45rem;
-            border: 2px solid #0056d2;
-            border-bottom: 5.5px solid #0056d2;
-            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.20), 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 2.5px solid #7c3aed;
+            border-bottom: 6px solid #5b21b6;
+            box-shadow: 0 16px 32px -6px rgba(124, 58, 237, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
         }
         .card-theme-tasks:hover {
             transform: translateY(-4px);
-            border-bottom: 7px solid #07255e;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.32);
+            border-bottom: 7.5px solid #4c1d95;
+            box-shadow: 0 24px 44px -8px rgba(124, 58, 237, 0.35);
         }
 
         /* Explicit Grid Definitions that NEVER break or collapse */
