@@ -1,20 +1,132 @@
+<style>
+    /* Animated Glowing Accent Strip between Tier 1 & Tier 2 */
+    @keyframes nav-shimmer {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .nav-accent-strip {
+        height: 2.5px;
+        width: 100%;
+        background: linear-gradient(90deg, #0056d2 0%, #38bdf8 25%, #0d9467 50%, #cd3805 75%, #0056d2 100%);
+        background-size: 250% 100%;
+        animation: nav-shimmer 7s ease-in-out infinite;
+    }
+
+    /* Tactile 3D Action Buttons with Smooth Push & Hover Lift */
+    .nav-btn-tender {
+        background-color: #0056d2;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-bottom: 3.5px solid #07255e;
+        box-shadow: 0 4px 14px -1px rgba(0, 86, 210, 0.4);
+        color: #ffffff;
+        font-weight: 900;
+        transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-btn-tender:hover {
+        transform: translateY(-2px);
+        background-color: #1a6fe3;
+        box-shadow: 0 8px 20px -1px rgba(0, 86, 210, 0.55);
+    }
+    .nav-btn-tender:active {
+        transform: translateY(1.5px);
+        border-bottom-width: 1.5px;
+        box-shadow: 0 2px 6px rgba(0, 86, 210, 0.25);
+    }
+
+    .nav-btn-bill {
+        background-color: #0d9467;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-bottom: 3.5px solid #064e3b;
+        box-shadow: 0 4px 14px -1px rgba(13, 148, 103, 0.4);
+        color: #ffffff;
+        font-weight: 900;
+        transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-btn-bill:hover {
+        transform: translateY(-2px);
+        background-color: #10b981;
+        box-shadow: 0 8px 20px -1px rgba(13, 148, 103, 0.55);
+    }
+    .nav-btn-bill:active {
+        transform: translateY(1.5px);
+        border-bottom-width: 1.5px;
+        box-shadow: 0 2px 6px rgba(13, 148, 103, 0.25);
+    }
+
+    /* Top Bar Generate Bill CTA */
+    .nav-btn-quick-bill {
+        background-color: #0056d2;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-bottom: 3.5px solid #07255e;
+        box-shadow: 0 4px 14px -1px rgba(0, 86, 210, 0.4);
+        color: #ffffff;
+        font-weight: 900;
+        transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-btn-quick-bill:hover {
+        transform: translateY(-2px);
+        background-color: #1a6fe3;
+        box-shadow: 0 8px 20px -1px rgba(0, 86, 210, 0.55);
+    }
+    .nav-btn-quick-bill:active {
+        transform: translateY(1.5px);
+        border-bottom-width: 1.5px;
+    }
+
+    /* Animated Navigation Links */
+    .nav-pill-item {
+        transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-pill-item:hover:not(.nav-pill-active) {
+        transform: translateY(-2px);
+        background-color: #eff6ff;
+        color: #0056d2;
+        box-shadow: 0 4px 12px -2px rgba(0, 86, 210, 0.18);
+    }
+    .nav-pill-active {
+        background-color: #0056d2 !important;
+        color: #ffffff !important;
+        border-bottom: 3.5px solid #07255e !important;
+        box-shadow: 0 4px 16px -2px rgba(0, 86, 210, 0.45) !important;
+        transform: translateY(-1px);
+    }
+    .nav-pill-active:hover {
+        transform: translateY(-2.5px);
+        box-shadow: 0 8px 22px -2px rgba(0, 86, 210, 0.55) !important;
+    }
+
+    /* Bell Ring Shake Animation on Hover */
+    @keyframes bell-ring {
+        0%, 100% { transform: rotate(0deg); }
+        15% { transform: rotate(16deg); }
+        30% { transform: rotate(-14deg); }
+        45% { transform: rotate(12deg); }
+        60% { transform: rotate(-8deg); }
+        75% { transform: rotate(4deg); }
+    }
+    .hover-bell:hover svg {
+        animation: bell-ring 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        transform-origin: top center;
+    }
+</style>
 <!-- Two-Tier ERP Navigation Header -->
 <div x-data="{ open: false }" class="sticky top-0 z-50 shadow-md">
     <!-- Top Bar: Executive Midnight Slate (#090d16) -->
     <div class="bg-[#090d16] border-b border-slate-800/80 text-white select-none shadow-sm" style="background: linear-gradient(90deg, #090d16 0%, #0f172a 45%, #0d1527 100%);">
-        <div class="max-w-full px-4 sm:px-6 lg:px-8 xl:px-10 h-14 flex items-center justify-between gap-4">
+        <div class="max-w-full px-4 sm:px-6 lg:px-8 xl:px-10 h-16 sm:h-17 flex items-center justify-between gap-4">
             <!-- Left: Logo & Company Pill -->
             <div class="flex items-center gap-3">
                 <!-- Logo Monogram & Name: ProWave Technologies -->
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 group">
-                    <div class="w-8 h-8 rounded-xl bg-[#0056d2] border border-sky-400/40 flex items-center justify-center font-black text-white text-xs shadow-md shadow-blue-500/20 group-hover:border-sky-300 transition">
+                    <div class="w-10 h-10 rounded-xl bg-[#0056d2] border border-sky-300/40 border-b-3 border-[#07255e] flex items-center justify-center font-black text-white text-sm shadow-md shadow-blue-500/25 group-hover:scale-105 group-hover:-rotate-3 transition duration-200">
                         PW
                     </div>
                     <div class="flex flex-col leading-tight">
-                        <span class="font-black text-sm sm:text-[15px] tracking-tight text-white whitespace-nowrap flex items-center gap-1.5">
+                        <span class="font-black text-[15px] sm:text-[17px] tracking-tight text-white whitespace-nowrap flex items-center gap-1.5">
                             PROWAVE <span class="text-sky-400 font-extrabold">TECHNOLOGIES</span>
                         </span>
-                        <span class="text-[10px] text-slate-400 font-semibold tracking-wider uppercase">
+                        <span class="text-[11px] text-slate-300 font-bold tracking-wider uppercase">
                             Tender & Procurement ERP
                         </span>
                     </div>
@@ -22,7 +134,7 @@
 
                 @auth
                     <!-- Dynamic Client Company Pill (Al-Madina Enterprises) -->
-                    <div class="hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/90 border border-slate-700/80 text-slate-200 text-xs sm:text-[13px] font-semibold whitespace-nowrap ms-1 shadow-2xs backdrop-blur-sm">
+                    <div class="hidden md:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-800/95 border border-slate-700 text-slate-200 text-xs sm:text-[13px] font-bold whitespace-nowrap ms-1.5 shadow-xs backdrop-blur-sm">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
                         <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Client:</span>
                         <span class="truncate max-w-[240px] font-bold text-white tracking-wide">
@@ -37,32 +149,32 @@
             <div class="flex items-center gap-3 sm:gap-3.5">
                 <!-- Phone Contact with Cyan Circular Icon -->
                 <a href="tel:+923259385085" class="inline-flex items-center gap-2 text-white font-bold text-xs sm:text-[13px] hover:text-sky-300 transition whitespace-nowrap">
-                    <span class="w-6 h-6 rounded-full bg-[#0056d2] flex items-center justify-center text-white shrink-0 shadow-xs">
+                    <span class="w-7 h-7 rounded-full bg-[#0056d2] border-b-2 border-[#07255e] flex items-center justify-center text-white shrink-0 shadow-xs">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
                     </span>
-                    <span class="font-mono tracking-tight text-xs sm:text-[13px] font-bold text-slate-200">+92 325 9385 085</span>
+                    <span class="font-mono tracking-tight text-xs sm:text-[13.5px] font-extrabold text-slate-200">+92 325 9385 085</span>
                 </a>
 
                 <!-- Vertical Divider -->
                 <span class="text-slate-700 hidden sm:inline">|</span>
 
                 <!-- Support Pill with Headset Icon -->
-                <a href="https://wa.me/923259385085" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs sm:text-[12.5px] font-bold transition shadow-xs whitespace-nowrap" title="Chat on WhatsApp">
+                <a href="https://wa.me/923259385085" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/95 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs sm:text-[13px] font-bold transition shadow-xs whitespace-nowrap hover:scale-105" title="Chat on WhatsApp">
                     <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                     <span>Support</span>
                 </a>
 
                 <!-- Online Status Pill -->
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-xs sm:text-[12.5px] font-semibold whitespace-nowrap">
+                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs sm:text-[13px] font-extrabold whitespace-nowrap">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>Online</span>
                 </span>
 
                 @auth
                     <!-- Quick Bill CTA Button (Vibrant 3D Gradient) -->
-                    <a href="{{ route('bills.create') }}" class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#0056d2] hover:bg-[#1a6fe3] text-white text-xs sm:text-[12.5px] font-bold transition shadow-sm border border-blue-400/30 whitespace-nowrap">
+                    <a href="{{ route('bills.create') }}" class="nav-btn-quick-bill hidden lg:inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-[13px] whitespace-nowrap">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         <span>Generate Bill</span>
                     </a>
@@ -74,7 +186,7 @@
                     @endphp
                     <div class="relative hidden sm:block" x-data="{ notifOpen: false }">
                         <button @click="notifOpen = !notifOpen" 
-                                class="relative p-2 text-slate-300 hover:text-white transition rounded-full hover:bg-slate-800/80 focus:outline-none"
+                                class="hover-bell relative p-2.5 text-slate-300 hover:text-white transition rounded-full hover:bg-slate-800/80 focus:outline-none"
                                 title="Notifications">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
@@ -253,16 +365,19 @@
         </div>
     </div>
 
+    <!-- Animated Accent Strip -->
+    <div class="nav-accent-strip"></div>
+
     <!-- Bottom Tier: Luminous Clean Glass Navigation Bar with Dropdowns -->
     <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200/90 text-slate-700 select-none shadow-xs">
         <div class="max-w-full px-4 sm:px-6 lg:px-8 xl:px-10">
-            <div class="flex items-center justify-between h-13 py-1 gap-3">
+            <div class="flex items-center justify-between h-15 sm:h-16 py-1.5 gap-3">
                 <!-- Navigation Items with Elegant Dropdowns -->
-                <div class="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 min-w-0">
+                <div class="hidden lg:flex items-center gap-1.5 xl:gap-2 flex-1 min-w-0">
                     @auth
                         <!-- 1. Dashboard -->
                         <a href="{{ route('dashboard') }}" 
-                           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('dashboard') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                           class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] whitespace-nowrap {{ request()->routeIs('dashboard') ? 'nav-pill-active font-black' : 'text-slate-800 hover:text-[#0056d2] font-extrabold' }}">
                             <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-slate-400' }}" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                             </svg>
@@ -272,7 +387,7 @@
                         <!-- 2. Tenders & EPAD 2.0 Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('tenders.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] whitespace-nowrap {{ request()->routeIs('tenders.*') ? 'nav-pill-active font-black' : 'text-slate-800 hover:text-[#0056d2] font-extrabold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('tenders.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                 </svg>
@@ -341,7 +456,7 @@
                         <!-- 3. Billing & Cheques Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] whitespace-nowrap {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'nav-pill-active font-black' : 'text-slate-800 hover:text-[#0056d2] font-extrabold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-400' }}" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                                 </svg>
@@ -420,7 +535,7 @@
                         <!-- 4. Budget & Finance Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] whitespace-nowrap {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'nav-pill-active font-black' : 'text-slate-800 hover:text-[#0056d2] font-extrabold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('finance.*') || request()->routeIs('releases.*') || request()->routeIs('expenses.*') || request()->routeIs('banks.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -493,7 +608,7 @@
                         <!-- 5. Setup & Master Data Dropdown -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                                    class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] whitespace-nowrap {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'nav-pill-active font-black' : 'text-slate-800 hover:text-[#0056d2] font-extrabold' }}">
                                 <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('departments.*') || request()->routeIs('companies.*') || request()->routeIs('products.*') || request()->routeIs('users.*') || request()->routeIs('activity-logs.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -609,7 +724,7 @@
 
                         <!-- 6. To-Do List & Tasks -->
                         <a href="{{ route('todos.index') }}" 
-                           class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs xl:text-[13px] whitespace-nowrap transition-all duration-150 {{ request()->routeIs('todos.*') ? 'bg-[#0056d2] text-white font-extrabold shadow-sm shadow-blue-500/25 border-b-2 border-[#0b327b]' : 'text-slate-700 hover:text-[#0056d2] hover:bg-blue-50/80 font-semibold' }}">
+                           class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] whitespace-nowrap {{ request()->routeIs('todos.*') ? 'nav-pill-active font-black' : 'text-slate-800 hover:text-[#0056d2] font-extrabold' }}">
                             <svg class="w-4 h-4 shrink-0 {{ request()->routeIs('todos.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                             </svg>
@@ -626,16 +741,16 @@
                     @endauth
                 </div>
 
-                <!-- Right Quick CTA Action Buttons -->
-                <div class="hidden lg:flex items-center gap-2 shrink-0">
-                    <a href="{{ route('tenders.create') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#0056d2] hover:text-[#0b327b] bg-blue-50 hover:bg-blue-100 border border-blue-200/90 px-3 py-1.5 rounded-xl transition shadow-2xs whitespace-nowrap">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-                        <span>+ New Tender</span>
+                <!-- Right Quick CTA Action Buttons (Solid 3D Tactile Buttons) -->
+                <div class="hidden lg:flex items-center gap-2.5 shrink-0">
+                    <a href="{{ route('tenders.create') }}" class="nav-btn-tender px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-[13px] inline-flex items-center gap-2 whitespace-nowrap">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                        <span>New Tender</span>
                     </a>
 
-                    <a href="{{ route('bills.create') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/90 px-3 py-1.5 rounded-xl transition shadow-2xs whitespace-nowrap">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
-                        <span>+ New Bill</span>
+                    <a href="{{ route('bills.create') }}" class="nav-btn-bill px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-[13px] inline-flex items-center gap-2 whitespace-nowrap">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                        <span>New Bill</span>
                     </a>
                 </div>
             </div>
