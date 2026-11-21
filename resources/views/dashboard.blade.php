@@ -837,7 +837,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #0056d2; border-bottom: 2.5px solid #07255e;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Sales & Purchases Overview</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Sales & Purchases Overview</h2>
                         </div>
 
                         <div class="flex items-center gap-2 shrink-0">
@@ -921,7 +921,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #881337; border-bottom: 2.5px solid #4c0519;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Business Analytics</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Business Analytics</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2.5 py-1">
                             <span>This Year</span>
@@ -996,7 +996,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #cd3805; border-bottom: 2.5px solid #9a3412;">
                                 <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Activities</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Activities</h2>
                         </div>
                         <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#cd3805] hover:text-[#9a3412] shrink-0 whitespace-nowrap">View All ›</a>
                     </div>
@@ -1090,7 +1090,7 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-2">
-                                <h2 class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Active Tenders & Procurement Board</h2>
+                                <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">Active Tenders & Procurement Board</h2>
                                 <span class="px-2 py-0.5 rounded-full text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200">
                                     {{ $stats['total_tenders'] ?? 7 }} Total
                                 </span>
@@ -1203,7 +1203,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-amber-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="text-base shrink-0">🏆</span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Top Selling Products</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Top Selling Products</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2 py-1">
                             <span>This Month</span>
@@ -1279,7 +1279,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-emerald-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="text-base shrink-0">🧊</span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Stock Status</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Stock Status</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2 py-1">
                             <span>All</span>
@@ -1330,7 +1330,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-sky-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="text-base shrink-0">🧮</span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Financial Overview</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Financial Overview</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2 py-1">
                             <span>This Month</span>
@@ -1374,7 +1374,7 @@
                     <div class="flex items-center justify-between pb-3 border-b border-blue-100 min-w-0">
                         <div class="flex items-center gap-2 min-w-0">
                             <span class="w-5 h-5 rounded-full bg-[#0056d2] text-white flex items-center justify-center text-[10px] font-black shrink-0">✔</span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Upcoming Tasks</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Upcoming Tasks</h2>
                         </div>
                         <a href="{{ route('todos.index') }}" class="text-xs font-black text-[#0056d2] hover:text-blue-900 shrink-0 whitespace-nowrap">View All ›</a>
                     </div>
@@ -1434,7 +1434,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #0056d2; border-bottom: 2.5px solid #07255e;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Department Performance</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Department Performance</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2.5 py-1">
                             <span>This Year</span>
@@ -1516,7 +1516,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #881337; border-bottom: 2.5px solid #4c0519;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-black text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Invoices</h2>
+                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Invoices</h2>
                         </div>
                         <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#881337] hover:text-[#4c0519] shrink-0 whitespace-nowrap">View All →</a>
                     </div>
@@ -1602,7 +1602,7 @@
                                 <svg class="w-3.5 h-3.5 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                                 <span>AI</span>
                             </span>
-                            <h2 class="text-xs sm:text-sm font-black text-white tracking-tight">Smart Business Insight</h2>
+                            <h2 class="text-xs sm:text-sm font-bold text-white tracking-tight">Smart Business Insight</h2>
                         </div>
                         <span class="text-[10px] text-emerald-300 font-extrabold flex items-center gap-1 shrink-0">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
