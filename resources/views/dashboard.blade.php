@@ -690,13 +690,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $bPct = (int)($stats['billed_pct'] ?? 68); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $bPct }}% Billed">
-                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $bPct }}% Billed">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $bPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-[10px] font-black font-mono text-[#0056d2]">{{ $bPct }}%</span>
+                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">{{ $bPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -734,13 +734,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $cValPct = (int)($stats['cheque_pct'] ?? 82); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $cValPct }}% Cleared">
-                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $cValPct }}% Cleared">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $cValPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-[10px] font-black font-mono text-[#0d9467]">{{ $cValPct }}%</span>
+                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $cValPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -783,13 +783,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $commPct = (int)($stats['commission_pct'] ?? 45); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $commPct }}% Commission Rate">
-                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $commPct }}% Commission Rate">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $commPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-[10px] font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
+                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -849,13 +849,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $profPct = (int)($stats['profit_pct'] ?? 88); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 44px; height: 44px;" title="{{ $profPct }}% Profit Margin">
-                            <svg class="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $profPct }}% Profit Margin">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $profPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-[10px] font-black font-mono text-[#881337]">{{ $profPct }}%</span>
+                            <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $profPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -974,8 +974,8 @@
                     @endphp
                     <div class="flex items-center justify-center gap-3 sm:gap-4 py-2">
                         <!-- Donut SVG with strict bounded dimensions -->
-                        <div class="relative shrink-0 flex items-center justify-center" style="width: 105px; height: 105px;">
-                            <svg width="105" height="105" viewBox="0 0 100 100" class="-rotate-90">
+                        <div class="relative shrink-0 flex items-center justify-center" style="width: 125px; height: 125px;">
+                            <svg width="125" height="125" viewBox="0 0 100 100" class="-rotate-90">
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="13"/>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#881337" stroke-width="13"
                                         stroke-dasharray="238.76" stroke-dashoffset="0" stroke-linecap="round"/>
@@ -985,8 +985,8 @@
 
                             <!-- Center Text -->
                             <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                                <span class="text-xl font-black font-mono text-slate-900 leading-none" data-counter-target="{{ $baSalesPct }}" data-counter-suffix="%">{{ $baSalesPct }}%</span>
-                                <span class="text-[9px] font-bold text-slate-400 mt-0.5">Growth</span>
+                                <span class="text-2xl font-black font-mono text-slate-900 leading-none" data-counter-target="{{ $baSalesPct }}" data-counter-suffix="%">{{ $baSalesPct }}%</span>
+                                <span class="text-[10px] font-bold text-slate-400 mt-1">Growth</span>
                             </div>
                         </div>
 
@@ -1330,8 +1330,8 @@
                     </div>
 
                     <div class="flex items-center justify-center gap-3 py-1">
-                        <div class="relative shrink-0 flex items-center justify-center" style="width: 100px; height: 100px;">
-                            <svg width="100" height="100" viewBox="0 0 100 100" class="-rotate-90">
+                        <div class="relative shrink-0 flex items-center justify-center" style="width: 120px; height: 120px;">
+                            <svg width="120" height="120" viewBox="0 0 100 100" class="-rotate-90">
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="12"/>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#ef4444" stroke-width="12"
                                         stroke-dasharray="238.7" stroke-dashoffset="215"/>
@@ -1341,8 +1341,8 @@
                                         stroke-dasharray="238.7" stroke-dashoffset="67" stroke-linecap="round"/>
                             </svg>
                             <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                                <span class="text-lg font-black font-mono text-slate-900 leading-none" data-counter-target="72" data-counter-suffix="%">72%</span>
-                                <span class="text-[8px] font-bold text-slate-400 mt-0.5">In Stock</span>
+                                <span class="text-xl font-black font-mono text-slate-900 leading-none" data-counter-target="72" data-counter-suffix="%">72%</span>
+                                <span class="text-[9px] font-bold text-slate-400 mt-1">In Stock</span>
                             </div>
                         </div>
 

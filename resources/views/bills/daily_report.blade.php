@@ -264,8 +264,8 @@
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Bill CreateDate</th>
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Bill No</th>
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Quarter</th>
-                                <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Head of Account</th>
-                                <th class="py-2.5 px-4 text-left font-black border-r border-slate-400/60 min-w-[200px]">Head Description</th>
+                                <th class="py-2.5 px-2 text-center font-black border-r border-slate-400/60 whitespace-nowrap w-24">Head of Account</th>
+                                <th class="py-2.5 px-4 text-left font-black border-r border-slate-400/60 min-w-[280px]">Head Description</th>
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Cost Center</th>
                                 <th class="py-2.5 px-4 text-left font-black border-r border-slate-400/60 min-w-[220px]">Department Name</th>
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">GST/SST</th>
@@ -314,13 +314,13 @@
                                         {{ $bill->quarter_display }}
                                     </td>
 
-                                    <!-- Head of Account -->
-                                    <td class="py-2 px-3 text-center font-mono font-bold text-slate-900 border-r border-slate-300 whitespace-nowrap">
+                                    <!-- Head of Account (Compact width) -->
+                                    <td class="py-2 px-2 text-center font-mono font-bold text-slate-900 border-r border-slate-300 whitespace-nowrap w-24">
                                         {{ $bill->head_code_display }}
                                     </td>
 
-                                    <!-- Head Description -->
-                                    <td class="py-2 px-4 text-left font-semibold text-slate-800 border-r border-slate-300">
+                                    <!-- Head Description (Expanded space) -->
+                                    <td class="py-2 px-4 text-left font-semibold text-slate-800 border-r border-slate-300 min-w-[280px]">
                                         {{ $bill->head_description_display }}
                                     </td>
 

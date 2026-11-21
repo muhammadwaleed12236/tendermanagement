@@ -116,9 +116,12 @@ class Bill extends Model
     public function getHeadCodeDisplayAttribute(): string
     {
         if (!empty($this->head_code)) {
-            return $this->head_code;
+            if (preg_match('/(A\d{4,5})/i', trim($this->head_code), $m)) {
+                return strtoupper($m[1]);
+            }
+            return trim($this->head_code);
         }
-        if (!empty($this->head_of_account) && preg_match('/^(A\d{4,5})/i', trim($this->head_of_account), $m)) {
+        if (!empty($this->head_of_account) && preg_match('/(A\d{4,5})/i', trim($this->head_of_account), $m)) {
             return strtoupper($m[1]);
         }
         return 'A03970';
@@ -127,15 +130,18 @@ class Bill extends Model
     public function getHeadDescriptionDisplayAttribute(): string
     {
         if (!empty($this->head_description)) {
-            return $this->head_description;
+            $desc = trim($this->head_description);
+            if (!preg_match('/^(mr|ms|mrs|dr)\.?\s+/i', $desc) && !str_contains(strtolower($desc), 'ali raza')) {
+                return $desc;
+            }
         }
         if (!empty($this->head_of_account)) {
             $clean = preg_replace('/^(A\d{4,5})\s*[-:]*\s*/i', '', trim($this->head_of_account));
-            if (!empty($clean)) {
+            if (!empty($clean) && !preg_match('/^(mr|ms|mrs|dr)\.?\s+/i', $clean) && !str_contains(strtolower($clean), 'ali raza')) {
                 return $clean;
             }
         }
-        return $this->milestone_description ?: 'General Procurement & Supplies';
+        return $this->milestone_description ?: 'Others';
     }
 
     public function getCostCenterCodeDisplayAttribute(): string
