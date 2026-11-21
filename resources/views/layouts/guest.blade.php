@@ -51,11 +51,26 @@
                 transition: background 0.5s ease;
             }
 
+            body {
+                font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+                background-color: #080d1a;
+                color: #e2e8f0;
+                min-height: 100vh;
+                width: 100%;
+                overflow-x: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                transition: background 0.5s ease;
+            }
+
             body.lamp-lit {
-                background: radial-gradient(circle at 35% 50%, #151d30 0%, #0d1322 50%, #070a12 100%);
+                background: radial-gradient(ellipse 90% 80% at 35% 45%, #142242 0%, #0b1426 45%, #050811 100%);
+                background-attachment: fixed;
             }
             body.lamp-off {
-                background: radial-gradient(circle at 35% 50%, #0e1422 0%, #05080f 100%);
+                background: radial-gradient(ellipse 90% 80% at 50% 50%, #0b1324 0%, #04060c 100%);
+                background-attachment: fixed;
             }
 
             /* 4-Color Floating Dust Particles */
@@ -157,15 +172,15 @@
             /* Executive 3D Login Card Matching Dashboard System Theme */
             .luxury-card {
                 width: 100%;
-                max-width: 470px;
-                background: rgba(15, 23, 42, 0.95);
-                backdrop-filter: blur(24px);
-                -webkit-backdrop-filter: blur(24px);
-                border: 2px solid #334155;
+                max-width: 450px;
+                background: rgba(11, 18, 33, 0.96);
+                backdrop-filter: blur(28px);
+                -webkit-backdrop-filter: blur(28px);
+                border: 1.5px solid rgba(255, 255, 255, 0.1);
                 border-bottom: 5px solid #0056d2;
                 border-radius: 1.75rem;
                 padding: 2.25rem 2rem;
-                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 35px -5px rgba(0, 86, 210, 0.3);
+                box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px -5px rgba(0, 86, 210, 0.35);
                 position: relative;
                 z-index: 20;
             }
