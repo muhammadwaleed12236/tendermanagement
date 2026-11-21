@@ -47,7 +47,7 @@
                         <span class="text-xs text-slate-400">All fields marked with <span class="text-rose-500">*</span> are mandatory</span>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2.2fr_2.2fr_1fr_1fr] gap-5 items-start">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
                         <!-- 1. Target Department -->
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
@@ -77,37 +77,62 @@
                             @error('department_id') <span class="text-[11px] text-rose-500 block mt-1">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- 2. Bill Head / Cost Center Title -->
+                        <!-- 2. Head of Account (Code & Description) -->
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-xs font-bold text-slate-700 uppercase">Bill Head / Cost Center Title</label>
+                                <label class="text-xs font-bold text-slate-700 uppercase">Head of Account & Description</label>
                             </div>
-                            <input type="text" name="head_of_account" id="head_of_account" value="{{ old('head_of_account') }}" placeholder="e.g. Office of the XYZ" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 py-2.5">
+                            <div class="grid grid-cols-5 gap-1.5">
+                                <input type="text" name="head_code" id="head_code" value="{{ old('head_code', 'A03970') }}" placeholder="Code (e.g. A13801)" class="col-span-2 text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                                <input type="text" name="head_description" id="head_description" value="{{ old('head_description') }}" placeholder="Description (e.g. Others)" class="col-span-3 text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                            </div>
+                            <input type="hidden" name="head_of_account" id="head_of_account" value="{{ old('head_of_account') }}">
                             <div class="mt-1.5 text-[11px] text-slate-400">
-                                Auto-loaded from department
+                                Head code & budget line description
                             </div>
                         </div>
 
-                        <!-- 3. Bill / Cash Memo # -->
+                        <!-- 3. Quarter & Cost Center -->
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill / Memo # <span class="text-rose-500">*</span></label>
-                            <input type="text" name="bill_number" value="{{ old('bill_number', $suggestedBillNumber ?? '11710') }}" placeholder="e.g. 11710" required class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 font-mono py-2.5 @error('bill_number') border-rose-500 @enderror">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Quarter</label>
+                                    <select name="quarter" id="quarter_select" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 bg-white">
+                                        <option value="1st Qtr" {{ old('quarter', '1st Qtr') == '1st Qtr' ? 'selected' : '' }}>1st Qtr</option>
+                                        <option value="2nd Qtr" {{ old('quarter') == '2nd Qtr' ? 'selected' : '' }}>2nd Qtr</option>
+                                        <option value="3rd Qtr" {{ old('quarter') == '3rd Qtr' ? 'selected' : '' }}>3rd Qtr</option>
+                                        <option value="4th Qtr" {{ old('quarter') == '4th Qtr' ? 'selected' : '' }}>4th Qtr</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Cost Center</label>
+                                    <input type="text" name="cost_center" id="cost_center_input" value="{{ old('cost_center') }}" placeholder="e.g. KA-8914" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                                </div>
+                            </div>
+                            <div class="mt-1.5 text-[11px] text-slate-400">
+                                Financial quarter & cost center code
+                            </div>
+                        </div>
+
+                        <!-- 4. Bill / Cash Memo # & Date -->
+                        <div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill # <span class="text-rose-500">*</span></label>
+                                    <input type="text" name="bill_number" value="{{ old('bill_number', $suggestedBillNumber ?? '11710') }}" placeholder="e.g. 10885" required class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 font-mono py-2.5 @error('bill_number') border-rose-500 @enderror">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill Date <span class="text-rose-500">*</span></label>
+                                    <input type="date" name="invoice_date" value="{{ date('Y-m-d') }}" required class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                                </div>
+                            </div>
                             @error('bill_number') 
                                 <span class="text-[11px] text-rose-600 font-semibold block mt-1">{{ $message }}</span>
                             @else
                                 <div class="mt-1.5 text-[11px] text-slate-400">
-                                    Unique voucher number
+                                    Voucher number & invoice creation date
                                 </div>
                             @enderror
-                        </div>
-
-                        <!-- 4. Invoice Date -->
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill Date <span class="text-rose-500">*</span></label>
-                            <input type="date" name="invoice_date" value="{{ date('Y-m-d') }}" required class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                            <div class="mt-1.5 text-[11px] text-slate-400">
-                                Invoice date
-                            </div>
                         </div>
                     </div>
 
@@ -566,6 +591,22 @@
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Supporting Document / Invoice Scan (PDF / Image)</label>
                             <input type="file" name="attachment" accept=".pdf,.docx,.zip,.jpg,.png" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 border border-slate-200 rounded-lg p-1">
                             <p class="text-[11px] text-slate-400 mt-1">Upload verified delivery challan, vendor bill, or inspection memo.</p>
+                        </div>
+                    </div>
+
+                    <!-- Daily Billing Report Fields: Dispatch Date & Remarks -->
+                    <div class="pt-4 border-t border-slate-100">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Bill Dispatch Date <span class="text-slate-400 font-normal">(Daily Report)</span></label>
+                                <input type="date" name="dispatch_date" value="{{ old('dispatch_date') }}" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                                <p class="text-[11px] text-slate-400 mt-1">Date when bill voucher was dispatched to the department.</p>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dispatch Remarks / Mode <span class="text-slate-400 font-normal">(e.g. Rider By Hand)</span></label>
+                                <input type="text" name="remarks" value="{{ old('remarks', 'Rider By Hand') }}" placeholder="e.g. Rider By Hand, TCS, Hand Delivery" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                                <p class="text-[11px] text-slate-400 mt-1">Carrier method or special delivery remarks.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1215,6 +1256,18 @@
                 // Auto-fill Bill Head / Cost Center Title if not manually typed by user
                 if (!headInput.dataset.manualEdit || headInput.value.trim() === '') {
                     headInput.value = costCenter;
+                }
+
+                const costCenterInput = document.getElementById('cost_center_input');
+                const deptCode = selectedOpt.getAttribute('data-code') || '';
+                if (costCenterInput && (!costCenterInput.value || costCenterInput.dataset.autoFilled)) {
+                    costCenterInput.value = deptCode;
+                    costCenterInput.dataset.autoFilled = "true";
+                }
+
+                const headDescInput = document.getElementById('head_description');
+                if (headDescInput && !headDescInput.value) {
+                    headDescInput.value = costCenter;
                 }
             } else {
                 if (badgeVal) {

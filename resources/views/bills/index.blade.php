@@ -7,9 +7,15 @@
                 </h2>
                 <p class="text-sm text-slate-500 mt-0.5">Track procurement milestone payments, deductions, and financial approvals.</p>
             </div>
-            <a href="{{ route('bills.create') }}" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
-                + Generate New Running Bill
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('bills.daily-report') }}" class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
+                    <svg class="w-4 h-4 text-orange-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    <span>Daily Billing Report</span>
+                </a>
+                <a href="{{ route('bills.create') }}" class="inline-flex items-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
+                    + Generate New Running Bill
+                </a>
+            </div>
         </div>
     </x-slot>
 

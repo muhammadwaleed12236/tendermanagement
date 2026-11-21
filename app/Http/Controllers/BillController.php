@@ -102,11 +102,17 @@ class BillController extends Controller
             'vendor_id' => 'nullable|exists:users,id',
             'tender_id' => 'nullable|exists:tenders,id',
             'bill_number' => 'nullable|string|max:50',
+            'quarter' => 'nullable|string|max:50',
             'head_of_account' => 'nullable|string|max:255',
+            'head_code' => 'nullable|string|max:50',
+            'head_description' => 'nullable|string|max:255',
+            'cost_center' => 'nullable|string|max:50',
             'gst_rate' => 'nullable|numeric|min:0',
             'gst_amount' => 'nullable|numeric|min:0',
             'invoice_date' => 'required|date',
             'due_date' => 'nullable|date',
+            'dispatch_date' => 'nullable|date',
+            'remarks' => 'nullable|string|max:255',
             'milestone_description' => 'nullable|string',
             'tax_deduction' => 'nullable|numeric|min:0',
             'agpr_vendor_no' => 'nullable|string|max:50',
@@ -212,13 +218,31 @@ class BillController extends Controller
         $ntnNumber = !empty($validated['ntn_number']) ? $validated['ntn_number'] : ($company?->ntn ?? ($vendor?->tax_number ?? '3437101-0'));
         $sstNumber = !empty($validated['sst_number']) ? $validated['sst_number'] : ($company?->sst ?? 'S3437101-2');
 
+        $headCode = !empty($validated['head_code']) ? trim($validated['head_code']) : null;
+        $headDesc = !empty($validated['head_description']) ? trim($validated['head_description']) : null;
+        $headOfAccount = $headCode 
+            ? ($headCode . ($headDesc ? ' - ' . $headDesc : '')) 
+            : (!empty($validated['head_of_account']) ? $validated['head_of_account'] : 'Cost of Other Stores');
+
+        $billQuarter = !empty($validated['quarter']) 
+            ? $validated['quarter'] 
+            : Bill::determineQuarter($validated['invoice_date']);
+
+        $costCenter = !empty($validated['cost_center']) 
+            ? trim($validated['cost_center']) 
+            : ($department->code ?: 'KA-8914');
+
         $bill = Bill::create([
             'bill_number' => $billNumber,
+            'quarter' => $billQuarter,
             'department_id' => $department->id,
             'tender_id' => $validated['tender_id'] ?? null,
             'vendor_id' => $vendorId,
             'company_id' => $companyId,
-            'head_of_account' => $validated['head_of_account'] ?? 'Cost of Other Stores',
+            'head_of_account' => $headOfAccount,
+            'head_code' => $headCode,
+            'head_description' => $headDesc,
+            'cost_center' => $costCenter,
             'gross_amount' => $gross,
             'gst_rate' => $gstRate,
             'gst_amount' => $gstAmount,
@@ -230,6 +254,8 @@ class BillController extends Controller
             'sst_number' => $sstNumber,
             'invoice_date' => $validated['invoice_date'],
             'due_date' => $validated['due_date'] ?? null,
+            'dispatch_date' => $validated['dispatch_date'] ?? null,
+            'remarks' => $validated['remarks'] ?? null,
             'milestone_description' => $milestoneDesc,
             'attachment_path' => $docPath,
             'status' => 'pending',
@@ -636,5 +662,233 @@ class BillController extends Controller
         \App\Services\NotificationService::billStatusChanged($bill, $oldStatus, $validated['status']);
 
         return back()->with('success', 'Bill status updated to: ' . ucfirst(str_replace('_', ' ', $validated['status'])));
+    }
+
+    /**
+     * Daily Billing Report - Filter by Date, Quarter, Head, Cost Center, Vendor & Department
+     */
+    public function dailyReport(Request $request)
+    {
+        $user = Auth::user();
+        $query = Bill::with(['department', 'company', 'vendor', 'items']);
+
+        if ($user && $user->isVendor()) {
+            $query->where('vendor_id', $user->id);
+        }
+
+        // Single date filter (e.g. 20th, 21st, 22nd...) or Date Range
+        $selectedDate = $request->get('date');
+        $dateFrom = $request->get('date_from');
+        $dateTo = $request->get('date_to');
+
+        if ($request->filled('date')) {
+            $query->whereDate('invoice_date', $selectedDate);
+        } elseif ($request->filled('date_from') && $request->filled('date_to')) {
+            $query->whereBetween('invoice_date', [$dateFrom, $dateTo]);
+        } elseif ($request->filled('date_from')) {
+            $query->whereDate('invoice_date', '>=', $dateFrom);
+        } elseif ($request->filled('date_to')) {
+            $query->whereDate('invoice_date', '<=', $dateTo);
+        }
+
+        // Quarter filter
+        if ($request->filled('quarter')) {
+            $query->where('quarter', $request->quarter);
+        }
+
+        // Department filter
+        if ($request->filled('department_id')) {
+            $query->where('department_id', $request->department_id);
+        }
+
+        // Company / Vendor filter
+        if ($request->filled('company_id')) {
+            $query->where('company_id', $request->company_id);
+        }
+
+        // Search Keyword
+        if ($request->filled('search')) {
+            $s = trim($request->search);
+            $query->where(function ($q) use ($s) {
+                $q->where('bill_number', 'like', "%{$s}%")
+                  ->orWhere('head_code', 'like', "%{$s}%")
+                  ->orWhere('head_description', 'like', "%{$s}%")
+                  ->orWhere('head_of_account', 'like', "%{$s}%")
+                  ->orWhere('cost_center', 'like', "%{$s}%")
+                  ->orWhere('remarks', 'like', "%{$s}%")
+                  ->orWhereHas('company', fn($cq) => $cq->where('company_name', 'like', "%{$s}%"))
+                  ->orWhereHas('department', fn($dq) => $dq->where('name', 'like', "%{$s}%")->orWhere('code', 'like', "%{$s}%"));
+            });
+        }
+
+        $allBills = (clone $query)->orderBy('invoice_date', 'desc')->orderBy('id', 'desc')->get();
+
+        $stats = [
+            'total_count' => $allBills->count(),
+            'total_amount' => $allBills->sum(fn($b) => (float)($b->net_amount ?: $b->gross_amount)),
+            'dispatched_count' => $allBills->whereNotNull('dispatch_date')->count(),
+            'pending_dispatch_count' => $allBills->whereNull('dispatch_date')->count(),
+        ];
+
+        $departments = Department::where('status', 'active')->orderBy('name')->get();
+        $companies = \App\Models\Company::where('status', 'active')->orderBy('company_name')->get();
+        $quarters = ['1st Qtr', '2nd Qtr', '3rd Qtr', '4th Qtr'];
+
+        return view('bills.daily_report', compact('allBills', 'stats', 'departments', 'companies', 'quarters', 'selectedDate', 'dateFrom', 'dateTo'));
+    }
+
+    /**
+     * Export Daily Billing Report to Excel (.xls) or CSV
+     */
+    public function exportDailyReport(Request $request)
+    {
+        $user = Auth::user();
+        $query = Bill::with(['department', 'company', 'vendor']);
+
+        if ($user && $user->isVendor()) {
+            $query->where('vendor_id', $user->id);
+        }
+
+        if ($request->filled('date')) {
+            $query->whereDate('invoice_date', $request->date);
+        } elseif ($request->filled('date_from') && $request->filled('date_to')) {
+            $query->whereBetween('invoice_date', [$request->date_from, $request->date_to]);
+        } elseif ($request->filled('date_from')) {
+            $query->whereDate('invoice_date', '>=', $request->date_from);
+        } elseif ($request->filled('date_to')) {
+            $query->whereDate('invoice_date', '<=', $request->date_to);
+        }
+
+        if ($request->filled('quarter')) {
+            $query->where('quarter', $request->quarter);
+        }
+        if ($request->filled('department_id')) {
+            $query->where('department_id', $request->department_id);
+        }
+        if ($request->filled('company_id')) {
+            $query->where('company_id', $request->company_id);
+        }
+        if ($request->filled('search')) {
+            $s = trim($request->search);
+            $query->where(function ($q) use ($s) {
+                $q->where('bill_number', 'like', "%{$s}%")
+                  ->orWhere('head_code', 'like', "%{$s}%")
+                  ->orWhere('head_description', 'like', "%{$s}%")
+                  ->orWhere('head_of_account', 'like', "%{$s}%")
+                  ->orWhere('cost_center', 'like', "%{$s}%")
+                  ->orWhere('remarks', 'like', "%{$s}%");
+            });
+        }
+
+        $bills = $query->orderBy('invoice_date', 'asc')->orderBy('id', 'asc')->get();
+
+        $format = strtolower($request->get('format', 'xls'));
+        $dateSuffix = $request->filled('date') ? $request->date : ($request->filled('date_from') ? ($request->date_from . '_to_' . $request->date_to) : date('d-M-Y'));
+        $fileName = 'Daily_Billing_Report_' . $dateSuffix . '.' . ($format === 'csv' ? 'csv' : 'xls');
+
+        if ($format === 'csv') {
+            $headers = [
+                'Content-Type' => 'text/csv; charset=UTF-8',
+                'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
+            ];
+
+            return response()->stream(function () use ($bills) {
+                $file = fopen('php://output', 'w');
+                // Output UTF-8 BOM so Excel opens it with proper encoding
+                fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+                // Exact Columns Matching Image
+                fputcsv($file, [
+                    'Sr #',
+                    'Bill CreateDate',
+                    'Bill No',
+                    'Quarter',
+                    'Head of Account',
+                    'Head Description',
+                    'Cost Center',
+                    'Department Name',
+                    'GST/SST',
+                    'Amount',
+                    'Vendor Name',
+                    'Bill Dispatch Date',
+                    'Remarks',
+                ]);
+
+                $sr = 1;
+                $totalAmount = 0;
+                foreach ($bills as $b) {
+                    $amt = (float) ($b->net_amount ?: $b->gross_amount);
+                    $totalAmount += $amt;
+                    fputcsv($file, [
+                        $sr++,
+                        $b->formatted_create_date,
+                        $b->bill_number,
+                        $b->quarter_display,
+                        $b->head_code_display,
+                        $b->head_description_display,
+                        $b->cost_center_code_display,
+                        $b->department_name_display,
+                        $b->gst_display,
+                        number_format($amt),
+                        $b->vendor_name_display,
+                        $b->formatted_dispatch_date,
+                        $b->remarks ?: '',
+                    ]);
+                }
+
+                // Total Row
+                fputcsv($file, [
+                    'Total',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    number_format($totalAmount),
+                    '',
+                    '',
+                    '',
+                ]);
+
+                fclose($file);
+            }, 200, $headers);
+        }
+
+        // HTML Excel Spreadsheet with styled peach header #f5c6a5, borders & exact cell alignment
+        return response()->view('bills.export_excel', compact('bills'), 200, [
+            'Content-Type' => 'application/vnd.ms-excel; charset=utf-8',
+            'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+        ]);
+    }
+
+    /**
+     * Quick Update Dispatch Date & Remarks for a Bill
+     */
+    public function quickUpdateDispatch(Request $request, Bill $bill)
+    {
+        $validated = $request->validate([
+            'dispatch_date' => 'nullable|date',
+            'remarks' => 'nullable|string|max:255',
+            'quarter' => 'nullable|string|max:50',
+            'head_code' => 'nullable|string|max:50',
+            'head_description' => 'nullable|string|max:255',
+        ]);
+
+        $bill->update($validated);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Bill dispatch details updated successfully.',
+                'bill' => $bill,
+            ]);
+        }
+
+        return back()->with('success', "Bill #{$bill->bill_number} dispatch & remarks updated successfully.");
     }
 }

@@ -670,7 +670,7 @@
 
                         <!-- Center: Content -->
                         <div class="min-w-0 flex-1 px-1">
-                            <span class="stat-card-label">TOTAL BUDGET AMOUNT</span>
+                            <span class="stat-card-label">TOTAL BILL AMOUNT</span>
                             <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
