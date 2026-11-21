@@ -134,6 +134,24 @@
     .nav-dropdown-enter {
         animation: dropdown-pop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    .mega-dropdown-panel {
+        width: 580px !important;
+        min-width: 540px !important;
+        max-width: calc(100vw - 2rem) !important;
+        box-sizing: border-box !important;
+    }
+    .mega-dropdown-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        column-gap: 0.75rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .mega-dropdown-col {
+        min-width: 240px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
     .dropdown-col-item {
         transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -444,12 +462,12 @@
                                  x-transition:leave="transition ease-in duration-120"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
-                                 class="absolute left-0 mt-2 w-[540px] sm:w-[570px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
-                                 style="display: none;">
+                                 class="absolute left-0 mt-2 w-[540px] sm:w-[570px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
+                                 style="display: none; width: 560px; min-width: 520px; max-width: calc(100vw - 2rem);">
                                 
-                                <div class="grid grid-cols-2 divide-x divide-slate-100 gap-x-2">
+                                <div class="grid grid-cols-2 mega-dropdown-grid divide-x divide-slate-100 gap-x-2">
                                     <!-- Column 1: Procurement & Operations -->
-                                    <div class="pr-2 space-y-1">
+                                    <div class="pr-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0056d2] border-b border-blue-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                                             <span>Procurement & Bidding</span>
@@ -482,7 +500,7 @@
                                     </div>
 
                                     <!-- Column 2: Reports & Evaluations -->
-                                    <div class="pl-2 space-y-1">
+                                    <div class="pl-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0d9467] border-b border-emerald-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#0d9467]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                                             <span>Reports & Audit</span>
@@ -535,12 +553,12 @@
                                  x-transition:leave="transition ease-in duration-120"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
-                                 class="absolute left-0 mt-2 w-[550px] sm:w-[580px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
-                                 style="display: none;">
+                                 class="absolute left-0 mt-2 w-[550px] sm:w-[580px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
+                                 style="display: none; width: 570px; min-width: 530px; max-width: calc(100vw - 2rem);">
                                 
-                                <div class="grid grid-cols-2 divide-x divide-slate-100 gap-x-2">
+                                <div class="grid grid-cols-2 mega-dropdown-grid divide-x divide-slate-100 gap-x-2">
                                     <!-- Column 1: Bills & Invoices -->
-                                    <div class="pr-2 space-y-1">
+                                    <div class="pr-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0056d2] border-b border-blue-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
                                             <span>Bills & Invoices</span>
@@ -570,7 +588,7 @@
                                     </div>
 
                                     <!-- Column 2: Cheques & AGPR -->
-                                    <div class="pl-2 space-y-1">
+                                    <div class="pl-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#cd3805] border-b border-orange-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#cd3805]" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path></svg>
                                             <span>Cheques & AGPR Treasury</span>
@@ -626,12 +644,12 @@
                                  x-transition:leave="transition ease-in duration-120"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
-                                 class="absolute left-0 mt-2 w-[550px] sm:w-[580px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
-                                 style="display: none;">
+                                 class="absolute left-0 lg:left-1/2 lg:-translate-x-1/4 mt-2 w-[550px] sm:w-[580px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
+                                 style="display: none; width: 570px; min-width: 530px; max-width: calc(100vw - 2rem);">
                                 
-                                <div class="grid grid-cols-2 divide-x divide-slate-100 gap-x-2">
+                                <div class="grid grid-cols-2 mega-dropdown-grid divide-x divide-slate-100 gap-x-2">
                                     <!-- Column 1: Grants & Accounts -->
-                                    <div class="pr-2 space-y-1">
+                                    <div class="pr-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0d9467] border-b border-emerald-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#0d9467]" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"></path></svg>
                                             <span>Grants & Accounts</span>
@@ -661,7 +679,7 @@
                                     </div>
 
                                     <!-- Column 2: Analytics & Expenses -->
-                                    <div class="pl-2 space-y-1">
+                                    <div class="pl-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0056d2] border-b border-blue-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                             <span>Analytics & Expenses</span>
@@ -712,12 +730,12 @@
                                  x-transition:leave="transition ease-in duration-120"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
-                                 class="absolute left-0 mt-2 w-[580px] sm:w-[620px] rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
-                                 style="display: none;">
+                                 class="absolute right-0 mt-2 w-[580px] sm:w-[620px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
+                                 style="display: none; width: 600px; min-width: 560px; max-width: calc(100vw - 2rem);">
                                 
-                                <div class="grid grid-cols-2 divide-x divide-slate-100 gap-x-2">
+                                <div class="grid grid-cols-2 mega-dropdown-grid divide-x divide-slate-100 gap-x-2">
                                     <!-- Column 1: Agencies & Contractor Firms -->
-                                    <div class="pr-2 space-y-1">
+                                    <div class="pr-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0056d2] border-b border-blue-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                                             <span>Agencies & Contractor Firms</span>
@@ -769,7 +787,7 @@
                                     </div>
 
                                     <!-- Column 2: Items Catalog & System Controls -->
-                                    <div class="pl-2 space-y-1">
+                                    <div class="pl-2 space-y-1 mega-dropdown-col">
                                         <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0d9467] border-b border-emerald-50 flex items-center gap-1.5">
                                             <svg class="w-3.5 h-3.5 text-[#0d9467]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
                                             <span>Catalog & Security</span>
