@@ -520,12 +520,12 @@
                         <!-- 3. Billing & Cheques (2-Column Mega Dropdown) -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
-                                <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-500' }}" fill="currentColor" viewBox="0 0 20 20">
+                                    class="nav-pill-item inline-flex items-center gap-2 px-3.5 xl:px-4 py-2 sm:py-2.5 rounded-xl text-[13.5px] xl:text-[14px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') || request()->routeIs('purchases.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#0056d2]' }}">
+                                <svg width="17" height="17" class="nav-main-icon w-[17px] h-[17px] shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') || request()->routeIs('purchases.*') ? 'text-white' : 'text-slate-500' }}" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
                                 </svg>
                                 <span>{{ __('Billing & Cheques') }}</span>
-                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('bills.*') || request()->routeIs('cheques.*') || request()->routeIs('purchases.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
                             <div x-show="open"
@@ -565,6 +565,17 @@
                                             <div class="flex-1 min-w-0">
                                                 <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Bills & Invoices Ledger</div>
                                                 <div class="text-[11px] font-medium text-slate-500 truncate">Department bills, taxes & items</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="{{ route('purchases.index') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('purchases.*') ? 'bg-indigo-50 text-indigo-700 font-black' : 'text-slate-700 hover:text-indigo-700' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 border-b-2 border-indigo-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-indigo-700 truncate">Product Purchases</div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Vendor purchases, GST/SST & balance</div>
                                             </div>
                                         </a>
                                     </div>
@@ -783,6 +794,17 @@
                                             <div class="flex-1 min-w-0">
                                                 <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0d9467] truncate">Products & Items Catalog</div>
                                                 <div class="text-[11px] font-medium text-slate-500 truncate">Standard inventory & supply item rates</div>
+                                            </div>
+                                        </a>
+
+                                        <a href="{{ route('vendors.index') }}" @click="open = false"
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('vendors.*') ? 'bg-indigo-50 text-indigo-700 font-black' : 'text-slate-700 hover:text-indigo-700' }}">
+                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 border-b-2 border-indigo-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-indigo-700 truncate">Vendors Directory</div>
+                                                <div class="text-[11px] font-medium text-slate-500 truncate">Contacts, phone, address & balances</div>
                                             </div>
                                         </a>
 
