@@ -428,13 +428,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                        @foreach($bankAccounts as $acc)
-                                            <option value="{{ $acc->id }}" {{ old('tender_fee_bank_account_id') == $acc->id ? 'selected' : '' }}>
-                                                {{ $acc->bank_name }} - {{ $acc->account_title }} (Bal: PKR {{ number_format($acc->current_balance) }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
 
                                 <div>
                                     <label class="block text-[11px] font-bold text-stone-700 mb-1">Payment Mode</label>
