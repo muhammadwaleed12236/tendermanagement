@@ -76,7 +76,9 @@ class ChequeController extends Controller
     public function create(Request $request)
     {
         $departments = Department::orderBy('name')->get();
-        $companies = \App\Models\Company::where('is_active', true)->orderBy('name')->get();
+        $companies = \App\Models\Company::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('company_name')->get();
         $pendingBills = Bill::where('status', '!=', 'paid')->latest()->get();
         $selectedBillId = $request->query('bill_id');
         $selectedBill = $selectedBillId ? Bill::find($selectedBillId) : null;
