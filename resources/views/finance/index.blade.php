@@ -62,76 +62,105 @@
                 </div>
             @endif
 
-            <!-- 1. TOP 4 FINANCIAL KPI CARDS -->
+            @php
+                $bankPct = $totalLiquidFunds > 0 ? min(100, round(($bankBalances / $totalLiquidFunds) * 100)) : 0;
+                $cashPct = $totalLiquidFunds > 0 ? min(100, round(($cashInHandBalance / $totalLiquidFunds) * 100)) : 0;
+                $expPct = $totalLiquidFunds > 0 ? min(100, round(($thisMonthExpenses / $totalLiquidFunds) * 100)) : 15;
+            @endphp
+
+            <!-- 1. TOP 4 VIBRANT 3D FINANCIAL KPI CARDS WITH CANDY ICONS & CIRCULAR RING METERS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Total Liquid Funds -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Liquid Treasury</span>
-                            <div class="text-2xl font-black text-slate-900 font-mono mt-1 tracking-tight">
-                                PKR {{ number_format($totalLiquidFunds, 2) }}
-                            </div>
-                            <div class="text-[11px] text-emerald-600 font-semibold mt-1 flex items-center gap-1">
-                                <span>●</span> All Banks & Cash Vaults
-                            </div>
+                <!-- Total Liquid Funds (Emerald Green 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-green">
+                        <div class="stat-candy-icon candy-icon-green">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Cash in Hand (Petty Cash) -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Petty Cash In Hand</span>
-                            <div class="text-2xl font-black text-slate-900 font-mono mt-1 tracking-tight">
-                                PKR {{ number_format($cashInHandBalance, 2) }}
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Total Liquid Treasury</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-emerald-600">PKR</span>{{ number_format($totalLiquidFunds, 0) }}
                             </div>
-                            <div class="text-[11px] text-amber-600 font-semibold mt-1">
-                                Ready for daily petty expenses
-                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">All Banks & Cash Vaults</div>
                         </div>
-                        <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Total Treasury">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">100%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Commercial Bank Accounts -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Commercial Bank Balance</span>
-                            <div class="text-2xl font-black text-slate-900 font-mono mt-1 tracking-tight">
-                                PKR {{ number_format($bankBalances, 2) }}
-                            </div>
-                            <div class="text-[11px] text-indigo-600 font-semibold mt-1">
-                                Across {{ $accounts->where('account_type', '!=', 'petty_cash')->count() }} Active Bank Accounts
-                            </div>
+                <!-- Cash in Hand (Sunset Orange 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-orange">
+                        <div class="stat-candy-icon candy-icon-orange">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                         </div>
-                        <div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Petty Cash In Hand</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-orange-600">PKR</span>{{ number_format($cashInHandBalance, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Daily Petty Vaults</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $cashPct }}% in Cash">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $cashPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $cashPct }}%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Monthly Expenses -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:border-slate-300 transition">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Expenses (This Month)</span>
-                            <div class="text-2xl font-black text-rose-600 font-mono mt-1 tracking-tight">
-                                PKR {{ number_format($thisMonthExpenses, 2) }}
-                            </div>
-                            <div class="text-[11px] text-slate-400 font-medium mt-1">
-                                Total All Time: PKR {{ number_format($totalExpensesAllTime, 0) }}
-                            </div>
+                <!-- Commercial Bank Accounts (Electric Blue 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-blue">
+                        <div class="stat-candy-icon candy-icon-blue">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                         </div>
-                        <div class="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-700">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Bank Accounts</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-blue-600">PKR</span>{{ number_format($bankBalances, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">{{ $accounts->where('account_type', '!=', 'petty_cash')->count() }} Active Accounts</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $bankPct }}% in Banks">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $bankPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">{{ $bankPct }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Expenses (Deep Maroon 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-maroon">
+                        <div class="stat-candy-icon candy-icon-maroon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Expenses (This Month)</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-rose-800">PKR</span>{{ number_format($thisMonthExpenses, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">All Time: PKR {{ number_format($totalExpensesAllTime, 0) }}</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $expPct }}% Spent">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $expPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $expPct }}%</span>
                         </div>
                     </div>
                 </div>
