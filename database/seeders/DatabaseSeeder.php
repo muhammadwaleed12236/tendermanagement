@@ -69,5 +69,8 @@ class DatabaseSeeder extends Seeder
                 'tax_number' => 'NTN-1938472-1',
             ]
         );
+
+        // 5. Seed Finance Categories & Bank Accounts
+        $this->call(FinanceSeeder::class);
     }
 }

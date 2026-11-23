@@ -170,7 +170,12 @@ class TenderController extends Controller
         $companies = Company::where(function ($q) {
             $q->where('status', 'active')->orWhereNull('status');
         })->orderBy('company_name')->get();
-        $bankAccounts = BankAccount::where('status', 'active')->orderBy('bank_name')->get();
+        if (BankAccount::count() === 0) {
+            (new \Database\Seeders\FinanceSeeder())->run();
+        }
+        $bankAccounts = BankAccount::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('bank_name')->get();
 
         return view('tenders.reports', compact(
             'tenders',
@@ -199,7 +204,13 @@ class TenderController extends Controller
         $companies = Company::where(function ($q) {
             $q->where('status', 'active')->orWhereNull('status');
         })->orderBy('company_name')->get();
-        $bankAccounts = BankAccount::where('status', 'active')->orderBy('bank_name')->get();
+
+        if (BankAccount::count() === 0) {
+            (new \Database\Seeders\FinanceSeeder())->run();
+        }
+        $bankAccounts = BankAccount::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('bank_name')->get();
 
         return view('tenders.create', compact('departments', 'companies', 'bankAccounts'));
     }
@@ -239,6 +250,7 @@ class TenderController extends Controller
             'bid_security_status' => 'nullable|string|max:50',
             'bid_security_scan' => 'nullable|file|mimes:pdf,docx,jpg,png|max:10240',
             // Dates
+            'upload_date' => 'nullable|date',
             'collection_start_date' => 'nullable|date',
             'collection_start_notes' => 'nullable|string|max:255',
             'collection_end_date' => 'nullable|date',
@@ -289,9 +301,10 @@ class TenderController extends Controller
                 $technicalOpening = $generalOpening;
                 $financialOpening = $generalOpening;
             }
-            $collectionStartDate = $validated['collection_start_date'] ?? null;
+            $uploadDate = $validated['upload_date'] ?? $validated['collection_start_date'] ?? null;
+            $collectionStartDate = $uploadDate ?: ($validated['collection_start_date'] ?? null);
             $collectionStartNotes = $validated['collection_start_notes'] ?: 'During working hours';
-            $collectionEndDate = $validated['collection_end_date'] ?? null;
+            $collectionEndDate = $uploadDate ?: ($validated['collection_end_date'] ?? null);
             $collectionEndNotes = $validated['collection_end_notes'] ?: 'During working hours';
             $category = $validated['category'] ?? 'General Procurement';
         }
@@ -382,6 +395,7 @@ class TenderController extends Controller
             'bid_security_status' => $bidSecurityStatus,
             'bid_security_file' => $bidSecurityFile,
             // Schedule
+            'upload_date' => $uploadDate,
             'collection_start_date' => $collectionStartDate,
             'collection_start_notes' => $collectionStartNotes,
             'collection_end_date' => $collectionEndDate,
@@ -428,7 +442,12 @@ class TenderController extends Controller
             $userBid = $tender->bids->where('user_id', Auth::id())->first();
         }
 
-        $bankAccounts = BankAccount::where('status', 'active')->orderBy('bank_name')->get();
+        if (BankAccount::count() === 0) {
+            (new \Database\Seeders\FinanceSeeder())->run();
+        }
+        $bankAccounts = BankAccount::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('bank_name')->get();
 
         return view('tenders.show', compact('tender', 'userBid', 'bankAccounts'));
     }
@@ -443,7 +462,13 @@ class TenderController extends Controller
         $companies = Company::where(function ($q) {
             $q->where('status', 'active')->orWhereNull('status');
         })->orderBy('company_name')->get();
-        $bankAccounts = BankAccount::where('status', 'active')->orderBy('bank_name')->get();
+
+        if (BankAccount::count() === 0) {
+            (new \Database\Seeders\FinanceSeeder())->run();
+        }
+        $bankAccounts = BankAccount::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('bank_name')->get();
 
         return view('tenders.edit', compact('tender', 'departments', 'companies', 'bankAccounts'));
     }
@@ -485,6 +510,7 @@ class TenderController extends Controller
             'work_order_no' => 'nullable|string|max:255',
             'work_order_date' => 'nullable|date',
             // Schedule
+            'upload_date' => 'nullable|date',
             'collection_start_date' => 'nullable|date',
             'collection_start_notes' => 'nullable|string|max:255',
             'collection_end_date' => 'nullable|date',
@@ -535,6 +561,13 @@ class TenderController extends Controller
 
         if (!empty($validated['tender_no'])) {
             $validated['tender_no'] = trim($validated['tender_no']);
+        }
+
+        if (!empty($validated['upload_date'])) {
+            $validated['collection_start_date'] = $validated['upload_date'];
+            $validated['collection_end_date'] = $validated['upload_date'];
+        } elseif (!empty($validated['collection_start_date']) && empty($validated['upload_date'])) {
+            $validated['upload_date'] = $validated['collection_start_date'];
         }
 
         $tender->update($validated);

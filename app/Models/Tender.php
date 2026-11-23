@@ -17,6 +17,7 @@ class Tender extends Model
         'tender_no',
         'tender_type',
         'closing_date',
+        'upload_date',
         'bidding_procedure',
         'collection_start_date',
         'collection_start_notes',
@@ -78,6 +79,7 @@ class Tender extends Model
     protected function casts(): array
     {
         return [
+            'upload_date' => 'date',
             'collection_start_date' => 'date',
             'collection_end_date' => 'date',
             'closing_date' => 'datetime',

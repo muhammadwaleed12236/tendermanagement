@@ -691,7 +691,7 @@
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span>
                             <h3 class="font-black text-lg text-stone-900">
-                                Tender Form Fee & Bid Security (CDR / Pay Order)
+                                Tender Document Fee & Bid Security (CDR / Pay Order)
                             </h3>
                         </div>
                         <p class="text-xs text-stone-600 mt-0.5">
@@ -1071,11 +1071,11 @@
                                     </span>
                                 </div>
                             @else
-                                @if($tender->collection_start_date)
+                                @if($tender->upload_date || $tender->collection_start_date)
                                     <div class="pt-2 flex justify-between">
-                                        <span class="text-stone-500 font-medium">Collection Window</span>
+                                        <span class="text-stone-500 font-medium">Tender Upload Date</span>
                                         <span class="font-bold text-stone-900 text-right">
-                                            {{ $tender->collection_start_date->format('d/m/Y') }} — {{ $tender->collection_end_date ? $tender->collection_end_date->format('d/m/Y') : 'Open' }}
+                                            {{ ($tender->upload_date ?: $tender->collection_start_date)->format('d/m/Y') }}
                                         </span>
                                     </div>
                                 @endif
@@ -1119,7 +1119,7 @@
                             @endif
 
                             <div class="pt-2 flex justify-between">
-                                <span class="text-stone-500 font-medium">Tender Form Fee</span>
+                                <span class="text-stone-500 font-medium">Tender Document Fee</span>
                                 <div class="text-right">
                                     @if($tender->tender_fee_amount)
                                         <span class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->tender_fee_amount) }}</span>

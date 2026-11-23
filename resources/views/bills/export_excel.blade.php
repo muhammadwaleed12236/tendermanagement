@@ -55,19 +55,19 @@
     <table>
         <thead>
             <tr>
-                <th>Sr #</th>
-                <th>Bill CreateDate</th>
-                <th>Bill No</th>
-                <th>Quarter</th>
-                <th>Head of Account</th>
-                <th>Head Description</th>
-                <th>Cost Center</th>
-                <th>Department Name</th>
-                <th>GST/SST</th>
-                <th>Amount</th>
-                <th>Vendor Name</th>
-                <th>Bill Dispatch Date</th>
-                <th>Remarks</th>
+                <th style="width: 6px;">Sr #</th>
+                <th style="width: 14px;">Bill CreateDate</th>
+                <th style="width: 12px;">Bill No</th>
+                <th style="width: 12px;">Quarter</th>
+                <th style="width: 15px;">Head of Account</th>
+                <th style="width: 40px;">Head Description</th>
+                <th style="width: 14px;">Cost Center</th>
+                <th style="width: 32px;">Department Name</th>
+                <th style="width: 10px;">GST/SST</th>
+                <th style="width: 14px;">Amount</th>
+                <th style="width: 28px;">Vendor Name</th>
+                <th style="width: 16px;">Bill Dispatch Date</th>
+                <th style="width: 25px;">Remarks</th>
             </tr>
         </thead>
         <tbody>

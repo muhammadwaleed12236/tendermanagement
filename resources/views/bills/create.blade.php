@@ -1473,7 +1473,7 @@
 
                 const headDescInput = document.getElementById('head_description');
                 if (headDescInput && !headDescInput.value) {
-                    headDescInput.value = costCenter;
+                    headDescInput.value = 'Others';
                 }
 
                 // Populate budget heads dropdown for this department

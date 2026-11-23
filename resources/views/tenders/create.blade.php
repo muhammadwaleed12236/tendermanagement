@@ -16,7 +16,7 @@
                     <span class="text-xs font-bold bg-stone-200 text-stone-700 px-2.5 py-0.5 rounded-full border border-stone-300">SPPRA / PPRA</span>
                 </h2>
                 <p class="text-xs text-stone-600 mt-0.5">
-                    Step-by-step wizard to setup bidding procedure, collection schedule, tender form fees, and bid security (CDR / Pay Order).
+                    Step-by-step wizard to setup bidding procedure, schedule, tender document fee, and bid security (CDR / Pay Order).
                 </p>
             </div>
 
@@ -62,7 +62,7 @@
                         <span id="step_num_3" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">3</span>
                         <div class="min-w-0">
                             <div class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 3</div>
-                            <div class="text-xs font-black text-stone-700 truncate">Fees & Bid Security</div>
+                            <div class="text-xs font-black text-stone-700 truncate">Document Fee & Bid Security</div>
                         </div>
                     </button>
 
@@ -291,7 +291,7 @@
                         <div class="flex items-center justify-between border-b border-[#e5ded4] pb-3">
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 2: Tender Collection & Submission Schedule</h3>
+                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 2: Tender Upload & Submission Schedule</h3>
                             </div>
                             <span class="text-[11px] font-bold text-stone-500">Page 2 of 4</span>
                         </div>
@@ -304,34 +304,24 @@
                                     <span class="text-xs text-rose-900 font-bold">Physical collection dates eliminated. Unified under Closing Date.</span>
                                 </div>
                                 <button type="button" onclick="goToStep(3)" class="px-4 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs transition shrink-0">
-                                    Proceed to Fees & Security &rarr;
+                                    Proceed to Document Fee & Security &rarr;
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Collection Start & End Dates -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2">
+                        <!-- Single Tender Upload Date (Replaces collection start & end dates per user requirement) -->
+                        <div class="p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2">
+                            <div class="flex items-center justify-between">
                                 <label class="block text-xs font-black text-stone-800">
-                                    Tender Collection (Start Date)
+                                    Tender Upload Date <span class="text-rose-500">*</span>
                                 </label>
-                                <input type="date" name="collection_start_date" value="{{ old('collection_start_date') }}"
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
-                                <input type="text" name="collection_start_notes" value="{{ old('collection_start_notes', 'During working hours') }}" 
-                                       placeholder="Timing notes e.g. During working hours"
-                                       class="w-full text-[11px] rounded-lg border-[#e5ded4] bg-white px-2.5 py-1.5 text-stone-700">
+                                <span class="text-[10px] font-bold text-stone-500">Official Upload / Publishing Date</span>
                             </div>
-
-                            <div class="p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2">
-                                <label class="block text-xs font-black text-stone-800">
-                                    Tender Collection (End Date)
-                                </label>
-                                <input type="date" name="collection_end_date" value="{{ old('collection_end_date') }}"
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
-                                <input type="text" name="collection_end_notes" value="{{ old('collection_end_notes', 'During working hours') }}" 
-                                       placeholder="Timing notes e.g. During working hours"
-                                       class="w-full text-[11px] rounded-lg border-[#e5ded4] bg-white px-2.5 py-1.5 text-stone-700">
-                            </div>
+                            <input type="date" name="upload_date" id="input_upload_date" value="{{ old('upload_date', old('collection_start_date', date('Y-m-d'))) }}" required
+                                   class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
+                            <input type="text" name="collection_start_notes" value="{{ old('collection_start_notes', 'Uploaded on portal / During working hours') }}" 
+                                   placeholder="Timing / publishing notes e.g. Uploaded on official portal"
+                                   class="w-full text-[11px] rounded-lg border-[#e5ded4] bg-white px-2.5 py-1.5 text-stone-700">
                         </div>
 
                         <!-- Submission & Opening Dates -->
@@ -370,7 +360,7 @@
                                 <span>Back to Step 1</span>
                             </button>
                             <button type="button" onclick="nextStep(3)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
-                                <span>Proceed to Fees & Bid Security</span>
+                                <span>Proceed to Document Fee & Bid Security</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </button>
                         </div>
@@ -383,7 +373,7 @@
                         <div class="flex items-center justify-between border-b border-[#e5ded4] pb-3">
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 3: Tender Form Fees & Bid Security (CDR / Pay Order)</h3>
+                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 3: Tender Document Fee & Bid Security (CDR / Pay Order)</h3>
                             </div>
                             <span class="text-[11px] font-bold text-stone-500">Page 3 of 4</span>
                         </div>
@@ -401,12 +391,12 @@
                             </div>
                         </div>
 
-                        <!-- SECTION A: TENDER FORM / DOCUMENT FEE -->
+                        <!-- SECTION A: TENDER DOCUMENT FEE -->
                         <div class="p-5 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-4">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-orange-600"></span>
-                                    <h4 class="font-black text-xs uppercase tracking-wider text-stone-900">A. Tender Document / Form Fee</h4>
+                                    <h4 class="font-black text-xs uppercase tracking-wider text-stone-900">A. Tender Document Fee</h4>
                                 </div>
                                 <label class="inline-flex items-center gap-2 cursor-pointer bg-white px-3 py-1.5 rounded-xl border border-stone-200">
                                     <input type="checkbox" name="is_tender_fee_paid" id="checkbox_tender_fee_paid" value="1" 
@@ -425,9 +415,19 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Paid From Which Bank Account?</label>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="block text-[11px] font-bold text-stone-700">Paid From Which Bank Account?</label>
+                                        <a href="{{ route('banks.index') }}" target="_blank" class="text-[10px] text-blue-600 hover:underline font-bold">+ Add / Manage</a>
+                                    </div>
                                     <select name="tender_fee_bank_account_id" id="tender_fee_bank_account_id" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
                                         <option value="">-- Select Bank Account / Cash Vault --</option>
+                                        @foreach($bankAccounts as $acc)
+                                            <option value="{{ $acc->id }}" {{ old('tender_fee_bank_account_id') == $acc->id ? 'selected' : '' }}>
+                                                {{ $acc->bank_name }} - {{ $acc->account_title }} (Bal: PKR {{ number_format($acc->current_balance) }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                         @foreach($bankAccounts as $acc)
                                             <option value="{{ $acc->id }}" {{ old('tender_fee_bank_account_id') == $acc->id ? 'selected' : '' }}>
                                                 {{ $acc->bank_name }} - {{ $acc->account_title }} (Bal: PKR {{ number_format($acc->current_balance) }})
@@ -511,7 +511,10 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Issued From Bank Account</label>
+                                    <div class="flex items-center justify-between mb-1">
+                                        <label class="block text-[11px] font-bold text-stone-700">Issued From Bank Account</label>
+                                        <a href="{{ route('banks.index') }}" target="_blank" class="text-[10px] text-blue-600 hover:underline font-bold">+ Add / Manage</a>
+                                    </div>
                                     <select name="bid_security_bank_account_id" class="w-full text-xs font-semibold rounded-xl border-amber-200 bg-white">
                                         <option value="">-- Select Bank Account --</option>
                                         @foreach($bankAccounts as $acc)

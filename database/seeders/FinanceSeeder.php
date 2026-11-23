@@ -36,27 +36,59 @@ class FinanceSeeder extends Seeder
                 'account_number' => 'CASH-MAIN-01',
                 'account_type' => 'petty_cash',
                 'currency' => 'PKR',
-                'opening_balance' => 50000.00,
-                'current_balance' => 50000.00,
+                'opening_balance' => 150000.00,
+                'current_balance' => 150000.00,
                 'status' => 'active',
                 'is_default' => true,
-                'notes' => 'Primary petty cash drawer for daily operational expenses',
+                'notes' => 'Primary petty cash drawer for tender form fees and operational expenses',
             ]);
 
             BankAccount::create([
                 'bank_name' => 'Meezan Bank Limited',
-                'account_title' => 'ProWave Technologies / Three Stars Medical',
+                'account_title' => 'Main Tender & Bidding Account',
                 'account_number' => '0102-0100456789',
                 'iban' => 'PK65MEZN0001020100456789',
                 'branch_name' => 'Main Branch Karachi',
                 'branch_code' => '0102',
                 'account_type' => 'current',
                 'currency' => 'PKR',
-                'opening_balance' => 500000.00,
-                'current_balance' => 500000.00,
+                'opening_balance' => 5000000.00,
+                'current_balance' => 5000000.00,
                 'status' => 'active',
                 'is_default' => false,
-                'notes' => 'Main Islamic corporate commercial current account for government tenders & AGPR cheques',
+                'notes' => 'Main Islamic corporate current account for CDRs, Pay Orders & Bids',
+            ]);
+
+            BankAccount::create([
+                'bank_name' => 'Habib Bank Limited (HBL)',
+                'account_title' => 'Corporate Operations & CDR Security',
+                'account_number' => '0042-7901845603',
+                'iban' => 'PK36HABB0000427901845603',
+                'branch_name' => 'Corporate Centre',
+                'branch_code' => '0042',
+                'account_type' => 'current',
+                'currency' => 'PKR',
+                'opening_balance' => 3500000.00,
+                'current_balance' => 3500000.00,
+                'status' => 'active',
+                'is_default' => false,
+                'notes' => 'Primary CDR and Pay Order issuance account',
+            ]);
+
+            BankAccount::create([
+                'bank_name' => 'National Bank of Pakistan (NBP)',
+                'account_title' => 'Government Treasury & AGPR Receipts',
+                'account_number' => '1002-3344556677',
+                'iban' => 'PK12NBPA0010023344556677',
+                'branch_name' => 'Civil Secretariat Branch',
+                'branch_code' => '1002',
+                'account_type' => 'current',
+                'currency' => 'PKR',
+                'opening_balance' => 2000000.00,
+                'current_balance' => 2000000.00,
+                'status' => 'active',
+                'is_default' => false,
+                'notes' => 'Government and tender security processing account',
             ]);
         }
     }

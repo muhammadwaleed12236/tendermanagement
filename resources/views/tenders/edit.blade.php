@@ -128,23 +128,16 @@
                         </div>
                     </div>
 
-                    <!-- Collection Dates (Hidden if EPAD) -->
-                    <div id="edit_collection_box" class="{{ $tender->isEpad() ? 'hidden' : '' }} grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4]">
-                        <div>
-                            <label class="block text-xs font-black text-stone-800 mb-1">Collection (Start Date)</label>
-                            <input type="date" name="collection_start_date" value="{{ old('collection_start_date', $tender->collection_start_date ? $tender->collection_start_date->format('Y-m-d') : '') }}"
-                                   class="w-full text-xs rounded-xl border-[#e5ded4] bg-white">
-                            <input type="text" name="collection_start_notes" value="{{ old('collection_start_notes', $tender->collection_start_notes) }}" placeholder="Timing notes..."
-                                   class="w-full text-[11px] rounded-lg border-[#e5ded4] bg-white mt-1">
+                    <!-- Tender Upload Date & Schedule (Hidden if EPAD) -->
+                    <div id="edit_collection_box" class="{{ $tender->isEpad() ? 'hidden' : '' }} p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="block text-xs font-black text-stone-800">Tender Upload Date</label>
+                            <span class="text-[10px] font-bold text-stone-500">Official Upload / Publishing Date</span>
                         </div>
-
-                        <div>
-                            <label class="block text-xs font-black text-stone-800 mb-1">Collection (End Date)</label>
-                            <input type="date" name="collection_end_date" value="{{ old('collection_end_date', $tender->collection_end_date ? $tender->collection_end_date->format('Y-m-d') : '') }}"
-                                   class="w-full text-xs rounded-xl border-[#e5ded4] bg-white">
-                            <input type="text" name="collection_end_notes" value="{{ old('collection_end_notes', $tender->collection_end_notes) }}" placeholder="Timing notes..."
-                                   class="w-full text-[11px] rounded-lg border-[#e5ded4] bg-white mt-1">
-                        </div>
+                        <input type="date" name="upload_date" value="{{ old('upload_date', $tender->upload_date ? $tender->upload_date->format('Y-m-d') : ($tender->collection_start_date ? $tender->collection_start_date->format('Y-m-d') : '')) }}"
+                               class="w-full text-xs rounded-xl border-[#e5ded4] bg-white">
+                        <input type="text" name="collection_start_notes" value="{{ old('collection_start_notes', $tender->collection_start_notes) }}" placeholder="Timing / publishing notes e.g. During working hours"
+                               class="w-full text-[11px] rounded-lg border-[#e5ded4] bg-white">
                     </div>
 
                     <!-- Submission & Opening Dates -->
@@ -171,14 +164,14 @@
                     <!-- Tender Fee & Bid Security Parameters (Traditional Tender Only, Bypassed in EPAD) -->
                     <div id="edit_fees_security_wrapper" class="{{ old('tender_type', $tender->tender_type) === 'epad' ? 'hidden' : '' }} p-5 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-4">
                         <div class="font-black text-xs uppercase tracking-wider text-stone-800 flex items-center justify-between">
-                            <span>Tender Fee & Bid Security (CDR) Parameters</span>
+                            <span>Tender Document Fee & Bid Security (CDR / Pay Order)</span>
                             <span class="text-[10px] text-stone-500 font-bold bg-stone-100 px-2 py-0.5 rounded border border-stone-200">Traditional Tender Only</span>
                         </div>
 
                         <!-- Tender Fee -->
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                                <label class="block text-[11px] font-bold text-stone-700 mb-1">Tender Fee Amount (PKR)</label>
+                                <label class="block text-[11px] font-bold text-stone-700 mb-1">Tender Document Fee (PKR)</label>
                                 <input type="number" step="0.01" name="tender_fee_amount" value="{{ old('tender_fee_amount', $tender->tender_fee_amount) }}" class="w-full text-xs rounded-xl border-[#e5ded4] bg-white">
                             </div>
 
