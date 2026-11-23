@@ -45,7 +45,7 @@
                 <!-- 1. Total Won Work Orders Value -->
                 <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-emerald-700">Won Work Orders Value</div>
+                        <div class="text-[10px] font-black uppercase tracking-wider text-emerald-700">Awarded Work Order Value</div>
                         <div class="text-xl sm:text-2xl font-black text-emerald-950 mt-0.5">PKR {{ number_format($totalWonValue) }}</div>
                         <div class="text-[11px] text-stone-500">{{ $wonTenders->count() }} Tenders Awarded</div>
                     </div>
@@ -57,7 +57,7 @@
                 <!-- 2. Total Budget Volume -->
                 <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-stone-600">Total Budget Volume</div>
+                        <div class="text-[10px] font-black uppercase tracking-wider text-stone-600">Total Awarded Work Order Value</div>
                         <div class="text-xl sm:text-2xl font-black text-stone-900 mt-0.5">PKR {{ number_format($totalBudget) }}</div>
                         <div class="text-[11px] text-stone-500">All {{ $totalCount }} tenders listed</div>
                     </div>
@@ -69,7 +69,7 @@
                 <!-- 3. Total Tender Fees Paid -->
                 <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-orange-700">Tender Fees Paid</div>
+                        <div class="text-[10px] font-black uppercase tracking-wider text-orange-700">Total Tender Fees Paid</div>
                         <div class="text-xl sm:text-2xl font-black text-orange-950 mt-0.5">PKR {{ number_format($totalTenderFeesPaid) }}</div>
                         <div class="text-[11px] text-stone-500">Paid from Bank / Cash</div>
                     </div>
@@ -81,7 +81,7 @@
                 <!-- 4. Active Bid Security (CDR Locked) -->
                 <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-blue-700">Active Bid Security</div>
+                        <div class="text-[10px] font-black uppercase tracking-wider text-blue-700">Total Active Bid Security</div>
                         <div class="text-xl sm:text-2xl font-black text-blue-950 mt-0.5">PKR {{ number_format($totalBidSecuritySubmitted) }}</div>
                         <div class="text-[11px] text-stone-500">Locked in CDRs / Pay Orders</div>
                     </div>
@@ -93,7 +93,7 @@
                 <!-- 5. Released Bid Security / Docs Complete -->
                 <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between col-span-2 lg:col-span-1">
                     <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-teal-700">Docs Complete</div>
+                        <div class="text-[10px] font-black uppercase tracking-wider text-teal-700">Pending Award Documents Status</div>
                         <div class="text-xl sm:text-2xl font-black text-teal-950 mt-0.5">{{ $docsCompletedCount }} / {{ $wonTenders->count() }}</div>
                         <div class="text-[11px] text-stone-500">LOI & Work Order Verified</div>
                     </div>
@@ -192,13 +192,14 @@
                             <tr class="bg-stone-100/90 text-stone-900 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider print:bg-stone-200">
                                 <th class="py-3 px-3 text-center w-12 border-r border-[#e5ded4]">S.#</th>
                                 <th class="py-3 px-3 min-w-[140px] border-r border-[#e5ded4]">Tender No. / Code</th>
-                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Description & Department</th>
+                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Item of Description</th>
+                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Department</th>
                                 <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4] text-right">Budget (PKR)</th>
                                 <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Work Order / Award Value</th>
                                 <th class="py-3 px-3 min-w-[160px] border-r border-[#e5ded4]">Tender Fee & Account</th>
                                 <th class="py-3 px-3 min-w-[170px] border-r border-[#e5ded4]">Bid Security (CDR / PO)</th>
-                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4] text-center">Outcome</th>
-                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4] text-center">Post-Award Docs</th>
+                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4] text-center">Status</th>
+                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4] text-center">Received Award Documents</th>
                                 <th class="py-3 px-3 text-center min-w-[70px] print:hidden">Action</th>
                             </tr>
                         </thead>
@@ -223,18 +224,21 @@
                                         <div class="text-[10px] text-stone-500 font-sans font-normal">{{ $t->procedure_label }}</div>
                                     </td>
 
-                                    <!-- Description & Dept -->
+                                    <!-- Item of Description -->
                                     <td class="py-3 px-4 border-r border-[#e5ded4]">
                                         <a href="{{ route('tenders.show', $t) }}" class="font-bold text-stone-900 hover:text-orange-700 transition leading-snug block">
                                             {{ $t->title }}
                                         </a>
-                                        <div class="flex items-center gap-1.5 text-[11px] text-stone-500 mt-1">
-                                            <span>{{ $t->department?->name ?: 'General' }}</span>
-                                            @if($t->company)
-                                                <span>•</span>
-                                                <span class="text-orange-800 font-bold">{{ $t->company->company_name ?: $t->company->name }}</span>
-                                            @endif
-                                        </div>
+                                    </td>
+
+                                    <!-- Department -->
+                                    <td class="py-3 px-4 border-r border-[#e5ded4]">
+                                        <span class="font-bold text-stone-800 block">{{ $t->department?->name ?: 'General' }}</span>
+                                        @if($t->company)
+                                            <div class="text-[11px] text-orange-800 font-semibold mt-0.5">
+                                                {{ $t->company->company_name ?: $t->company->name }}
+                                            </div>
+                                        @endif
                                     </td>
 
                                     <!-- Estimated Budget -->
@@ -356,7 +360,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="10" class="py-12 text-center text-stone-500">
+                                    <td colspan="11" class="py-12 text-center text-stone-500">
                                         No tenders match the selected criteria.
                                     </td>
                                 </tr>

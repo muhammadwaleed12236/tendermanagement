@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/departments/{department}/budget-heads', [\App\Http\Controllers\DepartmentBudgetHeadController::class, 'index'])->name('departments.budget-heads.index');
     Route::post('/departments/{department}/budget-heads', [\App\Http\Controllers\DepartmentBudgetHeadController::class, 'store'])->name('departments.budget-heads.store');
     Route::put('/budget-heads/{budgetHead}', [\App\Http\Controllers\DepartmentBudgetHeadController::class, 'update'])->name('budget-heads.update');
+    Route::get('/budget-heads/{budgetHead}', [\App\Http\Controllers\DepartmentBudgetHeadController::class, 'show'])->name('budget-heads.show');
     Route::delete('/budget-heads/{budgetHead}', [\App\Http\Controllers\DepartmentBudgetHeadController::class, 'destroy'])->name('budget-heads.destroy');
 
     // Admin Tender Management & Reporting (Create & Reports before {tender})

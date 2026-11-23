@@ -16,7 +16,7 @@ class BillController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $query = Bill::with(['tender', 'vendor', 'department', 'items']);
+        $query = Bill::with(['tender', 'vendor', 'department', 'items', 'budgetHead', 'company']);
 
         // Vendors can only view their own bills
         if ($user && $user->isVendor()) {
@@ -24,7 +24,16 @@ class BillController extends Controller
         }
 
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            $st = strtolower(trim($request->status));
+            if ($st === 'draft' || $st === 'pending') {
+                $query->whereIn('status', ['draft', 'pending', 'verified_by_dept']);
+            } elseif ($st === 'confirmed' || $st === 'approved' || $st === 'generated') {
+                $query->whereIn('status', ['confirmed', 'approved']);
+            } elseif ($st === 'paid' || $st === 'printed') {
+                $query->where('status', 'paid');
+            } else {
+                $query->where('status', $st);
+            }
         }
 
         if ($request->filled('department_id')) {
@@ -48,10 +57,11 @@ class BillController extends Controller
         $companies = \App\Models\Company::where('status', 'active')->orderBy('company_name')->get();
 
         $stats = [
-            'total_amount' => (clone $query)->sum('gross_amount'),
-            'paid_amount' => (clone $query)->where('status', 'paid')->sum('net_amount'),
-            'pending_count' => (clone $query)->whereIn('status', ['pending', 'verified_by_dept'])->count(),
-            'approved_count' => (clone $query)->where('status', 'approved')->count(),
+            'total_amount' => (float) (clone $query)->sum(\Illuminate\Support\Facades\DB::raw('COALESCE(net_amount, gross_amount, 0)')),
+            'total_count' => (clone $query)->count(),
+            'generated_count' => (clone $query)->whereIn('status', ['approved', 'confirmed'])->count(),
+            'pending_count' => (clone $query)->whereIn('status', ['pending', 'draft', 'verified_by_dept'])->count(),
+            'printed_count' => (clone $query)->where('status', 'paid')->count(),
         ];
 
         return view('bills.index', compact('bills', 'departments', 'stats', 'companies'));
@@ -117,6 +127,8 @@ class BillController extends Controller
             'milestone_description' => 'nullable|string',
             'tax_deduction' => 'nullable|numeric|min:0',
             'agpr_vendor_no' => 'nullable|string|max:50',
+            'vendor_type' => 'nullable|string|max:50',
+            'vendor_number' => 'nullable|string|max:50',
             'strn_number' => 'nullable|string|max:50',
             'ntn_number' => 'nullable|string|max:50',
             'sst_number' => 'nullable|string|max:50',
@@ -156,7 +168,7 @@ class BillController extends Controller
 
             $itemsData[] = [
                 'item_name' => $item['item_name'],
-                'unit' => $item['unit'] ?? 'Nos',
+                'unit' => (isset($item['unit']) && trim($item['unit']) !== '') ? trim($item['unit']) : null,
                 'quantity' => $qty,
                 'unit_price' => $price,
                 'total_price' => $total,
@@ -179,11 +191,24 @@ class BillController extends Controller
         $taxDeduction = (float) ($validated['tax_deduction'] ?? 0);
         $totalPayable = max(0, $gross + $gstAmount - $taxDeduction);
 
-        // Budget Limit Notice (Non-blocking warning so user bill is never lost)
+        // 1. Account Head Budget Validation (Strict - prevents over-budget bill creation)
+        if (!empty($validated['budget_head_id'])) {
+            $budgetHead = \App\Models\DepartmentBudgetHead::where('department_id', $department->id)->find($validated['budget_head_id']);
+            if ($budgetHead) {
+                $headBalance = (float) $budgetHead->released_balance;
+                if ($totalPayable > $headBalance) {
+                    $headLabel = $budgetHead->head_name ?: ($budgetHead->head_code ?: 'Selected Head');
+                    $errorMsg = "Account Head Budget Exceeded: Bill payable amount (PKR " . number_format($totalPayable, 2) . ") exceeds the available Released Budget Balance (PKR " . number_format($headBalance, 2) . ") for account head '{$headLabel}'.";
+                    return back()->withInput()->withErrors(['budget_head_id' => $errorMsg])->with('error', $errorMsg);
+                }
+            }
+        }
+
+        // 2. Department Released Budget Ceiling Validation
         $availableReleasedBudget = $department->availableReleasedBudget();
-        $warningNotice = '';
         if ($totalPayable > $availableReleasedBudget) {
-            $warningNotice = ' (Notice: Bill amount PKR ' . number_format($totalPayable, 2) . ' exceeds currently released ceiling PKR ' . number_format($availableReleasedBudget, 2) . '; saved as Pending for tranche authorization).';
+            $errorMsg = "Account Head Budget Exceeded: Bill payable amount (PKR " . number_format($totalPayable, 2) . ") exceeds the available Released Budget Balance (PKR " . number_format($availableReleasedBudget, 2) . ") for department '{$department->name}'.";
+            return back()->withInput()->withErrors(['department_id' => $errorMsg])->with('error', $errorMsg);
         }
 
         $docPath = null;
@@ -215,7 +240,9 @@ class BillController extends Controller
             }
         }
 
-        $agprVendorNo = !empty($validated['agpr_vendor_no']) ? $validated['agpr_vendor_no'] : ($company?->vendor_no ?? ($vendor?->agpr_vendor_no ?? '30368984'));
+        $vendorType = !empty($validated['vendor_type']) ? trim($validated['vendor_type']) : 'AGPR';
+        $vendorNumber = !empty($validated['vendor_number']) ? trim($validated['vendor_number']) : (!empty($validated['agpr_vendor_no']) ? trim($validated['agpr_vendor_no']) : ($company?->vendor_no ?? ($vendor?->agpr_vendor_no ?? '30368984')));
+        $agprVendorNo = $vendorNumber;
         $strnNumber = !empty($validated['strn_number']) ? $validated['strn_number'] : ($company?->gst ?? ($vendor?->strn_number ?? '3277876289057'));
         $ntnNumber = !empty($validated['ntn_number']) ? $validated['ntn_number'] : ($company?->ntn ?? ($vendor?->tax_number ?? '3437101-0'));
         $sstNumber = !empty($validated['sst_number']) ? $validated['sst_number'] : ($company?->sst ?? 'S3437101-2');
@@ -252,6 +279,8 @@ class BillController extends Controller
             'tax_deduction' => $taxDeduction,
             'net_amount' => $totalPayable,
             'agpr_vendor_no' => $agprVendorNo,
+            'vendor_type' => $vendorType,
+            'vendor_number' => $vendorNumber,
             'strn_number' => $strnNumber,
             'ntn_number' => $ntnNumber,
             'sst_number' => $sstNumber,
@@ -294,7 +323,7 @@ class BillController extends Controller
 
         \App\Services\NotificationService::billCreated($bill);
 
-        return redirect()->route('bills.show', $bill)->with('success', 'Bill / Invoice ' . $billNumber . ' created successfully with ' . count($itemsData) . ' product items!' . $warningNotice);
+        return redirect()->route('bills.show', $bill)->with('success', 'Bill / Invoice ' . $billNumber . ' created successfully with ' . count($itemsData) . ' product items!');
     }
 
     public function show(Bill $bill)
@@ -361,6 +390,8 @@ class BillController extends Controller
             'milestone_description' => 'nullable|string',
             'tax_deduction' => 'nullable|numeric|min:0',
             'agpr_vendor_no' => 'nullable|string|max:50',
+            'vendor_type' => 'nullable|string|max:50',
+            'vendor_number' => 'nullable|string|max:50',
             'strn_number' => 'nullable|string|max:50',
             'ntn_number' => 'nullable|string|max:50',
             'sst_number' => 'nullable|string|max:50',
@@ -386,7 +417,7 @@ class BillController extends Controller
 
             $itemsData[] = [
                 'item_name' => $item['item_name'],
-                'unit' => $item['unit'] ?? 'Nos',
+                'unit' => (isset($item['unit']) && trim($item['unit']) !== '') ? trim($item['unit']) : null,
                 'quantity' => $qty,
                 'unit_price' => $price,
                 'total_price' => $total,
@@ -409,11 +440,42 @@ class BillController extends Controller
         $taxDeduction = (float) ($validated['tax_deduction'] ?? 0);
         $totalPayable = max(0, $gross + $gstAmount - $taxDeduction);
 
-        // Manage budget head expenditure adjustment
+        $department = Department::findOrFail($validated['department_id']);
         $oldHeadId = $bill->budget_head_id;
         $newHeadId = $validated['budget_head_id'] ?? null;
         $oldNetAmount = (float) $bill->net_amount;
 
+        // 1. Account Head Budget Validation on Edit (without double-counting current bill)
+        if ($newHeadId) {
+            $newHead = \App\Models\DepartmentBudgetHead::where('department_id', $department->id)->find($newHeadId);
+            if ($newHead) {
+                if ($oldHeadId == $newHeadId) {
+                    // Previously saved bill was already added to expenditure, so calculate available balance excluding this bill
+                    $effectiveHeadBalance = max(0, (float)$newHead->released_budget - max(0, (float)$newHead->expenditure - $oldNetAmount));
+                } else {
+                    $effectiveHeadBalance = (float) $newHead->released_balance;
+                }
+
+                if ($totalPayable > $effectiveHeadBalance) {
+                    $headLabel = $newHead->head_name ?: ($newHead->head_code ?: 'Selected Head');
+                    $errorMsg = "Account Head Budget Exceeded: Bill payable amount (PKR " . number_format($totalPayable, 2) . ") exceeds the available Released Budget Balance (PKR " . number_format($effectiveHeadBalance, 2) . ") for account head '{$headLabel}'.";
+                    return back()->withInput()->withErrors(['budget_head_id' => $errorMsg])->with('error', $errorMsg);
+                }
+            }
+        }
+
+        // 2. Department Released Budget Balance Validation on Edit (without double-counting current bill)
+        $deptAvailable = $department->availableReleasedBudget();
+        $effectiveDeptAvailable = ($bill->department_id == $department->id && $bill->status === 'paid')
+            ? ($deptAvailable + $oldNetAmount)
+            : $deptAvailable;
+
+        if ($totalPayable > $effectiveDeptAvailable) {
+            $errorMsg = "Account Head Budget Exceeded: Bill payable amount (PKR " . number_format($totalPayable, 2) . ") exceeds the available Released Budget Balance (PKR " . number_format($effectiveDeptAvailable, 2) . ") for department '{$department->name}'.";
+            return back()->withInput()->withErrors(['department_id' => $errorMsg])->with('error', $errorMsg);
+        }
+
+        // Manage budget head expenditure adjustment after validation passes
         if ($oldHeadId && $oldHeadId != $newHeadId) {
             $oldHead = \App\Models\DepartmentBudgetHead::find($oldHeadId);
             if ($oldHead) {
@@ -434,6 +496,11 @@ class BillController extends Controller
                     $newHead->increment('expenditure', $totalPayable);
                 }
             }
+        } elseif ($oldHeadId) {
+            $oldHead = \App\Models\DepartmentBudgetHead::find($oldHeadId);
+            if ($oldHead) {
+                $oldHead->decrement('expenditure', min($oldHead->expenditure, $oldNetAmount));
+            }
         }
 
         $docPath = $bill->attachment_path;
@@ -444,7 +511,9 @@ class BillController extends Controller
         $companyId = $validated['company_id'] ?? $bill->company_id;
         $company = $companyId ? \App\Models\Company::find($companyId) : null;
 
-        $agprVendorNo = !empty($validated['agpr_vendor_no']) ? $validated['agpr_vendor_no'] : ($company?->vendor_no ?? $bill->agpr_vendor_no);
+        $vendorType = !empty($validated['vendor_type']) ? trim($validated['vendor_type']) : ($bill->vendor_type ?? 'AGPR');
+        $vendorNumber = !empty($validated['vendor_number']) ? trim($validated['vendor_number']) : (!empty($validated['agpr_vendor_no']) ? trim($validated['agpr_vendor_no']) : ($company?->vendor_no ?? ($bill->vendor_number ?? $bill->agpr_vendor_no)));
+        $agprVendorNo = $vendorNumber;
         $strnNumber = !empty($validated['strn_number']) ? $validated['strn_number'] : ($company?->gst ?? $bill->strn_number);
         $ntnNumber = !empty($validated['ntn_number']) ? $validated['ntn_number'] : ($company?->ntn ?? $bill->ntn_number);
         $sstNumber = !empty($validated['sst_number']) ? $validated['sst_number'] : ($company?->sst ?? $bill->sst_number);
@@ -483,6 +552,8 @@ class BillController extends Controller
             'tax_deduction' => $taxDeduction,
             'net_amount' => $totalPayable,
             'agpr_vendor_no' => $agprVendorNo,
+            'vendor_type' => $vendorType,
+            'vendor_number' => $vendorNumber,
             'strn_number' => $strnNumber,
             'ntn_number' => $ntnNumber,
             'sst_number' => $sstNumber,
@@ -586,7 +657,7 @@ class BillController extends Controller
             $items[] = [
                 'name' => $item->item_name,
                 'qty' => $qty,
-                'unit' => $item->unit ?: 'Nos',
+                'unit' => $item->unit ?: null,
                 'unit_price' => $unitPrice,
                 'val_excl_tax' => $valExcl,
                 'gst_rate' => $gstRate,
@@ -1052,11 +1123,11 @@ class BillController extends Controller
                 // Exact Columns Matching Image
                 fputcsv($file, [
                     'Sr #',
-                    'Bill CreateDate',
-                    'Bill No',
+                    'Bill Create Date',
+                    'Bill #',
                     'Quarter',
                     'Head of Account',
-                    'Head Description',
+                    'Head of Account Description',
                     'Cost Center',
                     'Department Name',
                     'GST/SST',

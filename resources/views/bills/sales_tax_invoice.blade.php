@@ -223,12 +223,12 @@
                 <td class="meta-label">ST Registration #.</td>
                 <td class="meta-val"><strong>{{ $bill->strn_number ?: ($bill->company?->gst ?: ($bill->vendor?->strn_number ?: '3277876289057')) }}</strong></td>
             </tr>
-            @if(($bill->sst_number ?: $bill->company?->sst) || ($bill->agpr_vendor_no ?: $bill->company?->vendor_no))
+            @if(($bill->sst_number ?: $bill->company?->sst) || ($bill->vendor_number ?: ($bill->agpr_vendor_no ?: $bill->company?->vendor_no)))
             <tr>
                 <td class="meta-label">SST / SRB #.</td>
                 <td class="meta-val"><strong>{{ $bill->sst_number ?: ($bill->company?->sst ?: '-') }}</strong></td>
-                <td class="meta-label">Vendor # (AGPR)</td>
-                <td class="meta-val"><strong>{{ $bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: '-') }}</strong></td>
+                <td class="meta-label">Vendor # ({{ $bill->vendor_type ?: 'AGPR' }})</td>
+                <td class="meta-val"><strong>{{ $bill->vendor_number ?: ($bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: '-')) }}</strong></td>
             </tr>
             @endif
             <tr>
@@ -244,10 +244,16 @@
         </div>
 
         <!-- Line Items Table -->
+        @php
+            $hasUnit = collect($items)->contains(fn($r) => !empty($r['unit']));
+        @endphp
         <table class="items-table">
             <thead>
                 <tr>
                     <th class="col-desc">Particular Of Items</th>
+                    @if($hasUnit)
+                        <th style="width: 50px; text-align: center;">Unit</th>
+                    @endif
                     <th class="col-qty">Qty</th>
                     <th class="col-total-amt">Total Amount</th>
                     <th class="col-val-excl">Value Excluding Sales Tax</th>
@@ -260,6 +266,9 @@
                 @foreach($items as $row)
                     <tr>
                         <td class="col-desc">{{ $row['name'] }}</td>
+                        @if($hasUnit)
+                            <td style="text-align: center;">{{ $row['unit'] ?: '-' }}</td>
+                        @endif
                         <td class="col-qty">{{ number_format($row['qty']) }}</td>
                         <td class="col-total-amt font-mono">{{ number_format($row['val_incl_tax'], 2) }}</td>
                         <td class="col-val-excl font-mono">{{ number_format($row['val_excl_tax'], 2) }}</td>
@@ -272,6 +281,9 @@
                 <!-- Merged Grand Total Row (Exactly as user requested) -->
                 <tr class="total-row">
                     <td style="text-align: right; padding-right: 12px;"><strong>TOTAL:</strong></td>
+                    @if($hasUnit)
+                        <td></td>
+                    @endif
                     <td class="col-qty"><strong>{{ number_format($totalQty) }}</strong></td>
                     <td class="col-total-amt font-mono"><strong>{{ number_format($totalInclTax, 2) }}</strong></td>
                     <td class="col-val-excl font-mono"><strong>{{ number_format($totalExclTax, 2) }}</strong></td>

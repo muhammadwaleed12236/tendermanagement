@@ -47,118 +47,188 @@
                         <span class="text-xs text-slate-400">All fields marked with <span class="text-rose-500">*</span> are mandatory</span>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
-                        <!-- 1. Target Department -->
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-xs font-bold text-slate-700 uppercase">Target Department <span class="text-rose-500">*</span></label>
-                            </div>
-                            <select name="department_id" id="department_select" required class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 py-2.5">
-                                <option value="">-- Select Department --</option>
-                                @foreach($departments as $dept)
-                                    @php
-                                        $avail = $dept->availableReleasedBudget();
-                                    @endphp
-                                    <option value="{{ $dept->id }}" 
-                                            data-available="{{ $avail }}"
-                                            data-code="{{ $dept->code }}"
-                                            data-name="{{ $dept->name }}"
-                                            data-cost-center="{{ $dept->cost_center_description ?: ('Office of the ' . $dept->name) }}"
-                                            data-city="{{ $dept->city ?: 'Karachi.' }}"
-                                            {{ (old('department_id', $selectedDeptId) == $dept->id) ? 'selected' : '' }}>
-                                        [{{ $dept->code }}] {{ $dept->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="mt-1.5 flex items-center justify-between text-[11px]">
-                                <span class="text-slate-500 font-medium">Released Funds:</span>
-                                <span id="budget-badge-val" class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Avail: PKR 0.00</span>
-                            </div>
-                            @error('department_id') <span class="text-[11px] text-rose-500 block mt-1">{{ $message }}</span> @enderror
-                        </div>
+                    <div class="space-y-4">
 
-                        <!-- 2. Department Budget Head (Product) -->
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-xs font-bold text-slate-700 uppercase flex items-center gap-1">
-                                    <span>Head / Product</span>
-                                    <span class="text-indigo-600 font-extrabold text-[10px] bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">Dept Budget</span>
-                                </label>
-                                <button type="button" onclick="openNewHeadModal()" class="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-0.5">
-                                    <span>+ New Head</span>
-                                </button>
-                            </div>
-                            <select name="budget_head_id" id="budget_head_select" onchange="handleBudgetHeadChange()" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 text-slate-800 bg-white">
-                                <option value="">-- Select Product / Head --</option>
-                            </select>
-                            <div class="mt-1.5 flex items-center justify-between text-[11px]">
-                                <span class="text-slate-500 font-medium">Head Balance:</span>
-                                <span id="head-badge-val" class="font-mono font-bold text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">Select Dept</span>
-                            </div>
-                        </div>
+                        <!-- FIRST ROW: 4 Equal Width Fields -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
 
-                        <!-- 3. Quarter & Cost Center -->
-                        <div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Quarter</label>
-                                    <select name="quarter" id="quarter_select" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 bg-white">
-                                        <option value="1st Qtr" {{ old('quarter', '1st Qtr') == '1st Qtr' ? 'selected' : '' }}>1st Qtr</option>
-                                        <option value="2nd Qtr" {{ old('quarter') == '2nd Qtr' ? 'selected' : '' }}>2nd Qtr</option>
-                                        <option value="3rd Qtr" {{ old('quarter') == '3rd Qtr' ? 'selected' : '' }}>3rd Qtr</option>
-                                        <option value="4th Qtr" {{ old('quarter') == '4th Qtr' ? 'selected' : '' }}>4th Qtr</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Cost Center</label>
-                                    <input type="text" name="cost_center" id="cost_center_input" value="{{ old('cost_center') }}" placeholder="e.g. KA-8914" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                                </div>
-                            </div>
-                            <div class="mt-1.5 text-[11px] text-slate-400">
-                                Financial quarter & cost center code
-                            </div>
-                        </div>
+        <!-- 1. Cost Center -->
+        <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Cost Center
+            </label>
+            <input type="text" name="cost_center" id="cost_center_input"
+                value="{{ old('cost_center') }}"
+                placeholder="e.g. KA-8914"
+                class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
 
-                        <!-- 4. Bill / Cash Memo # & Date -->
-                        <div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill # <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="bill_number" value="{{ old('bill_number', $suggestedBillNumber ?? '11710') }}" placeholder="e.g. 10885" required class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 font-mono py-2.5 @error('bill_number') border-rose-500 @enderror">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill Date <span class="text-rose-500">*</span></label>
-                                    <input type="date" name="invoice_date" value="{{ date('Y-m-d') }}" required class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                                </div>
-                            </div>
-                            @error('bill_number') 
-                                <span class="text-[11px] text-rose-600 font-semibold block mt-1">{{ $message }}</span>
-                            @else
-                                <div class="mt-1 text-[11px] text-slate-400">
-                                    Voucher number & invoice creation date
-                                </div>
-                            @enderror
-                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between">
-                                <span class="text-[11px] font-bold text-slate-700 uppercase">Bill Status:</span>
-                                <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 text-[11px] font-bold">
-                                    <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-emerald-800 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
-                                        <input type="radio" name="status" value="approved" class="sr-only" checked>
-                                        <span>✓ Confirmed</span>
-                                    </label>
-                                    <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-slate-600 has-[:checked]:bg-amber-500 has-[:checked]:text-white transition">
-                                        <input type="radio" name="status" value="pending" class="sr-only">
-                                        <span>Draft</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="mt-1.5 text-[11px] text-slate-400">
+                Cost center code
+            </div>
+        </div>
+
+        <!-- 2. Department Name -->
+        <div>
+            <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs font-bold text-slate-700 uppercase">
+                    Department Name <span class="text-rose-500">*</span>
+                </label>
+            </div>
+
+            <select name="department_id" id="department_select" required
+                class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 py-2.5">
+                <option value="">-- Select Department --</option>
+                @foreach($departments as $dept)
+                    @php
+                        $avail = $dept->availableReleasedBudget();
+                    @endphp
+                    <option value="{{ $dept->id }}"
+                        data-available="{{ $avail }}"
+                        data-code="{{ $dept->code }}"
+                        data-name="{{ $dept->name }}"
+                        data-cost-center="{{ $dept->cost_center_description ?: ('Office of the ' . $dept->name) }}"
+                        data-city="{{ $dept->city ?: 'Karachi.' }}"
+                        {{ (old('department_id', $selectedDeptId ?? null) == $dept->id) ? 'selected' : '' }}>
+                        [{{ $dept->code }}] {{ $dept->name }}
+                    </option>
+                @endforeach
+            </select>
+
+            <div class="mt-1.5 flex items-center justify-between text-[11px]">
+                <span class="text-slate-500 font-medium">Released Funds:</span>
+                <span id="budget-badge-val"
+                    class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    Avail: PKR 0.00
+                </span>
+            </div>
+
+            @error('department_id')
+                <span class="text-[11px] text-rose-500 block mt-1">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- 3. Department Budget Head -->
+        <div>
+            <div class="flex items-center justify-between mb-1.5">
+                <label class="text-xs font-bold text-slate-700 uppercase flex items-center gap-1">
+                    <span>Head / Product</span>
+                    <span class="text-indigo-600 font-extrabold text-[10px] bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">
+                        Dept Budget
+                    </span>
+                </label>
+
+                <button type="button" onclick="openNewHeadModal()"
+                    class="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-0.5">
+                    <span>+ New Head</span>
+                </button>
+            </div>
+
+            <select name="budget_head_id" id="budget_head_select"
+                onchange="handleBudgetHeadChange()"
+                class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 text-slate-800 bg-white">
+                <option value="">-- Select Product / Head --</option>
+            </select>
+
+            <div class="mt-1.5 flex items-center justify-between text-[11px]">
+                <span class="text-slate-500 font-medium">Head Balance:</span>
+                <span id="head-badge-val"
+                    class="font-mono font-bold text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
+                    Select Dept
+                </span>
+            </div>
+        </div>
+
+        <!-- 4. Quarter -->
+        <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Quarter
+            </label>
+
+            <select name="quarter" id="quarter_select"
+                class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 bg-white">
+                <option value="1st Qtr" {{ old('quarter', '1st Qtr') == '1st Qtr' ? 'selected' : '' }}>1st Qtr</option>
+                <option value="2nd Qtr" {{ old('quarter') == '2nd Qtr' ? 'selected' : '' }}>2nd Qtr</option>
+                <option value="3rd Qtr" {{ old('quarter') == '3rd Qtr' ? 'selected' : '' }}>3rd Qtr</option>
+                <option value="4th Qtr" {{ old('quarter') == '4th Qtr' ? 'selected' : '' }}>4th Qtr</option>
+            </select>
+
+            <div class="mt-1.5 text-[11px] text-slate-400">
+                Financial quarter
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECOND ROW: Bill # and Bill Date (50% / 50%) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+
+        <!-- Bill Number -->
+        <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Bill # <span class="text-rose-500">*</span>
+            </label>
+
+            <input type="text" name="bill_number"
+                value="{{ old('bill_number', $suggestedBillNumber ?? '11710') }}"
+                placeholder="e.g. 10885" required
+                class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 font-mono py-2.5 @error('bill_number') border-rose-500 @enderror">
+
+            @error('bill_number')
+                <span class="text-[11px] text-rose-600 font-semibold block mt-1">{{ $message }}</span>
+            @else
+                <div class="mt-1 text-[11px] text-slate-400">
+                    Voucher number
+                </div>
+            @enderror
+        </div>
+
+        <!-- Bill Date -->
+        <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                Bill Date <span class="text-rose-500">*</span>
+            </label>
+
+            <input type="date" name="invoice_date"
+                value="{{ date('Y-m-d') }}" required
+                class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+
+            <div class="mt-1 text-[11px] text-slate-400">
+                Invoice creation date
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BILL STATUS -->
+    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+        <span class="text-[11px] font-bold text-slate-700 uppercase">
+            Bill Status:
+        </span>
+
+        <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 text-[11px] font-bold">
+            <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-emerald-800 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                <input type="radio" name="status" value="approved" class="sr-only" checked>
+                <span>✓ Confirmed</span>
+            </label>
+
+            <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-slate-600 has-[:checked]:bg-amber-500 has-[:checked]:text-white transition">
+                <input type="radio" name="status" value="pending" class="sr-only">
+                <span>Draft</span>
+            </label>
+        </div>
+    </div>
+
+</div>
+
 
                     <!-- Active Head of Account & 1-Click Auto-Fill Bar -->
                     <div id="head-active-banner" class="hidden p-3.5 bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-emerald-50/80 rounded-xl border-2 border-blue-200 mt-4 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-xs">
                         <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-10 h-10 rounded-xl bg-[#0056d2] text-white flex items-center justify-center font-black text-base shrink-0 shadow-xs">
-                                🎯
+                            <div class="w-10 h-10 rounded-xl bg-[#0056d2] text-white flex items-center justify-center shrink-0 shadow-md ring-2 ring-blue-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5v-9Z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9h18M16 14h2"/>
+                                </svg>
                             </div>
                             <div class="min-w-0">
                                 <div class="flex items-center gap-2 flex-wrap">
@@ -187,11 +257,11 @@
                     <!-- Head Details Inputs (Code & Description - Auto-Synced with dropdown, editable) -->
                     <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head of Account Code <span class="text-slate-400 font-normal">(e.g. A03806)</span></label>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head of Account<span class="text-slate-400 font-normal">(e.g. A03806)</span></label>
                             <input type="text" name="head_code" id="head_code" value="{{ old('head_code', 'A03970') }}" placeholder="e.g. A03806" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2 bg-white">
                         </div>
                         <div class="sm:col-span-1 lg:col-span-2">
-                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head Description / Product Title <span class="text-slate-400 font-normal">(e.g. Transportation of Goods)</span></label>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Account Head Description <span class="text-slate-400 font-normal">(e.g. Transportation of Goods)</span></label>
                             <input type="text" name="head_description" id="head_description" value="{{ old('head_description', 'Others') }}" placeholder="e.g. Transportation of Goods" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2 bg-white">
                         </div>
                         <input type="hidden" name="head_of_account" id="head_of_account" value="{{ old('head_of_account') }}">
@@ -206,7 +276,7 @@
                                 </span>
                                 <div>
                                     <label class="text-xs font-bold text-slate-800 uppercase tracking-wider block">
-                                        Billing Company / Supplier Setup <span class="text-rose-500">*</span>
+                                        Billing Company / Vendor Details <span class="text-rose-500">*</span>
                                     </label>
                                     <span class="text-[11px] text-slate-400 font-medium">Select company to auto-fill Vendor #, NTN, GST, & SST</span>
                                 </div>
@@ -224,10 +294,10 @@
                         </div>
 
                         <!-- Dropdown & Direct Fields Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-end bg-slate-50/70 p-3.5 rounded-xl border border-slate-200">
-                            <!-- Company Selector (4 cols) -->
-                            <div class="md:col-span-4">
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Company / Supplier Name</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5 items-end bg-slate-50/70 p-3.5 rounded-xl border border-slate-200">
+                            <!-- Company Selector (Vendor Name) -->
+                            <div class="col-span-1 sm:col-span-2 lg:col-span-1">
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor Name</label>
                                 <select name="company_id" id="company_select" onchange="updateCompanyDetails()" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500 py-2 text-slate-800 bg-white shadow-2xs">
                                     @foreach($companies as $comp)
                                         <option value="{{ $comp->id }}" 
@@ -246,26 +316,36 @@
                                 </select>
                             </div>
 
-                            <!-- Vendor No (AGPR) (2 cols) -->
-                            <div class="md:col-span-2">
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor # (AGPR)</label>
-                                <input type="text" name="agpr_vendor_no" id="company_vendor_no" value="{{ old('agpr_vendor_no', $defaultCompany?->vendor_no ?? '30368984') }}" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white" placeholder="e.g. 30368984">
+                            <!-- Vendor Type Dropdown (AGPR or AG Sindh) -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor Type</label>
+                                <select name="vendor_type" id="company_vendor_type" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500 py-2 text-slate-800 bg-white shadow-2xs">
+                                    <option value="AGPR" {{ old('vendor_type', 'AGPR') == 'AGPR' ? 'selected' : '' }}>AGPR</option>
+                                    <option value="AG Sindh" {{ old('vendor_type') == 'AG Sindh' ? 'selected' : '' }}>AG Sindh</option>
+                                </select>
                             </div>
 
-                            <!-- NTN # (2 cols) -->
-                            <div class="md:col-span-2">
+                            <!-- Vendor Number (separate field) -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor Number</label>
+                                <input type="text" name="vendor_number" id="company_vendor_no" value="{{ old('vendor_number', $defaultCompany?->vendor_no ?? '30368984') }}" oninput="if(document.getElementById('company_agpr_vendor_no_hidden')) document.getElementById('company_agpr_vendor_no_hidden').value = this.value" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white" placeholder="e.g. 30368984">
+                                <input type="hidden" name="agpr_vendor_no" id="company_agpr_vendor_no_hidden" value="{{ old('vendor_number', $defaultCompany?->vendor_no ?? '30368984') }}">
+                            </div>
+
+                            <!-- NTN # -->
+                            <div>
                                 <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">NTN #</label>
                                 <input type="text" name="ntn_number" id="company_ntn" value="{{ old('ntn_number', $defaultCompany?->ntn ?? '3437101-0') }}" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white" placeholder="e.g. 3437101-0">
                             </div>
 
-                            <!-- GST / STRN # (2 cols) -->
-                            <div class="md:col-span-2">
+                            <!-- GST / STRN # -->
+                            <div>
                                 <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">GST / STRN #</label>
                                 <input type="text" name="strn_number" id="company_gst" value="{{ old('strn_number', $defaultCompany?->gst ?? '3277876289057') }}" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white" placeholder="e.g. 3277876289057">
                             </div>
 
-                            <!-- SST / SRB # (2 cols) -->
-                            <div class="md:col-span-2">
+                            <!-- SST / SRB # -->
+                            <div>
                                 <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">SST #</label>
                                 <input type="text" name="sst_number" id="company_sst" value="{{ old('sst_number', $defaultCompany?->sst ?? 'S3437101-2') }}" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white" placeholder="e.g. S3437101-2">
                             </div>
@@ -286,15 +366,19 @@
                         <div class="flex items-center gap-2">
                             <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">2</span>
                             <div>
-                                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Products & Invoice Line Items</h3>
-                                <p class="text-[11px] text-slate-400">Add multiple items, units, quantities, and rates for this bill</p>
+                                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Invoice Items & Details</h3>
+                                <p class="text-[11px] text-slate-400">Add multiple items, optional units, quantities, and rates for this bill</p>
                             </div>
                         </div>
 
                         <div class="flex flex-wrap items-center gap-2">
                             <span id="items-counter" class="text-xs font-semibold text-slate-500 px-2.5 py-1 bg-slate-100 rounded-lg">
-                                1 Product Item
+                                1 Item
                             </span>
+                            <button type="button" onclick="showUnitColumn()" id="show-unit-btn" class="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-lg border border-slate-300 shadow-2xs transition flex items-center gap-1.5" title="Show unit column for line items" style="display: none;">
+                                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                <span>+ Add Unit Column</span>
+                            </button>
                             <button type="button" onclick="togglePastePanel()" id="toggle-paste-btn" class="px-3.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg border border-emerald-300 shadow-2xs transition flex items-center gap-1.5" title="Copy Excel rows (description, qty, price) and paste directly into invoice">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                                 <span>Paste from Excel / Text</span>
@@ -308,7 +392,7 @@
                             </button>
                             <button type="button" onclick="addProductRow()" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-1.5">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                + Add Product Item
+                                + Add Item
                             </button>
                         </div>
                     </div>
@@ -381,8 +465,8 @@
                             <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase font-bold sticky top-0 z-10 shadow-sm">
                                 <tr>
                                     <th class="p-3 w-10 text-center bg-slate-50">#</th>
-                                    <th class="p-3 bg-slate-50" style="min-width: 280px;">Product / Item Description <span class="text-rose-500">*</span></th>
-                                    <th class="p-3 w-28 bg-slate-50">Unit</th>
+                                    <th class="p-3 bg-slate-50" style="min-width: 280px;">Item Description <span class="text-rose-500">*</span></th>
+                                    <th class="p-3 w-28 bg-slate-50 unit-col" style="display: none;">Unit</th>
                                     <th class="p-3 w-24 bg-slate-50">Qty <span class="text-rose-500">*</span></th>
                                     <th class="p-3 w-36 bg-slate-50">Unit Price (PKR) <span class="text-rose-500">*</span></th>
                                     <th class="p-3 w-36 text-right bg-slate-50">Total (PKR)</th>
@@ -396,8 +480,9 @@
                                     <td class="p-3">
                                         <input type="text" name="items[0][item_name]" list="products-catalog-list" oninput="handleProductSelect(this)" required placeholder="Type description or pick from catalog..." class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                                     </td>
-                                    <td class="p-3">
-                                        <select name="items[0][unit]" class="w-full text-xs rounded-lg border-slate-200">
+                                    <td class="p-3 unit-col" style="display: none;">
+                                        <select name="items[0][unit]" class="w-full text-xs rounded-lg border-slate-200 unit-select" onchange="unitColumnForced = false; checkUnitColumnVisibility()">
+                                            <option value="">-- No Unit --</option>
                                             <option value="Nos">Nos</option>
                                             <option value="Units">Units</option>
                                             <option value="Pcs">Pcs</option>
@@ -522,74 +607,27 @@
                     </div>
                 </div>
 
-                <!-- CARD 3: Calculations & Live Budget Compliance Guard -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                    <!-- Left: Budget Compliance Guard Alert Box -->
-                    <div id="budget-alert-box" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
-                        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-                            <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Department Budget Compliance</span>
-                            <span id="budget-status-pill" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">
-                                Pending Selection
-                            </span>
+                <!-- CARD 3: Taxes, Deductions & Compact Budget Compliance (Matched to Image 3) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    
+                    <!-- Left Column: TAXES & DEDUCTIONS + MILESTONE DESCRIPTION (7 cols) -->
+                    <div class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                            <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">3</span>
+                            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">TAXES & DEDUCTIONS</h3>
                         </div>
 
-                        <div class="space-y-2 text-xs">
-                            <div class="flex justify-between items-center text-slate-600">
-                                <span>Released Funds Ceiling:</span>
-                                <span id="comp-avail" class="font-bold text-slate-800 font-mono">PKR 0.00</span>
-                            </div>
-                            <div class="flex justify-between items-center text-slate-600">
-                                <span>Total Payable for this Bill:</span>
-                                <span id="comp-bill" class="font-bold text-slate-900 font-mono">PKR 0.00</span>
-                            </div>
-                            <div class="flex justify-between items-center pt-2 border-t border-slate-100">
-                                <span class="font-semibold text-slate-700">Estimated Balance After Bill:</span>
-                                <span id="comp-rem" class="font-black text-indigo-700 font-mono">PKR 0.00</span>
-                            </div>
-
-                            <!-- Head of Account Budget Compliance Details -->
-                            <div id="comp-head-box" class="hidden pt-2 border-t border-blue-100 space-y-1.5 bg-blue-50/50 p-2.5 rounded-lg border border-blue-100">
-                                <div class="flex justify-between items-center text-blue-900 font-bold">
-                                    <span>Head (<span id="comp-head-name">Transport</span>) Ceiling:</span>
-                                    <span id="comp-head-avail" class="font-mono">PKR 0.00</span>
-                                </div>
-                                <div class="flex justify-between items-center text-slate-700">
-                                    <span>Head Balance After Bill:</span>
-                                    <span id="comp-head-rem" class="font-bold font-mono">PKR 0.00</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="text-[11px] text-slate-500 leading-relaxed pt-2 border-t border-slate-100" id="budget-alert-text">
-                            Please select a target department to verify that this bill amount stays strictly within the authorized released budget.
-                        </div>
-                    </div>
-
-                    <!-- Right: Pricing Totals Card (Dual % & PKR Inputs) -->
-                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3.5">
-                        <div class="text-xs font-bold text-slate-800 uppercase tracking-wider pb-2 border-b border-slate-100 flex items-center justify-between">
-                            <span>Invoice Summary & Deductions</span>
-                            <span class="text-[10px] text-slate-400 font-medium">Editable in % or PKR</span>
-                        </div>
-
-                        <!-- 1. Gross Subtotal -->
-                        <div class="flex justify-between items-center text-xs py-1">
-                            <span class="font-bold text-slate-700">Items Gross Subtotal:</span>
-                            <span class="font-black text-slate-900 text-sm font-mono" id="subtotal_display">PKR 0.00</span>
-                        </div>
-
-                        <!-- 2. Sales Tax GST (Dual % and PKR) -->
+                        <!-- 1. Sales Tax (GST / SST) Dual-Linked % & PKR -->
                         <div class="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200 space-y-2">
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="text-xs font-bold text-slate-800">Sales Tax GST</span>
-                                    <span class="text-[10px] font-semibold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">Default 18%</span>
-                                </div>
-                                <span class="text-xs font-extrabold text-indigo-700 font-mono" id="gst_badge_val">+ PKR 0.00</span>
+                                <span class="text-xs font-bold text-slate-800">
+                                    SALES TAX (GST / SST) <span class="text-[10px] text-slate-400 font-normal">DUAL-LINKED % & PKR</span>
+                                </span>
+                                <span class="text-xs font-extrabold text-indigo-700 font-mono bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100" id="gst_badge_val">+ PKR 0.00</span>
                             </div>
                             <div class="grid grid-cols-2 gap-3 items-center">
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Rate (%):</label>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">GST Rate (%):</label>
                                     <div class="relative">
                                         <input type="number" step="0.01" name="gst_rate" id="gst_rate" value="18" 
                                                class="w-full text-xs font-bold rounded-lg border-slate-300 pr-8 py-2 text-right font-mono focus:border-indigo-500 focus:ring-indigo-500" 
@@ -599,30 +637,30 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Or Amount (PKR):</label>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">GST Amount (PKR):</label>
                                     <div class="relative">
-                                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
                                         <input type="number" step="0.01" name="gst_amount" id="gst_amount" value="0.00" 
-                                               class="w-full text-xs font-black rounded-lg border-slate-300 pl-11 py-2 text-right font-mono text-indigo-700 focus:border-indigo-500 focus:ring-indigo-500" 
+                                               class="w-full text-xs font-black rounded-lg border-slate-300 pr-10 py-2 text-right font-mono text-indigo-700 focus:border-indigo-500 focus:ring-indigo-500" 
                                                placeholder="0.00"
                                                oninput="handleGstAmountChange(this.value)">
+                                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
                                     </div>
                                 </div>
                             </div>
+                            <p class="text-[10.5px] text-slate-400">Set to 0 if this product head has 0% GST (e.g. non-GST items)</p>
                         </div>
 
-                        <!-- 3. Withholding Deductions (Dual % and PKR) -->
+                        <!-- 2. Withholding / Income Tax Deduction Dual-Linked % & PKR -->
                         <div class="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200 space-y-2">
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="text-xs font-bold text-slate-800">Less: Withholding Deductions</span>
-                                    <span class="text-[10px] font-semibold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-100">Optional</span>
-                                </div>
-                                <span class="text-xs font-extrabold text-rose-600 font-mono" id="deduction_badge_val">- PKR 0.00</span>
+                                <span class="text-xs font-bold text-slate-800">
+                                    WITHHOLDING / INCOME TAX DEDUCTION <span class="text-[10px] text-slate-400 font-normal">DUAL-LINKED % & PKR</span>
+                                </span>
+                                <span class="text-xs font-extrabold text-rose-600 font-mono bg-rose-50 px-2 py-0.5 rounded border border-rose-100" id="deduction_badge_val">- PKR 0.00</span>
                             </div>
                             <div class="grid grid-cols-2 gap-3 items-center">
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Deduction Rate (%):</label>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Deduction Rate (%):</label>
                                     <div class="relative">
                                         <input type="number" step="0.01" id="deduction_rate" value="0" 
                                                class="w-full text-xs font-bold rounded-lg border-slate-300 pr-8 py-2 text-right font-mono text-rose-600 focus:border-rose-500 focus:ring-rose-500" 
@@ -632,62 +670,120 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Or Deduction Amount (PKR):</label>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Deduction Amount (PKR):</label>
                                     <div class="relative">
-                                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
                                         <input type="number" step="0.01" name="tax_deduction" id="tax_deduction" value="0" 
-                                               class="w-full text-xs font-black rounded-lg border-slate-300 pl-11 py-2 text-right font-mono text-rose-600 focus:border-rose-500 focus:ring-rose-500" 
+                                               class="w-full text-xs font-black rounded-lg border-slate-300 pr-10 py-2 text-right font-mono text-rose-600 focus:border-rose-500 focus:ring-rose-500" 
                                                placeholder="0.00"
                                                oninput="handleDeductionAmountChange(this.value)">
+                                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 4. Total Payable Amount -->
-                        <div class="p-3.5 bg-emerald-50/70 rounded-xl border border-emerald-200 flex justify-between items-center">
-                            <div>
-                                <span class="font-black text-slate-900 uppercase tracking-wider text-xs block">Total Bill Amount Payable:</span>
-                                <span class="text-[10px] text-emerald-800 font-medium">(Gross + GST - Deductions)</span>
-                            </div>
-                            <span class="text-xl font-black text-emerald-700 font-mono" id="net_display">PKR 0.00</span>
+                        <!-- 3. Milestone / Scope of Work Description -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">MILESTONE / SCOPE OF WORK DESCRIPTION</label>
+                            <textarea name="milestone_description" rows="3" placeholder="Procurement of goods / store items as per bill" class="w-full text-xs rounded-xl border-slate-300 focus:border-indigo-500 text-slate-800">{{ old('milestone_description', 'Procurement of goods / store items as per bill') }}</textarea>
                         </div>
+                    </div>
+
+                    <!-- Right Column: INVOICE FINANCIAL SUMMARY + COMPACT BUDGET COMPLIANCE (5 cols) -->
+                    <div class="lg:col-span-5 space-y-4">
+                        
+                        <!-- Top: INVOICE FINANCIAL SUMMARY -->
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                            <div class="text-xs font-bold text-slate-800 uppercase tracking-wider pb-2 border-b border-slate-100 flex items-center justify-between">
+                                <span>INVOICE FINANCIAL SUMMARY</span>
+                                <span class="text-[10px] text-slate-400 font-medium">Editable in % or PKR</span>
+                            </div>
+
+                            <div class="space-y-2.5 text-xs">
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span class="font-medium">Subtotal (Gross Items):</span>
+                                    <span class="font-bold text-slate-900 font-mono" id="subtotal_display">PKR 0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span class="font-medium">Sales Tax (GST):</span>
+                                    <span class="font-bold text-indigo-700 font-mono" id="summary_gst_display">+ PKR 0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center text-slate-600">
+                                    <span class="font-medium">Withholding Deduction:</span>
+                                    <span class="font-bold text-rose-600 font-mono" id="summary_deduction_display">- PKR 0.00</span>
+                                </div>
+                                
+                                <div class="border-t-2 border-slate-800 pt-3 mt-1 flex justify-between items-center">
+                                    <span class="font-black text-slate-900 uppercase tracking-wider text-xs">NET PAYABLE:</span>
+                                    <span class="text-xl font-black text-emerald-700 font-mono" id="net_display">PKR 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom: Selected Compact BUDGET COMPLIANCE Card (Image 3) -->
+                        <div id="budget-alert-box" class="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-300 shadow-xs space-y-2.5">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded-full bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 00.374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08zm3.094 8.016a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span class="text-xs font-black text-slate-800 tracking-wider uppercase">BUDGET COMPLIANCE</span>
+                                </div>
+                                <span id="budget-status-pill" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                                    ✓ Budget Compliant
+                                </span>
+                            </div>
+
+                            <p id="budget-alert-text" class="text-[11.5px] text-slate-600 leading-relaxed">
+                                Please select a target department to verify available released budget balance.
+                            </p>
+
+                            <!-- 3-Pill Stat Boxes from Image 3 -->
+                            <div class="grid grid-cols-3 gap-2 pt-1">
+                                <div class="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-xs text-center">
+                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">DEPT AVAIL</span>
+                                    <span id="comp-avail" class="block text-xs font-black text-slate-800 font-mono mt-0.5 truncate">PKR 0.00</span>
+                                </div>
+                                <div class="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-xs text-center">
+                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">THIS BILL</span>
+                                    <span id="comp-bill" class="block text-xs font-black text-slate-800 font-mono mt-0.5 truncate">PKR 0.00</span>
+                                </div>
+                                <div class="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-xs text-center">
+                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">REMAINING</span>
+                                    <span id="comp-rem" class="block text-xs font-black text-slate-800 font-mono mt-0.5 truncate">PKR 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <!-- CARD 4: Purpose & Attachments -->
+                <!-- CARD 4: Supporting Document & Daily Dispatch Register -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
                     <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                        <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">3</span>
-                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Expenditure Purpose & Supporting Document</h3>
+                        <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">4</span>
+                        <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Supporting Document & Dispatch Details</h3>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Expenditure Purpose / Justification Notes <span class="text-slate-400 font-normal">(Optional)</span></label>
-                            <textarea name="milestone_description" rows="3" placeholder="Procurement of goods / store items as per bill..." class="w-full text-xs rounded-lg border-slate-300 focus:border-indigo-500">{{ old('milestone_description') }}</textarea>
-                        </div>
-
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Supporting Document / Invoice Scan (PDF / Image)</label>
                             <input type="file" name="attachment" accept=".pdf,.docx,.zip,.jpg,.png" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 border border-slate-200 rounded-lg p-1">
                             <p class="text-[11px] text-slate-400 mt-1">Upload verified delivery challan, vendor bill, or inspection memo.</p>
                         </div>
-                    </div>
 
-                    <!-- Daily Billing Report Fields: Dispatch Date & Remarks -->
-                    <div class="pt-4 border-t border-slate-100">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Bill Dispatch Date <span class="text-slate-400 font-normal">(Daily Report)</span></label>
-                                <input type="date" name="dispatch_date" value="{{ old('dispatch_date') }}" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                                <p class="text-[11px] text-slate-400 mt-1">Date when bill voucher was dispatched to the department.</p>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dispatch Remarks / Mode <span class="text-slate-400 font-normal">(e.g. Rider By Hand)</span></label>
-                                <input type="text" name="remarks" value="{{ old('remarks', 'Rider By Hand') }}" placeholder="e.g. Rider By Hand, TCS, Hand Delivery" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                                <p class="text-[11px] text-slate-400 mt-1">Carrier method or special delivery remarks.</p>
-                            </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Bill Dispatch Date <span class="text-slate-400 font-normal">(Daily Report)</span></label>
+                            <input type="date" name="dispatch_date" value="{{ old('dispatch_date') }}" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                            <p class="text-[11px] text-slate-400 mt-1">Date when bill voucher was dispatched to the department.</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dispatch Remarks / Mode <span class="text-slate-400 font-normal">(e.g. Rider By Hand)</span></label>
+                            <input type="text" name="remarks" value="{{ old('remarks', 'Rider By Hand') }}" placeholder="e.g. Rider By Hand, TCS, Hand Delivery" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                            <p class="text-[11px] text-slate-400 mt-1">Carrier method or special delivery remarks.</p>
                         </div>
                     </div>
                 </div>
@@ -711,12 +807,22 @@
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
             <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <span class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">
-                        🎯
-                    </span>
+                    
+<span class="w-9 h-9 rounded-xl bg-indigo-600 from-indigo-500 via-indigo-600 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 ring-1 ring-white/20">
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="20" height="20" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor"
+         stroke-width="1.8" stroke-linecap="round"
+         stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="15" rx="2"/>
+        <path d="M3 9h18"/>
+        <path d="M16 14h.01"/>
+        <path d="M7 5V3h10v2"/>
+    </svg>
+</span>
+
                     <div>
-                        <h3 class="text-sm font-bold tracking-tight">Add Budget Head / Product</h3>
-                        <p class="text-[10px] text-slate-300" id="quick-head-dept-name">Department Head Allocation</p>
+                        <h3 class="text-sm font-bold tracking-tight">Account Head & Budget Management</h3>
                     </div>
                 </div>
                 <button type="button" onclick="closeNewHeadModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
@@ -725,27 +831,46 @@
             <form id="quick-head-form" onsubmit="handleNewHeadSubmit(event)" class="p-5 space-y-3.5">
                 <div class="grid grid-cols-3 gap-3">
                     <div class="col-span-1">
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head Code</label>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head of Account</label>
                         <input type="text" id="quick_head_code" placeholder="e.g. A03806" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head Name / Product <span class="text-rose-500">*</span></label>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Account Head Description <span class="text-rose-500">*</span></label>
                         <input type="text" id="quick_head_name" required placeholder="e.g. Transportation of Goods" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
+                    <!-- 1. Total Original Budget (PKR) -->
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Released / Sanctioned (PKR) <span class="text-rose-500">*</span></label>
-                        <input type="number" step="0.01" min="0" id="quick_head_released" required placeholder="e.g. 20000" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2" oninput="if(!document.getElementById('quick_head_original').dataset.manual) document.getElementById('quick_head_original').value = this.value">
-                        <p class="text-[10px] text-slate-400 mt-1">Available funds allocated for this product/head</p>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                            Total Original Budget (PKR)
+                        </label>
+                        <input type="number" step="0.01" min="0"
+                            id="quick_head_original"
+                            placeholder="e.g. 50000"
+                            class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                        <p class="text-[10px] text-slate-400 mt-1">
+                            Full financial year original budget allocation
+                        </p>
                     </div>
+
+                    <!-- 2. Released Budget -->
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Total / Original Grant (PKR)</label>
-                        <input type="number" step="0.01" min="0" id="quick_head_original" placeholder="e.g. 20000" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2" oninput="this.dataset.manual = 'true'">
-                        <p class="text-[10px] text-slate-400 mt-1">Full financial year allocation (defaults to released)</p>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                            Released Budget <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="number" step="0.01" min="0"
+                            id="quick_head_released"
+                            required
+                            placeholder="e.g. 20000"
+                            class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                        <p class="text-[10px] text-slate-400 mt-1">
+                            Released / sanctioned budget amount
+                        </p>
                     </div>
                 </div>
+
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -910,17 +1035,49 @@
             }
         }
 
-        function addProductRow(desc = '', unit = 'Nos', price = 0, qty = 1) {
+        let unitColumnForced = false;
+
+        function showUnitColumn() {
+            unitColumnForced = true;
+            checkUnitColumnVisibility();
+            const firstSelect = document.querySelector('#items-table .unit-select');
+            if (firstSelect) {
+                firstSelect.focus();
+            }
+        }
+
+        function checkUnitColumnVisibility() {
+            const unitSelects = document.querySelectorAll('#items-table .unit-select');
+            let hasAnyUnit = false;
+            unitSelects.forEach(select => {
+                if (select.value && select.value.trim() !== '') {
+                    hasAnyUnit = true;
+                }
+            });
+
+            const shouldShow = hasAnyUnit || unitColumnForced;
+            const unitCols = document.querySelectorAll('#items-table .unit-col');
+            unitCols.forEach(col => {
+                col.style.display = shouldShow ? '' : 'none';
+            });
+
+            const btn = document.getElementById('show-unit-btn');
+            if (btn) {
+                btn.style.display = shouldShow ? 'none' : 'inline-flex';
+            }
+        }
+
+        function addProductRow(desc = '', unit = '', price = 0, qty = 1) {
             const tbody = document.getElementById('items-body');
             const newIndex = rowCount++;
             
             const tr = document.createElement('tr');
             tr.className = 'item-row hover:bg-slate-50/50 transition';
 
-            const units = ['Nos', 'Units', 'Pcs', 'Kg', 'Box', 'Pack', 'Meters', 'Set', 'LumpSum'];
-            let unitOptions = '';
+            const units = ['Nos', 'Units', 'Pcs', 'Kg', 'Box', 'Pack', 'Meters', 'Set', 'LumpSum', 'Job'];
+            let unitOptions = '<option value="">-- No Unit --</option>';
             units.forEach(u => {
-                const sel = (u.toLowerCase() === (unit || 'Nos').toLowerCase()) ? 'selected' : '';
+                const sel = (unit && u.toLowerCase() === unit.toLowerCase()) ? 'selected' : '';
                 unitOptions += `<option value="${u}" ${sel}>${u}</option>`;
             });
 
@@ -929,8 +1086,8 @@
                 <td class="p-3">
                     <input type="text" name="items[` + newIndex + `][item_name]" value="${escapeHtml(desc)}" list="products-catalog-list" oninput="handleProductSelect(this)" required placeholder="Type description or pick from catalog..." class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                 </td>
-                <td class="p-3">
-                    <select name="items[` + newIndex + `][unit]" class="w-full text-xs rounded-lg border-slate-200">
+                <td class="p-3 unit-col">
+                    <select name="items[` + newIndex + `][unit]" class="w-full text-xs rounded-lg border-slate-200 unit-select" onchange="unitColumnForced = false; checkUnitColumnVisibility()">
                         ${unitOptions}
                     </select>
                 </td>
@@ -952,6 +1109,7 @@
             tbody.appendChild(tr);
             updateCounters();
             calcTotals();
+            checkUnitColumnVisibility();
         }
 
         function escapeHtml(text) {
@@ -1033,12 +1191,12 @@
                 if (firstInput && (!firstInput.value || firstInput.value.trim() === '')) {
                     const firstCb = checkedBoxes[0];
                     const desc = firstCb.getAttribute('data-description');
-                    const unit = firstCb.getAttribute('data-unit') || 'Nos';
+                    const unit = firstCb.getAttribute('data-unit') || '';
                     const price = parseFloat(firstCb.getAttribute('data-price')) || 0;
 
                     firstInput.value = desc;
                     const unitSelect = rows[0].querySelector('select[name*="[unit]"]');
-                    if (unitSelect) {
+                    if (unitSelect && unit) {
                         for (let i = 0; i < unitSelect.options.length; i++) {
                             if (unitSelect.options[i].value.toLowerCase() === unit.toLowerCase()) {
                                 unitSelect.selectedIndex = i;
@@ -1058,7 +1216,7 @@
             // Append additional rows for the remaining checked items
             checkedBoxes.forEach(cb => {
                 const desc = cb.getAttribute('data-description');
-                const unit = cb.getAttribute('data-unit') || 'Nos';
+                const unit = cb.getAttribute('data-unit') || '';
                 const price = parseFloat(cb.getAttribute('data-price')) || 0;
                 addProductRow(desc, unit, price, 1);
             });
@@ -1068,6 +1226,7 @@
             updateCatalogSelectedCount();
             closeCatalogModal();
             calcTotals();
+            checkUnitColumnVisibility();
         }
 
         /* Quick Paste from Excel / Multi-Line Text Functions */
@@ -1113,6 +1272,7 @@
                 else if (rawLine.includes(',')) delimiter = ',';
 
                 let desc = '';
+                let unit = '';
                 let qty = 1;
                 let price = 0;
 
@@ -1121,25 +1281,45 @@
                     desc = parts[0] || '';
                     if (!desc) return;
 
-                    if (parts.length >= 3) {
-                        // Col 0: description | Col 1: qty | Col 2: default_price
+                    if (parts.length >= 4) {
+                        // Format: [Desc, Unit, Qty, Price] or [Desc, Qty, Unit, Price]
+                        const p1Num = parseFloat(parts[1]);
+                        if (isNaN(p1Num)) {
+                            unit = parts[1];
+                            const qVal = parseFloat(parts[2]);
+                            qty = (!isNaN(qVal) && qVal > 0) ? qVal : 1;
+                            const pStr = (parts[3] || '').replace(/[^\d.]/g, '');
+                            const pVal = parseFloat(pStr);
+                            price = (!isNaN(pVal) && pVal >= 0) ? pVal : 0;
+                        } else {
+                            qty = p1Num > 0 ? p1Num : 1;
+                            unit = parts[2];
+                            const pStr = (parts[3] || '').replace(/[^\d.]/g, '');
+                            const pVal = parseFloat(pStr);
+                            price = (!isNaN(pVal) && pVal >= 0) ? pVal : 0;
+                        }
+                    } else if (parts.length === 3) {
+                        // Col 0: description | Col 1: qty | Col 2: default_price (unit is empty/optional)
                         const qVal = parseFloat(parts[1]);
                         qty = (!isNaN(qVal) && qVal > 0) ? qVal : 1;
 
                         const pStr = (parts[2] || '').replace(/[^\d.]/g, '');
                         const pVal = parseFloat(pStr);
                         price = (!isNaN(pVal) && pVal >= 0) ? pVal : 0;
+                        unit = '';
                     } else if (parts.length === 2) {
                         // Col 0: description | Col 1: qty or price
                         const valStr = (parts[1] || '').replace(/[^\d.]/g, '');
                         const val = parseFloat(valStr) || 0;
                         price = val;
                         qty = 1;
+                        unit = '';
                     }
                 } else {
                     desc = line;
                     qty = 1;
                     price = 0;
+                    unit = '';
                 }
 
                 if (desc) {
@@ -1147,7 +1327,7 @@
                         description: desc,
                         quantity: qty,
                         unit_price: price,
-                        unit: 'Nos'
+                        unit: unit
                     });
                 }
             });
@@ -1196,6 +1376,10 @@
                     if (firstInput && (!firstInput.value || firstInput.value.trim() === '')) {
                         const firstItem = items[0];
                         firstInput.value = firstItem.description;
+                        if (firstItem.unit) {
+                            const unitSelect = rows[0].querySelector('.unit-select');
+                            if (unitSelect) unitSelect.value = firstItem.unit;
+                        }
                         const qtyInput = rows[0].querySelector('.item-qty');
                         if (qtyInput) qtyInput.value = firstItem.quantity;
                         const priceInput = rows[0].querySelector('.item-price');
@@ -1239,17 +1423,19 @@
 
             document.getElementById('excel-paste-input').value = '';
             calcTotals();
+            checkUnitColumnVisibility();
         }
 
         function removeRow(btn) {
             const tbody = document.getElementById('items-body');
             if (tbody.children.length <= 1) {
-                alert('At least one product item is required for an invoice.');
+                alert('At least one item is required for an invoice.');
                 return;
             }
             btn.closest('tr').remove();
             updateCounters();
             calcTotals();
+            checkUnitColumnVisibility();
         }
 
         function updateCounters() {
@@ -1261,7 +1447,7 @@
             });
             const counter = document.getElementById('items-counter');
             if (counter) {
-                counter.textContent = rows.length + ' Product Item' + (rows.length > 1 ? 's' : '');
+                counter.textContent = rows.length + ' Item' + (rows.length > 1 ? 's' : '');
             }
         }
 
@@ -1361,9 +1547,18 @@
             if (gstBadge) {
                 gstBadge.textContent = '+ PKR ' + gstAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             }
+            const summaryGst = document.getElementById('summary_gst_display');
+            if (summaryGst) {
+                summaryGst.textContent = '+ PKR ' + gstAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+
             const dedBadge = document.getElementById('deduction_badge_val');
             if (dedBadge) {
                 dedBadge.textContent = '- PKR ' + deduction.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            const summaryDed = document.getElementById('summary_deduction_display');
+            if (summaryDed) {
+                summaryDed.textContent = '- PKR ' + deduction.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             }
 
             document.getElementById('subtotal_display').textContent = 'PKR ' + gross.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1374,7 +1569,7 @@
 
         function checkBudgetCompliance(netPayable) {
             const deptSelect = document.getElementById('department_select');
-            const selectedOpt = deptSelect.options[deptSelect.selectedIndex];
+            const selectedOpt = deptSelect ? deptSelect.options[deptSelect.selectedIndex] : null;
             const headSelect = document.getElementById('budget_head_select');
             const selectedHeadOpt = headSelect ? headSelect.options[headSelect.selectedIndex] : null;
 
@@ -1387,16 +1582,20 @@
             const compBill = document.getElementById('comp-bill');
             const compRem = document.getElementById('comp-rem');
 
-            compBill.textContent = 'PKR ' + netPayable.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (compBill) {
+                compBill.textContent = 'PKR ' + netPayable.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
 
-            if (!deptSelect.value) {
-                compAvail.textContent = 'PKR 0.00';
-                compRem.textContent = 'PKR 0.00';
-                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600';
-                statusPill.textContent = 'Pending Selection';
-                alertText.innerHTML = 'Please select a target department to verify available released quarterly funds.';
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            if (!deptSelect || !deptSelect.value) {
+                if (compAvail) compAvail.textContent = 'PKR 0.00';
+                if (compRem) compRem.textContent = 'PKR 0.00';
+                if (statusPill) {
+                    statusPill.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600';
+                    statusPill.textContent = 'Pending Selection';
+                }
+                if (alertText) {
+                    alertText.innerHTML = 'Please select a target department to verify available Released Budget Balance.';
+                }
                 return;
             }
 
@@ -1415,30 +1614,41 @@
                 }
             }
 
-            compAvail.textContent = 'PKR ' + avail.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            compRem.textContent = 'PKR ' + Math.max(0, remaining).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (compAvail) {
+                compAvail.textContent = 'PKR ' + avail.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
+            if (compRem) {
+                compRem.textContent = 'PKR ' + Math.max(0, remaining).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }
 
             if (isHeadExceeded) {
-                alertBox.className = 'bg-amber-50/70 p-5 rounded-2xl border-2 border-amber-300 shadow-sm space-y-3';
-                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900';
-                statusPill.textContent = 'Head Budget Exceeded';
-                alertText.innerHTML = `<strong class="text-amber-800">Head Budget Warning:</strong> Bill payable (PKR ${netPayable.toLocaleString('en-US', { minimumFractionDigits: 2 })}) exceeds available balance in head <strong class="text-indigo-800 font-bold">${escapeHtml(headName)}</strong> (PKR ${headBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}) by <strong class="text-rose-700 font-mono">PKR ${(netPayable - headBalance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>. Bill can still be submitted for tranche clearance.`;
-                submitBtn.disabled = false;
+                if (alertBox) alertBox.className = 'bg-rose-50/70 p-4 rounded-2xl border-2 border-rose-300 shadow-xs space-y-2.5';
+                if (statusPill) {
+                    statusPill.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800';
+                    statusPill.textContent = 'Account Head Budget Exceeded';
+                }
+                if (alertText) {
+                    alertText.innerHTML = `<strong class="text-rose-700">Account Head Budget Warning:</strong> Bill payable (PKR ${netPayable.toLocaleString('en-US', { minimumFractionDigits: 2 })}) exceeds available Released Budget Balance in head <strong class="text-indigo-800 font-bold">${escapeHtml(headName)}</strong> (PKR ${headBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}) by <strong class="text-rose-700 font-mono">PKR ${(netPayable - headBalance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>.`;
+                }
             } else if (netPayable > avail) {
-                alertBox.className = 'bg-amber-50/70 p-5 rounded-2xl border-2 border-amber-300 shadow-sm space-y-3';
-                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900';
-                statusPill.textContent = 'Tranche Release Required';
-                alertText.innerHTML = '<strong class="text-amber-800">Budget Notice:</strong> Bill payable exceeds current released funds by <strong class="text-rose-700 font-mono">PKR ' + (netPayable - avail).toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</strong>. Bill can still be submitted & recorded in Pending status.';
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                if (alertBox) alertBox.className = 'bg-rose-50/70 p-4 rounded-2xl border-2 border-rose-300 shadow-xs space-y-2.5';
+                if (statusPill) {
+                    statusPill.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800';
+                    statusPill.textContent = 'Account Head Budget Exceeded';
+                }
+                if (alertText) {
+                    alertText.innerHTML = `<strong class="text-rose-700">Account Head Budget Warning:</strong> Bill payable exceeds currently released department Released Budget Balance by <strong class="text-rose-700 font-mono">PKR ${(netPayable - avail).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>.`;
+                }
             } else {
-                alertBox.className = 'bg-emerald-50/60 p-5 rounded-2xl border-2 border-emerald-300 shadow-sm space-y-3';
-                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800';
-                statusPill.textContent = '✓ Budget Compliant';
+                if (alertBox) alertBox.className = 'bg-emerald-50/60 p-4 rounded-2xl border border-emerald-300 shadow-xs space-y-2.5';
+                if (statusPill) {
+                    statusPill.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800';
+                    statusPill.textContent = '✓ Budget Compliant';
+                }
                 const headNote = headSelect && headSelect.value ? ` and head <strong class="text-indigo-800">${escapeHtml(headName)}</strong> (PKR ${(headBalance - netPayable).toLocaleString('en-US', { minimumFractionDigits: 2 })} remaining)` : '';
-                alertText.innerHTML = `<strong class="text-emerald-700">Budget Verified!</strong> Invoice amount is fully covered by authorized released funds${headNote}. PKR ` + remaining.toLocaleString('en-US', { minimumFractionDigits: 2 }) + ' will remain available in this department.';
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                if (alertText) {
+                    alertText.innerHTML = `<strong class="text-emerald-700">Budget Verified!</strong> Invoice amount is fully covered by authorized released funds${headNote}. PKR ` + remaining.toLocaleString('en-US', { minimumFractionDigits: 2 }) + ' will remain available in this department.';
+                }
             }
         }
 
@@ -1661,15 +1871,14 @@
             btn.disabled = true;
             btn.innerHTML = '<span>Saving...</span>';
 
+            const original = parseFloat(document.getElementById('quick_head_original').value) || 0;
             const released = parseFloat(document.getElementById('quick_head_released').value) || 0;
-            const originalVal = document.getElementById('quick_head_original').value;
-            const original = originalVal ? (parseFloat(originalVal) || 0) : released;
 
             const payload = {
                 head_code: document.getElementById('quick_head_code').value.trim(),
                 head_name: document.getElementById('quick_head_name').value.trim(),
-                released_budget: released,
                 original_budget: original,
+                released_budget: released,
                 year: document.getElementById('quick_head_year').value.trim() || '2026',
                 notes: document.getElementById('quick_head_notes').value.trim(),
             };
@@ -1763,6 +1972,8 @@
 
             const vendorInput = document.getElementById('company_vendor_no');
             if (vendorInput) vendorInput.value = vendorNo;
+            const hiddenVendor = document.getElementById('company_agpr_vendor_no_hidden');
+            if (hiddenVendor) hiddenVendor.value = vendorNo;
 
             const ntnInput = document.getElementById('company_ntn');
             if (ntnInput) ntnInput.value = ntn;
@@ -1901,6 +2112,7 @@
             updateCompanyDetails();
             updateDepartmentDetails();
             calcTotals();
+            checkUnitColumnVisibility();
         });
     </script>
 </x-app-layout>

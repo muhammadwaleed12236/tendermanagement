@@ -62,117 +62,134 @@
                         <span class="text-xs text-slate-400">All fields marked with <span class="text-rose-500">*</span> are mandatory</span>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
-                        <!-- 1. Target Department -->
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-xs font-bold text-slate-700 uppercase">Target Department <span class="text-rose-500">*</span></label>
-                            </div>
-                            <select name="department_id" id="department_select" required class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 py-2.5">
-                                <option value="">-- Select Department --</option>
-                                @foreach($departments as $dept)
-                                    @php
-                                        $avail = $dept->availableReleasedBudget();
-                                        // When editing, current bill amount was part of department spending, so adjust avail preview
-                                        $adjAvail = ($dept->id == $bill->department_id) ? ($avail + (float)$bill->net_amount) : $avail;
-                                        $isSelected = (old('department_id', $bill->department_id) == $dept->id);
-                                    @endphp
-                                    <option value="{{ $dept->id }}" 
-                                            data-available="{{ $adjAvail }}" 
-                                            data-name="{{ $dept->name }}"
-                                            data-code="{{ $dept->code }}"
-                                            data-cost-center="{{ $dept->cost_center_description }}"
-                                            {{ $isSelected ? 'selected' : '' }}>
-                                        {{ $dept->name }} ({{ $dept->code ?: 'N/A' }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            <div class="mt-1.5 flex items-center justify-between text-[11px]">
-                                <span class="text-slate-500 font-medium">Released Funds:</span>
-                                <span id="budget-badge-val" class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Avail: PKR 0.00</span>
-                            </div>
-                            @error('department_id') <span class="text-[11px] text-rose-500 block mt-1">{{ $message }}</span> @enderror
-                        </div>
-
-                        <!-- 2. Department Budget Head (Product) -->
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label class="text-xs font-bold text-slate-700 uppercase flex items-center gap-1">
-                                    <span>Head / Product</span>
-                                    <span class="text-indigo-600 font-extrabold text-[10px] bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">Dept Budget</span>
+                    <div class="space-y-4">
+                        <!-- FIRST ROW: 4 Equal Width Fields -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+                            <!-- 1. Cost Center -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">
+                                    Cost Center
                                 </label>
-                                <button type="button" onclick="openNewHeadModal()" class="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-0.5">
-                                    <span>+ New Head</span>
-                                </button>
+                                <input type="text" name="cost_center" id="cost_center_input"
+                                    value="{{ old('cost_center', $bill->cost_center) }}"
+                                    placeholder="e.g. KA-8914"
+                                    class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                                <div class="mt-1.5 text-[11px] text-slate-400">
+                                    Cost center code
+                                </div>
                             </div>
-                            <select name="budget_head_id" id="budget_head_select" onchange="handleBudgetHeadChange()" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 text-slate-800 bg-white">
-                                <option value="">-- Select Product / Head --</option>
-                            </select>
-                            <div class="mt-1.5 flex items-center justify-between text-[11px]">
-                                <span class="text-slate-500 font-medium">Head Balance:</span>
-                                <span id="head-badge-val" class="font-mono font-bold text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">Select Dept</span>
+
+                            <!-- 2. Department Name -->
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="text-xs font-bold text-slate-700 uppercase">
+                                        Department Name <span class="text-rose-500">*</span>
+                                    </label>
+                                </div>
+                                <select name="department_id" id="department_select" required
+                                    class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 py-2.5">
+                                    <option value="">-- Select Department --</option>
+                                    @foreach($departments as $dept)
+                                        @php
+                                            $avail = $dept->availableReleasedBudget();
+                                            $adjAvail = ($dept->id == $bill->department_id) ? ($avail + (float)$bill->net_amount) : $avail;
+                                            $isSelected = (old('department_id', $bill->department_id) == $dept->id);
+                                        @endphp
+                                        <option value="{{ $dept->id }}" 
+                                                data-available="{{ $adjAvail }}" 
+                                                data-name="{{ $dept->name }}"
+                                                data-code="{{ $dept->code }}"
+                                                data-cost-center="{{ $dept->cost_center_description }}"
+                                                {{ $isSelected ? 'selected' : '' }}>
+                                            [{{ $dept->code }}] {{ $dept->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <div class="mt-1.5 flex items-center justify-between text-[11px]">
+                                    <span class="text-slate-500 font-medium">Released Funds:</span>
+                                    <span id="budget-badge-val" class="font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Avail: PKR 0.00</span>
+                                </div>
+                                @error('department_id') <span class="text-[11px] text-rose-500 block mt-1">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- 3. Head / Product -->
+                            <div>
+                                <div class="flex items-center justify-between mb-1.5">
+                                    <label class="text-xs font-bold text-slate-700 uppercase flex items-center gap-1">
+                                        <span>Head / Product</span>
+                                        <span class="text-indigo-600 font-extrabold text-[10px] bg-indigo-50 px-1.5 py-0.2 rounded border border-indigo-200">Dept Budget</span>
+                                    </label>
+                                    <button type="button" onclick="openNewHeadModal()" class="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-0.5">
+                                        <span>+ New Head</span>
+                                    </button>
+                                </div>
+                                <select name="budget_head_id" id="budget_head_select" onchange="handleBudgetHeadChange()" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 text-slate-800 bg-white">
+                                    <option value="">-- Select Product / Head --</option>
+                                </select>
+                                <div class="mt-1.5 flex items-center justify-between text-[11px]">
+                                    <span class="text-slate-500 font-medium">Head Balance:</span>
+                                    <span id="head-badge-val" class="font-mono font-bold text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">Select Dept</span>
+                                </div>
+                            </div>
+
+                            <!-- 4. Quarter -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Quarter</label>
+                                <select name="quarter" id="quarter_select" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 bg-white">
+                                    <option value="1st Qtr" {{ old('quarter', $bill->quarter) == '1st Qtr' ? 'selected' : '' }}>1st Qtr</option>
+                                    <option value="2nd Qtr" {{ old('quarter', $bill->quarter) == '2nd Qtr' ? 'selected' : '' }}>2nd Qtr</option>
+                                    <option value="3rd Qtr" {{ old('quarter', $bill->quarter) == '3rd Qtr' ? 'selected' : '' }}>3rd Qtr</option>
+                                    <option value="4th Qtr" {{ old('quarter', $bill->quarter) == '4th Qtr' ? 'selected' : '' }}>4th Qtr</option>
+                                </select>
+                                <div class="mt-1.5 text-[11px] text-slate-400">
+                                    Financial quarter
+                                </div>
                             </div>
                         </div>
 
-                        <!-- 3. Quarter & Cost Center -->
-                        <div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Quarter</label>
-                                    <select name="quarter" id="quarter_select" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5 bg-white">
-                                        <option value="1st Qtr" {{ old('quarter', $bill->quarter) == '1st Qtr' ? 'selected' : '' }}>1st Qtr</option>
-                                        <option value="2nd Qtr" {{ old('quarter', $bill->quarter) == '2nd Qtr' ? 'selected' : '' }}>2nd Qtr</option>
-                                        <option value="3rd Qtr" {{ old('quarter', $bill->quarter) == '3rd Qtr' ? 'selected' : '' }}>3rd Qtr</option>
-                                        <option value="4th Qtr" {{ old('quarter', $bill->quarter) == '4th Qtr' ? 'selected' : '' }}>4th Qtr</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Cost Center</label>
-                                    <input type="text" name="cost_center" id="cost_center_input" value="{{ old('cost_center', $bill->cost_center) }}" placeholder="e.g. KA-8914" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                                </div>
+                        <!-- SECOND ROW: 2 Equal Width Fields (Bill # and Bill Date) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+                            <!-- Bill # -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill # <span class="text-rose-500">*</span></label>
+                                <input type="text" name="bill_number" value="{{ old('bill_number', $bill->bill_number) }}" placeholder="e.g. 10885" required class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 font-mono py-2.5 @error('bill_number') border-rose-500 @enderror">
+                                @error('bill_number') 
+                                    <span class="text-[11px] text-rose-600 font-semibold block mt-1">{{ $message }}</span>
+                                @else
+                                    <div class="mt-1 text-[11px] text-slate-400">
+                                        Voucher number
+                                    </div>
+                                @enderror
                             </div>
-                            <div class="mt-1.5 text-[11px] text-slate-400">
-                                Financial quarter & cost center code
-                            </div>
-                        </div>
 
-                        <!-- 4. Bill / Cash Memo # & Date & Status -->
-                        <div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill # <span class="text-rose-500">*</span></label>
-                                    <input type="text" name="bill_number" value="{{ old('bill_number', $bill->bill_number) }}" placeholder="e.g. 10885" required class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 font-mono py-2.5 @error('bill_number') border-rose-500 @enderror">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill Date <span class="text-rose-500">*</span></label>
-                                    @php
-                                        $formattedDate = $bill->invoice_date ? \Carbon\Carbon::parse($bill->invoice_date)->format('Y-m-d') : date('Y-m-d');
-                                    @endphp
-                                    <input type="date" name="invoice_date" value="{{ old('invoice_date', $formattedDate) }}" required class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
-                                </div>
-                            </div>
-                            @error('bill_number') 
-                                <span class="text-[11px] text-rose-600 font-semibold block mt-1">{{ $message }}</span>
-                            @else
-                                <div class="mt-1 text-[11px] text-slate-400">
-                                    Voucher number & invoice creation date
-                                </div>
-                            @enderror
-                            <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between">
-                                <span class="text-[11px] font-bold text-slate-700 uppercase">Bill Status:</span>
+                            <!-- Bill Date -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1.5">Bill Date <span class="text-rose-500">*</span></label>
                                 @php
-                                    $isConfirmed = in_array(old('status', $bill->status), ['approved', 'confirmed']);
+                                    $formattedDate = $bill->invoice_date ? \Carbon\Carbon::parse($bill->invoice_date)->format('Y-m-d') : date('Y-m-d');
                                 @endphp
-                                <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 text-[11px] font-bold">
-                                    <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-emerald-800 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
-                                        <input type="radio" name="status" value="approved" class="sr-only" {{ $isConfirmed ? 'checked' : '' }}>
-                                        <span>✓ Confirmed</span>
-                                    </label>
-                                    <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-slate-600 has-[:checked]:bg-amber-500 has-[:checked]:text-white transition">
-                                        <input type="radio" name="status" value="pending" class="sr-only" {{ !$isConfirmed ? 'checked' : '' }}>
-                                        <span>Draft</span>
-                                    </label>
+                                <input type="date" name="invoice_date" value="{{ old('invoice_date', $formattedDate) }}" required class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2.5">
+                                <div class="mt-1 text-[11px] text-slate-400">
+                                    Invoice creation date
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- THIRD ROW: Bill Status -->
+                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] font-bold text-slate-700 uppercase">Bill Status:</span>
+                            @php
+                                $isConfirmed = in_array(old('status', $bill->status), ['approved', 'confirmed']);
+                            @endphp
+                            <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 text-[11px] font-bold">
+                                <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-emerald-800 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                                    <input type="radio" name="status" value="approved" class="sr-only" {{ $isConfirmed ? 'checked' : '' }}>
+                                    <span>✓ Confirmed</span>
+                                </label>
+                                <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-slate-600 has-[:checked]:bg-amber-500 has-[:checked]:text-white transition">
+                                    <input type="radio" name="status" value="pending" class="sr-only" {{ !$isConfirmed ? 'checked' : '' }}>
+                                    <span>Draft</span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -210,11 +227,11 @@
                     <!-- Head Details Inputs (Code & Description - Auto-Synced with dropdown, editable) -->
                     <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head of Account Code <span class="text-slate-400 font-normal">(e.g. A03806)</span></label>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head of Account <span class="text-slate-400 font-normal">(e.g. A03806)</span></label>
                             <input type="text" name="head_code" id="head_code" value="{{ old('head_code', $bill->head_code ?: 'A03970') }}" placeholder="e.g. A03806" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2 bg-white">
                         </div>
                         <div class="sm:col-span-1 lg:col-span-2">
-                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head Description / Product Title <span class="text-slate-400 font-normal">(e.g. Transportation of Goods)</span></label>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Account Head Description <span class="text-slate-400 font-normal">(e.g. Transportation of Goods)</span></label>
                             <input type="text" name="head_description" id="head_description" value="{{ old('head_description', $bill->head_description ?: 'Others') }}" placeholder="e.g. Transportation of Goods" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-indigo-500 py-2 bg-white">
                         </div>
                         <input type="hidden" name="head_of_account" id="head_of_account" value="{{ old('head_of_account', $bill->head_of_account) }}">
@@ -229,7 +246,7 @@
                                 </span>
                                 <div>
                                     <label class="text-xs font-bold text-slate-800 uppercase tracking-wider block">
-                                        Billing Company / Supplier Setup <span class="text-rose-500">*</span>
+                                        Billing Company / Vendor Details <span class="text-rose-500">*</span>
                                     </label>
                                     <span class="text-[11px] text-slate-400 font-medium">Select company to auto-fill Vendor #, NTN, GST, & SST</span>
                                 </div>
@@ -247,11 +264,11 @@
                         </div>
 
                         <!-- Dropdown & Direct Fields Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5 items-end bg-slate-50/70 p-3.5 rounded-xl border border-slate-200">
-                            <!-- Company Selector (4 cols) -->
-                            <div class="md:col-span-4">
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Company / Supplier Name</label>
-                                <select name="company_id" id="company_select" onchange="updateCompanyDetails()" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500 py-2 text-slate-800 bg-white shadow-2xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5 items-end bg-slate-50/70 p-3.5 rounded-xl border border-slate-200">
+                            <!-- Company Selector (Vendor Name) -->
+                            <div class="col-span-1 sm:col-span-2 lg:col-span-1">
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor Name</label>
+                                <select name="company_id" id="company_select" onchange="updateCompanyDetails(true)" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500 py-2 text-slate-800 bg-white shadow-2xs">
                                     @foreach($companies as $comp)
                                         <option value="{{ $comp->id }}" 
                                                 data-name="{{ $comp->company_name }}"
@@ -268,27 +285,37 @@
                                 </select>
                             </div>
 
-                            <!-- AGPR Vendor No (2 cols) -->
-                            <div class="md:col-span-2">
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor # (AGPR)</label>
-                                <input type="text" name="agpr_vendor_no" id="company_vendor_no" value="{{ old('agpr_vendor_no', $bill->agpr_vendor_no) }}" placeholder="30368984" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white">
+                            <!-- Vendor Type Dropdown (AGPR or AG Sindh) -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor Type</label>
+                                <select name="vendor_type" id="company_vendor_type" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-blue-500 focus:ring-blue-500 py-2 text-slate-800 bg-white shadow-2xs">
+                                    <option value="AGPR" {{ old('vendor_type', $bill->vendor_type ?? 'AGPR') == 'AGPR' ? 'selected' : '' }}>AGPR</option>
+                                    <option value="AG Sindh" {{ old('vendor_type', $bill->vendor_type) == 'AG Sindh' ? 'selected' : '' }}>AG Sindh</option>
+                                </select>
                             </div>
 
-                            <!-- NTN (2 cols) -->
-                            <div class="md:col-span-2">
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">NTN Number</label>
+                            <!-- Vendor Number (separate field) -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">Vendor Number</label>
+                                <input type="text" name="vendor_number" id="company_vendor_no" value="{{ old('vendor_number', $bill->vendor_number ?? $bill->agpr_vendor_no) }}" oninput="if(document.getElementById('company_agpr_vendor_no_hidden')) document.getElementById('company_agpr_vendor_no_hidden').value = this.value" placeholder="30368984" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white">
+                                <input type="hidden" name="agpr_vendor_no" id="company_agpr_vendor_no_hidden" value="{{ old('vendor_number', $bill->vendor_number ?? $bill->agpr_vendor_no) }}">
+                            </div>
+
+                            <!-- NTN # -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">NTN #</label>
                                 <input type="text" name="ntn_number" id="company_ntn" value="{{ old('ntn_number', $bill->ntn_number) }}" placeholder="3437101-0" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white">
                             </div>
 
-                            <!-- GST / STRN (2 cols) -->
-                            <div class="md:col-span-2">
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">GST / STRN</label>
+                            <!-- GST / STRN # -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">GST / STRN #</label>
                                 <input type="text" name="strn_number" id="company_gst" value="{{ old('strn_number', $bill->strn_number) }}" placeholder="3277876289057" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white">
                             </div>
 
-                            <!-- SST / SRB (2 cols) -->
-                            <div class="md:col-span-2">
-                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">SST / SRB</label>
+                            <!-- SST # -->
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 uppercase mb-1">SST #</label>
                                 <input type="text" name="sst_number" id="company_sst" value="{{ old('sst_number', $bill->sst_number) }}" placeholder="S3437101-2" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-blue-500 py-2 bg-white">
                             </div>
                         </div>
@@ -305,17 +332,24 @@
                     </div>
                 </div>
 
-                <!-- CARD 2: Product Line Items Grid -->
+                <!-- CARD 2: Products & Line Items Grid -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
                         <div class="flex items-center gap-2">
                             <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">2</span>
                             <div>
-                                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Product Line Items</h3>
-                                <p class="text-[11px] text-slate-400">Edit item descriptions, units, quantities, and rates</p>
+                                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Invoice Items & Details</h3>
+                                <p class="text-[11px] text-slate-400">Edit items, optional units, quantities, and rates</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-2 flex-wrap">
+                            <span id="items-counter" class="text-xs font-semibold text-slate-500 px-2.5 py-1 bg-slate-100 rounded-lg">
+                                {{ count($bill->items) }} Item{{ count($bill->items) > 1 ? 's' : '' }}
+                            </span>
+                            <button type="button" onclick="showUnitColumn()" id="show-unit-btn" class="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-lg border border-slate-300 shadow-2xs transition flex items-center gap-1.5" title="Show unit column for line items" style="display: none;">
+                                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                <span>+ Add Unit Column</span>
+                            </button>
                             <button type="button" onclick="openCatalogModal()" class="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-lg border border-indigo-200 transition flex items-center gap-1.5 shadow-2xs">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                                 <span>Pick from Catalog</span>
@@ -324,21 +358,70 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                                 <span>Paste from Excel</span>
                             </button>
-                            <button type="button" onclick="addProductRow()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-1.5">
+                            <button type="button" onclick="addProductRow()" class="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-1.5">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                <span>Add Row</span>
+                                <span>+ Add Item</span>
                             </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Excel / Multi-Line Text Paste Panel -->
+                    <div id="quick-paste-panel" class="hidden p-4 bg-gradient-to-r from-emerald-50/90 to-teal-50/70 border-2 border-dashed border-emerald-300 rounded-2xl space-y-3 transition-all duration-200">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                </span>
+                                <div>
+                                    <h4 class="text-xs font-bold text-emerald-950 flex items-center gap-2">
+                                        <span>Quick Paste from Excel (Description, Qty, Price)</span>
+                                        <span class="text-[10px] bg-emerald-200/70 text-emerald-800 font-semibold px-2 py-0.5 rounded-full">Live Table Auto-Populate</span>
+                                    </h4>
+                                    <p class="text-[11px] text-emerald-700">Paste Excel cells here to populate or append invoice items.</p>
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="togglePastePanel()" class="text-xs text-slate-400 hover:text-slate-700 font-bold px-2 py-1 rounded hover:bg-slate-100 transition">✕ Hide</button>
+                        </div>
+
+                        <div class="space-y-2">
+                            <textarea id="excel-paste-input" rows="3" 
+                                      placeholder="Paste Excel cells here... Example:&#10;Cat6 Shielded Ethernet Cable 305m Roll&#9;12&#9;18500&#10;A4 Photocopy Paper 80gsm 500 Sheets&#9;&#9;1450"
+                                      class="w-full text-xs font-mono rounded-xl border-emerald-300 focus:border-emerald-600 focus:ring-emerald-600 placeholder-slate-400 bg-white shadow-inner"
+                                      oninput="handleExcelPasteInput()"></textarea>
+
+                            <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                                <div class="flex flex-wrap items-center gap-4 text-xs">
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-slate-700 font-semibold text-[11px]">
+                                        <input type="radio" name="paste_mode" value="append" checked class="text-emerald-600 focus:ring-emerald-500">
+                                        <span>Append to Table</span>
+                                    </label>
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-slate-700 font-semibold text-[11px]">
+                                        <input type="radio" name="paste_mode" value="replace" class="text-emerald-600 focus:ring-emerald-500">
+                                        <span>Replace Existing Rows</span>
+                                    </label>
+                                </div>
+
+                                <div class="flex items-center gap-2">
+                                    <span id="paste-live-status" class="text-xs font-bold text-emerald-800 font-mono"></span>
+                                    <button type="button" onclick="clearPasteInput()" class="px-2.5 py-1 text-xs text-slate-500 hover:text-slate-800 font-bold">Clear</button>
+                                    <button type="button" onclick="applyExcelPasteToInvoice()" id="apply-paste-btn" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        <span>Insert into Invoice</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Products Table -->
                     <div class="overflow-x-auto border border-slate-200 rounded-xl">
-                        <table class="w-full text-left border-collapse text-xs">
+                        <table class="w-full text-left border-collapse text-xs" id="items-table">
                             <thead>
                                 <tr class="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase tracking-wider">
                                     <th class="p-3 w-12 text-center">#</th>
-                                    <th class="p-3 min-w-[260px]">Description / Product Name <span class="text-rose-500">*</span></th>
-                                    <th class="p-3 w-28">Unit</th>
+                                    <th class="p-3 min-w-[260px]">Item Description <span class="text-rose-500">*</span></th>
+                                    <th class="p-3 w-28 unit-col">Unit</th>
                                     <th class="p-3 w-28">Qty <span class="text-rose-500">*</span></th>
                                     <th class="p-3 w-36">Rate (PKR) <span class="text-rose-500">*</span></th>
                                     <th class="p-3 w-36 text-right">Total (PKR)</th>
@@ -352,10 +435,11 @@
                                         <td class="p-3">
                                             <input type="text" name="items[{{ $idx }}][item_name]" value="{{ $item->item_name }}" list="products-catalog-list" oninput="handleProductSelect(this)" required placeholder="Type description or pick from catalog..." class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                                         </td>
-                                        <td class="p-3">
-                                            <select name="items[{{ $idx }}][unit]" class="w-full text-xs rounded-lg border-slate-200">
+                                        <td class="p-3 unit-col">
+                                            <select name="items[{{ $idx }}][unit]" class="w-full text-xs rounded-lg border-slate-200 unit-select" onchange="unitColumnForced = false; checkUnitColumnVisibility()">
+                                                <option value="">-- No Unit --</option>
                                                 @foreach(['Nos', 'Units', 'Pcs', 'Kg', 'Box', 'Pack', 'Meters', 'Set', 'LumpSum', 'Job'] as $u)
-                                                    <option value="{{ $u }}" {{ strtolower($item->unit) == strtolower($u) ? 'selected' : '' }}>{{ $u }}</option>
+                                                    <option value="{{ $u }}" {{ strtolower($item->unit ?? '') == strtolower($u) ? 'selected' : '' }}>{{ $u }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -380,8 +464,9 @@
                                         <td class="p-3">
                                             <input type="text" name="items[0][item_name]" list="products-catalog-list" oninput="handleProductSelect(this)" required placeholder="Type description or pick from catalog..." class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                                         </td>
-                                        <td class="p-3">
-                                            <select name="items[0][unit]" class="w-full text-xs rounded-lg border-slate-200">
+                                        <td class="p-3 unit-col">
+                                            <select name="items[0][unit]" class="w-full text-xs rounded-lg border-slate-200 unit-select" onchange="unitColumnForced = false; checkUnitColumnVisibility()">
+                                                <option value="">-- No Unit --</option>
                                                 <option value="Nos">Nos</option>
                                                 <option value="Units">Units</option>
                                                 <option value="Pcs">Pcs</option>
@@ -414,8 +499,84 @@
                     </div>
 
                     <div class="flex items-center justify-between text-xs text-slate-500 pt-1">
-                        <span id="items-counter" class="font-bold text-slate-700">{{ count($bill->items) }} Product Items</span>
-                        <span>Click <strong class="text-indigo-600">+ Add Row</strong> or paste directly from Excel</span>
+                        <span class="text-slate-400">Manage line items or paste rows directly from Excel</span>
+                        <button type="button" onclick="addProductRow()" class="text-indigo-600 font-bold hover:underline">+ Add Another Line Item</button>
+                    </div>
+                </div>
+
+                <!-- Catalog Multi-Select Modal -->
+                <div id="catalog-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4" style="display: none;">
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-in fade-in zoom-in duration-150">
+                        <!-- Modal Header -->
+                        <div class="p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-8 h-8 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                                    <svg width="20" height="20" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                                </span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-slate-900">Select Products from Catalog</h4>
+                                    <p class="text-[11px] text-slate-500">Pick one or more products to insert into this bill</p>
+                                </div>
+                            </div>
+                            <button type="button" onclick="closeCatalogModal()" class="w-8 h-8 rounded-lg hover:bg-slate-200 text-slate-400 hover:text-slate-700 flex items-center justify-center transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+
+                        <!-- Modal Search & Selection Controls -->
+                        <div class="p-3 bg-white border-b border-slate-100 flex items-center justify-between gap-3">
+                            <div class="relative flex-1">
+                                <input type="text" id="catalog-search" oninput="filterCatalogModal()" placeholder="Search product description..." class="w-full text-xs rounded-xl border-slate-300 pl-8 py-2">
+                                <svg class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button type="button" onclick="toggleSelectAllCatalog(true)" class="text-[11px] font-bold text-blue-600 hover:underline">Select All</button>
+                                <span class="text-slate-300">|</span>
+                                <button type="button" onclick="toggleSelectAllCatalog(false)" class="text-[11px] font-bold text-slate-500 hover:underline">Clear</button>
+                            </div>
+                        </div>
+
+                        <!-- Modal Products List -->
+                        <div class="p-2 overflow-y-auto flex-1 divide-y divide-slate-100" id="catalog-list">
+                            @if(isset($products) && $products->isNotEmpty())
+                                @foreach($products as $p)
+                                    <label class="catalog-item flex items-center justify-between p-3 rounded-xl hover:bg-blue-50/50 cursor-pointer transition select-none" data-search="{{ strtolower($p->description) }}">
+                                        <div class="flex items-center gap-3">
+                                            <input type="checkbox" class="catalog-check rounded text-blue-600 focus:ring-blue-500" 
+                                                   data-description="{{ $p->description }}" 
+                                                   data-unit="{{ $p->unit ?: '' }}" 
+                                                   data-price="{{ $p->default_price ?: 0 }}">
+                                            <div>
+                                                <p class="text-xs font-semibold text-slate-800">{{ $p->description }}</p>
+                                                <div class="flex items-center gap-2 mt-0.5">
+                                                    @if($p->unit)
+                                                        <span class="text-[10px] text-slate-400">Unit: {{ $p->unit }}</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if($p->default_price > 0)
+                                            <span class="text-xs font-mono font-bold text-slate-600">PKR {{ number_format($p->default_price, 2) }}</span>
+                                        @endif
+                                    </label>
+                                @endforeach
+                            @else
+                                <div class="p-8 text-center text-slate-400">
+                                    <p class="text-xs font-semibold">No products saved in catalog yet.</p>
+                                </div>
+                            @endif
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+                            <span id="catalog-selected-count" class="text-xs font-semibold text-slate-600">0 items selected</span>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="closeCatalogModal()" class="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-200 rounded-lg transition">Cancel</button>
+                                <button type="button" onclick="insertSelectedProducts()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm transition">
+                                    Insert Selected Products
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -612,12 +773,20 @@
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
             <div class="p-4 bg-slate-900 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <span class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">
-                        🎯
+                    <span class="w-9 h-9 rounded-xl bg-indigo-600 from-indigo-500 via-indigo-600 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30 ring-1 ring-white/20">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             width="20" height="20" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor"
+                             stroke-width="1.8" stroke-linecap="round"
+                             stroke-linejoin="round">
+                            <rect x="3" y="5" width="18" height="15" rx="2"/>
+                            <path d="M3 9h18"/>
+                            <path d="M16 14h.01"/>
+                            <path d="M7 5V3h10v2"/>
+                        </svg>
                     </span>
                     <div>
-                        <h3 class="text-sm font-bold tracking-tight">Add Budget Head / Product</h3>
-                        <p class="text-[10px] text-slate-300" id="quick-head-dept-name">Department Head Allocation</p>
+                        <h3 class="text-sm font-bold tracking-tight">Account Head & Budget Management</h3>
                     </div>
                 </div>
                 <button type="button" onclick="closeNewHeadModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
@@ -626,25 +795,43 @@
             <form id="quick-head-form" onsubmit="handleNewHeadSubmit(event)" class="p-5 space-y-3.5">
                 <div class="grid grid-cols-3 gap-3">
                     <div class="col-span-1">
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head Code</label>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head of Account</label>
                         <input type="text" id="quick_head_code" placeholder="e.g. A03806" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Head Name / Product <span class="text-rose-500">*</span></label>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Account Head Description <span class="text-rose-500">*</span></label>
                         <input type="text" id="quick_head_name" required placeholder="e.g. Transportation of Goods" class="w-full text-xs font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
+                    <!-- 1. Total Original Budget (PKR) -->
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Released / Sanctioned (PKR) <span class="text-rose-500">*</span></label>
-                        <input type="number" step="0.01" min="0" id="quick_head_released" required placeholder="e.g. 20000" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2" oninput="if(!document.getElementById('quick_head_original').dataset.manual) document.getElementById('quick_head_original').value = this.value">
-                        <p class="text-[10px] text-slate-400 mt-1">Available funds allocated for this product/head</p>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                            Total Original Budget (PKR)
+                        </label>
+                        <input type="number" step="0.01" min="0"
+                            id="quick_head_original"
+                            placeholder="e.g. 50000"
+                            class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                        <p class="text-[10px] text-slate-400 mt-1">
+                            Full financial year original budget allocation
+                        </p>
                     </div>
+
+                    <!-- 2. Released Budget -->
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Total / Original Grant (PKR)</label>
-                        <input type="number" step="0.01" min="0" id="quick_head_original" placeholder="e.g. 20000" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2" oninput="this.dataset.manual = 'true'">
-                        <p class="text-[10px] text-slate-400 mt-1">Full financial year allocation (defaults to released)</p>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                            Released Budget <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="number" step="0.01" min="0"
+                            id="quick_head_released"
+                            required
+                            placeholder="e.g. 20000"
+                            class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2">
+                        <p class="text-[10px] text-slate-400 mt-1">
+                            Released / sanctioned budget amount
+                        </p>
                     </div>
                 </div>
 
@@ -779,6 +966,38 @@
             @endforeach
         };
 
+        let unitColumnForced = false;
+
+        function showUnitColumn() {
+            unitColumnForced = true;
+            checkUnitColumnVisibility();
+            const firstSelect = document.querySelector('#items-table .unit-select');
+            if (firstSelect) {
+                firstSelect.focus();
+            }
+        }
+
+        function checkUnitColumnVisibility() {
+            const unitSelects = document.querySelectorAll('#items-table .unit-select');
+            let hasAnyUnit = false;
+            unitSelects.forEach(select => {
+                if (select.value && select.value.trim() !== '') {
+                    hasAnyUnit = true;
+                }
+            });
+
+            const shouldShow = hasAnyUnit || unitColumnForced;
+            const unitCols = document.querySelectorAll('#items-table .unit-col');
+            unitCols.forEach(col => {
+                col.style.display = shouldShow ? '' : 'none';
+            });
+
+            const btn = document.getElementById('show-unit-btn');
+            if (btn) {
+                btn.style.display = shouldShow ? 'none' : 'inline-flex';
+            }
+        }
+
         function handleProductSelect(input) {
             const val = (input.value || '').trim().toLowerCase();
             if (!val) return;
@@ -795,6 +1014,7 @@
                             }
                         }
                     }
+                    checkUnitColumnVisibility();
                 }
                 const priceInput = tr.querySelector('.item-price');
                 if (priceInput && match.default_price && parseFloat(match.default_price) > 0) {
@@ -806,7 +1026,7 @@
             }
         }
 
-        function addProductRow(desc = '', unit = 'Nos', price = 0, qty = 1) {
+        function addProductRow(desc = '', unit = '', price = 0, qty = 1) {
             const tbody = document.getElementById('items-body');
             const newIndex = rowCount++;
             
@@ -814,9 +1034,9 @@
             tr.className = 'item-row hover:bg-slate-50/50 transition';
 
             const units = ['Nos', 'Units', 'Pcs', 'Kg', 'Box', 'Pack', 'Meters', 'Set', 'LumpSum', 'Job'];
-            let unitOptions = '';
+            let unitOptions = '<option value="">-- No Unit --</option>';
             units.forEach(u => {
-                const sel = (u.toLowerCase() === (unit || 'Nos').toLowerCase()) ? 'selected' : '';
+                const sel = (unit && u.toLowerCase() === unit.toLowerCase()) ? 'selected' : '';
                 unitOptions += `<option value="${u}" ${sel}>${u}</option>`;
             });
 
@@ -825,8 +1045,8 @@
                 <td class="p-3">
                     <input type="text" name="items[` + newIndex + `][item_name]" value="${escapeHtml(desc)}" list="products-catalog-list" oninput="handleProductSelect(this)" required placeholder="Type description or pick from catalog..." class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                 </td>
-                <td class="p-3">
-                    <select name="items[` + newIndex + `][unit]" class="w-full text-xs rounded-lg border-slate-200">
+                <td class="p-3 unit-col">
+                    <select name="items[` + newIndex + `][unit]" class="w-full text-xs rounded-lg border-slate-200 unit-select" onchange="unitColumnForced = false; checkUnitColumnVisibility()">
                         ${unitOptions}
                     </select>
                 </td>
@@ -848,6 +1068,7 @@
             tbody.appendChild(tr);
             updateCounters();
             calcTotals();
+            checkUnitColumnVisibility();
         }
 
         function escapeHtml(text) {
@@ -858,12 +1079,13 @@
         function removeRow(btn) {
             const tbody = document.getElementById('items-body');
             if (tbody.children.length <= 1) {
-                alert('At least one product item is required for an invoice.');
+                alert('At least one item is required for an invoice.');
                 return;
             }
             btn.closest('tr').remove();
             updateCounters();
             calcTotals();
+            checkUnitColumnVisibility();
         }
 
         function updateCounters() {
@@ -875,8 +1097,273 @@
             });
             const counter = document.getElementById('items-counter');
             if (counter) {
-                counter.textContent = rows.length + ' Product Item' + (rows.length > 1 ? 's' : '');
+                counter.textContent = rows.length + ' Item' + (rows.length > 1 ? 's' : '');
             }
+        }
+
+        /* Excel Paste Functions */
+        function togglePastePanel() {
+            const panel = document.getElementById('quick-paste-panel');
+            if (!panel) return;
+            if (panel.style.display === 'none' || panel.classList.contains('hidden')) {
+                panel.style.display = 'block';
+                panel.classList.remove('hidden');
+                document.getElementById('excel-paste-input').focus();
+            } else {
+                panel.style.display = 'none';
+                panel.classList.add('hidden');
+            }
+        }
+
+        function clearPasteInput() {
+            const input = document.getElementById('excel-paste-input');
+            if (input) input.value = '';
+            const status = document.getElementById('paste-live-status');
+            if (status) status.textContent = '';
+        }
+
+        function parseExcelLines(rawText) {
+            const lines = (rawText || '').split(/\r?\n/);
+            const items = [];
+
+            lines.forEach((rawLine, idx) => {
+                const line = rawLine.trim();
+                if (!line) return;
+
+                const lower = line.toLowerCase();
+                if (idx === 0 && lower.includes('description') && (lower.includes('qty') || lower.includes('price'))) {
+                    return;
+                }
+
+                let delimiter = null;
+                if (rawLine.includes('\t')) delimiter = '\t';
+                else if (rawLine.includes('|')) delimiter = '|';
+                else if (rawLine.includes(',')) delimiter = ',';
+
+                let desc = '';
+                let unit = '';
+                let qty = 1;
+                let price = 0;
+
+                if (delimiter) {
+                    const parts = rawLine.split(delimiter).map(p => p.trim());
+                    desc = parts[0] || '';
+                    if (!desc) return;
+
+                    if (parts.length >= 4) {
+                        const p1Num = parseFloat(parts[1]);
+                        if (isNaN(p1Num)) {
+                            unit = parts[1];
+                            const qVal = parseFloat(parts[2]);
+                            qty = (!isNaN(qVal) && qVal > 0) ? qVal : 1;
+                            const pStr = (parts[3] || '').replace(/[^\d.]/g, '');
+                            const pVal = parseFloat(pStr);
+                            price = (!isNaN(pVal) && pVal >= 0) ? pVal : 0;
+                        } else {
+                            qty = p1Num > 0 ? p1Num : 1;
+                            unit = parts[2];
+                            const pStr = (parts[3] || '').replace(/[^\d.]/g, '');
+                            const pVal = parseFloat(pStr);
+                            price = (!isNaN(pVal) && pVal >= 0) ? pVal : 0;
+                        }
+                    } else if (parts.length === 3) {
+                        const qVal = parseFloat(parts[1]);
+                        qty = (!isNaN(qVal) && qVal > 0) ? qVal : 1;
+                        const pStr = (parts[2] || '').replace(/[^\d.]/g, '');
+                        const pVal = parseFloat(pStr);
+                        price = (!isNaN(pVal) && pVal >= 0) ? pVal : 0;
+                        unit = '';
+                    } else if (parts.length === 2) {
+                        const valStr = (parts[1] || '').replace(/[^\d.]/g, '');
+                        const val = parseFloat(valStr) || 0;
+                        price = val;
+                        qty = 1;
+                        unit = '';
+                    }
+                } else {
+                    desc = line;
+                    qty = 1;
+                    price = 0;
+                    unit = '';
+                }
+
+                if (desc) {
+                    items.push({
+                        description: desc,
+                        quantity: qty,
+                        unit_price: price,
+                        unit: unit
+                    });
+                }
+            });
+
+            return items;
+        }
+
+        function handleExcelPasteInput() {
+            const text = document.getElementById('excel-paste-input').value;
+            const items = parseExcelLines(text);
+            const status = document.getElementById('paste-live-status');
+            if (status) {
+                if (items.length > 0) {
+                    const totalEst = items.reduce((sum, it) => sum + (it.quantity * it.unit_price), 0);
+                    status.textContent = `${items.length} items parsed (Total: PKR ${totalEst.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })})`;
+                    status.className = 'text-xs font-bold text-emerald-800 font-mono';
+                } else {
+                    status.textContent = '';
+                }
+            }
+        }
+
+        function applyExcelPasteToInvoice() {
+            const text = (document.getElementById('excel-paste-input').value || '').trim();
+            const items = parseExcelLines(text);
+
+            if (items.length === 0) {
+                alert('Please paste rows copied from Excel first (e.g. description, qty, price).');
+                return;
+            }
+
+            const tbody = document.getElementById('items-body');
+            const mode = document.querySelector('input[name="paste_mode"]:checked')?.value || 'append';
+
+            if (mode === 'replace') {
+                tbody.innerHTML = '';
+                rowCount = 0;
+            }
+
+            let startIndex = 0;
+            if (mode === 'append') {
+                const rows = tbody.querySelectorAll('.item-row');
+                if (rows.length === 1) {
+                    const firstInput = rows[0].querySelector('input[name*="[item_name]"]');
+                    if (firstInput && (!firstInput.value || firstInput.value.trim() === '')) {
+                        const firstItem = items[0];
+                        firstInput.value = firstItem.description;
+                        if (firstItem.unit) {
+                            const unitSelect = rows[0].querySelector('.unit-select');
+                            if (unitSelect) unitSelect.value = firstItem.unit;
+                        }
+                        const qtyInput = rows[0].querySelector('.item-qty');
+                        if (qtyInput) qtyInput.value = firstItem.quantity;
+                        const priceInput = rows[0].querySelector('.item-price');
+                        if (priceInput) priceInput.value = firstItem.unit_price;
+                        calcRow(priceInput || firstInput);
+                        startIndex = 1;
+                    }
+                }
+            }
+
+            for (let i = startIndex; i < items.length; i++) {
+                const it = items[i];
+                addProductRow(it.description, it.unit, it.unit_price, it.quantity);
+            }
+
+            const status = document.getElementById('paste-live-status');
+            if (status) {
+                status.textContent = `✓ ${items.length} items added to invoice!`;
+                status.className = 'text-xs font-bold text-emerald-900 font-mono';
+            }
+
+            document.getElementById('excel-paste-input').value = '';
+            calcTotals();
+            checkUnitColumnVisibility();
+        }
+
+        /* Catalog Modal Functions */
+        function openCatalogModal() {
+            const modal = document.getElementById('catalog-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('catalog-search').value = '';
+                filterCatalogModal();
+                updateCatalogSelectedCount();
+            }
+        }
+
+        function closeCatalogModal() {
+            const modal = document.getElementById('catalog-modal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function filterCatalogModal() {
+            const q = (document.getElementById('catalog-search').value || '').toLowerCase().trim();
+            const items = document.querySelectorAll('#catalog-list .catalog-item');
+            items.forEach(el => {
+                const text = el.getAttribute('data-search') || '';
+                el.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+            });
+        }
+
+        function toggleSelectAllCatalog(checked) {
+            const visibleItems = document.querySelectorAll('#catalog-list .catalog-item');
+            visibleItems.forEach(item => {
+                if (item.style.display !== 'none') {
+                    const cb = item.querySelector('.catalog-check');
+                    if (cb) cb.checked = checked;
+                }
+            });
+            updateCatalogSelectedCount();
+        }
+
+        function updateCatalogSelectedCount() {
+            const checked = document.querySelectorAll('#catalog-list .catalog-check:checked');
+            const countEl = document.getElementById('catalog-selected-count');
+            if (countEl) {
+                countEl.textContent = checked.length + ' item' + (checked.length === 1 ? '' : 's') + ' selected';
+            }
+        }
+
+        function insertSelectedProducts() {
+            const checkedBoxes = Array.from(document.querySelectorAll('#catalog-list .catalog-check:checked'));
+            if (checkedBoxes.length === 0) {
+                alert('Please select at least one product from the list.');
+                return;
+            }
+
+            const tbody = document.getElementById('items-body');
+            const rows = tbody.querySelectorAll('.item-row');
+
+            let firstRowHandled = false;
+            if (rows.length === 1) {
+                const firstInput = rows[0].querySelector('input[name*="[item_name]"]');
+                if (firstInput && (!firstInput.value || firstInput.value.trim() === '')) {
+                    const firstCb = checkedBoxes[0];
+                    const desc = firstCb.getAttribute('data-description');
+                    const unit = firstCb.getAttribute('data-unit') || '';
+                    const price = parseFloat(firstCb.getAttribute('data-price')) || 0;
+
+                    firstInput.value = desc;
+                    const unitSelect = rows[0].querySelector('select[name*="[unit]"]');
+                    if (unitSelect && unit) {
+                        for (let i = 0; i < unitSelect.options.length; i++) {
+                            if (unitSelect.options[i].value.toLowerCase() === unit.toLowerCase()) {
+                                unitSelect.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    const priceInput = rows[0].querySelector('.item-price');
+                    if (priceInput) priceInput.value = price;
+                    calcRow(priceInput || firstInput);
+
+                    checkedBoxes.shift();
+                    firstRowHandled = true;
+                }
+            }
+
+            checkedBoxes.forEach(cb => {
+                const desc = cb.getAttribute('data-description');
+                const unit = cb.getAttribute('data-unit') || '';
+                const price = parseFloat(cb.getAttribute('data-price')) || 0;
+                addProductRow(desc, unit, price, 1);
+            });
+
+            document.querySelectorAll('#catalog-list .catalog-check').forEach(cb => cb.checked = false);
+            updateCatalogSelectedCount();
+            closeCatalogModal();
+            calcTotals();
+            checkUnitColumnVisibility();
         }
 
         function calcRow(input) {
@@ -1010,7 +1497,7 @@
                 compRem.textContent = 'PKR 0.00';
                 statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600';
                 statusPill.textContent = 'Pending Selection';
-                alertText.innerHTML = 'Please select a target department to verify available released quarterly funds.';
+                alertText.innerHTML = 'Please select a target department to verify available Released Budget Balance.';
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 return;
@@ -1035,26 +1522,21 @@
             compRem.textContent = 'PKR ' + Math.max(0, remaining).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             if (isHeadExceeded) {
-                alertBox.className = 'bg-amber-50/70 p-5 rounded-2xl border-2 border-amber-300 shadow-sm space-y-3';
-                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900';
-                statusPill.textContent = 'Head Budget Exceeded';
-                alertText.innerHTML = `<strong class="text-amber-800">Head Budget Warning:</strong> Bill payable (PKR ${netPayable.toLocaleString('en-US', { minimumFractionDigits: 2 })}) exceeds available balance in head <strong class="text-indigo-800 font-bold">${escapeHtml(headName)}</strong> (PKR ${headBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}) by <strong class="text-rose-700 font-mono">PKR ${(netPayable - headBalance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>.`;
-                submitBtn.disabled = false;
+                alertBox.className = 'bg-rose-50/70 p-4 rounded-2xl border-2 border-rose-300 shadow-sm space-y-3';
+                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800';
+                statusPill.textContent = 'Account Head Budget Exceeded';
+                alertText.innerHTML = `<strong class="text-rose-700">Account Head Budget Warning:</strong> Bill payable (PKR ${netPayable.toLocaleString('en-US', { minimumFractionDigits: 2 })}) exceeds available Released Budget Balance in head <strong class="text-indigo-800 font-bold">${escapeHtml(headName)}</strong> (PKR ${headBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}) by <strong class="text-rose-700 font-mono">PKR ${(netPayable - headBalance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>.`;
             } else if (netPayable > avail) {
-                alertBox.className = 'bg-amber-50/70 p-5 rounded-2xl border-2 border-amber-300 shadow-sm space-y-3';
-                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900';
-                statusPill.textContent = 'Tranche Release Required';
-                alertText.innerHTML = '<strong class="text-amber-800">Budget Notice:</strong> Bill payable exceeds current released funds by <strong class="text-rose-700 font-mono">PKR ' + (netPayable - avail).toLocaleString('en-US', { minimumFractionDigits: 2 }) + '</strong>. Bill can still be updated.';
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                alertBox.className = 'bg-rose-50/70 p-4 rounded-2xl border-2 border-rose-300 shadow-sm space-y-3';
+                statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800';
+                statusPill.textContent = 'Account Head Budget Exceeded';
+                alertText.innerHTML = `<strong class="text-rose-700">Account Head Budget Warning:</strong> Bill payable exceeds current department Released Budget Balance by <strong class="text-rose-700 font-mono">PKR ${(netPayable - avail).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>.`;
             } else {
-                alertBox.className = 'bg-emerald-50/60 p-5 rounded-2xl border-2 border-emerald-300 shadow-sm space-y-3';
+                alertBox.className = 'bg-emerald-50/60 p-4 rounded-2xl border-2 border-emerald-300 shadow-sm space-y-3';
                 statusPill.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800';
                 statusPill.textContent = '✓ Budget Compliant';
                 const headNote = headSelect && headSelect.value ? ` and head <strong class="text-indigo-800">${escapeHtml(headName)}</strong> (PKR ${(headBalance - netPayable).toLocaleString('en-US', { minimumFractionDigits: 2 })} remaining)` : '';
                 alertText.innerHTML = `<strong class="text-emerald-700">Budget Verified!</strong> Invoice amount is fully covered by authorized released funds${headNote}. PKR ` + remaining.toLocaleString('en-US', { minimumFractionDigits: 2 }) + ' will remain available in this department.';
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
         }
 
@@ -1207,7 +1689,7 @@
         }
 
         /* Company / Supplier Interactive Functions */
-        function updateCompanyDetails() {
+        function updateCompanyDetails(force = false) {
             const select = document.getElementById('company_select');
             if (!select) return;
             const opt = select.options[select.selectedIndex];
@@ -1221,16 +1703,18 @@
             const phone = opt.getAttribute('data-phone') || '';
 
             const vendorInput = document.getElementById('company_vendor_no');
-            if (vendorInput && !vendorInput.value) vendorInput.value = vendorNo;
+            if (vendorInput && (force || !vendorInput.value)) vendorInput.value = vendorNo;
+            const hiddenVendor = document.getElementById('company_agpr_vendor_no_hidden');
+            if (hiddenVendor && (force || !hiddenVendor.value)) hiddenVendor.value = vendorNo;
 
             const ntnInput = document.getElementById('company_ntn');
-            if (ntnInput && !ntnInput.value) ntnInput.value = ntn;
+            if (ntnInput && (force || !ntnInput.value)) ntnInput.value = ntn;
 
             const gstInput = document.getElementById('company_gst');
-            if (gstInput && !gstInput.value) gstInput.value = gst;
+            if (gstInput && (force || !gstInput.value)) gstInput.value = gst;
 
             const sstInput = document.getElementById('company_sst');
-            if (sstInput && !sstInput.value) sstInput.value = sst;
+            if (sstInput && (force || !sstInput.value)) sstInput.value = sst;
 
             const addrEl = document.getElementById('company_address_text');
             if (addrEl) addrEl.textContent = address || '-';
@@ -1352,15 +1836,14 @@
             errEl.classList.add('hidden');
             btn.disabled = true;
 
+            const original = parseFloat(document.getElementById('quick_head_original').value) || 0;
             const released = parseFloat(document.getElementById('quick_head_released').value) || 0;
-            const originalVal = document.getElementById('quick_head_original').value;
-            const original = originalVal ? (parseFloat(originalVal) || 0) : released;
 
             const payload = {
                 head_code: document.getElementById('quick_head_code').value.trim(),
                 head_name: document.getElementById('quick_head_name').value.trim(),
-                released_budget: released,
                 original_budget: original,
+                released_budget: released,
                 year: document.getElementById('quick_head_year').value.trim() || '2026',
                 notes: document.getElementById('quick_head_notes').value.trim(),
             };
@@ -1463,6 +1946,7 @@
             updateCompanyDetails();
             updateDepartmentDetails();
             calcTotals();
+            checkUnitColumnVisibility();
         });
     </script>
 </x-app-layout>

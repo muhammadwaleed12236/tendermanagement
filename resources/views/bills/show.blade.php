@@ -209,8 +209,8 @@
                         </div>
                         @endif
                         <div class="flex justify-between">
-                            <span class="text-slate-500 font-semibold">AGPR Vendor #:</span>
-                            <span class="font-bold text-slate-800">{{ $bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: ($bill->vendor?->agpr_vendor_no ?: '30368984')) }}</span>
+                            <span class="text-slate-500 font-semibold">{{ $bill->vendor_type ?: 'AGPR' }} Vendor #:</span>
+                            <span class="font-bold text-slate-800">{{ $bill->vendor_number ?: ($bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: ($bill->vendor?->agpr_vendor_no ?: '30368984'))) }}</span>
                         </div>
                     </div>
                 </div>
@@ -225,12 +225,18 @@
                 </div>
 
                 <!-- 4. Products Table (Image 2 Clean Style) -->
+                @php
+                    $hasUnit = $bill->items->contains(fn($i) => !empty($i->unit));
+                @endphp
                 <div class="border border-slate-800 rounded-lg overflow-hidden">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-slate-100 border-b-2 border-slate-800 text-slate-900 font-black uppercase">
                                 <th class="p-3 w-14 text-center border-r border-slate-300">S. #.</th>
                                 <th class="p-3 border-r border-slate-300">Description</th>
+                                @if($hasUnit)
+                                    <th class="p-3 w-20 text-center border-r border-slate-300">Unit</th>
+                                @endif
                                 <th class="p-3 w-20 text-center border-r border-slate-300">Qty</th>
                                 <th class="p-3 w-28 text-right border-r border-slate-300">Rate</th>
                                 <th class="p-3 w-32 text-right">Amount</th>
@@ -241,13 +247,16 @@
                                 <tr class="hover:bg-slate-50/60">
                                     <td class="p-2.5 text-center font-bold text-slate-600 border-r border-slate-200">{{ $idx + 1 }}</td>
                                     <td class="p-2.5 font-medium text-slate-800 border-r border-slate-200">{{ $item->item_name }}</td>
+                                    @if($hasUnit)
+                                        <td class="p-2.5 text-center font-semibold text-slate-700 border-r border-slate-200">{{ $item->unit ?: '-' }}</td>
+                                    @endif
                                     <td class="p-2.5 text-center font-semibold text-slate-700 border-r border-slate-200">{{ (int)$item->quantity == $item->quantity ? (int)$item->quantity : $item->quantity }}</td>
                                     <td class="p-2.5 text-right font-medium text-slate-700 border-r border-slate-200">{{ number_format($item->unit_price) }}</td>
                                     <td class="p-2.5 text-right font-bold text-slate-900">{{ number_format($item->total_price) }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="p-4 text-center text-slate-400">No items listed.</td>
+                                    <td colspan="{{ $hasUnit ? 6 : 5 }}" class="p-4 text-center text-slate-400">No items listed.</td>
                                 </tr>
                             @endforelse
                         </tbody>

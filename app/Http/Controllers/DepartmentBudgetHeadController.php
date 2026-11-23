@@ -47,6 +47,17 @@ class DepartmentBudgetHeadController extends Controller
     }
 
     /**
+     * Get single budget head (JSON for edit modal)
+     */
+    public function show(DepartmentBudgetHead $budgetHead)
+    {
+        return response()->json([
+            'success' => true,
+            'head' => $budgetHead,
+        ]);
+    }
+
+    /**
      * Store a new budget head for a department
      */
     public function store(Request $request, Department $department)
@@ -55,7 +66,7 @@ class DepartmentBudgetHeadController extends Controller
             'year' => 'nullable|string|max:20',
             'head_code' => 'nullable|string|max:50',
             'head_name' => 'required|string|max:255',
-            'original_budget' => 'required|numeric|min:0',
+            'original_budget' => 'nullable|numeric|min:0',
             'released_budget' => 'nullable|numeric|min:0',
             'expenditure' => 'nullable|numeric|min:0',
             'notes' => 'nullable|string',
@@ -75,9 +86,9 @@ class DepartmentBudgetHeadController extends Controller
             'year' => $year,
             'head_code' => $headCode,
             'head_name' => $headName,
-            'original_budget' => $validated['original_budget'],
-            'released_budget' => $validated['released_budget'] ?? 0,
-            'expenditure' => $validated['expenditure'] ?? 0,
+            'original_budget' => isset($validated['original_budget']) ? (float)$validated['original_budget'] : 0,
+            'released_budget' => isset($validated['released_budget']) ? (float)$validated['released_budget'] : 0,
+            'expenditure' => isset($validated['expenditure']) ? (float)$validated['expenditure'] : 0,
             'notes' => $validated['notes'] ?? null,
         ]);
 
@@ -100,13 +111,20 @@ class DepartmentBudgetHeadController extends Controller
         $validated = $request->validate([
             'head_name' => 'required|string|max:255',
             'head_code' => 'nullable|string|max:50',
-            'original_budget' => 'required|numeric|min:0',
+            'original_budget' => 'nullable|numeric|min:0',
             'released_budget' => 'nullable|numeric|min:0',
             'expenditure' => 'nullable|numeric|min:0',
             'notes' => 'nullable|string',
         ]);
 
-        $budgetHead->update($validated);
+        $budgetHead->update([
+            'head_name' => trim($validated['head_name']),
+            'head_code' => isset($validated['head_code']) ? trim($validated['head_code']) : $budgetHead->head_code,
+            'original_budget' => isset($validated['original_budget']) ? (float)$validated['original_budget'] : $budgetHead->original_budget,
+            'released_budget' => isset($validated['released_budget']) ? (float)$validated['released_budget'] : $budgetHead->released_budget,
+            'expenditure' => isset($validated['expenditure']) ? (float)$validated['expenditure'] : $budgetHead->expenditure,
+            'notes' => array_key_exists('notes', $validated) ? $validated['notes'] : $budgetHead->notes,
+        ]);
 
         if ($request->wantsJson() || $request->ajax()) {
             return response()->json([

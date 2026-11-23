@@ -246,7 +246,7 @@
             @if($bill->sst_number ?: $bill->company?->sst)
             <div>SST #: <strong>{{ $bill->sst_number ?: $bill->company?->sst }}</strong></div>
             @endif
-            <div>AGPR Vendor #: <strong>{{ $bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: ($bill->vendor?->agpr_vendor_no ?: '30368984')) }}</strong></div>
+            <div>{{ $bill->vendor_type ?: 'AGPR' }} Vendor #: <strong>{{ $bill->vendor_number ?: ($bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: ($bill->vendor?->agpr_vendor_no ?: '30368984'))) }}</strong></div>
         </div>
     </div>
 
@@ -304,8 +304,8 @@
                 </tr>
                 @endif
                 <tr>
-                    <td class="lbl">AGPR VENDOR #</td>
-                    <td class="val">: {{ $bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: ($bill->vendor?->agpr_vendor_no ?: '30368984')) }}</td>
+                    <td class="lbl">{{ strtoupper($bill->vendor_type ?: 'AGPR') }} VENDOR #</td>
+                    <td class="val">: {{ $bill->vendor_number ?: ($bill->agpr_vendor_no ?: ($bill->company?->vendor_no ?: ($bill->vendor?->agpr_vendor_no ?: '30368984'))) }}</td>
                 </tr>
                 <tr>
                     <td class="lbl">CONTACT DETAILS</td>
@@ -324,11 +324,17 @@
     </div>
 
     <!-- 4. Products Table (Image 2 Style) -->
+    @php
+        $hasUnit = $bill->items->contains(fn($i) => !empty($i->unit));
+    @endphp
     <table class="items-table">
         <thead>
             <tr>
                 <th style="width: 40px;" class="text-center">S. #.</th>
                 <th>Description</th>
+                @if($hasUnit)
+                    <th style="width: 60px;" class="text-center">Unit</th>
+                @endif
                 <th style="width: 60px;" class="text-center">Qty</th>
                 <th style="width: 90px;" class="text-right">Rate</th>
                 <th style="width: 100px;" class="text-right">Amount</th>
@@ -339,13 +345,16 @@
                 <tr>
                     <td class="text-center">{{ $idx + 1 }}</td>
                     <td>{{ $item->item_name }}</td>
+                    @if($hasUnit)
+                        <td class="text-center">{{ $item->unit ?: '-' }}</td>
+                    @endif
                     <td class="text-center">{{ (int)$item->quantity == $item->quantity ? (int)$item->quantity : $item->quantity }}</td>
                     <td class="text-right">{{ number_format($item->unit_price) }}</td>
                     <td class="text-right" style="font-weight: bold;">{{ number_format($item->total_price) }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" class="text-center">No items listed.</td>
+                    <td colspan="{{ $hasUnit ? 6 : 5 }}" class="text-center">No items listed.</td>
                 </tr>
             @endforelse
         </tbody>

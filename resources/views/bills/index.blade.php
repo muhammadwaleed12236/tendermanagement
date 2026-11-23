@@ -3,7 +3,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <h2 class="font-extrabold text-2xl text-slate-900 tracking-tight">
-                    {{ __('Contractor Invoicing & Bills Registry') }}
+                    {{ __('Billing & Invoice Management') }}
                 </h2>
                 <p class="text-sm text-slate-500 mt-0.5">Track procurement milestone payments, deductions, and financial approvals.</p>
             </div>
@@ -32,20 +32,20 @@
             <!-- Stats Bar -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Invoiced</div>
+                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Bill Amount</div>
                     <div class="text-xl font-black text-slate-900 mt-1">PKR {{ number_format($stats['total_amount'], 2) }}</div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Paid / Disbursed</div>
-                    <div class="text-xl font-black text-emerald-600 mt-1">PKR {{ number_format($stats['paid_amount'], 2) }}</div>
+                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Nos. of Bill Generated</div>
+                    <div class="text-xl font-black text-emerald-600 mt-1">{{ number_format($stats['total_count']) }} Bills</div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pending Review</div>
-                    <div class="text-xl font-black text-amber-600 mt-1">{{ $stats['pending_count'] }} Bills</div>
+                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Pending Bills</div>
+                    <div class="text-xl font-black text-amber-600 mt-1">{{ number_format($stats['pending_count']) }} Bills</div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Approved for Payment</div>
-                    <div class="text-xl font-black text-indigo-600 mt-1">{{ $stats['approved_count'] }} Bills</div>
+                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Bills Printed</div>
+                    <div class="text-xl font-black text-indigo-600 mt-1">{{ number_format($stats['printed_count']) }} Bills</div>
                 </div>
             </div>
 
@@ -71,9 +71,8 @@
                             <select name="status" class="w-full text-sm rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">All Statuses</option>
                                 <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="verified_by_dept" {{ request('status') == 'verified_by_dept' ? 'selected' : '' }}>Verified by Dept</option>
-                                <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
-                                <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Paid</option>
+                                <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Generated</option>
+                                <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Printed</option>
                                 <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
                             </select>
                             <button type="submit" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg transition">Filter</button>
@@ -88,10 +87,11 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider">
-                                <th class="p-4">Bill Voucher #</th>
-                                <th class="p-4">Bill Head / Description</th>
-                                <th class="p-4">Vendor / Contractor</th>
-                                <th class="p-4">Department</th>
+                                <th class="p-4">Bill #</th>
+                                <th class="p-4">Head of Account</th>
+                                <th class="p-4">Head of Account Description</th>
+                                <th class="p-4">Vendor Name</th>
+                                <th class="p-4">Department Name</th>
                                 <th class="p-4">Gross & Tax</th>
                                 <th class="p-4">Net Payable</th>
                                 <th class="p-4">Status</th>
@@ -108,24 +108,37 @@
                                         <div class="text-[11px] font-normal text-slate-400 mt-0.5">Date: {{ $bill->invoice_date->format('M d, Y') }}</div>
                                     </td>
                                     <td class="p-4">
+                                        <span class="font-mono font-bold text-slate-800 block">
+                                            {{ $bill->head_code ?: ($bill->budgetHead?->head_code ?: ($bill->head_of_account ?: 'Head of Account')) }}
+                                        </span>
                                         @if($bill->tender)
-                                            <a href="{{ route('tenders.show', $bill->tender) }}" class="font-semibold text-slate-800 hover:text-indigo-600 block line-clamp-1">
-                                                {{ $bill->tender->title }}
+                                            <a href="{{ route('tenders.show', $bill->tender) }}" class="text-xs text-indigo-600 hover:underline block line-clamp-1 mt-0.5">
+                                                Tender: {{ $bill->tender->title }}
                                             </a>
-                                        @else
-                                            <span class="font-semibold text-slate-800 block line-clamp-1">
-                                                {{ $bill->head_of_account ?: ($bill->department ? ($bill->department->cost_center_description ?: $bill->department->name) : 'Departmental Purchase') }}
-                                            </span>
                                         @endif
-                                        <div class="text-xs text-slate-500 line-clamp-1 mt-0.5">{{ $bill->milestone_description }}</div>
                                     </td>
                                     <td class="p-4">
-                                        <div class="font-semibold text-slate-800">{{ $bill->vendor ? ($bill->vendor->company_name ?: $bill->vendor->name) : 'Department Direct' }}</div>
-                                        <div class="text-xs text-slate-400">{{ $bill->vendor ? ($bill->vendor->phone ?: $bill->vendor->email) : 'Internal Procurement' }}</div>
+                                        <span class="font-semibold text-slate-800 block line-clamp-1">
+                                            {{ $bill->budgetHead?->head_name ?: ($bill->head_description ?: ($bill->milestone_description ?: 'General Procurement')) }}
+                                        </span>
+                                        @if($bill->milestone_description && $bill->milestone_description !== ($bill->budgetHead?->head_name ?? ''))
+                                            <div class="text-xs text-slate-500 line-clamp-1 mt-0.5">{{ $bill->milestone_description }}</div>
+                                        @endif
                                     </td>
                                     <td class="p-4">
-                                        <span class="font-mono text-xs font-semibold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
-                                            {{ $bill->department ? $bill->department->code : 'General' }}
+                                        <div class="font-semibold text-slate-800">
+                                            {{ $bill->company?->company_name ?: ($bill->vendor?->company_name ?: ($bill->vendor?->name ?: 'Department Direct')) }}
+                                        </div>
+                                        <div class="text-xs text-slate-400 font-mono">
+                                            {{ $bill->vendor_type ?: 'AGPR' }}: {{ $bill->vendor_number ?: ($bill->company?->vendor_no ?: 'N/A') }}
+                                        </div>
+                                    </td>
+                                    <td class="p-4">
+                                        <span class="font-semibold text-slate-800 block">
+                                            {{ $bill->department ? $bill->department->name : 'General' }}
+                                        </span>
+                                        <span class="font-mono text-xs font-semibold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded mt-0.5 inline-block">
+                                            {{ $bill->department ? $bill->department->code : 'N/A' }}
                                         </span>
                                     </td>
                                     <td class="p-4">
@@ -138,15 +151,15 @@
                                     <td class="p-4">
                                         @if($bill->status === 'paid')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-300">
-                                                ● Paid
+                                                ● Printed
                                             </span>
                                         @elseif($bill->status === 'approved' || $bill->status === 'confirmed')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                                                ● Confirmed
+                                                ● Generated
                                             </span>
                                         @elseif($bill->status === 'draft' || $bill->status === 'pending')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-300">
-                                                ● Draft
+                                                ● Pending
                                             </span>
                                         @elseif($bill->status === 'rejected')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
@@ -235,7 +248,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="p-12 text-center text-slate-500">
+                                    <td colspan="9" class="p-12 text-center text-slate-500">
                                         No bills or invoices match the selected criteria.
                                     </td>
                                 </tr>

@@ -681,7 +681,7 @@
 
                             <!-- Original Budget Input -->
                             <div class="sm:col-span-3">
-                                <label class="block text-[11px] font-bold text-slate-600 mb-1">Original Budget (PKR) <span class="text-rose-500">*</span></label>
+                                <label class="block text-[11px] font-bold text-slate-600 mb-1">Total Original Budget (PKR) <span class="text-rose-500">*</span></label>
                                 <input type="number" step="0.01" min="0" id="form-head-original" placeholder="0" required class="w-full text-xs rounded-lg border-slate-300 py-1.5 font-mono font-bold text-right text-slate-800">
                             </div>
 
@@ -930,9 +930,13 @@
             });
         }
 
+        let loadedHeads = [];
+        let editingHeadId = null;
+
         function renderModalHeads(data) {
             const tbody = document.getElementById('modal-heads-tbody');
             const heads = data.heads || [];
+            loadedHeads = heads;
             const totals = data.totals || {};
 
             document.getElementById('modal-dept-heads-sum').textContent = 'PKR ' + Number(totals.original_budget || 0).toLocaleString();
@@ -961,14 +965,81 @@
                         <td class="py-2.5 px-3 text-right font-mono font-bold text-indigo-700">${Number(h.released_budget).toLocaleString()}</td>
                         <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-700 bg-emerald-50/40">${Number(balance).toLocaleString()}</td>
                         <td class="py-2.5 px-3 text-center">
-                            <button type="button" onclick="deleteBudgetHead(${h.id})" class="text-slate-400 hover:text-rose-600 transition" title="Delete head">
-                                <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                            </button>
+                            <div class="inline-flex items-center gap-1.5">
+                                <button type="button" onclick="editBudgetHead(${h.id})" class="text-slate-400 hover:text-indigo-600 transition" title="Edit head amounts">
+                                    <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                </button>
+                                <button type="button" onclick="deleteBudgetHead(${h.id})" class="text-slate-400 hover:text-rose-600 transition" title="Delete head">
+                                    <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
             });
             tbody.innerHTML = html;
+        }
+
+        function editBudgetHead(id) {
+            const h = loadedHeads.find(item => item.id == id);
+            if (!h) return;
+
+            editingHeadId = id;
+            const presetSelect = document.getElementById('form-head-preset');
+            const customInput = document.getElementById('form-head-custom');
+
+            let found = false;
+            for (let i = 0; i < presetSelect.options.length; i++) {
+                if (presetSelect.options[i].value === h.head_name) {
+                    presetSelect.selectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                presetSelect.value = 'CUSTOM';
+                customInput.value = h.head_name;
+                customInput.classList.remove('hidden');
+            } else {
+                customInput.classList.add('hidden');
+            }
+
+            document.getElementById('form-head-original').value = h.original_budget;
+            document.getElementById('form-head-released').value = h.released_budget;
+
+            const btn = document.getElementById('btn-save-head');
+            btn.textContent = 'Update Head';
+            btn.className = 'w-full py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg shadow-sm transition';
+
+            let cancelBtn = document.getElementById('btn-cancel-edit-head');
+            if (!cancelBtn) {
+                cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button';
+                cancelBtn.id = 'btn-cancel-edit-head';
+                cancelBtn.textContent = 'Cancel Edit';
+                cancelBtn.className = 'w-full py-1 px-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-[11px] font-semibold rounded-lg transition mt-1';
+                cancelBtn.onclick = resetHeadForm;
+                btn.parentNode.appendChild(cancelBtn);
+            }
+            cancelBtn.style.display = 'block';
+        }
+
+        function resetHeadForm() {
+            editingHeadId = null;
+            document.getElementById('form-head-preset').value = '';
+            const custom = document.getElementById('form-head-custom');
+            custom.value = '';
+            custom.classList.add('hidden');
+            document.getElementById('form-head-original').value = '';
+            document.getElementById('form-head-released').value = '';
+
+            const btn = document.getElementById('btn-save-head');
+            btn.textContent = '+ Add Head';
+            btn.className = 'w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition';
+
+            const cancelBtn = document.getElementById('btn-cancel-edit-head');
+            if (cancelBtn) cancelBtn.style.display = 'none';
         }
 
         function submitAddHeadForm(e) {
@@ -991,10 +1062,13 @@
 
             const btn = document.getElementById('btn-save-head');
             btn.disabled = true;
-            btn.textContent = 'Saving...';
+            btn.textContent = editingHeadId ? 'Updating...' : 'Saving...';
 
-            fetch(`/departments/${deptId}/budget-heads`, {
-                method: 'POST',
+            const url = editingHeadId ? `/budget-heads/${editingHeadId}` : `/departments/${deptId}/budget-heads`;
+            const method = editingHeadId ? 'PUT' : 'POST';
+
+            fetch(url, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -1010,18 +1084,13 @@
             .then(res => res.json())
             .then(res => {
                 btn.disabled = false;
-                btn.textContent = '+ Add Head';
-                presetSelect.value = '';
-                customInput.value = '';
-                customInput.classList.add('hidden');
-                document.getElementById('form-head-original').value = '';
-                document.getElementById('form-head-released').value = '';
+                resetHeadForm();
                 loadBudgetHeads(deptId);
             })
             .catch(err => {
                 btn.disabled = false;
-                btn.textContent = '+ Add Head';
-                alert('Error adding budget head: ' + err.message);
+                btn.textContent = editingHeadId ? 'Update Head' : '+ Add Head';
+                alert('Error saving budget head: ' + err.message);
             });
         }
 

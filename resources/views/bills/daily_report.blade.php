@@ -92,7 +92,7 @@
                 <!-- 1. Total Bills -->
                 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-slate-500">Total Invoices</span>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-slate-500">Total Nos. of Bill Generated</span>
                         <div class="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">{{ number_format($stats['total_count']) }}</div>
                         <span class="text-[11px] font-medium text-slate-400">Bills Generated</span>
                     </div>
@@ -104,7 +104,7 @@
                 <!-- 2. Total Invoiced Amount -->
                 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-emerald-700">Total Billing Volume</span>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-emerald-700">Total Bill Amount</span>
                         <div class="text-xl sm:text-2xl font-black text-emerald-900 mt-0.5">PKR {{ number_format($stats['total_amount']) }}</div>
                         <span class="text-[11px] font-medium text-emerald-600">Net Payable Amount</span>
                     </div>
@@ -116,7 +116,7 @@
                 <!-- 3. Dispatched Bills -->
                 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-sky-700">Dispatched Bills</span>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-sky-700">Total Dispatched Bills</span>
                         <div class="text-xl sm:text-2xl font-black text-sky-900 mt-0.5">{{ number_format($stats['dispatched_count']) }}</div>
                         <span class="text-[11px] font-medium text-sky-600">Delivered to Dept</span>
                     </div>
@@ -128,7 +128,7 @@
                 <!-- 4. Pending Dispatch -->
                 <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-amber-700">Pending Dispatch</span>
+                        <span class="text-[10px] font-black uppercase tracking-wider text-amber-700">Total Pending Dispatch Bills</span>
                         <div class="text-xl sm:text-2xl font-black text-amber-900 mt-0.5">{{ number_format($stats['pending_dispatch_count']) }}</div>
                         <span class="text-[11px] font-medium text-amber-600">In Office / In Transit</span>
                     </div>
@@ -217,7 +217,7 @@
 
                         <!-- Company / Vendor -->
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Vendor / Company</label>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Vendor Name</label>
                             <select name="company_id" class="w-full text-xs font-semibold rounded-lg border-slate-300 focus:border-blue-500 py-2 text-slate-800 bg-white">
                                 <option value="">All Vendors</option>
                                 @foreach($companies as $comp)
@@ -261,11 +261,11 @@
                         <thead>
                             <tr class="bg-[#f7cbb0] text-slate-900 border-b-2 border-slate-800">
                                 <th class="py-2.5 px-2.5 text-center font-black border-r border-slate-400/60 whitespace-nowrap w-12">Sr #</th>
-                                <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Bill CreateDate</th>
-                                <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Bill No</th>
+                                <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Bill Create Date</th>
+                                <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Bill #</th>
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Quarter</th>
                                 <th class="py-2.5 px-2 text-center font-black border-r border-slate-400/60 whitespace-nowrap w-24">Head of Account</th>
-                                <th class="py-2.5 px-4 text-left font-black border-r border-slate-400/60 min-w-[280px]">Head Description</th>
+                                <th class="py-2.5 px-4 text-left font-black border-r border-slate-400/60 min-w-[280px]">Head of Account Description</th>
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">Cost Center</th>
                                 <th class="py-2.5 px-4 text-left font-black border-r border-slate-400/60 min-w-[220px]">Department Name</th>
                                 <th class="py-2.5 px-3 text-center font-black border-r border-slate-400/60 whitespace-nowrap">GST/SST</th>

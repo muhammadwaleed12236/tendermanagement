@@ -690,13 +690,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $bPct = (int)($stats['billed_pct'] ?? 68); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $bPct }}% Billed">
-                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $bPct }}% Billed">
+                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $bPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">{{ $bPct }}%</span>
+                            <span class="absolute text-xl font-black font-mono text-[#0056d2]">{{ $bPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -734,13 +734,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $cValPct = (int)($stats['cheque_pct'] ?? 82); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $cValPct }}% Cleared">
-                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $cValPct }}% Cleared">
+                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $cValPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $cValPct }}%</span>
+                            <span class="absolute text-xl font-black font-mono text-[#0d9467]">{{ $cValPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -783,13 +783,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $commPct = (int)($stats['commission_pct'] ?? 45); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $commPct }}% Commission Rate">
-                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $commPct }}% Commission Rate">
+                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $commPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
+                            <span class="absolute text-xl font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -849,13 +849,13 @@
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $profPct = (int)($stats['profit_pct'] ?? 88); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $profPct }}% Profit Margin">
-                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $profPct }}% Profit Margin">
+                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $profPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $profPct }}%</span>
+                            <span class="absolute text-xl font-black font-mono text-[#881337]">{{ $profPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -1143,7 +1143,7 @@
                         </div>
                     </div>
 
-                    <!-- Right Quick Actions -->
+                    <!-- Right Quick Actions: Independent EPADS 2.0 and Tenders Management Buttons -->
                     <div class="flex items-center gap-2 self-start sm:self-auto flex-wrap">
                         <div class="hidden md:flex items-center gap-2 mr-1">
                             <span class="px-2.5 py-1 rounded-xl text-xs font-extrabold text-sky-700 bg-sky-50 border border-sky-200 flex items-center gap-1.5 shadow-2xs">
@@ -1155,12 +1155,20 @@
                                 <span>{{ $stats['total_bids'] ?? 3 }} Bids Filed</span>
                             </span>
                         </div>
+                        <!-- 1. EPADS 2.0 Independent Option -->
+                        <a href="{{ route('tenders.index') }}?tender_type=epad" class="px-3.5 py-2 rounded-xl text-xs font-black text-[#881337] bg-rose-50 hover:bg-rose-100 border-2 border-rose-200 transition-all shadow-2xs flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-rose-600"></span>
+                            <span>EPADS 2.0</span>
+                        </a>
+                        <!-- 2. Tenders Management Independent Option -->
+                        <a href="{{ route('tenders.index') }}" class="px-3.5 py-2 rounded-xl text-xs font-black text-[#0056d2] bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 transition-all shadow-2xs flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            <span>Tenders Management</span>
+                        </a>
+                        <!-- New Tender -->
                         <a href="{{ route('tenders.create') }}" class="btn-funky-tender px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                             <span>+ Float Tender</span>
-                        </a>
-                        <a href="{{ route('tenders.index') }}" class="px-3 py-1.5 rounded-xl text-xs font-black text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition-all">
-                            <span>View All ({{ $stats['total_tenders'] ?? 7 }}) →</span>
                         </a>
                     </div>
                 </div>

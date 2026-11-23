@@ -56,11 +56,11 @@
         <thead>
             <tr>
                 <th style="width: 6px;">Sr #</th>
-                <th style="width: 14px;">Bill CreateDate</th>
-                <th style="width: 12px;">Bill No</th>
+                <th style="width: 14px;">Bill Create Date</th>
+                <th style="width: 12px;">Bill #</th>
                 <th style="width: 12px;">Quarter</th>
                 <th style="width: 15px;">Head of Account</th>
-                <th style="width: 40px;">Head Description</th>
+                <th style="width: 40px;">Head of Account Description</th>
                 <th style="width: 14px;">Cost Center</th>
                 <th style="width: 32px;">Department Name</th>
                 <th style="width: 10px;">GST/SST</th>

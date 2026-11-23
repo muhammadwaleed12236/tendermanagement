@@ -28,6 +28,8 @@ class Bill extends Model
         'tax_deduction',
         'net_amount',
         'agpr_vendor_no',
+        'vendor_type',
+        'vendor_number',
         'strn_number',
         'ntn_number',
         'sst_number',

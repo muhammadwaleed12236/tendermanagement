@@ -53,7 +53,15 @@ class Department extends Model
      */
     public function totalReleasedBudget(): float
     {
-        return (float) $this->releases()->sum('amount');
+        $releases = (float) $this->releases()->sum('amount');
+        if ($releases > 0) {
+            return $releases;
+        }
+        $headsReleased = (float) $this->budgetHeads()->sum('released_budget');
+        if ($headsReleased > 0) {
+            return $headsReleased;
+        }
+        return (float) ($this->budget_allocated ?? 0);
     }
 
     /**
