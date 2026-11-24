@@ -7,30 +7,30 @@
                         Public & Private Procurement
                     </span>
                     <span class="text-stone-300">•</span>
-                    <span class="text-xs font-semibold text-stone-500">Tender Register & Bid Schedule</span>
+                    <span class="text-xs font-semibold text-stone-500">Tenders Register & Directory</span>
                 </div>
                 <h2 class="font-black text-2xl text-stone-900 leading-tight flex items-center gap-2">
-                    <span>{{ __('Tenders Management') }}</span>
+                    <span>{{ __('Tender Register Management') }}</span>
                     <span class="text-xs font-mono font-bold bg-stone-200 text-stone-700 px-2.5 py-0.5 rounded-full border border-stone-300">
                         {{ $totalCount }} {{ Str::plural('Tender', $totalCount) }}
                     </span>
                 </h2>
                 <p class="text-xs text-stone-600 mt-0.5">
-                    Track Single Stage One Envelope and Single Stage Two Envelope tenders, collection windows, opening dates, and stage results.
+                    Official directory of all standard Single Stage 1E and 2E tenders, categories, opening dates, and master records.
                 </p>
             </div>
 
             <!-- Header Quick Actions -->
             <div class="flex items-center gap-2">
-                <a href="{{ route('tenders.reports') }}" class="px-4 py-2 text-xs font-bold bg-white hover:bg-stone-50 text-stone-700 border border-[#e5ded4] rounded-xl shadow-xs transition flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                <a href="{{ route('tenders.reports') }}" class="px-4 py-2 text-xs font-bold bg-stone-900 hover:bg-stone-800 text-white rounded-full shadow-xs transition flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-orange-500 shrink-0"></span>
                     <span>Tenders & Work Orders Report</span>
                 </a>
 
                 @if(Auth::check() && Auth::user()->isAdmin())
-                    <a href="{{ route('tenders.create') }}" class="px-4 py-2 text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white rounded-xl shadow-xs transition flex items-center gap-1.5">
+                    <a href="{{ route('tenders.create') }}" class="px-4 py-2 text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white rounded-full shadow-xs transition flex items-center gap-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                        <span>+ Create New Tender</span>
+                        <span>Create New Tender</span>
                     </a>
                 @endif
             </div>
@@ -68,113 +68,99 @@
                 $twoEnvPct = $totalCount > 0 ? min(100, round(($twoEnvelopeCount / $totalCount) * 100)) : 0;
             @endphp
 
-            <!-- Circular Ring 3D KPI Metric Cards -->
-            <div class="grid grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4">
+            <!-- Circular Ring 3D KPI Metric Cards (4 Cards) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
                 <!-- 1. Total Tenders (Electric Blue 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-blue">
                         <div class="stat-candy-icon candy-icon-blue">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">Total Tenders</span>
-                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($totalCount) }}</div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate">All registered</div>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
+                            <span class="stat-card-label text-left">Total Tenders</span>
+                            <div class="w-full flex justify-center my-0.5">
+                                <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">All Tenders</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="100% Registered">
-                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="100% Registered">
+                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">100%</span>
+                            <span class="absolute text-sm font-black font-mono text-[#0056d2]">100%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 2. In Progress (Cyan / Sky 3D Theme) -->
+                <!-- 2. In Progress (Navy #2B2D4B Theme - White Background, #2B2D4B Border/Icon/Text) -->
                 <div class="stat-card-3d-wrap group">
-                    <div class="stat-card-3d stat-card-cyan">
-                        <div class="stat-candy-icon candy-icon-cyan">
+                    <div class="stat-card-3d stat-card-navy">
+                        <div class="stat-candy-icon candy-icon-navy">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">In Progress</span>
-                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($inProgressCount) }}</div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate">Bids open / eval</div>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
+                            <span class="stat-card-label text-left" style="color: #2B2D4B !important;">In Progress</span>
+                            <div class="w-full flex justify-center my-0.5">
+                                <span class="text-xl sm:text-2xl font-black stat-card-value" style="color: #2B2D4B !important;">{{ str_pad($inProgressCount, 2, '0', STR_PAD_LEFT) }}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">Bids open / eval</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $inProgressPct }}% In Progress">
-                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#e0f2fe" stroke-width="3.5" />
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0284c7" stroke-width="3.5" 
-                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $inProgressPct / 100) }}" stroke-linecap="round" />
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $inProgressPct }}% In Progress">
+                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#e2e4ee" stroke-width="3.5" />
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#2B2D4B" stroke-width="3.5" 
+                                        stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $inProgressPct / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#0284c7]">{{ $inProgressPct }}%</span>
+                            <span class="absolute text-sm font-black font-mono text-[#2B2D4B]">{{ $inProgressPct }}%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. Won / Awarded (Emerald Green 3D Theme) -->
+                <!-- 3. Awarded (Emerald Green 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-green">
                         <div class="stat-candy-icon candy-icon-green">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">Won / Awarded</span>
-                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($wonCount) }}</div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate">Awarded</div>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
+                            <span class="stat-card-label text-left">Awarded</span>
+                            <div class="w-full flex justify-center my-0.5">
+                                <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">Awarded</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $wonPct }}% Won">
-                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
-                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $wonPct / 100) }}" stroke-linecap="round" />
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $wonPct }}% Awarded">
+                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                        stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $wonPct / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $wonPct }}%</span>
+                            <span class="absolute text-sm font-black font-mono text-[#0d9467]">{{ $wonPct }}%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. Lost / Disqualified (Maroon 3D Theme) -->
+                <!-- 4. Not Awarded (Maroon 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-maroon">
                         <div class="stat-candy-icon candy-icon-maroon">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">Lost / Disqual.</span>
-                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($lostCount) }}</div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate">Disqualified</div>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
+                            <span class="stat-card-label text-left">Not Awarded</span>
+                            <div class="w-full flex justify-center my-0.5">
+                                <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">Not Awarded</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $lostPct }}% Lost">
-                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
-                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $lostPct / 100) }}" stroke-linecap="round" />
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $lostPct }}% Not Awarded">
+                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#881337" stroke-width="3.5" 
+                                        stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $lostPct / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $lostPct }}%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5. Two Envelope Procedures (Sunset Orange 3D Theme) -->
-                <div class="stat-card-3d-wrap group col-span-2 lg:col-span-1">
-                    <div class="stat-card-3d stat-card-orange">
-                        <div class="stat-candy-icon candy-icon-orange font-black text-sm tracking-wider">
-                            2E
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">Two Envelope</span>
-                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($twoEnvelopeCount) }}</div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate">2-Stage proc.</div>
-                        </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $twoEnvPct }}% Two Envelope">
-                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
-                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
-                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $twoEnvPct / 100) }}" stroke-linecap="round" />
-                            </svg>
-                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $twoEnvPct }}%</span>
+                            <span class="absolute text-sm font-black font-mono text-[#881337]">{{ $lostPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -226,10 +212,10 @@
 
                     <!-- Action Buttons -->
                     <div class="flex items-end gap-2">
-                        <button type="submit" class="flex-1 py-2 px-3 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition">
-                            Filter
+                        <button type="submit" class="flex-1 py-2 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-full transition flex items-center justify-center gap-2 shadow-xs">
+                            <span>Filter</span>
                         </button>
-                        <a href="{{ route('tenders.index') }}" class="py-2 px-3 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold rounded-xl transition">
+                        <a href="{{ route('tenders.index') }}" class="py-2 px-4 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold rounded-full transition flex items-center justify-center">
                             Reset
                         </a>
                     </div>
@@ -243,45 +229,51 @@
                         <thead>
                             <tr class="bg-stone-100/80 text-stone-800 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider">
                                 <th class="py-3 px-3 text-center w-12 border-r border-[#e5ded4]">S. No.</th>
+                                <th class="py-3 px-3.5 min-w-[160px] border-r border-[#e5ded4]">Department Name</th>
                                 <th class="py-3 px-4 min-w-[280px] border-r border-[#e5ded4]">Tender Description</th>
-                                <th class="py-3 px-3 min-w-[160px] border-r border-[#e5ded4]">Tender No.</th>
-                                <th class="py-3 px-3 min-w-[170px] border-r border-[#e5ded4]">Bidding Procedure</th>
-                                <th class="py-3 px-3 min-w-[140px] border-r border-[#e5ded4]">Tender Collection<br><span class="text-[10px] font-semibold text-stone-500">(Start Date)</span></th>
-                                <th class="py-3 px-3 min-w-[140px] border-r border-[#e5ded4]">Tender Collection<br><span class="text-[10px] font-semibold text-stone-500">(End Date)</span></th>
+                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Tender No.</th>
+                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Bidding Procedure</th>
                                 <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Tender Submission<br><span class="text-[10px] font-semibold text-stone-500">Date/Time</span></th>
                                 <th class="py-3 px-3 min-w-[180px] border-r border-[#e5ded4]">Tender / Bid Opening Date<br><span class="text-[10px] font-semibold text-stone-500">(Technical & Financial)</span></th>
-                                <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4] text-center">Outcome / Status</th>
-                                <th class="py-3 px-3 text-center min-w-[100px]">Action</th>
+                                <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4] text-center">Status</th>
+                                <th class="py-3 px-3 text-center min-w-[90px]">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#e5ded4] text-stone-800">
                             @forelse($tenders as $index => $tender)
                                 <tr class="hover:bg-amber-50/20 transition-colors {{ $tender->isWon() ? 'bg-emerald-50/10' : ($tender->isLost() ? 'bg-rose-50/10' : '') }}">
-                                    <!-- S. No -->
+                                    <!-- 1. S. No -->
                                     <td class="py-3 px-3 text-center font-bold text-stone-600 border-r border-[#e5ded4]">
                                         {{ str_pad($tenders->firstItem() + $index, 2, '0', STR_PAD_LEFT) }}
                                     </td>
 
-                                    <!-- Tender Description -->
+                                    <!-- 2. Department Name -->
+                                    <td class="py-3 px-3.5 border-r border-[#e5ded4]">
+                                        <div class="font-bold text-stone-900 leading-snug">
+                                            {{ $tender->department ? $tender->department->name : '-' }}
+                                        </div>
+                                        @if($tender->department && $tender->department->code)
+                                            <span class="text-[10px] font-mono font-bold text-stone-400 uppercase">
+                                                {{ $tender->department->code }}
+                                            </span>
+                                        @endif
+                                    </td>
+
+                                    <!-- 3. Tender Description -->
                                     <td class="py-3 px-4 border-r border-[#e5ded4]">
                                         <a href="{{ route('tenders.show', $tender) }}" class="font-bold text-stone-900 hover:text-orange-700 transition leading-snug block">
                                             {{ $tender->title }}
                                         </a>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            @if($tender->department)
-                                                <span class="text-[11px] font-semibold text-stone-500">
-                                                    {{ $tender->department->name }}
-                                                </span>
-                                            @endif
-                                            @if($tender->company)
-                                                <span class="text-[10px] font-bold text-orange-800 bg-orange-100/70 px-1.5 py-0.2 rounded">
+                                        @if($tender->company)
+                                            <div class="mt-1">
+                                                <span class="text-[10px] font-bold text-orange-800 bg-orange-100/70 px-1.5 py-0.5 rounded">
                                                     {{ $tender->company->company_name ?: $tender->company->name }}
                                                 </span>
-                                            @endif
-                                        </div>
+                                            </div>
+                                        @endif
                                     </td>
 
-                                    <!-- Tender No. -->
+                                    <!-- 4. Tender No. -->
                                     <td class="py-3 px-3 font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
                                         {{ $tender->effective_tender_no }}
                                         <div class="mt-0.5">
@@ -297,12 +289,12 @@
                                         </div>
                                     </td>
 
-                                    <!-- Bidding Procedure -->
+                                    <!-- 5. Bidding Procedure -->
                                     <td class="py-3 px-3 border-r border-[#e5ded4]">
                                         @if($tender->isTwoEnvelope())
                                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-orange-100 text-orange-900 border border-orange-200">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>
-                                                Single Stage Two envelope
+                                                Single Stage 2E
                                             </span>
                                             <div class="text-[10px] font-bold mt-1 text-stone-500">
                                                 @if($tender->current_stage === 'stage_1')
@@ -316,36 +308,12 @@
                                         @else
                                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-stone-100 text-stone-800 border border-stone-200">
                                                 <span class="w-1.5 h-1.5 rounded-full bg-stone-600"></span>
-                                                Single Stage One envelope
+                                                Single Stage 1E
                                             </span>
                                         @endif
                                     </td>
 
-                                    <!-- Tender Collection (Start Date) -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
-                                        @if($tender->isEpad())
-                                            <span class="text-[10px] text-rose-700 font-bold bg-rose-50 px-2 py-0.5 rounded border border-rose-200">Digital Portal</span>
-                                        @elseif($tender->collection_start_date)
-                                            <div class="font-bold text-stone-900">{{ $tender->collection_start_date->format('d/m/Y') }}</div>
-                                            <div class="text-[10px] text-stone-500">{{ $tender->collection_start_notes ?: '(During working hours)' }}</div>
-                                        @else
-                                            <span class="text-stone-400 font-mono">-</span>
-                                        @endif
-                                    </td>
-
-                                    <!-- Tender Collection (End Date) -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
-                                        @if($tender->isEpad())
-                                            <span class="text-[10px] text-stone-400 italic">N/A (EPAD)</span>
-                                        @elseif($tender->collection_end_date)
-                                            <div class="font-bold text-stone-900">{{ $tender->collection_end_date->format('d/m/Y') }}</div>
-                                            <div class="text-[10px] text-stone-500">{{ $tender->collection_end_notes ?: '(During working hours)' }}</div>
-                                        @else
-                                            <span class="text-stone-400 font-mono">-</span>
-                                        @endif
-                                    </td>
-
-                                    <!-- Tender Submission Date/Time -->
+                                    <!-- 6. Tender Submission Date/Time -->
                                     <td class="py-3 px-3 border-r border-[#e5ded4]">
                                         @if($tender->isEpad())
                                             <div class="font-black text-rose-950">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }}</div>
@@ -360,7 +328,7 @@
                                         @endif
                                     </td>
 
-                                    <!-- Tender / Bid Opening Date -->
+                                    <!-- 7. Tender / Bid Opening Date -->
                                     <td class="py-3 px-3 border-r border-[#e5ded4]">
                                         @if($tender->isEpad())
                                             <div class="font-bold text-stone-900">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }}</div>
@@ -403,7 +371,7 @@
                                         @endif
                                     </td>
 
-                                    <!-- Outcome / Status -->
+                                    <!-- 8. Status -->
                                     <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
                                         @if($tender->isWon())
                                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
@@ -437,7 +405,7 @@
                                         @endif
                                     </td>
 
-                                    <!-- Action -->
+                                    <!-- 9. Action -->
                                     <td class="py-3 px-3 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
                                             <a href="{{ route('tenders.show', $tender) }}" 
@@ -455,7 +423,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="10" class="py-12 text-center text-stone-500">
+                                    <td colspan="9" class="py-12 text-center text-stone-500">
                                         <div class="flex flex-col items-center justify-center">
                                             <div class="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-2">
                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>

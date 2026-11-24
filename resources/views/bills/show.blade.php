@@ -293,19 +293,22 @@
                 <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div class="flex items-center gap-2">
                         <span class="text-xs text-slate-400 uppercase font-bold">Voucher Status:</span>
-                        @if($bill->status === 'paid')
+                        @php
+                            $st = strtolower(trim($bill->status ?? ''));
+                        @endphp
+                        @if($st === 'paid' || $st === 'printed')
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-emerald-50 text-emerald-700 border border-emerald-300">
-                                ● PAID
+                                ● PRINTED
                             </span>
-                        @elseif($bill->status === 'approved' || $bill->status === 'confirmed')
+                        @elseif($st === 'approved' || $st === 'confirmed' || $st === 'generated')
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
-                                ● CONFIRMED BILL
+                                ● GENERATED BILL
                             </span>
-                        @elseif($bill->status === 'draft' || $bill->status === 'pending')
+                        @elseif($st === 'draft' || $st === 'pending' || $st === 'verified_by_dept')
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-amber-50 text-amber-700 border border-amber-300">
-                                ● DRAFT BILL
+                                ● PENDING BILL
                             </span>
-                        @elseif($bill->status === 'rejected')
+                        @elseif($st === 'rejected')
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-rose-50 text-rose-700 border border-rose-300">
                                 ● REJECTED
                             </span>
@@ -329,23 +332,23 @@
 
                                 @if($bill->status !== 'approved' && $bill->status !== 'confirmed' && $bill->status !== 'paid')
                                     <button type="submit" name="status" value="approved" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition shadow-2xs">
-                                        ✓ Mark as Confirmed Bill
+                                        ✓ Mark as Generated Bill
                                     </button>
                                 @endif
 
                                 @if($bill->status !== 'draft' && $bill->status !== 'pending' && $bill->status !== 'paid')
                                     <button type="submit" name="status" value="pending" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-xs font-bold rounded-lg transition">
-                                        Mark as Draft
+                                        Mark as Pending
                                     </button>
                                 @endif
 
                                 @if($bill->status !== 'paid')
                                     <button type="submit" name="status" value="paid" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-lg transition shadow-2xs">
-                                        Mark as Paid
+                                        Mark as Printed
                                     </button>
                                 @else
                                     <button type="submit" name="status" value="approved" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold rounded-lg transition">
-                                        Revert from Paid
+                                        Revert from Printed
                                     </button>
                                 @endif
                             </form>

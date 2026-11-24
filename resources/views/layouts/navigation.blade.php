@@ -478,7 +478,7 @@
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                                             </div>
                                             <div class="flex-1 min-w-0">
-                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Tenders Register</div>
+                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Tenders Management</div>
                                                 <div class="text-[11px] font-medium text-slate-500 truncate">Directory of all standard tenders</div>
                                             </div>
                                         </a>
@@ -513,8 +513,8 @@
                                             </div>
                                         </a>
 
-                                        <a href="{{ route('tenders.index') }}?status=published" @click="open = false" 
-                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group text-slate-700 hover:text-[#0056d2]">
+                                        <a href="{{ route('tenders.pipeline') }}" @click="open = false" 
+                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.pipeline') ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
                                             <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                             </div>
@@ -531,11 +531,11 @@
                         <!-- 3. EPADS 2.0 (Independent Option) -->
                         <div x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false" class="relative">
                             <button @click="open = !open" type="button"
-                                    class="nav-pill-item inline-flex items-center gap-1.5 px-3 xl:px-3.5 py-2 sm:py-2.5 rounded-xl text-[13px] xl:text-[13.5px] font-black tracking-tight whitespace-nowrap {{ (request()->routeIs('tenders.*') && (request('tender_type') === 'epad' || request('type') === 'epad')) ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#881337]' }}">
+                                    class="nav-pill-item inline-flex items-center gap-1.5 px-3 xl:px-3.5 py-2 sm:py-2.5 rounded-xl text-[13px] xl:text-[13.5px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('epads.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#881337]' }}">
                                 <span class="w-2 h-2 rounded-full bg-rose-600 shrink-0"></span>
                                 <span>{{ __('EPADS 2.0') }}</span>
-                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider {{ (request()->routeIs('tenders.*') && (request('tender_type') === 'epad' || request('type') === 'epad')) ? 'bg-white/20 text-white border border-white/30' : 'bg-rose-100 text-[#881337] border border-rose-200' }}">EPAD</span>
-                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ (request()->routeIs('tenders.*') && (request('tender_type') === 'epad' || request('type') === 'epad')) ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider {{ request()->routeIs('epads.*') ? 'bg-white/20 text-white border border-white/30' : 'bg-rose-100 text-[#881337] border border-rose-200' }}">EPAD</span>
+                                <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('epads.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
                             <div x-show="open"
@@ -554,8 +554,8 @@
                                         <span>EPADS 2.0 E-Procurement</span>
                                     </div>
 
-                                    <a href="{{ route('tenders.index') }}?tender_type=epad" @click="open = false" 
-                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request('tender_type') === 'epad' ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
+                                    <a href="{{ route('epads.index') }}" @click="open = false" 
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.index') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
                                         <div class="item-icon-box w-8 h-8 rounded-lg bg-rose-100 text-[#881337] border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                                         </div>
@@ -565,27 +565,27 @@
                                         </div>
                                     </a>
 
-                                    <a href="{{ route('tenders.create') }}?type=epad" @click="open = false" 
-                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request('type') === 'epad' ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
+                                    <a href="{{ route('epads.create') }}" @click="open = false" 
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.create') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
                                         <div class="item-icon-box w-8 h-8 rounded-lg bg-rose-100 text-[#881337] border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#881337] flex items-center gap-1.5 truncate">
-                                                <span>+ Publish EPAD 2.0 Tender</span>
+                                                <span>+ Create ePads</span>
                                             </div>
-                                            <div class="text-[11px] font-medium text-slate-500 truncate">Quick 2-step digital publish</div>
+                                            <div class="text-[11px] font-medium text-slate-500 truncate">Quick e-procurement creation</div>
                                         </div>
                                     </a>
 
-                                    <a href="{{ route('tenders.reports') }}?tender_type=epad" @click="open = false" 
-                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group text-slate-700 hover:text-[#881337]">
+                                    <a href="{{ route('epads.reports') }}" @click="open = false" 
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.reports') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
                                         <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#881337] truncate">EPAD Reports & Awards</div>
-                                            <div class="text-[11px] font-medium text-slate-500 truncate">EPAD work orders & award values</div>
+                                            <div class="text-[11px] font-medium text-slate-500 truncate">EPAD records & reports</div>
                                         </div>
                                     </a>
                                 </div>
@@ -1101,6 +1101,10 @@
                         <span>Tenders Register (Directory)</span>
                         <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-slate-200 text-slate-700">1E / 2E</span>
                     </a>
+                    <a href="{{ route('tenders.pipeline') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                        <span>Active Bidding Pipeline</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-blue-100 text-blue-800">Pipeline</span>
+                    </a>
                     <a href="{{ route('tenders.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>+ Create Tender</span>
                     </a>
@@ -1113,12 +1117,15 @@
                 <!-- EPADS 2.0 Section (Independent) -->
                 <div class="space-y-1">
                     <div class="px-3 text-[10px] font-black uppercase tracking-wider text-rose-800">EPADS 2.0</div>
-                    <a href="{{ route('tenders.index') }}?tender_type=epad" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
-                        <span>EPADS 2.0 Register</span>
+                    <a href="{{ route('epads.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
+                        <span>EPADS 2.0 Directory</span>
                         <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-rose-100 text-rose-900 border border-rose-200">EPAD</span>
                     </a>
-                    <a href="{{ route('tenders.create') }}?type=epad" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
-                        <span>+ Publish EPAD 2.0 Tender</span>
+                    <a href="{{ route('epads.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
+                        <span>+ Create ePads</span>
+                    </a>
+                    <a href="{{ route('epads.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
+                        <span>EPAD Reports & Awards</span>
                     </a>
                 </div>
 

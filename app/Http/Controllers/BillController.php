@@ -16,33 +16,20 @@ class BillController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $query = Bill::with(['tender', 'vendor', 'department', 'items', 'budgetHead', 'company']);
+        $baseQuery = Bill::query();
 
         // Vendors can only view their own bills
         if ($user && $user->isVendor()) {
-            $query->where('vendor_id', $user->id);
-        }
-
-        if ($request->filled('status')) {
-            $st = strtolower(trim($request->status));
-            if ($st === 'draft' || $st === 'pending') {
-                $query->whereIn('status', ['draft', 'pending', 'verified_by_dept']);
-            } elseif ($st === 'confirmed' || $st === 'approved' || $st === 'generated') {
-                $query->whereIn('status', ['confirmed', 'approved']);
-            } elseif ($st === 'paid' || $st === 'printed') {
-                $query->where('status', 'paid');
-            } else {
-                $query->where('status', $st);
-            }
+            $baseQuery->where('vendor_id', $user->id);
         }
 
         if ($request->filled('department_id')) {
-            $query->where('department_id', $request->department_id);
+            $baseQuery->where('department_id', $request->department_id);
         }
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function ($q) use ($search) {
+            $baseQuery->where(function ($q) use ($search) {
                 $q->where('bill_number', 'like', "%{$search}%")
                   ->orWhere('milestone_description', 'like', "%{$search}%")
                   ->orWhereHas('vendor', function ($vq) use ($search) {
@@ -52,17 +39,34 @@ class BillController extends Controller
             });
         }
 
+        // Summary Card Stats (Preserves all 4 metrics without single-status filter collapse)
+        $stats = [
+            'total_amount' => (float) (clone $baseQuery)->sum(\Illuminate\Support\Facades\DB::raw('COALESCE(net_amount, gross_amount, 0)')),
+            'total_count' => (clone $baseQuery)->count(),
+            'generated_count' => (clone $baseQuery)->whereIn('status', ['approved', 'confirmed', 'generated'])->count(),
+            'pending_count' => (clone $baseQuery)->whereIn('status', ['pending', 'draft', 'verified_by_dept'])->count(),
+            'printed_count' => (clone $baseQuery)->whereIn('status', ['paid', 'printed'])->count(),
+        ];
+
+        // Apply status filter for paginated table list
+        $query = (clone $baseQuery)->with(['tender', 'vendor', 'department', 'items', 'budgetHead', 'company']);
+
+        if ($request->filled('status')) {
+            $st = strtolower(trim($request->status));
+            if ($st === 'draft' || $st === 'pending') {
+                $query->whereIn('status', ['draft', 'pending', 'verified_by_dept']);
+            } elseif ($st === 'confirmed' || $st === 'approved' || $st === 'generated') {
+                $query->whereIn('status', ['confirmed', 'approved', 'generated']);
+            } elseif ($st === 'paid' || $st === 'printed') {
+                $query->whereIn('status', ['paid', 'printed']);
+            } else {
+                $query->where('status', $st);
+            }
+        }
+
         $bills = $query->latest()->paginate(10)->withQueryString();
         $departments = Department::where('status', 'active')->get();
         $companies = \App\Models\Company::where('status', 'active')->orderBy('company_name')->get();
-
-        $stats = [
-            'total_amount' => (float) (clone $query)->sum(\Illuminate\Support\Facades\DB::raw('COALESCE(net_amount, gross_amount, 0)')),
-            'total_count' => (clone $query)->count(),
-            'generated_count' => (clone $query)->whereIn('status', ['approved', 'confirmed'])->count(),
-            'pending_count' => (clone $query)->whereIn('status', ['pending', 'draft', 'verified_by_dept'])->count(),
-            'printed_count' => (clone $query)->where('status', 'paid')->count(),
-        ];
 
         return view('bills.index', compact('bills', 'departments', 'stats', 'companies'));
     }

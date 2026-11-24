@@ -208,7 +208,7 @@ class Tender extends Model
 
     public function getEffectiveTenderNoAttribute(): string
     {
-        return $this->tender_no ?: $this->reference_no;
+        return (string) ($this->tender_no ?: ($this->reference_no ?: '-'));
     }
 
     public function getEffectiveWorkOrderNoAttribute(): ?string

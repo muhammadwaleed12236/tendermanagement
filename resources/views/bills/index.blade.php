@@ -41,7 +41,7 @@
 
             <!-- 3D Stat Cards Bar with Candy Icons & Circular Meters -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Card 1: TOTAL BILL AMOUNT (Electric Blue 3D Theme) -->
+                <!-- Card 1: Total Bill Amount (Electric Blue 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-blue">
                         <div class="stat-candy-icon candy-icon-blue">
@@ -64,20 +64,20 @@
                     </div>
                 </div>
 
-                <!-- Card 2: TOTAL BILLS GENERATED (Emerald Green 3D Theme) -->
+                <!-- Card 2: Total Nos. of Bill Generated (Emerald Green 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-green">
                         <div class="stat-candy-icon candy-icon-green">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
                         <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">Bills Generated</span>
+                            <span class="stat-card-label">Total Nos. of Bill Generated</span>
                             <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
-                                {{ number_format($totalBills) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
+                                {{ str_pad($totalBills, 2, '0', STR_PAD_LEFT) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
                             </div>
-                            <div class="text-[11px] text-slate-500 font-medium">{{ number_format($generatedBills) }} Confirmed</div>
+                            <div class="text-[11px] text-slate-500 font-medium">{{ str_pad($generatedBills, 2, '0', STR_PAD_LEFT) }} Generated</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $generatedPct }}% Confirmed">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $generatedPct }}% Generated">
                             <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
@@ -88,16 +88,16 @@
                     </div>
                 </div>
 
-                <!-- Card 3: PENDING BILLS (Sunset Orange 3D Theme) -->
+                <!-- Card 3: Total Pending Bills (Sunset Orange 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-orange">
                         <div class="stat-candy-icon candy-icon-orange">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">Pending Clearance</span>
+                            <span class="stat-card-label">Total Pending Bills</span>
                             <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
-                                {{ number_format($pendingBills) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
+                                {{ str_pad($pendingBills, 2, '0', STR_PAD_LEFT) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium">Awaiting sanction</div>
                         </div>
@@ -112,20 +112,20 @@
                     </div>
                 </div>
 
-                <!-- Card 4: BILLS PRINTED / PAID (Royal Purple 3D Theme) -->
+                <!-- Card 4: Total bills Printed (Royal Purple 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-purple">
                         <div class="stat-candy-icon candy-icon-purple">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                         </div>
                         <div class="min-w-0 flex-1">
-                            <span class="stat-card-label">Bills Printed / Paid</span>
+                            <span class="stat-card-label">Total bills Printed</span>
                             <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
-                                {{ number_format($printedBills) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
+                                {{ str_pad($printedBills, 2, '0', STR_PAD_LEFT) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium">Disbursed & archived</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $printedPct }}% Printed/Paid">
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $printedPct }}% Printed">
                             <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#e0e7ff" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#6366f1" stroke-width="3.5" 
@@ -158,9 +158,9 @@
                         <div class="flex gap-2">
                             <select name="status" class="w-full text-sm rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="">All Statuses</option>
-                                <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>Generated</option>
-                                <option value="paid" {{ request('status') == 'paid' ? 'selected' : '' }}>Printed</option>
+                                <option value="pending" {{ in_array(request('status'), ['pending', 'draft']) ? 'selected' : '' }}>Pending</option>
+                                <option value="confirmed" {{ in_array(request('status'), ['confirmed', 'approved', 'generated']) ? 'selected' : '' }}>Generated</option>
+                                <option value="paid" {{ in_array(request('status'), ['paid', 'printed']) ? 'selected' : '' }}>Printed</option>
                                 <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
                             </select>
                             <button type="submit" class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg transition">Filter</button>
@@ -237,19 +237,22 @@
                                         PKR {{ number_format($bill->net_amount, 2) }}
                                     </td>
                                     <td class="p-4">
-                                        @if($bill->status === 'paid')
+                                        @php
+                                            $st = strtolower(trim($bill->status ?? ''));
+                                        @endphp
+                                        @if($st === 'paid' || $st === 'printed')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-300">
                                                 ● Printed
                                             </span>
-                                        @elseif($bill->status === 'approved' || $bill->status === 'confirmed')
+                                        @elseif($st === 'approved' || $st === 'confirmed' || $st === 'generated')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
                                                 ● Generated
                                             </span>
-                                        @elseif($bill->status === 'draft' || $bill->status === 'pending')
+                                        @elseif($st === 'draft' || $st === 'pending' || $st === 'verified_by_dept')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-300">
                                                 ● Pending
                                             </span>
-                                        @elseif($bill->status === 'rejected')
+                                        @elseif($st === 'rejected')
                                             <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
                                                 ● Rejected
                                             </span>

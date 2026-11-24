@@ -4,6 +4,7 @@ use App\Http\Controllers\BidController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EpadController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TenderController;
@@ -32,8 +33,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/budget-heads/{budgetHead}', [\App\Http\Controllers\DepartmentBudgetHeadController::class, 'show'])->name('budget-heads.show');
     Route::delete('/budget-heads/{budgetHead}', [\App\Http\Controllers\DepartmentBudgetHeadController::class, 'destroy'])->name('budget-heads.destroy');
 
-    // Admin Tender Management & Reporting (Create & Reports before {tender})
+    // Admin Tender Management & Reporting (Create, Reports & Pipeline before {tender})
     Route::get('/tenders/reports', [TenderController::class, 'reports'])->name('tenders.reports');
+    Route::get('/tenders/pipeline', [TenderController::class, 'pipeline'])->name('tenders.pipeline');
     Route::get('/tenders/create', [TenderController::class, 'create'])->name('tenders.create');
     Route::post('/tenders', [TenderController::class, 'store'])->name('tenders.store');
     Route::get('/tenders/{tender}/edit', [TenderController::class, 'edit'])->name('tenders.edit');
@@ -43,6 +45,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tenders/{tender}/financial-securities', [TenderController::class, 'updateFinancialSecurities'])->name('tenders.financial-securities');
     Route::post('/tenders/{tender}/release-bid-security', [TenderController::class, 'releaseBidSecurity'])->name('tenders.release-bid-security');
     Route::delete('/tenders/{tender}', [TenderController::class, 'destroy'])->name('tenders.destroy');
+
+    // ePads 2.0 Module (Dedicated & Completely Separate)
+    Route::get('/epads', [EpadController::class, 'index'])->name('epads.index');
+    Route::get('/epads/create', [EpadController::class, 'create'])->name('epads.create');
+    Route::post('/epads', [EpadController::class, 'store'])->name('epads.store');
+    Route::get('/epads/reports', [EpadController::class, 'reports'])->name('epads.reports');
+    Route::get('/epads/reports/export', [EpadController::class, 'exportReports'])->name('epads.reports.export');
+    Route::get('/epads/{epad}/edit', [EpadController::class, 'edit'])->name('epads.edit');
+    Route::put('/epads/{epad}', [EpadController::class, 'update'])->name('epads.update');
+    Route::patch('/epads/{epad}/ref', [EpadController::class, 'updateRef'])->name('epads.update-ref');
+    Route::patch('/epads/{epad}/status', [EpadController::class, 'updateStatus'])->name('epads.update-status');
+    Route::delete('/epads/{epad}', [EpadController::class, 'destroy'])->name('epads.destroy');
 
     // Bids
     Route::post('/tenders/{tender}/bid', [BidController::class, 'store'])->name('bids.store');

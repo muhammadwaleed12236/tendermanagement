@@ -27,6 +27,10 @@ class TenderController extends Controller
 
         if ($request->filled('tender_type')) {
             $query->where('tender_type', $request->tender_type);
+        } else {
+            $query->where(function ($q) {
+                $q->where('tender_type', 'tender')->orWhereNull('tender_type');
+            });
         }
 
         if ($request->filled('tender_outcome')) {
@@ -39,10 +43,6 @@ class TenderController extends Controller
 
         if ($request->filled('company_id')) {
             $query->where('company_id', $request->company_id);
-        }
-
-        if ($request->filled('tender_type')) {
-            $query->where('tender_type', $request->tender_type);
         }
 
         if ($request->filled('category')) {
@@ -68,14 +68,21 @@ class TenderController extends Controller
             $q->where('status', 'active')->orWhereNull('status');
         })->orderBy('company_name')->get();
 
-        // Metric Counters
-        $totalCount = Tender::count();
-        $inProgressCount = Tender::where('tender_outcome', 'in_progress')->count();
-        $wonCount = Tender::where('tender_outcome', 'won')->orWhere('status', 'awarded')->count();
-        $lostCount = Tender::where('tender_outcome', 'lost')->orWhere('stage_1_status', 'disqualified')->count();
-        $twoEnvelopeCount = Tender::where('bidding_procedure', 'single_stage_two_envelope')->count();
+        // Metric Counters (Scoped to standard tenders so ePads remains separate)
+        $paperTenders = Tender::where(function ($q) {
+            $q->where('tender_type', 'tender')->orWhereNull('tender_type');
+        });
+        $totalCount = (clone $paperTenders)->count();
+        $inProgressCount = (clone $paperTenders)->where('tender_outcome', 'in_progress')->count();
+        $wonCount = (clone $paperTenders)->where(function ($q) {
+            $q->where('tender_outcome', 'won')->orWhere('status', 'awarded');
+        })->count();
+        $lostCount = (clone $paperTenders)->where(function ($q) {
+            $q->where('tender_outcome', 'lost')->orWhere('stage_1_status', 'disqualified');
+        })->count();
+        $twoEnvelopeCount = (clone $paperTenders)->where('bidding_procedure', 'single_stage_two_envelope')->count();
         $epadCount = Tender::where('tender_type', 'epad')->count();
-        $tenderTypeCount = Tender::where('tender_type', 'tender')->orWhereNull('tender_type')->count();
+        $tenderTypeCount = $totalCount;
 
         return view('tenders.index', compact(
             'tenders',
@@ -89,6 +96,91 @@ class TenderController extends Controller
             'twoEnvelopeCount',
             'epadCount',
             'tenderTypeCount'
+        ));
+    }
+
+    /**
+     * Active Bidding Pipeline
+     * Dedicated pipeline focused on upcoming opening dates, bidding stages & evaluation status.
+     */
+    public function pipeline(Request $request)
+    {
+        $query = Tender::with(['creator', 'department', 'company', 'tenderFeeBankAccount', 'bidSecurityBankAccount']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('tender_no', 'like', "%{$search}%")
+                  ->orWhere('reference_no', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('department_id')) {
+            $query->where('department_id', $request->department_id);
+        }
+
+        if ($request->filled('bidding_procedure')) {
+            $query->where('bidding_procedure', $request->bidding_procedure);
+        }
+
+        if ($request->filled('stage')) {
+            if ($request->stage === 'stage_1') {
+                $query->where('bidding_procedure', 'single_stage_two_envelope')->where('current_stage', 'stage_1');
+            } elseif ($request->stage === 'stage_2') {
+                $query->where('bidding_procedure', 'single_stage_two_envelope')->where('current_stage', 'stage_2');
+            } elseif ($request->stage === '1e') {
+                $query->where('bidding_procedure', 'single_stage_one_envelope');
+            }
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('outcome')) {
+            $query->where('tender_outcome', $request->outcome);
+        } else {
+            // Default: focus on active/in-progress pipeline tenders
+            $query->where(function ($q) {
+                $q->where('tender_outcome', 'in_progress')
+                  ->orWhereIn('status', ['published', 'open', 'bidding']);
+            });
+        }
+
+        // Sort by upcoming opening dates and deadlines
+        $tenders = $query->orderByRaw('COALESCE(opening_date, technical_opening_date, submission_deadline) ASC')
+                         ->paginate(15)
+                         ->withQueryString();
+
+        $departments = Department::where('status', 'active')->orderBy('name')->get();
+
+        // Pipeline Metrics
+        $totalActiveCount = Tender::where('tender_outcome', 'in_progress')->count();
+        $stage1PendingCount = Tender::where('bidding_procedure', 'single_stage_two_envelope')
+                                    ->where('current_stage', 'stage_1')
+                                    ->where('tender_outcome', 'in_progress')
+                                    ->count();
+        $stage2PendingCount = Tender::where('bidding_procedure', 'single_stage_two_envelope')
+                                    ->where('current_stage', 'stage_2')
+                                    ->where('tender_outcome', 'in_progress')
+                                    ->count();
+        $upcomingOpeningsCount = Tender::where('tender_outcome', 'in_progress')
+                                       ->where(function ($q) {
+                                           $q->whereDate('opening_date', '>=', now())
+                                             ->orWhereDate('technical_opening_date', '>=', now())
+                                             ->orWhereDate('financial_opening_date', '>=', now())
+                                             ->orWhereDate('submission_deadline', '>=', now());
+                                       })->count();
+
+        return view('tenders.pipeline', compact(
+            'tenders',
+            'departments',
+            'totalActiveCount',
+            'stage1PendingCount',
+            'stage2PendingCount',
+            'upcomingOpeningsCount'
         ));
     }
 
@@ -129,6 +221,10 @@ class TenderController extends Controller
 
         if ($request->filled('tender_type')) {
             $query->where('tender_type', $request->tender_type);
+        } else {
+            $query->where(function ($q) {
+                $q->where('tender_type', 'tender')->orWhereNull('tender_type');
+            });
         }
 
         if ($request->filled('tender_fee_status')) {

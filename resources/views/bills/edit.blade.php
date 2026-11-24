@@ -184,11 +184,11 @@
                             <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 text-[11px] font-bold">
                                 <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-emerald-800 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
                                     <input type="radio" name="status" value="approved" class="sr-only" {{ $isConfirmed ? 'checked' : '' }}>
-                                    <span>✓ Confirmed</span>
+                                    <span>✓ Generated</span>
                                 </label>
                                 <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-slate-600 has-[:checked]:bg-amber-500 has-[:checked]:text-white transition">
                                     <input type="radio" name="status" value="pending" class="sr-only" {{ !$isConfirmed ? 'checked' : '' }}>
-                                    <span>Draft</span>
+                                    <span>Pending</span>
                                 </label>
                             </div>
                         </div>

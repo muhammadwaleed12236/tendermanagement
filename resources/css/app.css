@@ -259,3 +259,25 @@
 .stat-card-rose .stat-card-value { color: #881337 !important; }
 .stat-card-cyan .stat-card-value { color: #075985 !important; }
 
+/* 9. Navy Blue Card #2B2D4B - White Background, #2B2D4B Accents */
+.stat-card-navy {
+    background: #ffffff !important;
+    border: 2.5px solid #2B2D4B !important;
+    border-bottom: 6px solid #1a1b2f !important;
+    box-shadow: 0 14px 28px -6px rgba(43, 45, 75, 0.22) !important;
+}
+.stat-card-3d-wrap:hover .stat-card-navy {
+    border-bottom-width: 7.5px !important;
+    box-shadow: 0 20px 38px -6px rgba(43, 45, 75, 0.35) !important;
+}
+.candy-icon-navy {
+    background: #2B2D4B !important;
+    border-top: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+    border-bottom: 4px solid #141525 !important;
+    box-shadow: 0 8px 16px rgba(43, 45, 75, 0.35) !important;
+    color: #ffffff !important;
+}
+.stat-card-navy .stat-card-label { color: #2B2D4B !important; }
+.stat-card-navy .stat-card-value { color: #2B2D4B !important; }
+
+

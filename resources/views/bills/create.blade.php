@@ -208,12 +208,12 @@
         <div class="inline-flex rounded-lg border border-slate-200 p-0.5 bg-slate-100 text-[11px] font-bold">
             <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-emerald-800 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
                 <input type="radio" name="status" value="approved" class="sr-only" checked>
-                <span>✓ Confirmed</span>
+                <span>✓ Generated</span>
             </label>
 
             <label class="cursor-pointer px-2.5 py-1 rounded-md flex items-center gap-1 text-slate-600 has-[:checked]:bg-amber-500 has-[:checked]:text-white transition">
                 <input type="radio" name="status" value="pending" class="sr-only">
-                <span>Draft</span>
+                <span>Pending</span>
             </label>
         </div>
     </div>
@@ -375,10 +375,6 @@
                             <span id="items-counter" class="text-xs font-semibold text-slate-500 px-2.5 py-1 bg-slate-100 rounded-lg">
                                 1 Item
                             </span>
-                            <button type="button" onclick="showUnitColumn()" id="show-unit-btn" class="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-lg border border-slate-300 shadow-2xs transition flex items-center gap-1.5" title="Show unit column for line items" style="display: none;">
-                                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                <span>+ Add Unit Column</span>
-                            </button>
                             <button type="button" onclick="togglePastePanel()" id="toggle-paste-btn" class="px-3.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg border border-emerald-300 shadow-2xs transition flex items-center gap-1.5" title="Copy Excel rows (description, qty, price) and paste directly into invoice">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                                 <span>Paste from Excel / Text</span>
@@ -459,15 +455,32 @@
                         @endif
                     </datalist>
 
+                    <!-- Datalist for Units Selection -->
+                    <datalist id="unit-options-list">
+                        <option value="Box">
+                        <option value="Packet">
+                        <option value="Piece">
+                        <option value="Dozen">
+                        <option value="Nos">
+                        <option value="Units">
+                        <option value="Pcs">
+                        <option value="Kg">
+                        <option value="Meters">
+                        <option value="Set">
+                        <option value="Roll">
+                        <option value="Carton">
+                        <option value="LumpSum">
+                    </datalist>
+
                     <!-- Scrollable Table Container (Both Horizontal & Vertical Scroll) -->
                     <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm" style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
                         <table class="w-full text-left border-collapse text-xs" id="items-table" style="min-width: 780px;">
-                            <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase font-bold sticky top-0 z-10 shadow-sm">
+                            <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 uppercase font-bold sticky top-0 z-10 shadow-sm text-[11px]">
                                 <tr>
                                     <th class="p-3 w-10 text-center bg-slate-50">#</th>
-                                    <th class="p-3 bg-slate-50" style="min-width: 280px;">Item Description <span class="text-rose-500">*</span></th>
-                                    <th class="p-3 w-28 bg-slate-50 unit-col" style="display: none;">Unit</th>
-                                    <th class="p-3 w-24 bg-slate-50">Qty <span class="text-rose-500">*</span></th>
+                                    <th class="p-3 bg-slate-50" style="min-width: 220px;">Item Description <span class="text-rose-500">*</span></th>
+                                    <th class="p-3 w-28 bg-slate-50">Qty <span class="text-rose-500">*</span></th>
+                                    <th class="p-3 w-28 bg-slate-50">Unit</th>
                                     <th class="p-3 w-36 bg-slate-50">Unit Price (PKR) <span class="text-rose-500">*</span></th>
                                     <th class="p-3 w-36 text-right bg-slate-50">Total (PKR)</th>
                                     <th class="p-3 w-12 text-center bg-slate-50"></th>
@@ -480,27 +493,16 @@
                                     <td class="p-3">
                                         <input type="text" name="items[0][item_name]" list="products-catalog-list" oninput="handleProductSelect(this)" required placeholder="Type description or pick from catalog..." class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                                     </td>
-                                    <td class="p-3 unit-col" style="display: none;">
-                                        <select name="items[0][unit]" class="w-full text-xs rounded-lg border-slate-200 unit-select" onchange="unitColumnForced = false; checkUnitColumnVisibility()">
-                                            <option value="">-- No Unit --</option>
-                                            <option value="Nos">Nos</option>
-                                            <option value="Units">Units</option>
-                                            <option value="Pcs">Pcs</option>
-                                            <option value="Kg">Kg</option>
-                                            <option value="Box">Box</option>
-                                            <option value="Pack">Pack</option>
-                                            <option value="Meters">Meters</option>
-                                            <option value="Set">Set</option>
-                                            <option value="LumpSum">LumpSum</option>
-                                        </select>
-                                    </td>
-                                    <td class="p-3">
+                                    <td class="p-3 w-28">
                                         <input type="number" step="0.01" min="0.01" name="items[0][quantity]" value="1" required class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 item-qty font-bold" oninput="calcRow(this)">
                                     </td>
-                                    <td class="p-3">
+                                    <td class="p-3 w-28">
+                                        <input type="text" name="items[0][unit]" list="unit-options-list" value="Nos" placeholder="e.g. Box" class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 item-unit font-semibold">
+                                    </td>
+                                    <td class="p-3 w-36">
                                         <input type="number" step="0.01" min="0" name="items[0][unit_price]" value="0" required class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 item-price font-bold" oninput="calcRow(this)">
                                     </td>
-                                    <td class="p-3 text-right">
+                                    <td class="p-3 w-36 text-right">
                                         <span class="font-extrabold text-slate-800 row-total font-mono text-xs">0.00</span>
                                     </td>
                                     <td class="p-3 text-center">
@@ -608,92 +610,94 @@
                 </div>
 
                 <!-- CARD 3: Taxes, Deductions & Compact Budget Compliance (Matched to Image 3) -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
                     
-                    <!-- Left Column: TAXES & DEDUCTIONS + MILESTONE DESCRIPTION (7 cols) -->
-                    <div class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-                        <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
-                            <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">3</span>
-                            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">TAXES & DEDUCTIONS</h3>
-                        </div>
+                    <!-- Left Column: TAXES & DEDUCTIONS + MILESTONE DESCRIPTION (50% Column) -->
+                    <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+                                <span class="w-6 h-6 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs flex items-center justify-center">3</span>
+                                <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider">TAXES & DEDUCTIONS</h3>
+                            </div>
 
-                        <!-- 1. Sales Tax (GST / SST) Dual-Linked % & PKR -->
-                        <div class="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-800">
-                                    SALES TAX (GST / SST) <span class="text-[10px] text-slate-400 font-normal">DUAL-LINKED % & PKR</span>
-                                </span>
-                                <span class="text-xs font-extrabold text-indigo-700 font-mono bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100" id="gst_badge_val">+ PKR 0.00</span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 items-center">
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">GST Rate (%):</label>
-                                    <div class="relative">
-                                        <input type="number" step="0.01" name="gst_rate" id="gst_rate" value="18" 
-                                               class="w-full text-xs font-bold rounded-lg border-slate-300 pr-8 py-2 text-right font-mono focus:border-indigo-500 focus:ring-indigo-500" 
-                                               placeholder="18"
-                                               oninput="handleGstRateChange(this.value)">
-                                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">%</span>
+                            <!-- 1. Sales Tax (GST / SST) Dual-Linked % & PKR -->
+                            <div class="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-800">
+                                        SALES TAX (GST / SST) <span class="text-[10px] text-slate-400 font-normal">DUAL-LINKED % & PKR</span>
+                                    </span>
+                                    <span class="text-xs font-extrabold text-indigo-700 font-mono bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100" id="gst_badge_val">+ PKR 0.00</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 items-center">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">GST Rate (%):</label>
+                                        <div class="relative">
+                                            <input type="number" step="0.01" name="gst_rate" id="gst_rate" value="18" 
+                                                   class="w-full text-xs font-bold rounded-lg border-slate-300 pr-8 py-2 text-right font-mono focus:border-indigo-500 focus:ring-indigo-500" 
+                                                   placeholder="18"
+                                                   oninput="handleGstRateChange(this.value)">
+                                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">%</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">GST Amount (PKR):</label>
+                                        <div class="relative">
+                                            <input type="number" step="0.01" name="gst_amount" id="gst_amount" value="0.00" 
+                                                   class="w-full text-xs font-black rounded-lg border-slate-300 pr-10 py-2 text-right font-mono text-indigo-700 focus:border-indigo-500 focus:ring-indigo-500" 
+                                                   placeholder="0.00"
+                                                   oninput="handleGstAmountChange(this.value)">
+                                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">GST Amount (PKR):</label>
-                                    <div class="relative">
-                                        <input type="number" step="0.01" name="gst_amount" id="gst_amount" value="0.00" 
-                                               class="w-full text-xs font-black rounded-lg border-slate-300 pr-10 py-2 text-right font-mono text-indigo-700 focus:border-indigo-500 focus:ring-indigo-500" 
-                                               placeholder="0.00"
-                                               oninput="handleGstAmountChange(this.value)">
-                                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
-                                    </div>
-                                </div>
+                                <p class="text-[10.5px] text-slate-400">Set to 0 if this product head has 0% GST (e.g. non-GST items)</p>
                             </div>
-                            <p class="text-[10.5px] text-slate-400">Set to 0 if this product head has 0% GST (e.g. non-GST items)</p>
-                        </div>
 
-                        <!-- 2. Withholding / Income Tax Deduction Dual-Linked % & PKR -->
-                        <div class="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200 space-y-2">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-bold text-slate-800">
-                                    WITHHOLDING / INCOME TAX DEDUCTION <span class="text-[10px] text-slate-400 font-normal">DUAL-LINKED % & PKR</span>
-                                </span>
-                                <span class="text-xs font-extrabold text-rose-600 font-mono bg-rose-50 px-2 py-0.5 rounded border border-rose-100" id="deduction_badge_val">- PKR 0.00</span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 items-center">
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Deduction Rate (%):</label>
-                                    <div class="relative">
-                                        <input type="number" step="0.01" id="deduction_rate" value="0" 
-                                               class="w-full text-xs font-bold rounded-lg border-slate-300 pr-8 py-2 text-right font-mono text-rose-600 focus:border-rose-500 focus:ring-rose-500" 
-                                               placeholder="0"
-                                               oninput="handleDeductionRateChange(this.value)">
-                                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">%</span>
-                                    </div>
+                            <!-- 2. Withholding / Income Tax Deduction Dual-Linked % & PKR -->
+                            <div class="p-3.5 bg-slate-50/80 rounded-xl border border-slate-200 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-bold text-slate-800">
+                                        WITHHOLDING / INCOME TAX DEDUCTION <span class="text-[10px] text-slate-400 font-normal">DUAL-LINKED % & PKR</span>
+                                    </span>
+                                    <span class="text-xs font-extrabold text-rose-600 font-mono bg-rose-50 px-2 py-0.5 rounded border border-rose-100" id="deduction_badge_val">- PKR 0.00</span>
                                 </div>
-                                <div>
-                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Deduction Amount (PKR):</label>
-                                    <div class="relative">
-                                        <input type="number" step="0.01" name="tax_deduction" id="tax_deduction" value="0" 
-                                               class="w-full text-xs font-black rounded-lg border-slate-300 pr-10 py-2 text-right font-mono text-rose-600 focus:border-rose-500 focus:ring-rose-500" 
-                                               placeholder="0.00"
-                                               oninput="handleDeductionAmountChange(this.value)">
-                                        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
+                                <div class="grid grid-cols-2 gap-3 items-center">
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Deduction Rate (%):</label>
+                                        <div class="relative">
+                                            <input type="number" step="0.01" id="deduction_rate" value="0" 
+                                                   class="w-full text-xs font-bold rounded-lg border-slate-300 pr-8 py-2 text-right font-mono text-rose-600 focus:border-rose-500 focus:ring-rose-500" 
+                                                   placeholder="0"
+                                                   oninput="handleDeductionRateChange(this.value)">
+                                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">%</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Deduction Amount (PKR):</label>
+                                        <div class="relative">
+                                            <input type="number" step="0.01" name="tax_deduction" id="tax_deduction" value="0" 
+                                                   class="w-full text-xs font-black rounded-lg border-slate-300 pr-10 py-2 text-right font-mono text-rose-600 focus:border-rose-500 focus:ring-rose-500" 
+                                                   placeholder="0.00"
+                                                   oninput="handleDeductionAmountChange(this.value)">
+                                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 pointer-events-none">PKR</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- 3. Milestone / Scope of Work Description -->
-                        <div>
+                        <div class="pt-2">
                             <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">MILESTONE / SCOPE OF WORK DESCRIPTION</label>
                             <textarea name="milestone_description" rows="3" placeholder="Procurement of goods / store items as per bill" class="w-full text-xs rounded-xl border-slate-300 focus:border-indigo-500 text-slate-800">{{ old('milestone_description', 'Procurement of goods / store items as per bill') }}</textarea>
                         </div>
                     </div>
 
-                    <!-- Right Column: INVOICE FINANCIAL SUMMARY + COMPACT BUDGET COMPLIANCE (5 cols) -->
-                    <div class="lg:col-span-5 space-y-4">
+                    <!-- Right Column: INVOICE FINANCIAL SUMMARY + COMPACT BUDGET COMPLIANCE (50% Column) -->
+                    <div class="flex flex-col gap-5 h-full">
                         
                         <!-- Top: INVOICE FINANCIAL SUMMARY -->
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
                             <div class="text-xs font-bold text-slate-800 uppercase tracking-wider pb-2 border-b border-slate-100 flex items-center justify-between">
                                 <span>INVOICE FINANCIAL SUMMARY</span>
                                 <span class="text-[10px] text-slate-400 font-medium">Editable in % or PKR</span>
@@ -720,8 +724,8 @@
                             </div>
                         </div>
 
-                        <!-- Bottom: Selected Compact BUDGET COMPLIANCE Card (Image 3) -->
-                        <div id="budget-alert-box" class="bg-emerald-50/60 p-4 rounded-2xl border border-emerald-300 shadow-xs space-y-2.5">
+                        <!-- Bottom: Selected Compact BUDGET COMPLIANCE Card (Matched to Image 3) -->
+                        <div id="budget-alert-box" class="bg-emerald-50/60 p-5 sm:p-6 rounded-2xl border border-emerald-300 shadow-xs flex-1 flex flex-col space-y-3">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-1.5">
                                     <span class="w-5 h-5 rounded-full bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
@@ -740,19 +744,21 @@
                                 Please select a target department to verify available released budget balance.
                             </p>
 
-                            <!-- 3-Pill Stat Boxes from Image 3 -->
-                            <div class="grid grid-cols-3 gap-2 pt-1">
-                                <div class="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-xs text-center">
-                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">DEPT AVAIL</span>
-                                    <span id="comp-avail" class="block text-xs font-black text-slate-800 font-mono mt-0.5 truncate">PKR 0.00</span>
+                            <!-- 3-Pill Stat Boxes from Image 3 (Soft Tinted Colors & Updated Labels) -->
+                            <div class="grid grid-cols-3 gap-2.5 pt-1">
+                                
+<div class="bg-blue-100 rounded-xl p-3 border border-blue-300 shadow-sm text-center transition">
+    <span class="block text-[10px] font-bold text-blue-800 uppercase tracking-wider">Released Budget</span>
+    <span id="comp-avail" class="block text-xs font-black text-blue-950 font-mono mt-0.5 truncate">PKR 0.00</span>
+</div>
+
+                                <div class="bg-amber-50/80 rounded-xl p-3 border border-amber-200/90 shadow-2xs text-center transition">
+                                    <span class="block text-[10px] font-bold text-amber-700 uppercase tracking-wider">This Bill</span>
+                                    <span id="comp-bill" class="block text-xs font-black text-amber-950 font-mono mt-0.5 truncate">PKR 0.00</span>
                                 </div>
-                                <div class="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-xs text-center">
-                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">THIS BILL</span>
-                                    <span id="comp-bill" class="block text-xs font-black text-slate-800 font-mono mt-0.5 truncate">PKR 0.00</span>
-                                </div>
-                                <div class="bg-white rounded-xl p-2.5 border border-slate-200/80 shadow-xs text-center">
-                                    <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider">REMAINING</span>
-                                    <span id="comp-rem" class="block text-xs font-black text-slate-800 font-mono mt-0.5 truncate">PKR 0.00</span>
+                                <div class="bg-emerald-50/80 rounded-xl p-3 border border-emerald-200/90 shadow-2xs text-center transition">
+                                    <span class="block text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Remaining Budget</span>
+                                    <span id="comp-rem" class="block text-xs font-black text-emerald-950 font-mono mt-0.5 truncate">PKR 0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -998,14 +1004,9 @@
             if (match) {
                 const tr = input.closest('tr');
                 if (match.unit) {
-                    const unitSelect = tr.querySelector('select[name*="[unit]"]');
-                    if (unitSelect) {
-                        for (let i = 0; i < unitSelect.options.length; i++) {
-                            if (unitSelect.options[i].value.toLowerCase() === match.unit.toLowerCase()) {
-                                unitSelect.selectedIndex = i;
-                                break;
-                            }
-                        }
+                    const unitInput = tr.querySelector('input[name*="[unit]"]');
+                    if (unitInput) {
+                        unitInput.value = match.unit;
                     }
                 }
                 const priceInput = tr.querySelector('.item-price');
@@ -1035,72 +1036,41 @@
             }
         }
 
-        let unitColumnForced = false;
+        let unitColumnForced = true;
 
         function showUnitColumn() {
-            unitColumnForced = true;
-            checkUnitColumnVisibility();
-            const firstSelect = document.querySelector('#items-table .unit-select');
-            if (firstSelect) {
-                firstSelect.focus();
-            }
+            // Unit column is now permanent
         }
 
         function checkUnitColumnVisibility() {
-            const unitSelects = document.querySelectorAll('#items-table .unit-select');
-            let hasAnyUnit = false;
-            unitSelects.forEach(select => {
-                if (select.value && select.value.trim() !== '') {
-                    hasAnyUnit = true;
-                }
-            });
-
-            const shouldShow = hasAnyUnit || unitColumnForced;
-            const unitCols = document.querySelectorAll('#items-table .unit-col');
-            unitCols.forEach(col => {
-                col.style.display = shouldShow ? '' : 'none';
-            });
-
-            const btn = document.getElementById('show-unit-btn');
-            if (btn) {
-                btn.style.display = shouldShow ? 'none' : 'inline-flex';
-            }
+            // Unit column is now permanently displayed beside Quantity
         }
 
-        function addProductRow(desc = '', unit = '', price = 0, qty = 1) {
+        function addProductRow(desc = '', unit = 'Nos', price = 0, qty = 1) {
             const tbody = document.getElementById('items-body');
             const newIndex = rowCount++;
             
             const tr = document.createElement('tr');
             tr.className = 'item-row hover:bg-slate-50/50 transition';
 
-            const units = ['Nos', 'Units', 'Pcs', 'Kg', 'Box', 'Pack', 'Meters', 'Set', 'LumpSum', 'Job'];
-            let unitOptions = '<option value="">-- No Unit --</option>';
-            units.forEach(u => {
-                const sel = (unit && u.toLowerCase() === unit.toLowerCase()) ? 'selected' : '';
-                unitOptions += `<option value="${u}" ${sel}>${u}</option>`;
-            });
-
             tr.innerHTML = `
                 <td class="p-3 text-center font-bold text-slate-400 row-num">` + (tbody.children.length + 1) + `</td>
                 <td class="p-3">
                     <input type="text" name="items[` + newIndex + `][item_name]" value="${escapeHtml(desc)}" list="products-catalog-list" oninput="handleProductSelect(this)" required placeholder="Type description or pick from catalog..." class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 focus:ring-indigo-500">
                 </td>
-                <td class="p-3 unit-col">
-                    <select name="items[` + newIndex + `][unit]" class="w-full text-xs rounded-lg border-slate-200 unit-select" onchange="unitColumnForced = false; checkUnitColumnVisibility()">
-                        ${unitOptions}
-                    </select>
-                </td>
-                <td class="p-3">
+                <td class="p-3 w-28">
                     <input type="number" step="0.01" min="0.01" name="items[` + newIndex + `][quantity]" value="${qty}" required class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 item-qty font-bold" oninput="calcRow(this)">
                 </td>
-                <td class="p-3">
+                <td class="p-3 w-28">
+                    <input type="text" name="items[` + newIndex + `][unit]" value="${escapeHtml(unit || 'Nos')}" list="unit-options-list" placeholder="e.g. Box" class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 item-unit font-semibold">
+                </td>
+                <td class="p-3 w-36">
                     <input type="number" step="0.01" min="0" name="items[` + newIndex + `][unit_price]" value="${price}" required class="w-full text-xs rounded-lg border-slate-200 focus:border-indigo-500 item-price font-bold" oninput="calcRow(this)">
                 </td>
-                <td class="p-3 text-right">
+                <td class="p-3 w-36 text-right">
                     <span class="font-extrabold text-slate-800 row-total font-mono text-xs">` + (parseFloat(qty) * parseFloat(price)).toFixed(2) + `</span>
                 </td>
-                <td class="p-3 text-center">
+                <td class="p-3 w-12 text-center">
                     <button type="button" onclick="removeRow(this)" class="text-slate-300 hover:text-rose-500 transition remove-btn" title="Remove item">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                     </button>
@@ -1109,7 +1079,6 @@
             tbody.appendChild(tr);
             updateCounters();
             calcTotals();
-            checkUnitColumnVisibility();
         }
 
         function escapeHtml(text) {
@@ -1195,14 +1164,9 @@
                     const price = parseFloat(firstCb.getAttribute('data-price')) || 0;
 
                     firstInput.value = desc;
-                    const unitSelect = rows[0].querySelector('select[name*="[unit]"]');
-                    if (unitSelect && unit) {
-                        for (let i = 0; i < unitSelect.options.length; i++) {
-                            if (unitSelect.options[i].value.toLowerCase() === unit.toLowerCase()) {
-                                unitSelect.selectedIndex = i;
-                                break;
-                            }
-                        }
+                    const unitInput = rows[0].querySelector('input[name*="[unit]"]');
+                    if (unitInput && unit) {
+                        unitInput.value = unit;
                     }
                     const priceInput = rows[0].querySelector('.item-price');
                     if (priceInput) priceInput.value = price;
@@ -1377,8 +1341,8 @@
                         const firstItem = items[0];
                         firstInput.value = firstItem.description;
                         if (firstItem.unit) {
-                            const unitSelect = rows[0].querySelector('.unit-select');
-                            if (unitSelect) unitSelect.value = firstItem.unit;
+                            const unitInput = rows[0].querySelector('input[name*="[unit]"]');
+                            if (unitInput) unitInput.value = firstItem.unit;
                         }
                         const qtyInput = rows[0].querySelector('.item-qty');
                         if (qtyInput) qtyInput.value = firstItem.quantity;
@@ -1622,7 +1586,7 @@
             }
 
             if (isHeadExceeded) {
-                if (alertBox) alertBox.className = 'bg-rose-50/70 p-4 rounded-2xl border-2 border-rose-300 shadow-xs space-y-2.5';
+                if (alertBox) alertBox.className = 'bg-rose-50/70 p-5 sm:p-6 rounded-2xl border-2 border-rose-300 shadow-xs flex-1 flex flex-col justify-between space-y-3';
                 if (statusPill) {
                     statusPill.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800';
                     statusPill.textContent = 'Account Head Budget Exceeded';
@@ -1631,7 +1595,7 @@
                     alertText.innerHTML = `<strong class="text-rose-700">Account Head Budget Warning:</strong> Bill payable (PKR ${netPayable.toLocaleString('en-US', { minimumFractionDigits: 2 })}) exceeds available Released Budget Balance in head <strong class="text-indigo-800 font-bold">${escapeHtml(headName)}</strong> (PKR ${headBalance.toLocaleString('en-US', { minimumFractionDigits: 2 })}) by <strong class="text-rose-700 font-mono">PKR ${(netPayable - headBalance).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>.`;
                 }
             } else if (netPayable > avail) {
-                if (alertBox) alertBox.className = 'bg-rose-50/70 p-4 rounded-2xl border-2 border-rose-300 shadow-xs space-y-2.5';
+                if (alertBox) alertBox.className = 'bg-rose-50/70 p-5 sm:p-6 rounded-2xl border-2 border-rose-300 shadow-xs flex-1 flex flex-col justify-between space-y-3';
                 if (statusPill) {
                     statusPill.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800';
                     statusPill.textContent = 'Account Head Budget Exceeded';
@@ -1640,7 +1604,7 @@
                     alertText.innerHTML = `<strong class="text-rose-700">Account Head Budget Warning:</strong> Bill payable exceeds currently released department Released Budget Balance by <strong class="text-rose-700 font-mono">PKR ${(netPayable - avail).toLocaleString('en-US', { minimumFractionDigits: 2 })}</strong>.`;
                 }
             } else {
-                if (alertBox) alertBox.className = 'bg-emerald-50/60 p-4 rounded-2xl border border-emerald-300 shadow-xs space-y-2.5';
+                if (alertBox) alertBox.className = 'bg-emerald-50/60 p-5 sm:p-6 rounded-2xl border border-emerald-300 shadow-xs flex-1 flex flex-col justify-between space-y-3';
                 if (statusPill) {
                     statusPill.className = 'text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800';
                     statusPill.textContent = '✓ Budget Compliant';
