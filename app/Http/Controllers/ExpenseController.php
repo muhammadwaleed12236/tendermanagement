@@ -87,7 +87,9 @@ class ExpenseController extends Controller
     {
         $categories = ExpenseCategory::where('status', 'active')->orderBy('name')->get();
         $bankAccounts = BankAccount::where('status', 'active')->orderByDesc('is_default')->get();
-        $companies = Company::where('is_active', true)->orderBy('name')->get();
+        $companies = Company::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('company_name')->get();
         $departments = Department::orderBy('name')->get();
 
         // Generate next suggested voucher number

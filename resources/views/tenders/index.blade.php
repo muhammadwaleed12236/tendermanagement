@@ -61,65 +61,121 @@
                 </div>
             @endif
 
-            <!-- Circular Ring KPI Metric Cards -->
-            <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
-                <!-- 1. Total Tenders -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-stone-500">Total Tenders</div>
-                        <div class="text-xl sm:text-2xl font-black text-stone-900 mt-0.5">{{ number_format($totalCount) }}</div>
-                        <div class="text-[11px] text-stone-500">All registered tenders</div>
-                    </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-stone-200 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            @php
+                $inProgressPct = $totalCount > 0 ? min(100, round(($inProgressCount / $totalCount) * 100)) : 0;
+                $wonPct = $totalCount > 0 ? min(100, round(($wonCount / $totalCount) * 100)) : 0;
+                $lostPct = $totalCount > 0 ? min(100, round(($lostCount / $totalCount) * 100)) : 0;
+                $twoEnvPct = $totalCount > 0 ? min(100, round(($twoEnvelopeCount / $totalCount) * 100)) : 0;
+            @endphp
+
+            <!-- Circular Ring 3D KPI Metric Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4">
+                <!-- 1. Total Tenders (Electric Blue 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-blue">
+                        <div class="stat-candy-icon candy-icon-blue">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Total Tenders</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($totalCount) }}</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">All registered</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="100% Registered">
+                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">100%</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 2. In Progress -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-blue-700">In Progress / Active</div>
-                        <div class="text-xl sm:text-2xl font-black text-blue-900 mt-0.5">{{ number_format($inProgressCount) }}</div>
-                        <div class="text-[11px] text-stone-500">Bids open / evaluation</div>
-                    </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-blue-500 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                </div>
-
-                <!-- 3. Won / Awarded -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-emerald-700">Won / Awarded</div>
-                        <div class="text-xl sm:text-2xl font-black text-emerald-900 mt-0.5">{{ number_format($wonCount) }}</div>
-                        <div class="text-[11px] text-stone-500">Successfully awarded</div>
-                    </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-emerald-500 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <!-- 2. In Progress (Cyan / Sky 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-cyan">
+                        <div class="stat-candy-icon candy-icon-cyan">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">In Progress</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($inProgressCount) }}</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">Bids open / eval</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $inProgressPct }}% In Progress">
+                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#e0f2fe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0284c7" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $inProgressPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0284c7]">{{ $inProgressPct }}%</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 4. Lost / Disqualified -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-rose-700">Lost / Disqualified</div>
-                        <div class="text-xl sm:text-2xl font-black text-rose-900 mt-0.5">{{ number_format($lostCount) }}</div>
-                        <div class="text-[11px] text-stone-500">Disqualified or lost</div>
-                    </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-rose-500 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <!-- 3. Won / Awarded (Emerald Green 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-green">
+                        <div class="stat-candy-icon candy-icon-green">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Won / Awarded</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($wonCount) }}</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">Awarded</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $wonPct }}% Won">
+                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $wonPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $wonPct }}%</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 5. Two Envelope Procedures -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between col-span-2 lg:col-span-1">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-orange-700">Two Envelope</div>
-                        <div class="text-xl sm:text-2xl font-black text-orange-900 mt-0.5">{{ number_format($twoEnvelopeCount) }}</div>
-                        <div class="text-[11px] text-stone-500">2-Stage procedure</div>
+                <!-- 4. Lost / Disqualified (Maroon 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-maroon">
+                        <div class="stat-candy-icon candy-icon-maroon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Lost / Disqual.</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($lostCount) }}</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">Disqualified</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $lostPct }}% Lost">
+                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $lostPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $lostPct }}%</span>
+                        </div>
                     </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-orange-500 flex items-center justify-center shrink-0">
-                        <span class="text-xs font-black text-orange-600">2E</span>
+                </div>
+
+                <!-- 5. Two Envelope Procedures (Sunset Orange 3D Theme) -->
+                <div class="stat-card-3d-wrap group col-span-2 lg:col-span-1">
+                    <div class="stat-card-3d stat-card-orange">
+                        <div class="stat-candy-icon candy-icon-orange font-black text-sm tracking-wider">
+                            2E
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Two Envelope</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">{{ number_format($twoEnvelopeCount) }}</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">2-Stage proc.</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 56px; height: 56px;" title="{{ $twoEnvPct }}% Two Envelope">
+                            <svg class="w-[56px] h-[56px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $twoEnvPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $twoEnvPct }}%</span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -42,45 +42,97 @@
     <div class="py-6 bg-slate-50 min-h-screen">
         <div class="max-w-[98%] mx-auto px-3 sm:px-4 space-y-4">
 
-            <!-- Summary KPI Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Line Items</div>
-                        <div class="text-xl font-extrabold text-slate-900 mt-0.5">{{ number_format($totalRecords) }}</div>
-                    </div>
-                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Quantity</div>
-                        <div class="text-xl font-extrabold text-indigo-700 font-mono mt-0.5">{{ number_format($totalQty, 2) }}</div>
-                    </div>
-                    <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-                    </div>
-                </div>
-
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Procurement Value</div>
-                        <div class="text-xl font-extrabold text-emerald-700 font-mono mt-0.5">PKR {{ number_format($totalAmount, 2) }}</div>
-                    </div>
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <!-- 3D Summary KPI Cards with Candy Icons & Circular Meters -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Card 1: Total Line Items (Electric Blue 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-blue">
+                        <div class="stat-candy-icon candy-icon-blue">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Total Line Items</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
+                                {{ number_format($totalRecords) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Billed item rows</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Total Records">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">100%</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Active Departments</div>
-                        <div class="text-xl font-extrabold text-amber-700 mt-0.5">{{ $departments->count() }}</div>
+                <!-- Card 2: Total Quantity (Purple 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-purple">
+                        <div class="stat-candy-icon candy-icon-purple">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Total Quantity</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                {{ number_format($totalQty, 0) }} <span class="text-xs font-bold text-indigo-400 ml-1">Units</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Procured volumes</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Total Quantity Units">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#e0e7ff" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#6366f1" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="15" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#6366f1]">QTY</span>
+                        </div>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                </div>
+
+                <!-- Card 3: Total Procurement Value (Emerald Green 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-green">
+                        <div class="stat-candy-icon candy-icon-green">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Procurement Value</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-emerald-600">PKR</span>{{ number_format($totalAmount, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Net disbursed</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Total Amount">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Active Departments (Sunset Orange 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-orange">
+                        <div class="stat-candy-icon candy-icon-orange">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Active Departments</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
+                                {{ $departments->count() }} <span class="text-xs font-bold text-orange-400 ml-1">Depts</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Cost centers active</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $departments->count() }} Departments">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="20" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $departments->count() }}</span>
+                        </div>
                     </div>
                 </div>
             </div>

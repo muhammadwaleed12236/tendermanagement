@@ -29,23 +29,111 @@
                 </div>
             @endif
 
-            <!-- Stats Bar -->
+            @php
+                $totalBills = $stats['total_count'] ?? 0;
+                $printedBills = $stats['printed_count'] ?? 0;
+                $pendingBills = $stats['pending_count'] ?? 0;
+                $generatedBills = $stats['generated_count'] ?? 0;
+                $printedPct = $totalBills > 0 ? min(100, round(($printedBills / $totalBills) * 100)) : 0;
+                $pendingPct = $totalBills > 0 ? min(100, round(($pendingBills / $totalBills) * 100)) : 0;
+                $generatedPct = $totalBills > 0 ? min(100, round(($generatedBills / $totalBills) * 100)) : 0;
+            @endphp
+
+            <!-- 3D Stat Cards Bar with Candy Icons & Circular Meters -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Bill Amount</div>
-                    <div class="text-xl font-black text-slate-900 mt-1">PKR {{ number_format($stats['total_amount'], 2) }}</div>
+                <!-- Card 1: TOTAL BILL AMOUNT (Electric Blue 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-blue">
+                        <div class="stat-candy-icon candy-icon-blue">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Total Bill Amount</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-blue-600">PKR</span>{{ number_format($stats['total_amount'], 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Cumulative billed</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Cumulative Total">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">100%</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Nos. of Bill Generated</div>
-                    <div class="text-xl font-black text-emerald-600 mt-1">{{ number_format($stats['total_count']) }} Bills</div>
+
+                <!-- Card 2: TOTAL BILLS GENERATED (Emerald Green 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-green">
+                        <div class="stat-candy-icon candy-icon-green">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Bills Generated</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
+                                {{ number_format($totalBills) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">{{ number_format($generatedBills) }} Confirmed</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $generatedPct }}% Confirmed">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $generatedPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $generatedPct }}%</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Pending Bills</div>
-                    <div class="text-xl font-black text-amber-600 mt-1">{{ number_format($stats['pending_count']) }} Bills</div>
+
+                <!-- Card 3: PENDING BILLS (Sunset Orange 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-orange">
+                        <div class="stat-candy-icon candy-icon-orange">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Pending Clearance</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
+                                {{ number_format($pendingBills) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Awaiting sanction</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $pendingPct }}% Pending">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $pendingPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $pendingPct }}%</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Bills Printed</div>
-                    <div class="text-xl font-black text-indigo-600 mt-1">{{ number_format($stats['printed_count']) }} Bills</div>
+
+                <!-- Card 4: BILLS PRINTED / PAID (Royal Purple 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-purple">
+                        <div class="stat-candy-icon candy-icon-purple">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Bills Printed / Paid</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5">
+                                {{ number_format($printedBills) }} <span class="text-xs ml-1 text-slate-400 font-bold">Bills</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Disbursed & archived</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $printedPct }}% Printed/Paid">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#e0e7ff" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#6366f1" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $printedPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#6366f1]">{{ $printedPct }}%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

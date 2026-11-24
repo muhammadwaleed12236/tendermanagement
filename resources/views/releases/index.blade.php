@@ -51,42 +51,137 @@
                 </div>
             @endif
 
-            <!-- 5 High-Level Metrics (Title Case / Abcd style) -->
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 overflow-x-auto">
-                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: nowrap; min-width: 820px; gap: 8px;">
-                    <!-- 1. Original Budget -->
-                    <div style="flex: 1; min-width: 150px; padding: 0 14px; border-right: 1px solid #e2e8f0;">
-                        <div class="text-[11px] font-bold text-slate-500 whitespace-nowrap">Original Budget</div>
-                        <div class="text-base xl:text-lg font-black text-slate-900 mt-0.5 whitespace-nowrap">PKR {{ number_format($totalOriginalBudget, 2) }}</div>
-                        <div class="text-[10px] text-slate-400 mt-0.5 whitespace-nowrap">Total sanctioned ceiling</div>
-                    </div>
+            @php
+                $origBudget = (float)($totalOriginalBudget ?? 0);
+                $expenditure = (float)($totalExpenditure ?? 0);
+                $relBudget = (float)($totalReleasedBudget ?? 0);
+                $relBalance = (float)($totalReleasedBalance ?? 0);
+                $unreleased = (float)($totalUnreleased ?? 0);
 
-                    <!-- 2. Expenditure -->
-                    <div style="flex: 1; min-width: 150px; padding: 0 14px; border-right: 1px solid #e2e8f0;">
-                        <div class="text-[11px] font-bold text-rose-600 whitespace-nowrap">Expenditure</div>
-                        <div class="text-base xl:text-lg font-black text-rose-600 mt-0.5 whitespace-nowrap">PKR {{ number_format($totalExpenditure, 2) }}</div>
-                        <div class="text-[10px] text-slate-400 mt-0.5 whitespace-nowrap">Disbursed via paid bills</div>
-                    </div>
+                $expPct = $origBudget > 0 ? min(100, round(($expenditure / $origBudget) * 100)) : 0;
+                $relPct = $origBudget > 0 ? min(100, round(($relBudget / $origBudget) * 100)) : 0;
+                $relBalPct = $relBudget > 0 ? min(100, round(($relBalance / $relBudget) * 100)) : 0;
+                $unrelPct = $origBudget > 0 ? min(100, round(($unreleased / $origBudget) * 100)) : 0;
+            @endphp
 
-                    <!-- 3. Released Budget -->
-                    <div style="flex: 1; min-width: 150px; padding: 0 14px; border-right: 1px solid #e2e8f0;">
-                        <div class="text-[11px] font-bold text-indigo-700 whitespace-nowrap">Released Budget</div>
-                        <div class="text-base xl:text-lg font-black text-indigo-700 mt-0.5 whitespace-nowrap">PKR {{ number_format($totalReleasedBudget, 2) }}</div>
-                        <div class="text-[10px] text-indigo-500 mt-0.5 whitespace-nowrap">Authorized releases</div>
+            <!-- 5 High-Level 3D Metric Cards with Candy Icons & Circular Ring Gauges -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4">
+                <!-- 1. Original Budget (Electric Blue 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-blue">
+                        <div class="stat-candy-icon candy-icon-blue">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Original Budget</span>
+                            <div class="text-lg sm:text-xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-0.5 font-extrabold text-blue-600">PKR</span>{{ number_format($origBudget, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">Total ceiling</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 54px; height: 54px;" title="Total Ceiling">
+                            <svg class="w-[54px] h-[54px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[11px] font-black font-mono text-[#0056d2]">100%</span>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- 4. Released Budget Balance -->
-                    <div style="flex: 1; min-width: 150px; padding: 0 14px; border-right: 1px solid #e2e8f0;">
-                        <div class="text-[11px] font-bold text-emerald-800 whitespace-nowrap">Released Budget Balance</div>
-                        <div class="text-base xl:text-lg font-black text-emerald-700 mt-0.5 whitespace-nowrap">PKR {{ number_format($totalReleasedBalance, 2) }}</div>
-                        <div class="text-[10px] text-emerald-700 font-semibold mt-0.5 whitespace-nowrap">✓ Available for invoices</div>
+                <!-- 2. Expenditure (Deep Maroon 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-maroon">
+                        <div class="stat-candy-icon candy-icon-maroon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Expenditure</span>
+                            <div class="text-lg sm:text-xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-0.5 font-extrabold text-rose-800">PKR</span>{{ number_format($expenditure, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">Disbursed</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 54px; height: 54px;" title="{{ $expPct }}% Expended">
+                            <svg class="w-[54px] h-[54px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $expPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[11px] font-black font-mono text-[#881337]">{{ $expPct }}%</span>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- 5. Unreleased Balance -->
-                    <div style="flex: 1; min-width: 150px; padding: 0 14px;">
-                        <div class="text-[11px] font-bold text-amber-800 whitespace-nowrap">Unreleased Balance</div>
-                        <div class="text-base xl:text-lg font-black text-amber-700 mt-0.5 whitespace-nowrap">PKR {{ number_format($totalUnreleased, 2) }}</div>
-                        <div class="text-[10px] text-amber-600 mt-0.5 whitespace-nowrap">Awaiting tranches</div>
+                <!-- 3. Released Budget (Indigo 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-purple">
+                        <div class="stat-candy-icon candy-icon-purple">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Released</span>
+                            <div class="text-lg sm:text-xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-0.5 font-extrabold text-indigo-700">PKR</span>{{ number_format($relBudget, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">Authorized</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 54px; height: 54px;" title="{{ $relPct }}% Released">
+                            <svg class="w-[54px] h-[54px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#e0e7ff" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#6366f1" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $relPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[11px] font-black font-mono text-[#6366f1]">{{ $relPct }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Released Budget Balance (Emerald Green 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-green">
+                        <div class="stat-candy-icon candy-icon-green">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2.2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-width="2.2"></path></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Available Balance</span>
+                            <div class="text-lg sm:text-xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-0.5 font-extrabold text-emerald-600">PKR</span>{{ number_format($relBalance, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">For invoices</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 54px; height: 54px;" title="{{ $relBalPct }}% Remaining">
+                            <svg class="w-[54px] h-[54px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $relBalPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[11px] font-black font-mono text-[#0d9467]">{{ $relBalPct }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Unreleased Balance (Sunset Orange 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-orange">
+                        <div class="stat-candy-icon candy-icon-orange">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Unreleased</span>
+                            <div class="text-lg sm:text-xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-0.5 font-extrabold text-orange-600">PKR</span>{{ number_format($unreleased, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate">Awaiting tranches</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 54px; height: 54px;" title="{{ $unrelPct }}% Unreleased">
+                            <svg class="w-[54px] h-[54px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $unrelPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-[11px] font-black font-mono text-[#cd3805]">{{ $unrelPct }}%</span>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -48,81 +48,110 @@
                 </div>
             @endif
 
-            <!-- 1. TOP 4 METRIC CARDS WITH CIRCULAR RINGS (MATCHING THE POST OFFICE PORTAL DESIGN) -->
+            @php
+                $totBill = (float)($totals['bill_amount'] ?? 0);
+                $totCheque = (float)($totals['cheque_amount'] ?? 0);
+                $totComm = (float)($totals['xyz_commission'] ?? 0);
+                $totDept = (float)($totals['amount_to_paid_department'] ?? 0);
+                $chequePct = $totBill > 0 ? min(100, round(($totCheque / $totBill) * 100)) : 82;
+                $commPct = $totBill > 0 ? min(100, round(($totComm / $totBill) * 100)) : 12;
+                $deptPct = $totBill > 0 ? min(100, round(($totDept / $totBill) * 100)) : 70;
+            @endphp
+
+            <!-- 1. TOP 4 VIBRANT 3D METRIC CARDS WITH CANDY ICONS & CIRCULAR RING METERS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Card 1: TOTAL BILL AMOUNT (Crimson Red Ring) -->
-                <div class="bg-white p-5 rounded-3xl border border-[#e5ded4] shadow-xs flex items-center justify-between hover:border-stone-400 transition">
-                    <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-rose-700">TOTAL BILL AMOUNT</span>
-                        <div class="text-xl sm:text-2xl font-black font-mono text-stone-900 mt-1">
-                            Rs. {{ number_format($totals['bill_amount'] ?? 0, 2) }}
+                <!-- Card 1: TOTAL BILL AMOUNT (Electric Blue 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-blue">
+                        <div class="stat-candy-icon candy-icon-blue">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
-                        <span class="inline-block px-2.5 py-0.5 mt-2 text-[10px] font-bold rounded-full bg-rose-50 text-rose-700 border border-rose-200">
-                            Overall Processed Bills
-                        </span>
-                    </div>
-                    <div class="relative w-12 h-12 flex items-center justify-center shrink-0">
-                        <svg class="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-                            <path class="text-stone-100" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path class="text-rose-600" stroke-width="4" stroke-dasharray="75, 100" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        </svg>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Total Bill Amount</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-blue-600">Rs.</span>{{ number_format($totBill, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Processed Bills</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Total Bill Volume">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="88" stroke-dashoffset="0" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0056d2]">100%</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card 2: TOTAL CHEQUE AMOUNT (Royal Blue Ring) -->
-                <div class="bg-white p-5 rounded-3xl border border-[#e5ded4] shadow-xs flex items-center justify-between hover:border-stone-400 transition">
-                    <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-blue-700">TOTAL CHEQUE AMOUNT</span>
-                        <div class="text-xl sm:text-2xl font-black font-mono text-blue-700 mt-1">
-                            Rs. {{ number_format($totals['cheque_amount'] ?? 0, 2) }}
+                <!-- Card 2: TOTAL CHEQUE AMOUNT (Emerald Green 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-green">
+                        <div class="stat-candy-icon candy-icon-green">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke-width="2.2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-width="2.2"></path></svg>
                         </div>
-                        <span class="inline-block px-2.5 py-0.5 mt-2 text-[10px] font-bold rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                            Overall Processed Cheques
-                        </span>
-                    </div>
-                    <div class="relative w-12 h-12 flex items-center justify-center shrink-0">
-                        <svg class="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-                            <path class="text-stone-100" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path class="text-blue-600" stroke-width="4" stroke-dasharray="60, 100" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        </svg>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Total Cheque Amount</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-emerald-600">Rs.</span>{{ number_format($totCheque, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Processed Cheques</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $chequePct }}% Cheques Cleared">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $chequePct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $chequePct }}%</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card 3: TOTAL AGPR COMMISSION (Orange Ring) -->
-                <div class="bg-white p-5 rounded-3xl border border-[#e5ded4] shadow-xs flex items-center justify-between hover:border-stone-400 transition">
-                    <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-orange-700">TOTAL AGPR COMMISSION</span>
-                        <div class="text-xl sm:text-2xl font-black font-mono text-orange-600 mt-1">
-                            Rs. {{ number_format($totals['xyz_commission'] ?? 0, 2) }}
+                <!-- Card 3: TOTAL COMMISSION (Sunset Orange 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-orange">
+                        <div class="stat-candy-icon candy-icon-orange">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <span class="inline-block px-2.5 py-0.5 mt-2 text-[10px] font-bold rounded-full bg-orange-50 text-orange-700 border border-orange-200">
-                            Overall AGPR Commission
-                        </span>
-                    </div>
-                    <div class="relative w-12 h-12 flex items-center justify-center shrink-0">
-                        <svg class="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-                            <path class="text-stone-100" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path class="text-orange-500" stroke-width="4" stroke-dasharray="45, 100" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        </svg>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">AGPR Commission</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-orange-600">Rs.</span>{{ number_format($totComm, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Official deduction</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $commPct }}% Commission">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $commPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card 4: TOTAL VENDOR PROFIT / PAID DEPT (Green Ring) -->
-                <div class="bg-white p-5 rounded-3xl border border-[#e5ded4] shadow-xs flex items-center justify-between hover:border-stone-400 transition">
-                    <div>
-                        <span class="text-[10px] font-black uppercase tracking-wider text-emerald-700">PAID TO DEPARTMENT</span>
-                        <div class="text-xl sm:text-2xl font-black font-mono text-emerald-700 mt-1">
-                            Rs. {{ number_format($totals['amount_to_paid_department'] ?? 0, 2) }}
+                <!-- Card 4: PAID TO DEPARTMENT / PROFIT (Deep Maroon 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-maroon">
+                        <div class="stat-candy-icon candy-icon-maroon">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                         </div>
-                        <span class="inline-block px-2.5 py-0.5 mt-2 text-[10px] font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            Net Dept Payout
-                        </span>
-                    </div>
-                    <div class="relative w-12 h-12 flex items-center justify-center shrink-0">
-                        <svg class="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-                            <path class="text-stone-100" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path class="text-emerald-600" stroke-width="4" stroke-dasharray="55, 100" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                        </svg>
+                        <div class="min-w-0 flex-1">
+                            <span class="stat-card-label">Paid to Department</span>
+                            <div class="text-xl sm:text-2xl font-black stat-card-value my-0.5 truncate">
+                                <span class="text-xs mr-1 font-extrabold text-rose-800">Rs.</span>{{ number_format($totDept, 0) }}
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium">Net Dept Payout</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $deptPct }}% Dept Payout">
+                            <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
+                                <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
+                                        stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * $deptPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $deptPct }}%</span>
+                        </div>
                     </div>
                 </div>
             </div>

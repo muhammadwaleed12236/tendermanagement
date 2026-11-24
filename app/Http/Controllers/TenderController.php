@@ -64,7 +64,9 @@ class TenderController extends Controller
         
         $categories = Tender::whereNotNull('category')->distinct()->pluck('category');
         $departments = Department::where('status', 'active')->orderBy('name')->get();
-        $companies = Company::where('status', 'active')->orderBy('name')->get();
+        $companies = Company::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('company_name')->get();
 
         // Metric Counters
         $totalCount = Tender::count();

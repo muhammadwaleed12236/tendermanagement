@@ -70,8 +70,8 @@
                             class="flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40">
                         <span id="step_num_4" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">4</span>
                         <div class="min-w-0">
-                            <div id="step_tag_4" class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 4</div>
-                            <div id="step_title_4" class="text-xs font-black text-stone-700 truncate">Scope & Publish</div>
+<div id="step_tag_4" class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 4</div>
+                            <div id="step_title_4" class="text-xs font-black text-stone-700 truncate">Scope & Requirements</div>
                         </div>
                     </button>
                 </div>
@@ -214,7 +214,7 @@
                                 <span id="step1_hint_text">Fill required information before proceeding.</span>
                             </div>
                             <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
-                                <button type="button" id="btn_step1_next" onclick="step1NextAction()" class="px-6 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
+<button type="button" id="btn_step1_next" onclick="step1NextAction()" class="px-6 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
                                     <span id="btn_step1_text">Proceed to Dates & Schedule</span>
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </button>
@@ -477,21 +477,21 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                                 <span id="btn_step3_back_text">Back to Step 2</span>
                             </button>
-                            <button type="button" onclick="goToStep(4)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
-                                <span>Proceed to Scope & Publish</span>
+<button type="button" onclick="goToStep(4)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
+                                <span>Proceed to Scope & Technical Requirements</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </button>
                         </div>
                     </div>
 
                     <!-- ============================================================= -->
-                    <!-- STEP 4: SCOPE, TECHNICAL REQUIREMENTS & PUBLISH              -->
+                    <!-- STEP 4: SCOPE OF WORK & TECHNICAL REQUIREMENTS                -->
                     <!-- ============================================================= -->
                     <div id="wizard_step_4" class="hidden space-y-6">
                         <div class="flex items-center justify-between border-b border-[#e5ded4] pb-3">
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                                <h3 id="step4_header_title" class="font-black text-sm uppercase tracking-wider text-stone-900">Step 4: Scope of Work, Technical Requirements & Official RFP Dossier</h3>
+                                <h3 id="step4_header_title" class="font-black text-sm uppercase tracking-wider text-stone-900">Step 4: Scope of Work and Technical Requirements</h3>
                             </div>
                             <span id="step4_page_tag" class="text-[11px] font-bold text-stone-500">Page 4 of 4</span>
                         </div>
@@ -518,17 +518,6 @@
                                    class="w-full text-xs text-stone-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-orange-50 file:text-orange-800 hover:file:bg-orange-100">
                         </div>
 
-                        <!-- Review Callout Summary -->
-                        <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-950 text-xs space-y-1">
-                            <div class="font-black flex items-center gap-1.5 text-emerald-900">
-                                <svg class="w-4 h-4 text-emerald-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                                <span>Ready to Publish Tender to Database:</span>
-                            </div>
-                            <p class="text-stone-700" id="step4_callout_text">
-                                Upon clicking "Publish Tender Now", the tender will be registered in the official Tender Directory. If Single Stage Two Envelope is selected, Stage 1 Technical evaluations will be tracked first.
-                            </p>
-                        </div>
-
                         <!-- Step 4 Navigation Buttons -->
                         <div class="flex items-center justify-between pt-4 border-t border-[#e5ded4]">
                             <button type="button" id="btn_step4_back" onclick="step4BackAction()" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
@@ -537,7 +526,7 @@
                             </button>
                             <button type="submit" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black rounded-xl shadow-xs transition flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                                <span id="btn_publish_label">Publish Tender Now</span>
+                                <span id="btn_publish_label">Save Tender Record</span>
                             </button>
                         </div>
                     </div>
