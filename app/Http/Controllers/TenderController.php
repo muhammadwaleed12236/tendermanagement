@@ -303,9 +303,9 @@ class TenderController extends Controller
             }
             $uploadDate = $validated['upload_date'] ?? $validated['collection_start_date'] ?? null;
             $collectionStartDate = $uploadDate ?: ($validated['collection_start_date'] ?? null);
-            $collectionStartNotes = $validated['collection_start_notes'] ?: 'During working hours';
+            $collectionStartNotes = !empty($validated['collection_start_notes']) ? $validated['collection_start_notes'] : 'During working hours';
             $collectionEndDate = $uploadDate ?: ($validated['collection_end_date'] ?? null);
-            $collectionEndNotes = $validated['collection_end_notes'] ?: 'During working hours';
+            $collectionEndNotes = !empty($validated['collection_end_notes']) ? $validated['collection_end_notes'] : 'During working hours';
             $category = $validated['category'] ?? 'General Procurement';
         }
 

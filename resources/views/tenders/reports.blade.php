@@ -189,17 +189,17 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs print:text-[10px]">
                         <thead>
-                            <tr class="bg-stone-100/90 text-stone-900 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider print:bg-stone-200">
+                            <tr class="bg-stone-100/90 text-stone-900 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider print:bg-stone-200 text-center">
                                 <th class="py-3 px-3 text-center w-12 border-r border-[#e5ded4]">S.#</th>
                                 <th class="py-3 px-3 min-w-[140px] border-r border-[#e5ded4]">Tender No. / Code</th>
-                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Item of Description</th>
-                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Department</th>
-                                <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4] text-right">Budget (PKR)</th>
+                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Description of Items</th>
+                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Department Name</th>
+                                <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4]">Budget (PKR)</th>
                                 <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Work Order / Award Value</th>
-                                <th class="py-3 px-3 min-w-[160px] border-r border-[#e5ded4]">Tender Fee & Account</th>
+                                <th class="py-3 px-3 min-w-[160px] border-r border-[#e5ded4]">Tender Fee</th>
                                 <th class="py-3 px-3 min-w-[170px] border-r border-[#e5ded4]">Bid Security (CDR / PO)</th>
-                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4] text-center">Status</th>
-                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4] text-center">Received Award Documents</th>
+                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4]">Status</th>
+                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4]">Received Award Documents</th>
                                 <th class="py-3 px-3 text-center min-w-[70px] print:hidden">Action</th>
                             </tr>
                         </thead>

@@ -12,7 +12,7 @@
                     </span>
                 </div>
                 <h2 class="font-black text-2xl text-stone-900 leading-tight flex items-center gap-2">
-                    <span>{{ __('Publish Procurement Tender') }}</span>
+                    <span>{{ __('Create New Procurement Tender') }}</span>
                     <span class="text-xs font-bold bg-stone-200 text-stone-700 px-2.5 py-0.5 rounded-full border border-stone-300">SPPRA / PPRA</span>
                 </h2>
                 <p class="text-xs text-stone-600 mt-0.5">
@@ -32,17 +32,16 @@
     <div class="py-6 font-sans">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            <!-- WIZARD STEPPERS HEADER -->
+            <!-- WIZARD STEPPERS HEADER (4 Steps) -->
             <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 sm:p-5 shadow-xs">
-                <!-- 1. Traditional Tender Stepper (4 Steps: Basic -> Dates -> Fees & CDR -> Scope & Publish) -->
-                <div id="tender_stepper_row" class="{{ old('tender_type', 'tender') === 'epad' ? 'hidden' : '' }} grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+                <div id="tender_stepper_row" class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
                     <!-- Step 1 Indicator -->
                     <button type="button" onclick="goToStep(1)" id="step_indicator_1" 
                             class="flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-orange-500 bg-orange-50/50">
                         <span id="step_num_1" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-orange-600 text-white shrink-0">1</span>
                         <div class="min-w-0">
-                            <div class="text-[10px] font-extrabold uppercase tracking-wider text-orange-900">Step 1</div>
-                            <div class="text-xs font-black text-stone-900 truncate">Basic & Procedure</div>
+                            <div id="step_tag_1" class="text-[10px] font-extrabold uppercase tracking-wider text-orange-900">Step 1</div>
+                            <div id="step_title_1" class="text-xs font-black text-stone-900 truncate">Basic & Procedure</div>
                         </div>
                     </button>
 
@@ -61,8 +60,8 @@
                             class="flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40">
                         <span id="step_num_3" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">3</span>
                         <div class="min-w-0">
-                            <div class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 3</div>
-                            <div class="text-xs font-black text-stone-700 truncate">Document Fee & Bid Security</div>
+                            <div id="step_tag_3" class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 3</div>
+                            <div id="step_title_3" class="text-xs font-black text-stone-700 truncate">Document Fee & Bid Security</div>
                         </div>
                     </button>
 
@@ -71,34 +70,8 @@
                             class="flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40">
                         <span id="step_num_4" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">4</span>
                         <div class="min-w-0">
-                            <div class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 4</div>
-                            <div class="text-xs font-black text-stone-700 truncate">Scope & Publish</div>
-                        </div>
-                    </button>
-                </div>
-
-                <!-- 2. EPAD 2.0 Stepper (2 Steps Only: Dates & Fees/Bid Security are eliminated!) -->
-                <div id="epad_stepper_row" class="{{ old('tender_type', 'tender') === 'epad' ? '' : 'hidden' }} grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <!-- EPAD Step 1 Indicator -->
-                    <button type="button" onclick="goToStep(1)" id="epad_step_indicator_1" 
-                            class="flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-rose-600 bg-rose-50/60 ring-2 ring-rose-200">
-                        <span id="epad_step_num_1" class="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-rose-600 text-white shrink-0">1</span>
-                        <div class="min-w-0">
-                            <div class="text-[10px] font-black uppercase tracking-wider text-rose-900 flex items-center gap-1.5">
-                                <span>EPAD 2.0 Step 1</span>
-                                <span class="px-1.5 py-0.2 bg-rose-200 text-rose-900 rounded font-black text-[9px]">E-Procurement</span>
-                            </div>
-                            <div class="text-xs font-black text-rose-950 truncate">Basic Details, Closing Date & Budget</div>
-                        </div>
-                    </button>
-
-                    <!-- EPAD Step 2 Indicator (Loads Scope & Publish) -->
-                    <button type="button" onclick="goToStep(4)" id="epad_step_indicator_2" 
-                            class="flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40">
-                        <span id="epad_step_num_2" class="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">2</span>
-                        <div class="min-w-0">
-                            <div class="text-[10px] font-black uppercase tracking-wider text-stone-500">EPAD 2.0 Step 2</div>
-                            <div class="text-xs font-black text-stone-700 truncate">Scope, Technical Dossier & Publish</div>
+                            <div id="step_tag_4" class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 4</div>
+                            <div id="step_title_4" class="text-xs font-black text-stone-700 truncate">Scope & Publish</div>
                         </div>
                     </button>
                 </div>
@@ -135,24 +108,15 @@
                         <!-- 1. Ultra-Compact Single Row Toolbar: Mode & Procedure -->
                         <div class="p-2 sm:p-2.5 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] shadow-xs">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 items-center">
-                                <!-- Mode Selector -->
+                                <!-- Mode Selector (Tender Paper Only) -->
                                 <div class="flex items-center gap-2">
                                     <span class="text-[11px] font-black uppercase text-stone-700 whitespace-nowrap min-w-[50px]">Mode:</span>
-                                    <div class="grid grid-cols-2 gap-1.5 flex-1">
-                                        <label id="card_type_tender" onclick="selectTenderType('tender')"
-                                               class="flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-orange-950 ring-2 ring-orange-200">
-                                            <input type="radio" name="tender_type" id="type_tender" value="tender" 
-                                                   {{ old('tender_type', 'tender') === 'tender' ? 'checked' : '' }}
+                                    <div class="flex items-center">
+                                        <label id="card_type_tender"
+                                               class="flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl border-2 font-bold text-xs border-orange-500 bg-orange-50 text-orange-950 ring-2 ring-orange-200 cursor-default">
+                                            <input type="radio" name="tender_type" id="type_tender" value="tender" checked
                                                    class="w-3.5 h-3.5 text-orange-600 focus:ring-orange-500">
-                                            <span class="truncate">Tender (Paper)</span>
-                                        </label>
-
-                                        <label id="card_type_epad" onclick="selectTenderType('epad')"
-                                               class="flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50">
-                                            <input type="radio" name="tender_type" id="type_epad" value="epad" 
-                                                   {{ old('tender_type') === 'epad' ? 'checked' : '' }}
-                                                   class="w-3.5 h-3.5 text-rose-600 focus:ring-rose-500">
-                                            <span class="text-rose-950 font-black truncate">EPAD 2.0</span>
+                                            <span class="font-extrabold text-stone-900 truncate">Tender (Paper)</span>
                                         </label>
                                     </div>
                                 </div>
@@ -216,7 +180,7 @@
                                       class="w-full text-sm font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">{{ old('title') }}</textarea>
                         </div>
 
-                        <!-- 4. Dynamic Fields: Company, Category / (Closing Date & Budget in EPAD) -->
+                        <!-- 4. Dynamic Fields: Company & Category -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">Our Bidding Firm</label>
@@ -230,7 +194,7 @@
                                 </select>
                             </div>
 
-                            <!-- Traditional Tender: Category Input -->
+                            <!-- Category Input -->
                             <div id="tender_category_wrapper" class="sm:col-span-1 md:col-span-2">
                                 <label class="block text-xs font-bold text-stone-700 mb-1">Category</label>
                                 <input type="text" name="category" id="input_category" value="{{ old('category', 'Audio-Video & IT Systems') }}" list="cat_list" 
@@ -242,40 +206,14 @@
                                     <option value="Electrical & Power Systems">
                                 </datalist>
                             </div>
-
-                            <!-- EPAD 2.0: Closing Date & Time (Replaces Category) -->
-                            <div id="epad_closing_wrapper" class="hidden">
-                                <label class="block text-xs font-black text-rose-950 mb-1 flex items-center justify-between">
-                                    <span>Closing Date & Time <span class="text-rose-500">*</span></span>
-                                    <span class="text-[9px] font-bold text-rose-700 bg-rose-50 px-1 py-0.2 rounded border border-rose-200">EPAD</span>
-                                </label>
-                                <input type="datetime-local" name="closing_date" id="input_closing_date" value="{{ old('closing_date') }}"
-                                       oninput="syncEpadDates()"
-                                       class="w-full text-xs font-black rounded-xl border-rose-300 bg-rose-50/40 text-rose-950 focus:border-rose-600 focus:ring-rose-500">
-                            </div>
-
-                            <!-- EPAD 2.0: Estimated Budget (Directly in Row 4) -->
-                            <div id="epad_budget_wrapper" class="hidden">
-                                <label class="block text-xs font-black text-emerald-950 mb-1 flex items-center justify-between">
-                                    <span>Total Estimated Budget (PKR) <span class="text-rose-500">*</span></span>
-                                    <span class="text-[9px] font-bold text-emerald-700 bg-emerald-50 px-1 py-0.2 rounded border border-emerald-200">Budget</span>
-                                </label>
-                                <input type="number" step="0.01" id="input_budget_epad" value="{{ old('budget') }}" 
-                                       placeholder="e.g. 12500000" oninput="syncEpadBudget()"
-                                       class="w-full text-xs font-black text-emerald-900 rounded-xl border-emerald-300 bg-emerald-50/30 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500">
-                            </div>
                         </div>
 
-                        <!-- 5. Step 1 Actions: Next / Quick Direct Publish -->
+                        <!-- 5. Step 1 Actions: Next -->
                         <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-[#e5ded4]">
                             <div class="text-xs text-stone-500 font-semibold text-center sm:text-left">
                                 <span id="step1_hint_text">Fill required information before proceeding.</span>
                             </div>
                             <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
-                                <button type="submit" id="btn_epad_quick_publish" class="hidden px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black rounded-xl shadow-xs transition flex items-center gap-1.5">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                                    <span>Publish Directly</span>
-                                </button>
                                 <button type="button" id="btn_step1_next" onclick="step1NextAction()" class="px-6 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
                                     <span id="btn_step1_text">Proceed to Dates & Schedule</span>
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -296,20 +234,7 @@
                             <span class="text-[11px] font-bold text-stone-500">Page 2 of 4</span>
                         </div>
 
-                        <!-- EPAD Notice in Step 2 -->
-                        <div id="epad_step2_banner" class="hidden p-4 rounded-2xl bg-rose-50 border border-rose-200">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                <div class="flex items-center gap-2">
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-rose-200 text-rose-900">EPAD 2.0 Mode Active</span>
-                                    <span class="text-xs text-rose-900 font-bold">Physical collection dates eliminated. Unified under Closing Date.</span>
-                                </div>
-                                <button type="button" onclick="goToStep(3)" class="px-4 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl shadow-xs transition shrink-0">
-                                    Proceed to Document Fee & Security &rarr;
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Single Tender Upload Date (Replaces collection start & end dates per user requirement) -->
+                        <!-- Single Tender Upload Date -->
                         <div class="p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2">
                             <div class="flex items-center justify-between">
                                 <label class="block text-xs font-black text-stone-800">
@@ -355,11 +280,11 @@
 
                         <!-- Step 2 Navigation Buttons -->
                         <div class="flex items-center justify-between pt-4 border-t border-[#e5ded4]">
-                            <button type="button" onclick="nextStep(1)" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
+                            <button type="button" onclick="goToStep(1)" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                                 <span>Back to Step 1</span>
                             </button>
-                            <button type="button" onclick="nextStep(3)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
+                            <button type="button" onclick="step2NextAction()" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
                                 <span>Proceed to Document Fee & Bid Security</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </button>
@@ -421,13 +346,6 @@
                                     </div>
                                     <select name="tender_fee_bank_account_id" id="tender_fee_bank_account_id" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
                                         <option value="">-- Select Bank Account / Cash Vault --</option>
-                                        @foreach($bankAccounts as $acc)
-                                            <option value="{{ $acc->id }}" {{ old('tender_fee_bank_account_id') == $acc->id ? 'selected' : '' }}>
-                                                {{ $acc->bank_name }} - {{ $acc->account_title }} (Bal: PKR {{ number_format($acc->current_balance) }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
                                         @foreach($bankAccounts as $acc)
                                             <option value="{{ $acc->id }}" {{ old('tender_fee_bank_account_id') == $acc->id ? 'selected' : '' }}>
                                                 {{ $acc->bank_name }} - {{ $acc->account_title }} (Bal: PKR {{ number_format($acc->current_balance) }})
@@ -506,7 +424,6 @@
                                         <option value="cdr">Call Deposit Receipt (CDR)</option>
                                         <option value="pay_order">Pay Order (P.O)</option>
                                         <option value="bank_guarantee">Bank Guarantee</option>
-                                        <option value="cheque">Cheque</option>
                                     </select>
                                 </div>
 
@@ -519,7 +436,7 @@
                                         <option value="">-- Select Bank Account --</option>
                                         @foreach($bankAccounts as $acc)
                                             <option value="{{ $acc->id }}" {{ old('bid_security_bank_account_id') == $acc->id ? 'selected' : '' }}>
-                                                {{ $acc->bank_name }} - {{ $acc->account_title }}
+                                                {{ $acc->bank_name }} - {{ $acc->account_title }} (Bal: PKR {{ number_format($acc->current_balance) }})
                                             </option>
                                         @endforeach
                                     </select>
@@ -560,7 +477,7 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                                 <span id="btn_step3_back_text">Back to Step 2</span>
                             </button>
-                            <button type="button" onclick="nextStep(4)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
+                            <button type="button" onclick="goToStep(4)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
                                 <span>Proceed to Scope & Publish</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </button>
@@ -632,115 +549,68 @@
 
     <script>
         let currentStep = 1;
-        let currentTenderType = '{{ old('tender_type', 'tender') }}';
 
-        function selectTenderType(type) {
-            currentTenderType = type;
-            const radioTender = document.getElementById('type_tender');
-            const radioEpad = document.getElementById('type_epad');
-            const cardTender = document.getElementById('card_type_tender');
-            const cardEpad = document.getElementById('card_type_epad');
-            const badgeLabel = document.getElementById('type_badge_label');
-            const catWrapper = document.getElementById('tender_category_wrapper');
-            const closingWrapper = document.getElementById('epad_closing_wrapper');
-            const epadBudgetWrapper = document.getElementById('epad_budget_wrapper');
-            const btnStep1Text = document.getElementById('btn_step1_text');
-            const btnEpadQuickPublish = document.getElementById('btn_epad_quick_publish');
-            const step1HintText = document.getElementById('step1_hint_text');
-            const step4HeaderTitle = document.getElementById('step4_header_title');
-            const step4PageTag = document.getElementById('step4_page_tag');
-            const btnStep4BackText = document.getElementById('btn_step4_back_text');
-            const btnPublishLabel = document.getElementById('btn_publish_label');
-            const tenderStepperRow = document.getElementById('tender_stepper_row');
-            const epadStepperRow = document.getElementById('epad_stepper_row');
-
-            if (type === 'epad') {
-                if (radioEpad) radioEpad.checked = true;
-                if (cardEpad) {
-                    cardEpad.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-rose-600 bg-rose-50 text-rose-950 ring-2 ring-rose-200';
-                }
-                if (cardTender) {
-                    cardTender.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
-                }
-                if (badgeLabel) {
-                    badgeLabel.innerText = 'EPAD 2.0 (E-Procurement)';
-                    badgeLabel.className = 'text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-rose-100 text-rose-900 border border-rose-300';
-                }
-
-                // Show EPAD Stepper (2 Steps), hide Traditional Stepper (4 Steps)
-                if (tenderStepperRow) tenderStepperRow.classList.add('hidden');
-                if (epadStepperRow) epadStepperRow.classList.remove('hidden');
-
-                // Step 1: Category replaced by Closing Date & Estimated Budget directly in Step 1
-                if (catWrapper) catWrapper.classList.add('hidden');
-                if (closingWrapper) closingWrapper.classList.remove('hidden');
-                if (epadBudgetWrapper) epadBudgetWrapper.classList.remove('hidden');
-
-                // Step 1 CTA buttons
-                if (btnStep1Text) btnStep1Text.innerText = 'Proceed to Scope & Publish (Step 2)';
-                if (btnEpadQuickPublish) btnEpadQuickPublish.classList.remove('hidden');
-                if (step1HintText) step1HintText.innerText = 'EPAD 2.0: Schedule & Fees/CDR modules are bypassed.';
-
-                // Step 4 (EPAD Step 2) labels
-                if (step4HeaderTitle) step4HeaderTitle.innerText = 'Step 2: Scope of Work, Technical Requirements & RFP Dossier (EPAD 2.0)';
-                if (step4PageTag) step4PageTag.innerText = 'Page 2 of 2 (EPAD 2.0)';
-                if (btnStep4BackText) btnStep4BackText.innerText = 'Back to EPAD Basic Info (Step 1)';
-                if (btnPublishLabel) btnPublishLabel.innerText = 'Publish EPAD 2.0 Tender Now';
-
-                // Disable all inputs in Step 3 so no fee/bid security is submitted
-                toggleStep3Inputs(true);
-
-                // If currently on step 2 or 3, redirect to 1 or 4
-                if (currentStep === 2 || currentStep === 3) {
+        function goToStep(step) {
+            // Validate required fields on earlier steps when moving forward
+            if (step > 1) {
+                const title = document.getElementById('input_title').value.trim();
+                const dept = document.getElementById('input_department_id').value;
+                if (!title || !dept) {
+                    alert('Please enter Tender Title and select a Procuring Department on Step 1 first.');
                     goToStep(1);
+                    return;
                 }
-
-                syncEpadBudget();
-                syncEpadDates();
-            } else {
-                if (radioTender) radioTender.checked = true;
-                if (cardTender) {
-                    cardTender.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-orange-950 ring-2 ring-orange-200';
-                }
-                if (cardEpad) {
-                    cardEpad.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
-                }
-                if (badgeLabel) {
-                    badgeLabel.innerText = 'Traditional Tender (Default)';
-                    badgeLabel.className = 'text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-stone-200 text-stone-800 border border-stone-300';
-                }
-
-                // Show Traditional Stepper (4 Steps), hide EPAD Stepper
-                if (tenderStepperRow) tenderStepperRow.classList.remove('hidden');
-                if (epadStepperRow) epadStepperRow.classList.add('hidden');
-
-                // Show Category, hide EPAD closing & budget
-                if (catWrapper) catWrapper.classList.remove('hidden');
-                if (closingWrapper) closingWrapper.classList.add('hidden');
-                if (epadBudgetWrapper) epadBudgetWrapper.classList.add('hidden');
-
-                // Step 1 CTA buttons
-                if (btnStep1Text) btnStep1Text.innerText = 'Proceed to Dates & Schedule (Step 2)';
-                if (btnEpadQuickPublish) btnEpadQuickPublish.classList.add('hidden');
-                if (step1HintText) step1HintText.innerText = 'Fill required information before proceeding.';
-
-                // Step 4 labels
-                if (step4HeaderTitle) step4HeaderTitle.innerText = 'Step 4: Scope of Work, Technical Requirements & Official RFP Dossier';
-                if (step4PageTag) step4PageTag.innerText = 'Page 4 of 4';
-                if (btnStep4BackText) btnStep4BackText.innerText = 'Back to Step 3';
-                if (btnPublishLabel) btnPublishLabel.innerText = 'Publish Tender Now';
-
-                // Re-enable inputs in Step 3
-                toggleStep3Inputs(false);
             }
-        }
 
-        function toggleStep3Inputs(disabled) {
-            const step3 = document.getElementById('wizard_step_3');
-            if (step3) {
-                const inputs = step3.querySelectorAll('input, select, textarea');
-                inputs.forEach(el => el.disabled = disabled);
+            if (step > 2) {
+                const deadline = document.getElementById('input_submission_deadline').value;
+                if (!deadline) {
+                    alert('Please specify the Submission Deadline on Step 2 first.');
+                    goToStep(2);
+                    return;
+                }
             }
+
+            // Hide all 4 steps
+            for (let i = 1; i <= 4; i++) {
+                const stepEl = document.getElementById('wizard_step_' + i);
+                if (stepEl) {
+                    stepEl.classList.add('hidden');
+                }
+
+                // Stepper indicators
+                const ind = document.getElementById('step_indicator_' + i);
+                const num = document.getElementById('step_num_' + i);
+                const tag = document.getElementById('step_tag_' + i);
+                const title = document.getElementById('step_title_' + i);
+
+                if (ind && num) {
+                    if (i < step) {
+                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-emerald-400 bg-emerald-50/50';
+                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-emerald-600 text-white shrink-0';
+                        if (tag) tag.className = 'text-[10px] font-extrabold uppercase tracking-wider text-emerald-800';
+                        if (title) title.className = 'text-xs font-black text-emerald-950 truncate';
+                    } else if (i === step) {
+                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-orange-500 bg-orange-50/50 ring-2 ring-orange-200';
+                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-orange-600 text-white shrink-0';
+                        if (tag) tag.className = 'text-[10px] font-extrabold uppercase tracking-wider text-orange-900';
+                        if (title) title.className = 'text-xs font-black text-stone-900 truncate';
+                    } else {
+                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40';
+                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0';
+                        if (tag) tag.className = 'text-[10px] font-extrabold uppercase tracking-wider text-stone-500';
+                        if (title) title.className = 'text-xs font-black text-stone-700 truncate';
+                    }
+                }
+            }
+
+            // Show active step
+            const activeStepEl = document.getElementById('wizard_step_' + step);
+            if (activeStepEl) {
+                activeStepEl.classList.remove('hidden');
+            }
+            currentStep = step;
+            window.scrollTo({ top: 100, behavior: 'smooth' });
         }
 
         function step1NextAction() {
@@ -750,21 +620,17 @@
                 alert('Please enter Tender Title and select a Procuring Department first.');
                 return;
             }
+            goToStep(2);
+        }
 
-            if (currentTenderType === 'epad') {
-                const closingDate = document.getElementById('input_closing_date').value;
-                if (!closingDate) {
-                    alert('Please specify the Closing Date & Time for EPAD 2.0.');
-                    document.getElementById('input_closing_date').focus();
-                    return;
-                }
-                syncEpadDates();
-                syncEpadBudget();
-                // In EPAD mode, skip Step 2 and Step 3, go straight to Step 4 (Scope & Publish)!
-                goToStep(4);
-            } else {
-                goToStep(2);
+        function step2NextAction() {
+            const deadline = document.getElementById('input_submission_deadline').value;
+            if (!deadline) {
+                alert('Please specify the Tender Submission Deadline on Step 2 first.');
+                document.getElementById('input_submission_deadline').focus();
+                return;
             }
+            goToStep(3);
         }
 
         function step3BackAction() {
@@ -772,109 +638,7 @@
         }
 
         function step4BackAction() {
-            if (currentTenderType === 'epad') {
-                goToStep(1);
-            } else {
-                goToStep(3);
-            }
-        }
-
-        function syncEpadDates() {
-            const closing = document.getElementById('input_closing_date').value;
-            if (closing) {
-                const deadlineInput = document.getElementById('input_submission_deadline');
-                if (deadlineInput) deadlineInput.value = closing;
-            }
-        }
-
-        function syncEpadBudget() {
-            const epadBudget = document.getElementById('input_budget_epad').value;
-            const mainBudget = document.getElementById('input_budget');
-            if (epadBudget && mainBudget) {
-                mainBudget.value = epadBudget;
-                calculateBidSecurityFromBudget();
-            }
-        }
-
-        function goToStep(step) {
-            // Validate required fields on earlier steps
-            if (step > 1) {
-                const title = document.getElementById('input_title').value.trim();
-                const dept = document.getElementById('input_department_id').value;
-                if (!title || !dept) {
-                    alert('Please enter Tender Title and select a Department on Step 1 first.');
-                    return;
-                }
-            }
-
-            if (currentTenderType === 'epad') {
-                const closing = document.getElementById('input_closing_date').value;
-                if (step > 1 && !closing) {
-                    alert('Please enter EPAD 2.0 Closing Date & Time on Step 1 first.');
-                    return;
-                }
-                syncEpadDates();
-                syncEpadBudget();
-                // In EPAD mode, only Step 1 and Step 4 (Scope & Publish) exist
-                if (step === 2 || step === 3) {
-                    step = 4;
-                }
-            } else {
-                if (step > 2) {
-                    const deadline = document.getElementById('input_submission_deadline').value;
-                    if (!deadline) {
-                        alert('Please specify the Submission Deadline on Step 2 first.');
-                        return;
-                    }
-                }
-            }
-
-            // Hide all steps
-            for (let i = 1; i <= 4; i++) {
-                const stepEl = document.getElementById('wizard_step_' + i);
-                if (stepEl) stepEl.classList.add('hidden');
-
-                // Traditional step indicators
-                const ind = document.getElementById('step_indicator_' + i);
-                const num = document.getElementById('step_num_' + i);
-                if (ind && num) {
-                    if (i < step) {
-                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-emerald-400 bg-emerald-50/50';
-                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-emerald-600 text-white shrink-0';
-                    } else if (i === step) {
-                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-orange-500 bg-orange-50/50 ring-2 ring-orange-200';
-                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-orange-600 text-white shrink-0';
-                    } else {
-                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40';
-                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0';
-                    }
-                }
-            }
-
-            // EPAD 2-step indicators
-            const epadInd1 = document.getElementById('epad_step_indicator_1');
-            const epadNum1 = document.getElementById('epad_step_num_1');
-            const epadInd2 = document.getElementById('epad_step_indicator_2');
-            const epadNum2 = document.getElementById('epad_step_num_2');
-
-            if (epadInd1 && epadNum1 && epadInd2 && epadNum2) {
-                if (step === 1) {
-                    epadInd1.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-rose-600 bg-rose-50/60 ring-2 ring-rose-200';
-                    epadNum1.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-rose-600 text-white shrink-0';
-                    epadInd2.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40';
-                    epadNum2.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0';
-                } else if (step === 4) {
-                    epadInd1.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-emerald-400 bg-emerald-50/50';
-                    epadNum1.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-emerald-600 text-white shrink-0';
-                    epadInd2.className = 'flex items-center gap-3 p-3 rounded-2xl border-2 transition-all text-left border-rose-600 bg-rose-50/60 ring-2 ring-rose-200';
-                    epadNum2.className = 'w-8 h-8 rounded-xl flex items-center justify-center text-xs font-black bg-rose-600 text-white shrink-0';
-                }
-            }
-
-            // Show active step
-            document.getElementById('wizard_step_' + step).classList.remove('hidden');
-            currentStep = step;
-            window.scrollTo({ top: 100, behavior: 'smooth' });
+            goToStep(3);
         }
 
         function nextStep(step) {
@@ -891,9 +655,9 @@
             const hint = document.getElementById('bid_opening_hint');
 
             if (type === 'single_stage_two_envelope') {
-                radioTwo.checked = true;
-                cardTwo.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200';
-                cardOne.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
+                if (radioTwo) radioTwo.checked = true;
+                if (cardTwo) cardTwo.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200';
+                if (cardOne) cardOne.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
                 
                 if (label) label.innerHTML = 'Stage 1: Technical Bid Opening Date & Time';
                 if (badge) {
@@ -902,9 +666,9 @@
                 }
                 if (hint) hint.innerText = 'Date and time when Envelope 1 (Technical) will be opened.';
             } else {
-                radioOne.checked = true;
-                cardOne.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200';
-                cardTwo.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
+                if (radioOne) radioOne.checked = true;
+                if (cardOne) cardOne.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200';
+                if (cardTwo) cardTwo.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
 
                 if (label) label.innerHTML = 'Tender / Bid Opening Date (Technical & Financial Bids)';
                 if (badge) {
@@ -920,14 +684,13 @@
             const pctVal = parseFloat(document.getElementById('bid_security_percentage').value) || 0;
             const securityInput = document.getElementById('bid_security_amount');
             
-            if (budgetVal > 0 && pctVal > 0) {
+            if (budgetVal > 0 && pctVal > 0 && securityInput) {
                 const computed = (budgetVal * (pctVal / 100));
                 securityInput.value = computed.toFixed(2);
             }
         }
 
         function toggleTenderFeeFields() {
-            const checkbox = document.getElementById('checkbox_tender_fee_paid');
             // Can be used to highlight paid state
         }
 
@@ -940,13 +703,8 @@
                 selectProcedure('single_stage_one_envelope');
             }
 
-            // Initialize procurement type (Tender vs EPAD 2.0)
-            const radioEpad = document.getElementById('type_epad');
-            if (radioEpad && radioEpad.checked) {
-                selectTenderType('epad');
-            } else {
-                selectTenderType('tender');
-            }
+            // Start on Step 1
+            goToStep(1);
         });
     </script>
 </x-app-layout>

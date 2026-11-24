@@ -118,7 +118,7 @@
                     <div>
                         <span class="text-[10px] font-black uppercase tracking-wider text-sky-700">Total Dispatched Bills</span>
                         <div class="text-xl sm:text-2xl font-black text-sky-900 mt-0.5">{{ number_format($stats['dispatched_count']) }}</div>
-                        <span class="text-[11px] font-medium text-sky-600">Delivered to Dept</span>
+                        <span class="text-[11px] font-medium text-sky-600">Delivered to Department</span>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 border border-sky-200 flex items-center justify-center font-black text-sm shrink-0">
                         🚚

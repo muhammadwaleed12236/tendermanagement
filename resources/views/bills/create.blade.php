@@ -200,7 +200,7 @@
     </div>
 
     <!-- BILL STATUS -->
-    <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+    <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-3">
         <span class="text-[11px] font-bold text-slate-700 uppercase">
             Bill Status:
         </span>
@@ -257,7 +257,7 @@
                     <!-- Head Details Inputs (Code & Description - Auto-Synced with dropdown, editable) -->
                     <div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head of Account<span class="text-slate-400 font-normal">(e.g. A03806)</span></label>
+                            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Head of Account <span class="text-slate-400 font-normal">(e.g. A03806)</span></label>
                             <input type="text" name="head_code" id="head_code" value="{{ old('head_code', 'A03970') }}" placeholder="e.g. A03806" class="w-full text-xs font-mono font-bold rounded-lg border-slate-300 focus:border-indigo-500 py-2 bg-white">
                         </div>
                         <div class="sm:col-span-1 lg:col-span-2">
