@@ -40,65 +40,247 @@
     <div class="py-6 font-sans">
         <div class="max-w-full px-4 sm:px-6 lg:px-8 space-y-6">
 
-            <!-- Circular Ring KPI Metric Cards (Printable & Screen) -->
-            <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
-                <!-- 1. Total Won Work Orders Value -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-emerald-700">Awarded Work Order Value</div>
-                        <div class="text-xl sm:text-2xl font-black text-emerald-950 mt-0.5">PKR {{ number_format($totalWonValue) }}</div>
-                        <div class="text-[11px] text-stone-500">{{ $wonTenders->count() }} Tenders Awarded</div>
+            <!-- Exactly 10 Summary KPI Cards in 3D System (5 Relocated from Tender Details + 5 Redesigned Management Cards) -->
+            <div class="space-y-4">
+                <!-- ROW 1: The 5 Cards Relocated from Tender Details -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
+                    <!-- 1. Total Tenders (Electric Blue 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-blue">
+                            <div class="stat-candy-icon candy-icon-blue">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Total Tenders</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">All Tenders</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="100% Listed">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#dbeafe" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-xs font-black font-mono text-[#0056d2]">100%</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-emerald-500 flex items-center justify-center shrink-0">
-                        <span class="text-xs font-black text-emerald-700">WON</span>
+
+                    <!-- 2. Cancel Tenders (Amber 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-amber">
+                            <div class="stat-candy-icon candy-icon-amber">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Cancel Tenders</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($cancelledCount ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Cancelled / Closed</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $cancelledPct }}% Cancelled">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#fef3c7" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d97706" stroke-width="3.5" 
+                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $cancelledPct / 100) }}" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-xs font-black font-mono text-[#d97706]">{{ $cancelledPct }}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. In Progress (Navy 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-navy">
+                            <div class="stat-candy-icon candy-icon-navy">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full" style="color: #2B2D4B !important;">In Progress</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-xl sm:text-2xl font-black stat-card-value" style="color: #2B2D4B !important;">{{ str_pad($inProgressCount, 2, '0', STR_PAD_LEFT) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Bids open / eval</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $inProgressPct }}% In Progress">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#e2e4ee" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#2B2D4B" stroke-width="3.5" 
+                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $inProgressPct / 100) }}" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-xs font-black font-mono text-[#2B2D4B]">{{ $inProgressPct }}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Awarded (Emerald Green 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-green">
+                            <div class="stat-candy-icon candy-icon-green">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Awarded</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Awarded</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $wonPct }}% Awarded">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $wonPct / 100) }}" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $wonPct }}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. Not Awarded (Maroon 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-maroon">
+                            <div class="stat-candy-icon candy-icon-maroon">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Not Awarded</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Not Awarded</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $lostPct }}% Not Awarded">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#881337" stroke-width="3.5" 
+                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $lostPct / 100) }}" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $lostPct }}%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 2. Total Budget Volume -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-stone-600">Total Awarded Work Order Value</div>
-                        <div class="text-xl sm:text-2xl font-black text-stone-900 mt-0.5">PKR {{ number_format($totalBudget) }}</div>
-                        <div class="text-[11px] text-stone-500">All {{ $totalCount }} tenders listed</div>
+                <!-- ROW 2: The 5 Redesigned Financial/Award Management Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
+                    <!-- 6. Awarded Work Order Value (Emerald Green 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-green">
+                            <div class="stat-candy-icon candy-icon-green">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Awarded Value</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-base sm:text-lg font-black text-emerald-950 truncate">PKR {{ number_format($totalWonValue) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">{{ $wonTenders->count() }} Tenders Awarded</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $wonPct }}% Awarded Rate">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $wonPct / 100) }}" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-[11px] font-black font-mono text-[#0d9467]">WON</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-stone-300 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    </div>
-                </div>
 
-                <!-- 3. Total Tender Fees Paid -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-orange-700">Total Tender Fees Paid</div>
-                        <div class="text-xl sm:text-2xl font-black text-orange-950 mt-0.5">PKR {{ number_format($totalTenderFeesPaid) }}</div>
-                        <div class="text-[11px] text-stone-500">Paid from Bank / Cash</div>
+                    <!-- 7. Total Awarded Work Order Value / Total Budget (Purple 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-purple">
+                            <div class="stat-candy-icon candy-icon-purple">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Total Budget Value</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-base sm:text-lg font-black text-indigo-950 truncate">PKR {{ number_format($totalBudget) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">All {{ $totalCount }} tenders listed</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="100% Volume">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ede9fe" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#6366f1" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-[11px] font-black font-mono text-[#6366f1]">VOL</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-orange-500 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                    </div>
-                </div>
 
-                <!-- 4. Active Bid Security (CDR Locked) -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-blue-700">Total Active Bid Security</div>
-                        <div class="text-xl sm:text-2xl font-black text-blue-950 mt-0.5">PKR {{ number_format($totalBidSecuritySubmitted) }}</div>
-                        <div class="text-[11px] text-stone-500">Locked in CDRs / Pay Orders</div>
+                    <!-- 8. Total Tender Fees Paid (Orange 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-orange">
+                            <div class="stat-candy-icon candy-icon-orange">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Tender Fees Paid</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-base sm:text-lg font-black text-orange-950 truncate">PKR {{ number_format($totalTenderFeesPaid) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Paid from Bank / Cash</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Fees Paid">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ffedd5" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ea580c" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-[11px] font-black font-mono text-[#ea580c]">FEE</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-blue-500 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                    </div>
-                </div>
 
-                <!-- 5. Released Bid Security / Docs Complete -->
-                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center justify-between col-span-2 lg:col-span-1">
-                    <div>
-                        <div class="text-[10px] font-black uppercase tracking-wider text-teal-700">Pending Award Documents Status</div>
-                        <div class="text-xl sm:text-2xl font-black text-teal-950 mt-0.5">{{ $docsCompletedCount }} / {{ $wonTenders->count() }}</div>
-                        <div class="text-[11px] text-stone-500">LOI & Work Order Verified</div>
+                    <!-- 9. Total Active Bid Security (Cyan 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-cyan">
+                            <div class="stat-candy-icon candy-icon-cyan">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate" style="color: #0284c7 !important;">Active Bid Security</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-base sm:text-lg font-black text-sky-950 truncate">PKR {{ number_format($totalBidSecuritySubmitted) }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Locked in CDRs</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Active CDR Security">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#e0f2fe" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-[11px] font-black font-mono text-[#0284c7]">CDR</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="w-12 h-12 rounded-full border-4 border-teal-500 flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+
+                    <!-- 10. Pending Award Documents Status (Rose/Teal 3D Theme) -->
+                    <div class="stat-card-3d-wrap group">
+                        <div class="stat-card-3d stat-card-green">
+                            <div class="stat-candy-icon candy-icon-green">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            </div>
+                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Award Documents</span>
+                                <div class="w-full flex justify-center my-0.5">
+                                    <span class="text-base sm:text-lg font-black text-emerald-950 truncate">{{ $docsCompletedCount }} / {{ $wonTenders->count() }}</span>
+                                </div>
+                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">LOI & Work Order</div>
+                            </div>
+                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $docsCompletedPct }}% Docs Verified">
+                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
+                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
+                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $docsCompletedPct / 100) }}" stroke-linecap="round" />
+                                </svg>
+                                <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $docsCompletedPct }}%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

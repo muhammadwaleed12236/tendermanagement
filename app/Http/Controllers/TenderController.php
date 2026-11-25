@@ -78,11 +78,22 @@ class TenderController extends Controller
             $q->where('status', 'active')->orWhereNull('status');
         })->orderBy('company_name')->get();
 
-        // Metric Counters (Scoped to standard tenders so ePads remains separate)
+        // Metric Counters (Relocated from Create Tender to Tender Details)
         $paperTenders = Tender::where(function ($q) {
             $q->where('tender_type', 'tender')->orWhereNull('tender_type');
         });
-        $totalCount = (clone $paperTenders)->count();
+        $totalTenderCreated = (clone $paperTenders)->count();
+        $totalActiveTender = (clone $paperTenders)->where('status', '!=', 'cancelled')->where(function ($q) {
+            $q->whereNull('submission_deadline')->orWhere('submission_deadline', '>=', now());
+        })->count();
+        $totalInterested = (clone $paperTenders)->where('interest_status', 'interested')->count();
+        $totalNotInterested = (clone $paperTenders)->where('interest_status', 'not_interested')->count();
+
+        $activePct = $totalTenderCreated > 0 ? min(100, round(($totalActiveTender / $totalTenderCreated) * 100)) : 0;
+        $interestedPct = $totalTenderCreated > 0 ? min(100, round(($totalInterested / $totalTenderCreated) * 100)) : 0;
+        $notInterestedPct = $totalTenderCreated > 0 ? min(100, round(($totalNotInterested / $totalTenderCreated) * 100)) : 0;
+
+        $totalCount = $totalTenderCreated;
         $inProgressCount = (clone $paperTenders)->where('tender_outcome', 'in_progress')->count();
         $wonCount = (clone $paperTenders)->where(function ($q) {
             $q->where('tender_outcome', 'won')->orWhere('status', 'awarded');
@@ -102,6 +113,13 @@ class TenderController extends Controller
             'categories',
             'departments',
             'companies',
+            'totalTenderCreated',
+            'totalActiveTender',
+            'totalInterested',
+            'totalNotInterested',
+            'activePct',
+            'interestedPct',
+            'notInterestedPct',
             'totalCount',
             'inProgressCount',
             'wonCount',
@@ -281,20 +299,47 @@ class TenderController extends Controller
             $query->whereDate('submission_deadline', '<=', $request->date_to);
         }
 
+        // Only interested/completed tenders enter the Tender Management workflow
+        $query->where(function ($q) {
+            $q->where('interest_status', '!=', 'not_interested')
+              ->orWhereNull('interest_status');
+        })->where(function ($q) {
+            $q->where('is_fully_processed', true)
+              ->orWhere('tender_outcome', 'won')
+              ->orWhere('status', 'awarded')
+              ->orWhere(function ($sub) {
+                  $sub->where('initial_entry_only', false)->orWhereNull('initial_entry_only');
+              });
+        });
+
         $allTenders = (clone $query)->get();
         $tenders = $query->latest('submission_deadline')->paginate(25)->withQueryString();
 
-        // Metrics for summary cards
+        // 10 Summary Cards for Tender Management
+        // Row 1: The 5 Cards Relocated from Tender Details
         $totalCount = $allTenders->count();
-        $totalBudget = $allTenders->sum('budget');
+        $inProgressCount = $allTenders->where('tender_outcome', 'in_progress')->count();
         $wonTenders = $allTenders->filter(fn($t) => $t->isWon());
+        $wonCount = $wonTenders->count();
+        $lostCount = $allTenders->filter(fn($t) => $t->isLost())->count();
+        $cancelledCount = $allTenders->filter(fn($t) => $t->status === 'cancelled' || $t->tender_outcome === 'cancelled')->count();
+
+        // Row 2: The 5 Redesigned Financial/Award Cards
         $totalWonValue = $wonTenders->sum(function ($t) {
             return $t->awarded_amount ?: $t->budget;
         });
+        $totalBudget = $allTenders->sum('budget');
         $totalTenderFeesPaid = $allTenders->where('is_tender_fee_paid', true)->sum('tender_fee_amount');
         $totalBidSecuritySubmitted = $allTenders->where('bid_security_status', 'submitted')->sum('bid_security_amount');
         $totalBidSecurityReleased = $allTenders->where('bid_security_status', 'released_returned')->sum('bid_security_amount');
         $docsCompletedCount = $wonTenders->filter(fn($t) => $t->isDocumentsCompleted())->count();
+
+        // Percentages for Gauges
+        $inProgressPct = $totalCount > 0 ? min(100, round(($inProgressCount / $totalCount) * 100)) : 0;
+        $wonPct = $totalCount > 0 ? min(100, round(($wonCount / $totalCount) * 100)) : 0;
+        $lostPct = $totalCount > 0 ? min(100, round(($lostCount / $totalCount) * 100)) : 0;
+        $cancelledPct = $totalCount > 0 ? min(100, round(($cancelledCount / $totalCount) * 100)) : 0;
+        $docsCompletedPct = $wonCount > 0 ? min(100, round(($docsCompletedCount / $wonCount) * 100)) : 0;
 
         $departments = Department::where('status', 'active')->orderBy('name')->get();
         $companies = Company::where(function ($q) {
@@ -311,13 +356,22 @@ class TenderController extends Controller
             'tenders',
             'allTenders',
             'totalCount',
-            'totalBudget',
+            'inProgressCount',
+            'wonCount',
+            'lostCount',
+            'cancelledCount',
             'totalWonValue',
+            'totalBudget',
             'totalTenderFeesPaid',
             'totalBidSecuritySubmitted',
             'totalBidSecurityReleased',
             'wonTenders',
             'docsCompletedCount',
+            'inProgressPct',
+            'wonPct',
+            'lostPct',
+            'cancelledPct',
+            'docsCompletedPct',
             'departments',
             'companies',
             'bankAccounts'
@@ -335,31 +389,9 @@ class TenderController extends Controller
             $q->where('status', 'active')->orWhereNull('status');
         })->orderBy('company_name')->get();
 
-        if (BankAccount::count() === 0) {
-            (new \Database\Seeders\FinanceSeeder())->run();
-        }
-        $bankAccounts = BankAccount::where(function ($q) {
-            $q->where('status', 'active')->orWhereNull('status');
-        })->orderBy('bank_name')->get();
-
-        // 04 Summary KPI Boxes for Create Tender
-        $totalTenderCreated = Tender::count();
-        $totalActiveTender = Tender::where('status', '!=', 'cancelled')->where(function ($q) {
-            $q->whereNull('submission_deadline')->orWhere('submission_deadline', '>=', now());
-        })->count();
-        $totalInterested = Tender::where(function ($q) {
-            $q->where('interest_status', 'interested')->orWhereNull('interest_status');
-        })->count();
-        $totalNotInterested = Tender::where('interest_status', 'not_interested')->count();
-
         return view('tenders.create', compact(
             'departments',
-            'companies',
-            'bankAccounts',
-            'totalTenderCreated',
-            'totalActiveTender',
-            'totalInterested',
-            'totalNotInterested'
+            'companies'
         ));
     }
 
@@ -562,35 +594,155 @@ class TenderController extends Controller
             'requirements' => $validated['requirements'] ?? null,
             'document_path' => $docPath,
             'status' => 'published',
-            'interest_status' => $validated['interest_status'] ?? 'interested',
+            'interest_status' => 'pending',
             'contact_person' => $validated['contact_person'] ?? null,
-            'is_fully_processed' => !$request->boolean('initial_entry_only', false),
-            'initial_entry_only' => $request->boolean('initial_entry_only', false),
+            'is_fully_processed' => false,
+            'initial_entry_only' => true,
             'created_by' => Auth::id(),
         ]);
 
         ActivityLog::record(
             'create',
             'Tender',
-            "Published tender '{$tender->tender_no}' with procedure '{$tender->procedure_label}'",
+            "Created tender '{$tender->tender_no}' with procedure '{$tender->procedure_label}'",
             $tender,
             [
                 'bidding_procedure' => $tender->bidding_procedure,
                 'submission_deadline' => $tender->submission_deadline,
                 'department_id' => $tender->department_id,
-                'is_tender_fee_paid' => $tender->is_tender_fee_paid,
-                'bid_security_amount' => $tender->bid_security_amount,
-                'interest_status' => $tender->interest_status,
             ]
         );
 
         \App\Services\NotificationService::tenderCreated($tender);
 
-        $msg = $request->boolean('initial_entry_only', false)
-            ? "Tender entry saved successfully! (Interest: " . ($tender->isInterested() ? 'Interested' : 'Not Interested') . ") | Tender No: {$tenderNo}"
-            : "Tender published successfully! Reference No: {$referenceNo} | Tender No: {$tenderNo}";
+        return redirect()->route('tenders.index')->with('success', "Tender '{$tenderNo}' created successfully! Please decide your bidding interest below.");
+    }
 
-        return redirect()->route('tenders.index')->with('success', $msg);
+    /**
+     * Bidding Preparation Stage: Step 2 Form (Document Fee & Bid Security)
+     */
+    public function biddingPrep(Tender $tender)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Auto mark as interested if not already
+        if ($tender->interest_status !== 'interested') {
+            $tender->update(['interest_status' => 'interested']);
+        }
+
+        if (BankAccount::count() === 0) {
+            (new \Database\Seeders\FinanceSeeder())->run();
+        }
+        $bankAccounts = BankAccount::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('bank_name')->get();
+
+        return view('tenders.bidding_prep', compact('tender', 'bankAccounts'));
+    }
+
+    /**
+     * Save Bidding Preparation (Step 2) & Move to Tender Management Workflow
+     */
+    public function saveBiddingPrep(Request $request, Tender $tender)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $validated = $request->validate([
+            'tender_fee_amount' => 'nullable|numeric|min:0',
+            'is_tender_fee_paid' => 'nullable|boolean',
+            'tender_fee_bank_account_id' => 'nullable|exists:bank_accounts,id',
+            'tender_fee_payment_mode' => 'nullable|string|max:50',
+            'tender_fee_ref_no' => 'nullable|string|max:255',
+            'tender_fee_date' => 'nullable|date',
+            'tender_fee_receipt' => 'nullable|file|mimes:pdf,docx,jpg,png|max:10240',
+            // Bid Security
+            'bid_security_amount' => 'nullable|numeric|min:0',
+            'bid_security_percentage' => 'nullable|numeric|min:0|max:100',
+            'bid_security_type' => 'nullable|string|max:50',
+            'bid_security_bank_account_id' => 'nullable|exists:bank_accounts,id',
+            'bid_security_instrument_no' => 'nullable|string|max:255',
+            'bid_security_date' => 'nullable|date',
+            'bid_security_expiry_date' => 'nullable|date',
+            'bid_security_status' => 'nullable|string|max:50',
+            'bid_security_scan' => 'nullable|file|mimes:pdf,docx,jpg,png|max:10240',
+        ]);
+
+        $tenderFeeReceipt = $tender->tender_fee_receipt_file;
+        if ($request->hasFile('tender_fee_receipt')) {
+            $tenderFeeReceipt = $request->file('tender_fee_receipt')->store('tender_documents', 'public');
+        }
+
+        $bidSecurityFile = $tender->bid_security_file;
+        if ($request->hasFile('bid_security_scan')) {
+            $bidSecurityFile = $request->file('bid_security_scan')->store('tender_documents', 'public');
+        }
+
+        $isTenderFeePaid = $request->boolean('is_tender_fee_paid');
+
+        $tender->update([
+            'tender_fee_amount' => $validated['tender_fee_amount'] ?? null,
+            'is_tender_fee_paid' => $isTenderFeePaid,
+            'tender_fee_bank_account_id' => $validated['tender_fee_bank_account_id'] ?? null,
+            'tender_fee_payment_mode' => $validated['tender_fee_payment_mode'] ?? ($isTenderFeePaid ? 'cash' : null),
+            'tender_fee_ref_no' => $validated['tender_fee_ref_no'] ?? null,
+            'tender_fee_date' => $validated['tender_fee_date'] ?? null,
+            'tender_fee_receipt_file' => $tenderFeeReceipt,
+            // Bid Security
+            'bid_security_amount' => $validated['bid_security_amount'] ?? null,
+            'bid_security_percentage' => $validated['bid_security_percentage'] ?? null,
+            'bid_security_type' => $validated['bid_security_type'] ?? 'pay_order',
+            'bid_security_bank_account_id' => $validated['bid_security_bank_account_id'] ?? null,
+            'bid_security_instrument_no' => $validated['bid_security_instrument_no'] ?? null,
+            'bid_security_date' => $validated['bid_security_date'] ?? null,
+            'bid_security_expiry_date' => $validated['bid_security_expiry_date'] ?? null,
+            'bid_security_status' => $validated['bid_security_status'] ?? 'submitted',
+            'bid_security_file' => $bidSecurityFile,
+            // Move into Tender Management
+            'interest_status' => 'interested',
+            'is_fully_processed' => true,
+            'tender_outcome' => 'in_progress',
+        ]);
+
+        ActivityLog::record(
+            'update',
+            'Tender',
+            "Completed bidding preparation for tender '{$tender->effective_tender_no}'",
+            $tender
+        );
+
+        return redirect()->route('tenders.reports')->with('success', "Bidding preparation completed! Tender '{$tender->effective_tender_no}' has entered Tender Management.");
+    }
+
+    /**
+     * Update Interested / Not Interested Decision from Tender Details
+     */
+    public function updateInterestStatus(Request $request, Tender $tender)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $status = $request->input('status');
+        if (!in_array($status, ['interested', 'not_interested'])) {
+            return back()->withErrors(['status' => 'Invalid interest status.']);
+        }
+
+        if ($status === 'not_interested') {
+            $tender->update([
+                'interest_status' => 'not_interested',
+                'is_fully_processed' => false,
+            ]);
+            return redirect()->route('tenders.index')->with('success', "Tender '{$tender->effective_tender_no}' marked as Not Interested.");
+        } else {
+            $tender->update([
+                'interest_status' => 'interested',
+            ]);
+            return redirect()->route('tenders.bidding-prep', $tender)->with('info', "Interest recorded! Please complete Document Fee & Bid Security to enter Tender Management.");
+        }
     }
 
     public function show(Tender $tender)

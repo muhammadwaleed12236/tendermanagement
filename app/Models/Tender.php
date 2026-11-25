@@ -156,12 +156,17 @@ class Tender extends Model
 
     public function isInterested(): bool
     {
-        return ($this->interest_status ?? 'interested') === 'interested';
+        return $this->interest_status === 'interested';
     }
 
     public function isNotInterested(): bool
     {
         return $this->interest_status === 'not_interested';
+    }
+
+    public function isPendingInterest(): bool
+    {
+        return empty($this->interest_status) || $this->interest_status === 'pending';
     }
 
     public function isOpen(): bool

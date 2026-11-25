@@ -38,6 +38,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tenders/pipeline', [TenderController::class, 'pipeline'])->name('tenders.pipeline');
     Route::get('/tenders/create', [TenderController::class, 'create'])->name('tenders.create');
     Route::post('/tenders', [TenderController::class, 'store'])->name('tenders.store');
+    Route::get('/tenders/{tender}/bidding-prep', [TenderController::class, 'biddingPrep'])->name('tenders.bidding-prep');
+    Route::post('/tenders/{tender}/bidding-prep', [TenderController::class, 'saveBiddingPrep'])->name('tenders.bidding-prep.store');
+    Route::post('/tenders/{tender}/interest-status', [TenderController::class, 'updateInterestStatus'])->name('tenders.interest-status');
     Route::get('/tenders/{tender}/edit', [TenderController::class, 'edit'])->name('tenders.edit');
     Route::put('/tenders/{tender}', [TenderController::class, 'update'])->name('tenders.update');
     Route::post('/tenders/{tender}/stage-status', [TenderController::class, 'updateStageStatus'])->name('tenders.stage-status');
