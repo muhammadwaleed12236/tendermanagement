@@ -29,7 +29,7 @@
 
                 <a href="{{ route('tenders.reports') }}" class="px-4 py-2 text-xs font-bold bg-stone-900 hover:bg-stone-800 text-white rounded-full shadow-xs transition flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-orange-500 shrink-0"></span>
-                    <span>Tenders & Work Orders Report</span>
+                    <span>Tender & Contract Management</span>
                 </a>
 
                 @if(Auth::check() && Auth::user()->isAdmin())

@@ -24,7 +24,7 @@
             <div class="flex items-center gap-2">
                 <a href="{{ route('tenders.reports') }}" class="px-4 py-2 text-xs font-bold bg-stone-900 hover:bg-stone-800 text-white rounded-full shadow-xs transition flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-orange-500 shrink-0"></span>
-                    <span>Tenders & Work Orders Report</span>
+                    <span>Tender & Contract Management</span>
                 </a>
 
                 @if(Auth::check() && Auth::user()->isAdmin())
@@ -65,23 +65,24 @@
                 $inProgressPct = $totalCount > 0 ? min(100, round(($inProgressCount / $totalCount) * 100)) : 0;
                 $wonPct = $totalCount > 0 ? min(100, round(($wonCount / $totalCount) * 100)) : 0;
                 $lostPct = $totalCount > 0 ? min(100, round(($lostCount / $totalCount) * 100)) : 0;
+                $cancelledPct = $totalCount > 0 ? min(100, round((($cancelledCount ?? 0) / $totalCount) * 100)) : 0;
                 $twoEnvPct = $totalCount > 0 ? min(100, round(($twoEnvelopeCount / $totalCount) * 100)) : 0;
             @endphp
 
-            <!-- Circular Ring 3D KPI Metric Cards (4 Cards) -->
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+            <!-- Circular Ring 3D KPI Metric Cards (5 Cards) -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
                 <!-- 1. Total Tenders (Electric Blue 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-blue">
                         <div class="stat-candy-icon candy-icon-blue">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
-                            <span class="stat-card-label text-left">Total Tenders</span>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full">Total Tenders</span>
                             <div class="w-full flex justify-center my-0.5">
                                 <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">All Tenders</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">All Tenders</div>
                         </div>
                         <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="100% Registered">
                             <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
@@ -93,18 +94,42 @@
                     </div>
                 </div>
 
-                <!-- 2. In Progress (Navy #2B2D4B Theme - White Background, #2B2D4B Border/Icon/Text) -->
+                <!-- 2. Cancel Tenders (Amber 3D Theme) -->
+                <div class="stat-card-3d-wrap group">
+                    <div class="stat-card-3d stat-card-amber">
+                        <div class="stat-candy-icon candy-icon-amber">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                        </div>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full">Cancel Tenders</span>
+                            <div class="w-full flex justify-center my-0.5">
+                                <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($cancelledCount ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Cancelled / Closed</div>
+                        </div>
+                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $cancelledPct }}% Cancelled">
+                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#fef3c7" stroke-width="3.5" />
+                                <circle cx="20" cy="20" r="16" fill="none" stroke="#d97706" stroke-width="3.5" 
+                                        stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $cancelledPct / 100) }}" stroke-linecap="round" />
+                            </svg>
+                            <span class="absolute text-sm font-black font-mono text-[#d97706]">{{ $cancelledPct }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. In Progress (Navy #2B2D4B Theme - White Background, #2B2D4B Border/Icon/Text) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-navy">
                         <div class="stat-candy-icon candy-icon-navy">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
-                            <span class="stat-card-label text-left" style="color: #2B2D4B !important;">In Progress</span>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full" style="color: #2B2D4B !important;">In Progress</span>
                             <div class="w-full flex justify-center my-0.5">
                                 <span class="text-xl sm:text-2xl font-black stat-card-value" style="color: #2B2D4B !important;">{{ str_pad($inProgressCount, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">Bids open / eval</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Bids open / eval</div>
                         </div>
                         <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $inProgressPct }}% In Progress">
                             <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
@@ -117,18 +142,18 @@
                     </div>
                 </div>
 
-                <!-- 3. Awarded (Emerald Green 3D Theme) -->
+                <!-- 4. Awarded (Emerald Green 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-green">
                         <div class="stat-candy-icon candy-icon-green">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
-                            <span class="stat-card-label text-left">Awarded</span>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full">Awarded</span>
                             <div class="w-full flex justify-center my-0.5">
                                 <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">Awarded</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Awarded</div>
                         </div>
                         <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $wonPct }}% Awarded">
                             <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
@@ -141,18 +166,18 @@
                     </div>
                 </div>
 
-                <!-- 4. Not Awarded (Maroon 3D Theme) -->
+                <!-- 5. Not Awarded (Maroon 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-maroon">
                         <div class="stat-candy-icon candy-icon-maroon">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
-                        <div class="min-w-0 flex-1 flex flex-col justify-center text-left">
-                            <span class="stat-card-label text-left">Not Awarded</span>
+                        <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
+                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full">Not Awarded</span>
                             <div class="w-full flex justify-center my-0.5">
                                 <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
-                            <div class="text-[11px] text-slate-500 font-medium truncate text-left">Not Awarded</div>
+                            <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Not Awarded</div>
                         </div>
                         <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $lostPct }}% Not Awarded">
                             <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
@@ -177,17 +202,7 @@
                                class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
                     </div>
 
-                    <!-- Tender Mode Filter -->
-                    <div>
-                        <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Procurement Mode</label>
-                        <select name="tender_type" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
-                            <option value="">All Modes</option>
-                            <option value="tender" {{ request('tender_type') === 'tender' ? 'selected' : '' }}>Traditional Tender ({{ $tenderTypeCount ?? 0 }})</option>
-                            <option value="epad" {{ request('tender_type') === 'epad' ? 'selected' : '' }}>EPAD 2.0 ({{ $epadCount ?? 0 }})</option>
-                        </select>
-                    </div>
-
-                    <!-- Bidding Procedure Filter -->
+                    <!-- 2. Bidding Procedure Filter (Moved to Position 2) -->
                     <div>
                         <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Bidding Procedure</label>
                         <select name="bidding_procedure" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
@@ -197,7 +212,7 @@
                         </select>
                     </div>
 
-                    <!-- Department -->
+                    <!-- 3. Department Filter (Moved to Position 3) -->
                     <div>
                         <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Department</label>
                         <select name="department_id" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
@@ -210,12 +225,19 @@
                         </select>
                     </div>
 
-                    <!-- Action Buttons -->
+                    <!-- 4. Tender / Bid Opening Date Filter (New Field in Position 4) -->
+                    <div>
+                        <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Tender / Bid Opening Date</label>
+                        <input type="date" name="opening_date" value="{{ request('opening_date') }}" 
+                               class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
+                    </div>
+
+                    <!-- 5. Action Buttons -->
                     <div class="flex items-end gap-2">
                         <button type="submit" class="flex-1 py-2 px-4 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-full transition flex items-center justify-center gap-2 shadow-xs">
                             <span>Filter</span>
                         </button>
-                        <a href="{{ route('tenders.index') }}" class="py-2 px-4 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold rounded-full transition flex items-center justify-center">
+                        <a href="{{ route('tenders.index') }}" class="py-2 px-4 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-full transition flex items-center justify-center shadow-xs">
                             Reset
                         </a>
                     </div>
@@ -227,16 +249,18 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
-                            <tr class="bg-stone-100/80 text-stone-800 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider">
+                            <tr class="bg-stone-100/80 text-stone-800 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider text-center">
                                 <th class="py-3 px-3 text-center w-12 border-r border-[#e5ded4]">S. No.</th>
-                                <th class="py-3 px-3.5 min-w-[160px] border-r border-[#e5ded4]">Department Name</th>
-                                <th class="py-3 px-4 min-w-[280px] border-r border-[#e5ded4]">Tender Description</th>
-                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Tender No.</th>
-                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Bidding Procedure</th>
-                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Tender Submission<br><span class="text-[10px] font-semibold text-stone-500">Date/Time</span></th>
-                                <th class="py-3 px-3 min-w-[180px] border-r border-[#e5ded4]">Tender / Bid Opening Date<br><span class="text-[10px] font-semibold text-stone-500">(Technical & Financial)</span></th>
+                                <th class="py-3 px-3.5 min-w-[150px] border-r border-[#e5ded4] text-center">Vendor Name</th>
+                                <th class="py-3 px-3.5 min-w-[160px] border-r border-[#e5ded4] text-center">Department Name</th>
+                                <th class="py-3 px-4 min-w-[280px] border-r border-[#e5ded4] text-center">Tender Description</th>
+                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4] text-center">Tender No.</th>
+                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4] text-center">Bidding Procedure</th>
+                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4] text-center">Tender Submission<br><span class="text-[10px] font-semibold text-stone-500">Date/Time</span></th>
+                                <th class="py-3 px-3 min-w-[180px] border-r border-[#e5ded4] text-center">Tender / Bid Opening Date<br><span class="text-[10px] font-semibold text-stone-500">(Technical & Financial)</span></th>
                                 <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4] text-center">Status</th>
-                                <th class="py-3 px-3 text-center min-w-[90px]">Action</th>
+                                <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4] text-center">Interest Status</th>
+                                <th class="py-3 px-3 text-center min-w-[120px]">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#e5ded4] text-stone-800">
@@ -247,8 +271,24 @@
                                         {{ str_pad($tenders->firstItem() + $index, 2, '0', STR_PAD_LEFT) }}
                                     </td>
 
-                                    <!-- 2. Department Name -->
-                                    <td class="py-3 px-3.5 border-r border-[#e5ded4]">
+                                    <!-- 2. Vendor Name (Dedicated Column before Department Name) -->
+                                    <td class="py-3 px-3.5 border-r border-[#e5ded4] text-left">
+                                        @if($tender->company)
+                                            <div class="font-bold text-stone-900 leading-snug">
+                                                {{ $tender->company->company_name ?: $tender->company->name }}
+                                            </div>
+                                            @if($tender->company->city || $tender->company->strn_number)
+                                                <span class="text-[10px] text-stone-400 font-medium">
+                                                    {{ $tender->company->city ?: 'Verified Vendor' }}
+                                                </span>
+                                            @endif
+                                        @else
+                                            <span class="text-stone-400 text-xs font-semibold">-</span>
+                                        @endif
+                                    </td>
+
+                                    <!-- 3. Department Name (Left-Aligned) -->
+                                    <td class="py-3 px-3.5 border-r border-[#e5ded4] text-left">
                                         <div class="font-bold text-stone-900 leading-snug">
                                             {{ $tender->department ? $tender->department->name : '-' }}
                                         </div>
@@ -259,24 +299,20 @@
                                         @endif
                                     </td>
 
-                                    <!-- 3. Tender Description -->
-                                    <td class="py-3 px-4 border-r border-[#e5ded4]">
+                                    <!-- 4. Tender Description (Left-Aligned, Vendor tag moved to its own column) -->
+                                    <td class="py-3 px-4 border-r border-[#e5ded4] text-left">
                                         <a href="{{ route('tenders.show', $tender) }}" class="font-bold text-stone-900 hover:text-orange-700 transition leading-snug block">
                                             {{ $tender->title }}
                                         </a>
-                                        @if($tender->company)
-                                            <div class="mt-1">
-                                                <span class="text-[10px] font-bold text-orange-800 bg-orange-100/70 px-1.5 py-0.5 rounded">
-                                                    {{ $tender->company->company_name ?: $tender->company->name }}
-                                                </span>
-                                            </div>
+                                        @if(!empty($tender->description) && $tender->description !== $tender->title)
+                                            <div class="text-[11px] text-stone-500 line-clamp-1 mt-0.5">{{ $tender->description }}</div>
                                         @endif
                                     </td>
 
-                                    <!-- 4. Tender No. -->
-                                    <td class="py-3 px-3 font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
-                                        {{ $tender->effective_tender_no }}
-                                        <div class="mt-0.5">
+                                    <!-- 4. Tender No. (Center-Aligned) -->
+                                    <td class="py-3 px-3 font-mono font-bold text-stone-900 border-r border-[#e5ded4] text-center">
+                                        <div>{{ $tender->effective_tender_no }}</div>
+                                        <div class="mt-0.5 flex justify-center">
                                             @if($tender->isEpad())
                                                 <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-200">
                                                     EPAD 2.0
@@ -289,14 +325,16 @@
                                         </div>
                                     </td>
 
-                                    <!-- 5. Bidding Procedure -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
+                                    <!-- 5. Bidding Procedure (Center-Aligned) -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-center">
                                         @if($tender->isTwoEnvelope())
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-orange-100 text-orange-900 border border-orange-200">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>
-                                                Single Stage 2E
-                                            </span>
-                                            <div class="text-[10px] font-bold mt-1 text-stone-500">
+                                            <div class="flex justify-center">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-orange-100 text-orange-900 border border-orange-200">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>
+                                                    Single Stage 2E
+                                                </span>
+                                            </div>
+                                            <div class="text-[10px] font-bold mt-1 text-stone-500 text-center">
                                                 @if($tender->current_stage === 'stage_1')
                                                     Current: <span class="text-orange-700">Stage 1 (Technical)</span>
                                                 @elseif($tender->current_stage === 'stage_2')
@@ -306,15 +344,17 @@
                                                 @endif
                                             </div>
                                         @else
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-stone-100 text-stone-800 border border-stone-200">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-stone-600"></span>
-                                                Single Stage 1E
-                                            </span>
+                                            <div class="flex justify-center">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-stone-100 text-stone-800 border border-stone-200">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-stone-600"></span>
+                                                    Single Stage 1E
+                                                </span>
+                                            </div>
                                         @endif
                                     </td>
 
-                                    <!-- 6. Tender Submission Date/Time -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
+                                    <!-- 6. Tender Submission Date/Time (Center-Aligned) -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-center">
                                         @if($tender->isEpad())
                                             <div class="font-black text-rose-950">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }}</div>
                                             <div class="text-[10px] font-bold text-rose-700">
@@ -328,14 +368,14 @@
                                         @endif
                                     </td>
 
-                                    <!-- 7. Tender / Bid Opening Date -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
+                                    <!-- 7. Tender / Bid Opening Date (Center-Aligned) -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-center">
                                         @if($tender->isEpad())
                                             <div class="font-bold text-stone-900">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }}</div>
                                             <div class="text-[10px] font-semibold text-rose-700">Digital Auto-Open</div>
                                         @elseif($tender->isTwoEnvelope())
                                             <!-- Technical Opening Date -->
-                                            <div class="text-[11px]">
+                                            <div class="text-[11px] text-center">
                                                 <span class="text-stone-500 font-bold">Tech:</span>
                                                 @if($tender->technical_opening_date || $tender->opening_date)
                                                     <span class="font-bold text-stone-900">
@@ -347,7 +387,7 @@
                                             </div>
 
                                             <!-- Financial Opening Date -->
-                                            <div class="text-[11px] mt-0.5">
+                                            <div class="text-[11px] mt-0.5 text-center">
                                                 <span class="text-stone-500 font-bold">Fin:</span>
                                                 @if($tender->financial_opening_date)
                                                     <span class="font-bold text-emerald-800 bg-emerald-50 px-1 py-0.5 rounded">
@@ -371,15 +411,17 @@
                                         @endif
                                     </td>
 
-                                    <!-- 8. Status -->
+                                    <!-- 8. Status (Center-Aligned, "Awarded") -->
                                     <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
                                         @if($tender->isWon())
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                                                <svg class="w-3 h-3 text-emerald-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                                WON / Awarded
-                                            </span>
+                                            <div class="flex justify-center">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
+                                                    <svg class="w-3 h-3 text-emerald-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                                    Awarded
+                                                </span>
+                                            </div>
                                             <!-- Documents Status Indicator -->
-                                            <div class="mt-1">
+                                            <div class="mt-1 flex justify-center">
                                                 @if($tender->isDocumentsCompleted())
                                                     <span class="inline-flex items-center gap-1 text-[10px] font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200" title="Both LOI & Award Letter submitted">
                                                         <span>Docs: Complete</span>
@@ -393,21 +435,53 @@
                                                 @endif
                                             </div>
                                         @elseif($tender->isLost())
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-rose-100 text-rose-900 border border-rose-300">
-                                                <svg class="w-3 h-3 text-rose-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                                LOST
-                                            </span>
+                                            <div class="flex justify-center">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-rose-100 text-rose-900 border border-rose-300">
+                                                    <svg class="w-3 h-3 text-rose-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                    Not Awarded
+                                                </span>
+                                            </div>
                                         @else
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-blue-100 text-blue-900 border border-blue-200">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
-                                                In Progress
-                                            </span>
+                                            <div class="flex justify-center">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-blue-100 text-blue-900 border border-blue-200">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+                                                    In Progress
+                                                </span>
+                                            </div>
                                         @endif
                                     </td>
 
-                                    <!-- 9. Action -->
+                                    <!-- 9. Interest Status -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-center">
+                                        @if($tender->isInterested())
+                                            <div class="flex justify-center">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-2xs">
+                                                    <svg class="w-3 h-3 text-emerald-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                                    Interested
+                                                </span>
+                                            </div>
+                                        @else
+                                            <div class="flex justify-center">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-extrabold bg-stone-100 text-stone-600 border border-stone-200">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>
+                                                    Not Interested
+                                                </span>
+                                            </div>
+                                        @endif
+                                    </td>
+
+                                    <!-- 10. Action -->
                                     <td class="py-3 px-3 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
+                                            @if($tender->isInterested() && !$tender->isWon() && !$tender->isLost())
+                                                <a href="{{ route('tenders.show', $tender) }}" 
+                                                   class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-extrabold text-[10.5px] shadow-2xs transition" 
+                                                   title="Continue Bidding & Procurement Process">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                                    <span>Process</span>
+                                                </a>
+                                            @endif
+
                                             <a href="{{ route('tenders.show', $tender) }}" 
                                                class="p-1.5 text-stone-600 hover:text-orange-700 hover:bg-stone-100 rounded-lg transition" title="View Tender & Manage Stages">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -423,7 +497,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="9" class="py-12 text-center text-stone-500">
+                                    <td colspan="11" class="py-12 text-center text-stone-500">
                                         <div class="flex flex-col items-center justify-center">
                                             <div class="w-12 h-12 rounded-full bg-stone-100 flex items-center justify-center text-stone-400 mb-2">
                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>

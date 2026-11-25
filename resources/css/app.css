@@ -223,12 +223,12 @@
 /* Stat Labels */
 .stat-card-label {
     font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-    font-size: 0.78rem !important;
+    font-size: 0.875rem !important;
     font-weight: 900;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     display: block;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.2rem;
 }
 .stat-card-blue .stat-card-label { color: #0056d2 !important; }
 .stat-card-green .stat-card-label { color: #059669 !important; }

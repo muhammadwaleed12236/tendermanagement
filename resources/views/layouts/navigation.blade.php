@@ -461,69 +461,50 @@
                                  x-transition:leave="transition ease-in duration-120"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
-                                 class="absolute left-0 mt-2 w-[520px] sm:w-[550px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-2xl shadow-slate-900/15 p-3.5 z-50 nav-dropdown-enter"
-                                 style="display: none; width: 540px; min-width: 500px; max-width: calc(100vw - 2rem);">
+                                 class="absolute left-0 mt-2 w-[320px] sm:w-[350px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-blue-300 shadow-2xl shadow-blue-900/15 p-3.5 z-50 nav-dropdown-enter"
+                                 style="display: none; width: 340px;">
                                 
-                                <div class="grid grid-cols-2 mega-dropdown-grid divide-x divide-slate-100 gap-x-2">
-                                    <!-- Column 1: Tenders Register & Creation -->
-                                    <div class="pr-2 space-y-1 mega-dropdown-col">
-                                        <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0056d2] border-b border-blue-50 flex items-center gap-1.5">
-                                            <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                                            <span>Tenders Operations</span>
-                                        </div>
-
-                                        <a href="{{ route('tenders.index') }}" @click="open = false" 
-                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.index') && request('tender_type') !== 'epad' ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
-                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Tenders Management</div>
-                                                <div class="text-[11px] font-medium text-slate-500 truncate">Directory of all standard tenders</div>
-                                            </div>
-                                        </a>
-
-                                        <a href="{{ route('tenders.create') }}" @click="open = false" 
-                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.create') && request('type') !== 'epad' ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
-                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">+ Create Tender</div>
-                                                <div class="text-[11px] font-medium text-slate-500 truncate">1E / 2E procedure workflow</div>
-                                            </div>
-                                        </a>
+                                <div class="space-y-1">
+                                    <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0056d2] border-b border-blue-100 flex items-center gap-1.5">
+                                        <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                        <span>Tenders Operations</span>
                                     </div>
 
-                                    <!-- Column 2: Reports & Pipelines -->
-                                    <div class="pl-2 space-y-1 mega-dropdown-col">
-                                        <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#0d9467] border-b border-emerald-50 flex items-center gap-1.5">
-                                            <svg class="w-3.5 h-3.5 text-[#0d9467]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                                            <span>Reports & Securities</span>
+                                    <!-- 1. Create Tender -->
+                                    <a href="{{ route('tenders.create') }}" @click="open = false" 
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.create') && request('type') !== 'epad' ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
+                                        <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                                         </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">+ Create Tender</div>
+                                            <div class="text-[11px] font-medium text-slate-500 truncate">Entry & publishing wizard</div>
+                                        </div>
+                                    </a>
 
-                                        <a href="{{ route('tenders.reports') }}" @click="open = false" 
-                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.reports') ? 'bg-emerald-50 text-[#0d9467] font-black' : 'text-slate-700 hover:text-[#0d9467]' }}">
-                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0d9467] truncate">Tenders & Work Orders</div>
-                                                <div class="text-[11px] font-medium text-slate-500 truncate">Won contracts, CDR security & fees</div>
-                                            </div>
-                                        </a>
+                                    <!-- 2. Tender Details -->
+                                    <a href="{{ route('tenders.index') }}" @click="open = false" 
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.index') && request('tender_type') !== 'epad' ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
+                                        <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Tender Details</div>
+                                            <div class="text-[11px] font-medium text-slate-500 truncate">Directory of all standard tenders</div>
+                                        </div>
+                                    </a>
 
-                                        <a href="{{ route('tenders.pipeline') }}" @click="open = false" 
-                                           class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.pipeline') ? 'bg-blue-50 text-[#0056d2] font-black' : 'text-slate-700 hover:text-[#0056d2]' }}">
-                                            <div class="item-icon-box w-8 h-8 rounded-lg bg-blue-100 text-[#0056d2] border-b-2 border-blue-300 flex items-center justify-center shrink-0 shadow-2xs">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0056d2] truncate">Active Bidding Pipeline</div>
-                                                <div class="text-[11px] font-medium text-slate-500 truncate">Upcoming opening dates & status</div>
-                                            </div>
-                                        </a>
-                                    </div>
+                                    <!-- 3. Tenders Management -->
+                                    <a href="{{ route('tenders.reports') }}" @click="open = false" 
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.reports') ? 'bg-emerald-50 text-[#0d9467] font-black' : 'text-slate-700 hover:text-[#0d9467]' }}">
+                                        <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0d9467] truncate">Tenders Management</div>
+                                            <div class="text-[11px] font-medium text-slate-500 truncate">Won contracts, CDR security & fees</div>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -554,6 +535,21 @@
                                         <span>EPADS 2.0 E-Procurement</span>
                                     </div>
 
+                                    <!-- 1. + Create EPADS 2.0 -->
+                                    <a href="{{ route('epads.create') }}" @click="open = false" 
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.create') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
+                                        <div class="item-icon-box w-8 h-8 rounded-lg bg-rose-100 text-[#881337] border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#881337] flex items-center gap-1.5 truncate">
+                                                <span>+ Create EPADS 2.0</span>
+                                            </div>
+                                            <div class="text-[11px] font-medium text-slate-500 truncate">Quick e-procurement creation</div>
+                                        </div>
+                                    </a>
+
+                                    <!-- 2. EPADS 2.0 Directory -->
                                     <a href="{{ route('epads.index') }}" @click="open = false" 
                                        class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.index') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
                                         <div class="item-icon-box w-8 h-8 rounded-lg bg-rose-100 text-[#881337] border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs">
@@ -565,19 +561,7 @@
                                         </div>
                                     </a>
 
-                                    <a href="{{ route('epads.create') }}" @click="open = false" 
-                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.create') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
-                                        <div class="item-icon-box w-8 h-8 rounded-lg bg-rose-100 text-[#881337] border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                                        </div>
-                                        <div class="flex-1 min-w-0">
-                                            <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#881337] flex items-center gap-1.5 truncate">
-                                                <span>+ Create ePads</span>
-                                            </div>
-                                            <div class="text-[11px] font-medium text-slate-500 truncate">Quick e-procurement creation</div>
-                                        </div>
-                                    </a>
-
+                                    <!-- 3. EPAD Reports & Awards -->
                                     <a href="{{ route('epads.reports') }}" @click="open = false" 
                                        class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.reports') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
                                         <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
@@ -838,7 +822,7 @@
                                             </div>
                                         </a>
 
-                                        <!-- Tenders & Work Orders -->
+                                        <!-- Tender & Contract Management -->
                                         <a href="{{ route('tenders.reports') }}" @click="open = false" 
                                            class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('tenders.reports') ? 'bg-emerald-50 text-[#0d9467] font-black' : 'text-slate-700 hover:text-[#0d9467]' }}">
                                             <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
@@ -846,8 +830,8 @@
                                             </div>
                                             <div class="flex-1 min-w-0">
                                                 <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#0d9467] flex items-center gap-1.5 truncate">
-                                                    <span>Tenders & Work Orders</span>
-                                                    <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-emerald-100 text-[#0d9467] border border-emerald-200">Audit</span>
+                                                    <span>Tender & Contract Management</span>
+                                                    <span class="text-[9px] font-black uppercase px-1.5 py-0.2 rounded bg-emerald-100 text-[#0d9467] border border-emerald-200">Contracts</span>
                                                 </div>
                                                 <div class="text-[11px] font-medium text-slate-500 truncate">Won contracts, CDR security & fees</div>
                                             </div>
@@ -1097,32 +1081,29 @@
                 <!-- Tenders Management Section -->
                 <div class="space-y-1">
                     <div class="px-3 text-[10px] font-black uppercase tracking-wider text-slate-400">Tenders Management</div>
-                    <a href="{{ route('tenders.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
-                        <span>Tenders Register (Directory)</span>
-                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-slate-200 text-slate-700">1E / 2E</span>
-                    </a>
-                    <a href="{{ route('tenders.pipeline') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
-                        <span>Active Bidding Pipeline</span>
-                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-blue-100 text-blue-800">Pipeline</span>
-                    </a>
                     <a href="{{ route('tenders.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>+ Create Tender</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-blue-100 text-blue-800">Wizard</span>
+                    </a>
+                    <a href="{{ route('tenders.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                        <span>Tender Details</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-slate-200 text-slate-700">Directory</span>
                     </a>
                     <a href="{{ route('tenders.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
-                        <span>Tenders & Work Orders Report</span>
-                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Audit</span>
+                        <span>Tenders Management</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Contracts</span>
                     </a>
                 </div>
 
                 <!-- EPADS 2.0 Section (Independent) -->
                 <div class="space-y-1">
                     <div class="px-3 text-[10px] font-black uppercase tracking-wider text-rose-800">EPADS 2.0</div>
+                    <a href="{{ route('epads.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
+                        <span>+ Create EPADS 2.0</span>
+                    </a>
                     <a href="{{ route('epads.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
                         <span>EPADS 2.0 Directory</span>
                         <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-rose-100 text-rose-900 border border-rose-200">EPAD</span>
-                    </a>
-                    <a href="{{ route('epads.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
-                        <span>+ Create ePads</span>
                     </a>
                     <a href="{{ route('epads.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
                         <span>EPAD Reports & Awards</span>
@@ -1179,8 +1160,8 @@
                         <span>Daily Billing Report</span>
                     </a>
                     <a href="{{ route('tenders.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
-                        <span>Tenders & Work Orders Report</span>
-                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Audit</span>
+                        <span>Tender & Contract Management</span>
+                        <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Contracts</span>
                     </a>
                     <a href="{{ route('releases.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100">
                         <span>Budget & Releases Report</span>

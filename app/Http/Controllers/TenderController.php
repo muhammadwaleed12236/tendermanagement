@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Tender;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class TenderController extends Controller
@@ -39,6 +40,15 @@ class TenderController extends Controller
 
         if ($request->filled('department_id')) {
             $query->where('department_id', $request->department_id);
+        }
+
+        if ($request->filled('opening_date')) {
+            $openingDate = $request->opening_date;
+            $query->where(function ($q) use ($openingDate) {
+                $q->whereDate('opening_date', $openingDate)
+                  ->orWhereDate('technical_opening_date', $openingDate)
+                  ->orWhereDate('financial_opening_date', $openingDate);
+            });
         }
 
         if ($request->filled('company_id')) {
@@ -80,6 +90,9 @@ class TenderController extends Controller
         $lostCount = (clone $paperTenders)->where(function ($q) {
             $q->where('tender_outcome', 'lost')->orWhere('stage_1_status', 'disqualified');
         })->count();
+        $cancelledCount = (clone $paperTenders)->where(function ($q) {
+            $q->where('status', 'cancelled')->orWhere('tender_outcome', 'cancelled');
+        })->count();
         $twoEnvelopeCount = (clone $paperTenders)->where('bidding_procedure', 'single_stage_two_envelope')->count();
         $epadCount = Tender::where('tender_type', 'epad')->count();
         $tenderTypeCount = $totalCount;
@@ -93,6 +106,7 @@ class TenderController extends Controller
             'inProgressCount',
             'wonCount',
             'lostCount',
+            'cancelledCount',
             'twoEnvelopeCount',
             'epadCount',
             'tenderTypeCount'
@@ -119,6 +133,15 @@ class TenderController extends Controller
 
         if ($request->filled('department_id')) {
             $query->where('department_id', $request->department_id);
+        }
+
+        if ($request->filled('opening_date')) {
+            $openingDate = $request->opening_date;
+            $query->where(function ($q) use ($openingDate) {
+                $q->whereDate('opening_date', $openingDate)
+                  ->orWhereDate('technical_opening_date', $openingDate)
+                  ->orWhereDate('financial_opening_date', $openingDate);
+            });
         }
 
         if ($request->filled('bidding_procedure')) {
@@ -209,6 +232,15 @@ class TenderController extends Controller
 
         if ($request->filled('department_id')) {
             $query->where('department_id', $request->department_id);
+        }
+
+        if ($request->filled('opening_date')) {
+            $openingDate = $request->opening_date;
+            $query->where(function ($q) use ($openingDate) {
+                $q->whereDate('opening_date', $openingDate)
+                  ->orWhereDate('technical_opening_date', $openingDate)
+                  ->orWhereDate('financial_opening_date', $openingDate);
+            });
         }
 
         if ($request->filled('company_id')) {
@@ -310,7 +342,25 @@ class TenderController extends Controller
             $q->where('status', 'active')->orWhereNull('status');
         })->orderBy('bank_name')->get();
 
-        return view('tenders.create', compact('departments', 'companies', 'bankAccounts'));
+        // 04 Summary KPI Boxes for Create Tender
+        $totalTenderCreated = Tender::count();
+        $totalActiveTender = Tender::where('status', '!=', 'cancelled')->where(function ($q) {
+            $q->whereNull('submission_deadline')->orWhere('submission_deadline', '>=', now());
+        })->count();
+        $totalInterested = Tender::where(function ($q) {
+            $q->where('interest_status', 'interested')->orWhereNull('interest_status');
+        })->count();
+        $totalNotInterested = Tender::where('interest_status', 'not_interested')->count();
+
+        return view('tenders.create', compact(
+            'departments',
+            'companies',
+            'bankAccounts',
+            'totalTenderCreated',
+            'totalActiveTender',
+            'totalInterested',
+            'totalNotInterested'
+        ));
     }
 
     public function store(Request $request)
@@ -329,6 +379,9 @@ class TenderController extends Controller
             'company_id' => 'nullable|exists:companies,id',
             'category' => 'nullable|string|max:100',
             'budget' => 'nullable|numeric|min:0',
+            'interest_status' => 'nullable|string|in:interested,not_interested',
+            'contact_person' => 'nullable|string|max:255',
+            'initial_entry_only' => 'nullable|boolean',
             // Tender Fee
             'tender_fee_amount' => 'nullable|numeric|min:0',
             'is_tender_fee_paid' => 'nullable|boolean',
@@ -509,6 +562,10 @@ class TenderController extends Controller
             'requirements' => $validated['requirements'] ?? null,
             'document_path' => $docPath,
             'status' => 'published',
+            'interest_status' => $validated['interest_status'] ?? 'interested',
+            'contact_person' => $validated['contact_person'] ?? null,
+            'is_fully_processed' => !$request->boolean('initial_entry_only', false),
+            'initial_entry_only' => $request->boolean('initial_entry_only', false),
             'created_by' => Auth::id(),
         ]);
 
@@ -523,12 +580,17 @@ class TenderController extends Controller
                 'department_id' => $tender->department_id,
                 'is_tender_fee_paid' => $tender->is_tender_fee_paid,
                 'bid_security_amount' => $tender->bid_security_amount,
+                'interest_status' => $tender->interest_status,
             ]
         );
 
         \App\Services\NotificationService::tenderCreated($tender);
 
-        return redirect()->route('tenders.index')->with('success', "Tender published successfully! Reference No: {$referenceNo} | Tender No: {$tenderNo}");
+        $msg = $request->boolean('initial_entry_only', false)
+            ? "Tender entry saved successfully! (Interest: " . ($tender->isInterested() ? 'Interested' : 'Not Interested') . ") | Tender No: {$tenderNo}"
+            : "Tender published successfully! Reference No: {$referenceNo} | Tender No: {$tenderNo}";
+
+        return redirect()->route('tenders.index')->with('success', $msg);
     }
 
     public function show(Tender $tender)
@@ -548,6 +610,20 @@ class TenderController extends Controller
         })->orderBy('bank_name')->get();
 
         return view('tenders.show', compact('tender', 'userBid', 'bankAccounts'));
+    }
+
+    public function downloadDocument(Tender $tender)
+    {
+        $tender->load(['creator', 'department', 'company', 'tenderFeeBankAccount', 'bidSecurityBankAccount']);
+
+        if ($tender->document_path && Storage::disk('public')->exists($tender->document_path)) {
+            $extension = pathinfo($tender->document_path, PATHINFO_EXTENSION) ?: 'pdf';
+            $fileName = Str::slug($tender->effective_tender_no ?: $tender->title) . '-rfp.' . $extension;
+            return Storage::disk('public')->download($tender->document_path, $fileName);
+        }
+
+        // Render official tender RFP dossier view
+        return view('tenders.dossier', compact('tender'));
     }
 
     public function edit(Tender $tender)
@@ -587,6 +663,9 @@ class TenderController extends Controller
             'company_id' => 'nullable|exists:companies,id',
             'category' => 'nullable|string|max:100',
             'budget' => 'nullable|numeric|min:0',
+            'interest_status' => 'nullable|string|in:interested,not_interested',
+            'contact_person' => 'nullable|string|max:255',
+            'initial_entry_only' => 'nullable|boolean',
             // Tender Fee
             'tender_fee_amount' => 'nullable|numeric|min:0',
             'is_tender_fee_paid' => 'nullable|boolean',

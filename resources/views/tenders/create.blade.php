@@ -23,7 +23,7 @@
             <div class="flex items-center gap-2">
                 <a href="{{ route('tenders.reports') }}" class="px-3.5 py-2 text-xs font-bold bg-white hover:bg-stone-50 text-stone-700 border border-[#e5ded4] rounded-xl shadow-xs transition flex items-center gap-1.5">
                     <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                    <span>Tenders & Work Orders Report</span>
+                    <span>Tender & Contract Management</span>
                 </a>
             </div>
         </div>
@@ -32,16 +32,75 @@
     <div class="py-6 font-sans">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
-            <!-- WIZARD STEPPERS HEADER (4 Steps) -->
+            <!-- 04 SUMMARY KPI METRIC BOXES -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-4">
+                <!-- 1. Total Tender Created -->
+                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0 border border-blue-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div class="min-w-0">
+                        <span class="block text-[11px] font-black uppercase tracking-wider text-stone-500">Total Tender Created</span>
+                        <div class="text-xl sm:text-2xl font-black text-stone-900 mt-0.5 leading-none">
+                            {{ str_pad($totalTenderCreated ?? 0, 2, '0', STR_PAD_LEFT) }}
+                        </div>
+                        <span class="text-[10px] text-stone-400 font-semibold truncate block mt-0.5">All tenders logged</span>
+                    </div>
+                </div>
+
+                <!-- 2. Total Active Tender -->
+                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-sky-100 text-[#0056d2] flex items-center justify-center shrink-0 border border-sky-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="min-w-0">
+                        <span class="block text-[11px] font-black uppercase tracking-wider text-stone-500">Total Active Tender</span>
+                        <div class="text-xl sm:text-2xl font-black text-stone-900 mt-0.5 leading-none">
+                            {{ str_pad($totalActiveTender ?? 0, 2, '0', STR_PAD_LEFT) }}
+                        </div>
+                        <span class="text-[10px] text-sky-600 font-semibold truncate block mt-0.5">Bidding open</span>
+                    </div>
+                </div>
+
+                <!-- 3. Total Tender Interested -->
+                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="min-w-0">
+                        <span class="block text-[11px] font-black uppercase tracking-wider text-stone-500">Total Tender Interested</span>
+                        <div class="text-xl sm:text-2xl font-black text-emerald-800 mt-0.5 leading-none">
+                            {{ str_pad($totalInterested ?? 0, 2, '0', STR_PAD_LEFT) }}
+                        </div>
+                        <span class="text-[10px] text-emerald-600 font-semibold truncate block mt-0.5">Ready to bid</span>
+                    </div>
+                </div>
+
+                <!-- 4. Total Tender Not Interested -->
+                <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 shadow-xs flex items-center gap-3.5">
+                    <div class="w-11 h-11 rounded-2xl bg-stone-100 text-stone-600 flex items-center justify-center shrink-0 border border-stone-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                    </div>
+                    <div class="min-w-0">
+                        <span class="block text-[11px] font-black uppercase tracking-wider text-stone-500">Total Not Interested</span>
+                        <div class="text-xl sm:text-2xl font-black text-stone-700 mt-0.5 leading-none">
+                            {{ str_pad($totalNotInterested ?? 0, 2, '0', STR_PAD_LEFT) }}
+                        </div>
+                        <span class="text-[10px] text-stone-400 font-semibold truncate block mt-0.5">Skipped / Archived</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIZARD STEPPERS HEADER (3 Steps) -->
             <div class="bg-white rounded-3xl border border-[#e5ded4] p-4 sm:p-5 shadow-xs">
-                <div id="tender_stepper_row" class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+                <div id="tender_stepper_row" class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
                     <!-- Step 1 Indicator -->
                     <button type="button" onclick="goToStep(1)" id="step_indicator_1" 
                             class="flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-orange-500 bg-orange-50/50">
                         <span id="step_num_1" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-orange-600 text-white shrink-0">1</span>
                         <div class="min-w-0">
                             <div id="step_tag_1" class="text-[10px] font-extrabold uppercase tracking-wider text-orange-900">Step 1</div>
-                            <div id="step_title_1" class="text-xs font-black text-stone-900 truncate">Basic & Procedure</div>
+                            <div id="step_title_1" class="text-xs font-black text-stone-900 truncate">Create Tender (Initial Entry)</div>
                         </div>
                     </button>
 
@@ -51,7 +110,7 @@
                         <span id="step_num_2" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">2</span>
                         <div class="min-w-0">
                             <div id="step_tag_2" class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 2</div>
-                            <div id="step_title_2" class="text-xs font-black text-stone-700 truncate">Dates & Schedule</div>
+                            <div id="step_title_2" class="text-xs font-black text-stone-700 truncate">Document Fee & Bid Security</div>
                         </div>
                     </button>
 
@@ -61,17 +120,7 @@
                         <span id="step_num_3" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">3</span>
                         <div class="min-w-0">
                             <div id="step_tag_3" class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 3</div>
-                            <div id="step_title_3" class="text-xs font-black text-stone-700 truncate">Document Fee & Bid Security</div>
-                        </div>
-                    </button>
-
-                    <!-- Step 4 Indicator -->
-                    <button type="button" onclick="goToStep(4)" id="step_indicator_4" 
-                            class="flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40">
-                        <span id="step_num_4" class="w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0">4</span>
-                        <div class="min-w-0">
-<div id="step_tag_4" class="text-[10px] font-extrabold uppercase tracking-wider text-stone-500">Step 4</div>
-                            <div id="step_title_4" class="text-xs font-black text-stone-700 truncate">Scope & Requirements</div>
+                            <div id="step_title_3" class="text-xs font-black text-stone-700 truncate">Scope & Requirements</div>
                         </div>
                     </button>
                 </div>
@@ -94,18 +143,18 @@
                     @csrf
 
                     <!-- ============================================================= -->
-                    <!-- STEP 1: BASIC INFORMATION & BIDDING PROCEDURE                 -->
+                    <!-- STEP 1: CREATE TENDER (INITIAL ENTRY & DATES MERGED)          -->
                     <!-- ============================================================= -->
-                    <div id="wizard_step_1" class="space-y-4">
+                    <div id="wizard_step_1" class="space-y-5">
                         <div class="flex items-center justify-between border-b border-[#e5ded4] pb-2.5">
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
-                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 1: Bidding Procedure & Basic Information</h3>
+                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 1: Create Tender (Initial Entry & Schedule)</h3>
                             </div>
-                            <span class="text-[11px] font-bold text-stone-500">Page 1 of 4</span>
+                            <span class="text-[11px] font-bold text-stone-500">Page 1 of 3</span>
                         </div>
 
-                        <!-- 1. Ultra-Compact Single Row Toolbar: Mode & Procedure -->
+                        <!-- 1. Toolbar: Mode & Procedure -->
                         <div class="p-2 sm:p-2.5 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] shadow-xs">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 items-center">
                                 <!-- Mode Selector (Tender Paper Only) -->
@@ -145,17 +194,8 @@
                             </div>
                         </div>
 
-                        <!-- 2. Tender No & Department -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-bold text-stone-700 mb-1">
-                                    Tender No. / Official Reference Code
-                                </label>
-                                <input type="text" name="tender_no" id="input_tender_no" value="{{ old('tender_no') }}" 
-                                       placeholder="e.g. P&DD/GOS/TD/001/2025-26 (or auto-generated)" 
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
-                            </div>
-
+                        <!-- 2. Tender # & Department Name -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">
                                     Procuring Department / Agency <span class="text-rose-500">*</span>
@@ -169,9 +209,18 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">
+                                    Tender # / Official Reference Code
+                                </label>
+                                <input type="text" name="tender_no" id="input_tender_no" value="{{ old('tender_no') }}" 
+                                       placeholder="e.g. P&DD/GOS/TD/001/2025-26 (or auto-generated)" 
+                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
+                            </div>
                         </div>
 
-                        <!-- 3. Title / Description -->
+                        <!-- 3. Tender Description -->
                         <div>
                             <label class="block text-xs font-bold text-stone-700 mb-1">
                                 Tender Description / Scope of Work <span class="text-rose-500">*</span>
@@ -180,7 +229,77 @@
                                       class="w-full text-sm font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">{{ old('title') }}</textarea>
                         </div>
 
-                        <!-- 4. Dynamic Fields: Company & Category -->
+                        <!-- 4. Estimated Budget (PKR) & Contact Person (Optional) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">
+                                    Estimated Budget (PKR)
+                                </label>
+                                <input type="number" step="0.01" name="budget" id="input_budget" value="{{ old('budget') }}" 
+                                       placeholder="e.g. 12500000" oninput="calculateBidSecurityFromBudget()"
+                                       class="w-full text-xs font-bold text-emerald-800 rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 mb-1">
+                                    Contact Person (Name, Designation or Phone Number) <span class="text-stone-400 font-normal">(Optional)</span>
+                                </label>
+                                <input type="text" name="contact_person" id="input_contact_person" value="{{ old('contact_person') }}" 
+                                       placeholder="e.g. Engr. Tariq (XEN) - 0300-1234567" 
+                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
+                            </div>
+                        </div>
+
+                        <!-- 5. Merged Schedule Dates: Submission Date & Bid Opening Date -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4]">
+                            <div>
+                                <label class="block text-xs font-black text-stone-800 mb-1">
+                                    Tender Submission Date & Time <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="datetime-local" name="submission_deadline" id="input_submission_deadline" required value="{{ old('submission_deadline') }}"
+                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
+                                <p class="text-[10px] text-stone-500 mt-1">e.g. 27/08/2026 up to 11:30 AM</p>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-black text-stone-800 mb-1">
+                                    Tender / Bid Opening Date (Technical & Financial)
+                                </label>
+                                <input type="datetime-local" name="opening_date" id="input_opening_date" value="{{ old('opening_date') }}"
+                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
+                                <p class="text-[10px] text-stone-500 mt-1">e.g. 27/08/2026 at 12:00 PM</p>
+                            </div>
+                        </div>
+
+                        <!-- 6. Interest Status: Interested vs Not Interested -->
+                        <div class="p-4 rounded-2xl bg-amber-50/40 border border-amber-200">
+                            <span class="block text-xs font-black text-amber-950 uppercase tracking-wider mb-2">
+                                Bidding Intent / Interest Status:
+                            </span>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-3 p-3 rounded-xl border-2 border-emerald-300 bg-white cursor-pointer hover:bg-emerald-50/50 transition">
+                                    <input type="radio" name="interest_status" value="interested" checked class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                                    <div>
+                                        <div class="font-extrabold text-xs text-emerald-950 flex items-center gap-1.5">
+                                            <span>🟢 Interested (Plan to Bid)</span>
+                                        </div>
+                                        <div class="text-[10px] text-emerald-800">Tender marked as qualified for bidding; can be processed anytime.</div>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center gap-3 p-3 rounded-xl border-2 border-stone-200 bg-white cursor-pointer hover:bg-stone-50 transition">
+                                    <input type="radio" name="interest_status" value="not_interested" class="w-4 h-4 text-stone-600 focus:ring-stone-500">
+                                    <div>
+                                        <div class="font-extrabold text-xs text-stone-800 flex items-center gap-1.5">
+                                            <span>⚪ Not Interested (Do Not Bid)</span>
+                                        </div>
+                                        <div class="text-[10px] text-stone-500">Log reference only; will not participate in bidding.</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 7. Dynamic Fields: Bidding Firm & Category -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                             <div>
                                 <label class="block text-xs font-bold text-stone-700 mb-1">Our Bidding Firm</label>
@@ -194,8 +313,7 @@
                                 </select>
                             </div>
 
-                            <!-- Category Input -->
-                            <div id="tender_category_wrapper" class="sm:col-span-1 md:col-span-2">
+                            <div class="sm:col-span-1 md:col-span-2">
                                 <label class="block text-xs font-bold text-stone-700 mb-1">Category</label>
                                 <input type="text" name="category" id="input_category" value="{{ old('category', 'Audio-Video & IT Systems') }}" list="cat_list" 
                                        class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
@@ -208,14 +326,19 @@
                             </div>
                         </div>
 
-                        <!-- 5. Step 1 Actions: Next -->
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-[#e5ded4]">
-                            <div class="text-xs text-stone-500 font-semibold text-center sm:text-left">
-                                <span id="step1_hint_text">Fill required information before proceeding.</span>
+                        <!-- Step 1 Actions: Save Initial Entry OR Proceed to Step 2 -->
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#e5ded4]">
+                            <div>
+                                <button type="submit" name="initial_entry_only" value="1" 
+                                        class="px-5 py-2.5 bg-white border-2 border-stone-300 hover:bg-stone-50 hover:border-stone-400 text-stone-800 text-xs font-black rounded-xl shadow-xs transition flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                                    <span>💾 Save Initial Entry (Draft / Log)</span>
+                                </button>
                             </div>
+
                             <div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
-<button type="button" id="btn_step1_next" onclick="step1NextAction()" class="px-6 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
-                                    <span id="btn_step1_text">Proceed to Dates & Schedule</span>
+                                <button type="button" onclick="goToStep(2)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
+                                    <span>Proceed to Fees & Bid Security</span>
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                 </button>
                             </div>
@@ -223,97 +346,15 @@
                     </div>
 
                     <!-- ============================================================= -->
-                    <!-- STEP 2: KEY DATES & SUBMISSION SCHEDULE                       -->
+                    <!-- STEP 2: TENDER FEES & BID SECURITY / EARNEST MONEY            -->
                     <!-- ============================================================= -->
                     <div id="wizard_step_2" class="hidden space-y-6">
                         <div class="flex items-center justify-between border-b border-[#e5ded4] pb-3">
                             <div class="flex items-center gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 2: Tender Upload & Submission Schedule</h3>
-                            </div>
-                            <span class="text-[11px] font-bold text-stone-500">Page 2 of 4</span>
-                        </div>
-
-                        <!-- Single Tender Upload Date -->
-                        <div class="p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2">
-                            <div class="flex items-center justify-between">
-                                <label class="block text-xs font-black text-stone-800">
-                                    Tender Upload Date <span class="text-rose-500">*</span>
-                                </label>
-                                <span class="text-[10px] font-bold text-stone-500">Official Upload / Publishing Date</span>
-                            </div>
-                            <input type="date" name="upload_date" id="input_upload_date" value="{{ old('upload_date', old('collection_start_date', date('Y-m-d'))) }}" required
-                                   class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
-                            <input type="text" name="collection_start_notes" value="{{ old('collection_start_notes', 'Uploaded on portal / During working hours') }}" 
-                                   placeholder="Timing / publishing notes e.g. Uploaded on official portal"
-                                   class="w-full text-[11px] rounded-lg border-[#e5ded4] bg-white px-2.5 py-1.5 text-stone-700">
-                        </div>
-
-                        <!-- Submission & Opening Dates -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <label class="block text-xs font-black text-stone-800">
-                                        Tender Submission Deadline <span class="text-rose-500">*</span>
-                                    </label>
-                                    <span class="text-[10px] font-bold text-stone-500">Date & Time</span>
-                                </div>
-                                <input type="datetime-local" name="submission_deadline" id="input_submission_deadline" required value="{{ old('submission_deadline') }}"
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
-                                <p class="text-[11px] text-stone-500">e.g. 27/08/2025 up to 11:30 AM</p>
-                            </div>
-
-                            <div class="p-4 rounded-2xl bg-[#fcfaf7] border border-[#e5ded4] space-y-2" id="bid_opening_box">
-                                <div class="flex items-center justify-between">
-                                    <label class="block text-xs font-black text-stone-800" id="bid_opening_label">
-                                        Tender / Bid Opening Date (Technical & Financial)
-                                    </label>
-                                    <span class="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200" id="bid_opening_badge">
-                                        Joint Opening
-                                    </span>
-                                </div>
-                                <input type="datetime-local" name="opening_date" value="{{ old('opening_date') }}"
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500">
-                                <p class="text-[11px] text-stone-500" id="bid_opening_hint">e.g. 27/08/2025 at 12:00 PM</p>
-                            </div>
-                        </div>
-
-                        <!-- Step 2 Navigation Buttons -->
-                        <div class="flex items-center justify-between pt-4 border-t border-[#e5ded4]">
-                            <button type="button" onclick="goToStep(1)" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                                <span>Back to Step 1</span>
-                            </button>
-                            <button type="button" onclick="step2NextAction()" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
-                                <span>Proceed to Document Fee & Bid Security</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- ============================================================= -->
-                    <!-- STEP 3: TENDER FEES & BID SECURITY / EARNEST MONEY            -->
-                    <!-- ============================================================= -->
-                    <div id="wizard_step_3" class="hidden space-y-6">
-                        <div class="flex items-center justify-between border-b border-[#e5ded4] pb-3">
-                            <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 3: Tender Document Fee & Bid Security (CDR / Pay Order)</h3>
+                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 2: Tender Document Fee & Bid Security (CDR / Pay Order)</h3>
                             </div>
-                            <span class="text-[11px] font-bold text-stone-500">Page 3 of 4</span>
-                        </div>
-
-                        <!-- Overall Estimated Budget -->
-                        <div class="p-4 rounded-2xl bg-stone-50/70 border border-[#e5ded4] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div>
-                                <label class="block text-xs font-black text-stone-900">Total Estimated Tender Budget (PKR)</label>
-                                <p class="text-[11px] text-stone-500">Bid Security % can automatically compute from this amount.</p>
-                            </div>
-                            <div class="w-full sm:w-64">
-                                <input type="number" step="0.01" name="budget" id="input_budget" value="{{ old('budget') }}" 
-                                       placeholder="e.g. 12500000" oninput="calculateBidSecurityFromBudget()"
-                                       class="w-full text-sm font-black text-emerald-800 rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 text-right">
-                            </div>
+                            <span class="text-[11px] font-bold text-stone-500">Page 2 of 3</span>
                         </div>
 
                         <!-- SECTION A: TENDER DOCUMENT FEE -->
@@ -471,13 +512,13 @@
                             </div>
                         </div>
 
-                        <!-- Step 3 Navigation Buttons -->
+                        <!-- Step 2 Navigation Buttons -->
                         <div class="flex items-center justify-between pt-4 border-t border-[#e5ded4]">
-                            <button type="button" onclick="step3BackAction()" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
+                            <button type="button" onclick="goToStep(1)" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                                <span id="btn_step3_back_text">Back to Step 2</span>
+                                <span>Back to Step 1</span>
                             </button>
-<button type="button" onclick="goToStep(4)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
+                            <button type="button" onclick="goToStep(3)" class="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2">
                                 <span>Proceed to Scope & Technical Requirements</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                             </button>
@@ -485,15 +526,15 @@
                     </div>
 
                     <!-- ============================================================= -->
-                    <!-- STEP 4: SCOPE OF WORK & TECHNICAL REQUIREMENTS                -->
+                    <!-- STEP 3: SCOPE OF WORK & TECHNICAL REQUIREMENTS                -->
                     <!-- ============================================================= -->
-                    <div id="wizard_step_4" class="hidden space-y-6">
+                    <div id="wizard_step_3" class="hidden space-y-6">
                         <div class="flex items-center justify-between border-b border-[#e5ded4] pb-3">
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                                <h3 id="step4_header_title" class="font-black text-sm uppercase tracking-wider text-stone-900">Step 4: Scope of Work and Technical Requirements</h3>
+                                <h3 class="font-black text-sm uppercase tracking-wider text-stone-900">Step 3: Scope of Work, Technical Requirements & Dossier</h3>
                             </div>
-                            <span id="step4_page_tag" class="text-[11px] font-bold text-stone-500">Page 4 of 4</span>
+                            <span class="text-[11px] font-bold text-stone-500">Page 3 of 3</span>
                         </div>
 
                         <div>
@@ -518,15 +559,15 @@
                                    class="w-full text-xs text-stone-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-orange-50 file:text-orange-800 hover:file:bg-orange-100">
                         </div>
 
-                        <!-- Step 4 Navigation Buttons -->
+                        <!-- Step 3 Navigation Buttons -->
                         <div class="flex items-center justify-between pt-4 border-t border-[#e5ded4]">
-                            <button type="button" id="btn_step4_back" onclick="step4BackAction()" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
+                            <button type="button" onclick="goToStep(2)" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                                <span id="btn_step4_back_text">Back to Step 3</span>
+                                <span>Back to Step 2</span>
                             </button>
                             <button type="submit" class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black rounded-xl shadow-xs transition flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                                <span id="btn_publish_label">Save Tender Record</span>
+                                <span>Save & Publish Full Tender</span>
                             </button>
                         </div>
                     </div>
@@ -540,160 +581,99 @@
         let currentStep = 1;
 
         function goToStep(step) {
-            // Validate required fields on earlier steps when moving forward
+            // Validate required fields on Step 1 before proceeding
             if (step > 1) {
                 const title = document.getElementById('input_title').value.trim();
                 const dept = document.getElementById('input_department_id').value;
-                if (!title || !dept) {
-                    alert('Please enter Tender Title and select a Procuring Department on Step 1 first.');
+                const deadline = document.getElementById('input_submission_deadline').value;
+
+                if (!title || !dept || !deadline) {
+                    alert('Please enter Tender Description, select Procuring Department, and provide Submission Date on Step 1 first.');
                     goToStep(1);
                     return;
                 }
             }
 
-            if (step > 2) {
-                const deadline = document.getElementById('input_submission_deadline').value;
-                if (!deadline) {
-                    alert('Please specify the Submission Deadline on Step 2 first.');
-                    goToStep(2);
-                    return;
-                }
-            }
+            // Hide all steps
+            for (let i = 1; i <= 3; i++) {
+                const el = document.getElementById('wizard_step_' + i);
+                if (el) el.classList.add('hidden');
 
-            // Hide all 4 steps
-            for (let i = 1; i <= 4; i++) {
-                const stepEl = document.getElementById('wizard_step_' + i);
-                if (stepEl) {
-                    stepEl.classList.add('hidden');
-                }
-
-                // Stepper indicators
                 const ind = document.getElementById('step_indicator_' + i);
                 const num = document.getElementById('step_num_' + i);
                 const tag = document.getElementById('step_tag_' + i);
                 const title = document.getElementById('step_title_' + i);
 
-                if (ind && num) {
-                    if (i < step) {
-                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-emerald-400 bg-emerald-50/50';
-                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-emerald-600 text-white shrink-0';
-                        if (tag) tag.className = 'text-[10px] font-extrabold uppercase tracking-wider text-emerald-800';
-                        if (title) title.className = 'text-xs font-black text-emerald-950 truncate';
-                    } else if (i === step) {
-                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-orange-500 bg-orange-50/50 ring-2 ring-orange-200';
-                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-orange-600 text-white shrink-0';
-                        if (tag) tag.className = 'text-[10px] font-extrabold uppercase tracking-wider text-orange-900';
-                        if (title) title.className = 'text-xs font-black text-stone-900 truncate';
+                if (ind && num && tag && title) {
+                    if (i === step) {
+                        ind.className = "flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-orange-500 bg-orange-50/50";
+                        num.className = "w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-orange-600 text-white shrink-0";
+                        tag.className = "text-[10px] font-extrabold uppercase tracking-wider text-orange-900";
+                        title.className = "text-xs font-black text-stone-900 truncate";
+                    } else if (i < step) {
+                        ind.className = "flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-emerald-300 bg-emerald-50/30";
+                        num.className = "w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-emerald-600 text-white shrink-0";
+                        tag.className = "text-[10px] font-extrabold uppercase tracking-wider text-emerald-800";
+                        title.className = "text-xs font-black text-stone-800 truncate";
                     } else {
-                        ind.className = 'flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40';
-                        num.className = 'w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0';
-                        if (tag) tag.className = 'text-[10px] font-extrabold uppercase tracking-wider text-stone-500';
-                        if (title) title.className = 'text-xs font-black text-stone-700 truncate';
+                        ind.className = "flex items-center gap-2.5 p-2.5 rounded-2xl border-2 transition-all text-left border-[#e5ded4] bg-stone-50/40";
+                        num.className = "w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black bg-stone-200 text-stone-700 shrink-0";
+                        tag.className = "text-[10px] font-extrabold uppercase tracking-wider text-stone-500";
+                        title.className = "text-xs font-black text-stone-700 truncate";
                     }
                 }
             }
 
-            // Show active step
-            const activeStepEl = document.getElementById('wizard_step_' + step);
-            if (activeStepEl) {
-                activeStepEl.classList.remove('hidden');
+            // Show current step
+            const target = document.getElementById('wizard_step_' + step);
+            if (target) {
+                target.classList.remove('hidden');
             }
             currentStep = step;
-            window.scrollTo({ top: 100, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function step1NextAction() {
-            const title = document.getElementById('input_title').value.trim();
-            const dept = document.getElementById('input_department_id').value;
-            if (!title || !dept) {
-                alert('Please enter Tender Title and select a Procuring Department first.');
-                return;
-            }
-            goToStep(2);
-        }
+        function selectProcedure(proc) {
+            const card1 = document.getElementById('card_one_envelope');
+            const card2 = document.getElementById('card_two_envelope');
+            const rad1 = document.getElementById('proc_one');
+            const rad2 = document.getElementById('proc_two');
 
-        function step2NextAction() {
-            const deadline = document.getElementById('input_submission_deadline').value;
-            if (!deadline) {
-                alert('Please specify the Tender Submission Deadline on Step 2 first.');
-                document.getElementById('input_submission_deadline').focus();
-                return;
-            }
-            goToStep(3);
-        }
-
-        function step3BackAction() {
-            goToStep(2);
-        }
-
-        function step4BackAction() {
-            goToStep(3);
-        }
-
-        function nextStep(step) {
-            goToStep(step);
-        }
-
-        function selectProcedure(type) {
-            const radioOne = document.getElementById('proc_one');
-            const radioTwo = document.getElementById('proc_two');
-            const cardOne = document.getElementById('card_one_envelope');
-            const cardTwo = document.getElementById('card_two_envelope');
-            const label = document.getElementById('bid_opening_label');
-            const badge = document.getElementById('bid_opening_badge');
-            const hint = document.getElementById('bid_opening_hint');
-
-            if (type === 'single_stage_two_envelope') {
-                if (radioTwo) radioTwo.checked = true;
-                if (cardTwo) cardTwo.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200';
-                if (cardOne) cardOne.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
-                
-                if (label) label.innerHTML = 'Stage 1: Technical Bid Opening Date & Time';
-                if (badge) {
-                    badge.innerText = 'Stage 1: Technical Only';
-                    badge.className = 'text-[10px] font-bold text-orange-800 bg-orange-100 px-2 py-0.5 rounded border border-orange-200';
-                }
-                if (hint) hint.innerText = 'Date and time when Envelope 1 (Technical) will be opened.';
+            if (proc === 'single_stage_one_envelope') {
+                rad1.checked = true;
+                card1.className = "flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200";
+                card2.className = "flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50";
             } else {
-                if (radioOne) radioOne.checked = true;
-                if (cardOne) cardOne.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200';
-                if (cardTwo) cardTwo.className = 'flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50';
-
-                if (label) label.innerHTML = 'Tender / Bid Opening Date (Technical & Financial Bids)';
-                if (badge) {
-                    badge.innerText = 'Joint Opening';
-                    badge.className = 'text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200';
-                }
-                if (hint) hint.innerText = 'Both Technical & Financial bids are opened together.';
+                rad2.checked = true;
+                card2.className = "flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50 text-stone-900 ring-2 ring-orange-200";
+                card1.className = "flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50";
             }
         }
 
         function calculateBidSecurityFromBudget() {
-            const budgetVal = parseFloat(document.getElementById('input_budget').value) || 0;
-            const pctVal = parseFloat(document.getElementById('bid_security_percentage').value) || 0;
-            const securityInput = document.getElementById('bid_security_amount');
-            
-            if (budgetVal > 0 && pctVal > 0 && securityInput) {
-                const computed = (budgetVal * (pctVal / 100));
-                securityInput.value = computed.toFixed(2);
+            const budgetInput = document.getElementById('input_budget');
+            const pctInput = document.getElementById('bid_security_percentage');
+            const amtInput = document.getElementById('bid_security_amount');
+
+            if (!budgetInput || !amtInput) return;
+
+            const budget = parseFloat(budgetInput.value) || 0;
+            const pct = parseFloat(pctInput ? pctInput.value : 2.0) || 2.0;
+
+            if (budget > 0) {
+                const computed = Math.round((budget * pct) / 100);
+                amtInput.value = computed;
             }
         }
 
         function toggleTenderFeeFields() {
-            // Can be used to highlight paid state
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize procedure
-            const radioTwo = document.getElementById('proc_two');
-            if (radioTwo && radioTwo.checked) {
-                selectProcedure('single_stage_two_envelope');
-            } else {
-                selectProcedure('single_stage_one_envelope');
+            const chk = document.getElementById('checkbox_tender_fee_paid');
+            const amountInput = document.getElementById('tender_fee_amount');
+            if (chk && amountInput) {
+                if (chk.checked && (!amountInput.value || parseFloat(amountInput.value) <= 0)) {
+                    amountInput.value = 3000;
+                }
             }
-
-            // Start on Step 1
-            goToStep(1);
-        });
+        }
     </script>
 </x-app-layout>

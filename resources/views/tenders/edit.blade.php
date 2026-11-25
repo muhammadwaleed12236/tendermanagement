@@ -255,10 +255,10 @@
                             <label class="block text-xs font-bold text-stone-700 mb-1">Status</label>
                             <select name="status" class="w-full text-xs rounded-xl border-[#e5ded4] bg-stone-50/40">
                                 <option value="draft" {{ old('status', $tender->status) === 'draft' ? 'selected' : '' }}>Draft</option>
-                                <option value="published" {{ old('status', $tender->status) === 'published' ? 'selected' : '' }}>Published (Open)</option>
+                                <option value="published" {{ old('status', $tender->status) === 'published' ? 'selected' : '' }}>In Progress</option>
                                 <option value="under_evaluation" {{ old('status', $tender->status) === 'under_evaluation' ? 'selected' : '' }}>Under Evaluation</option>
                                 <option value="awarded" {{ old('status', $tender->status) === 'awarded' ? 'selected' : '' }}>Awarded</option>
-                                <option value="closed" {{ old('status', $tender->status) === 'closed' ? 'selected' : '' }}>Closed</option>
+                                <option value="closed" {{ old('status', $tender->status) === 'closed' ? 'selected' : '' }}>Not Awarded</option>
                                 <option value="cancelled" {{ old('status', $tender->status) === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                             </select>
                         </div>
@@ -267,10 +267,26 @@
                             <label class="block text-xs font-bold text-stone-700 mb-1">Overall Outcome</label>
                             <select name="tender_outcome" class="w-full text-xs rounded-xl border-[#e5ded4] bg-stone-50/40">
                                 <option value="in_progress" {{ old('tender_outcome', $tender->tender_outcome) === 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                                <option value="won" {{ old('tender_outcome', $tender->tender_outcome) === 'won' ? 'selected' : '' }}>Won / Awarded</option>
-                                <option value="lost" {{ old('tender_outcome', $tender->tender_outcome) === 'lost' ? 'selected' : '' }}>Lost / Disqualified</option>
+                                <option value="won" {{ old('tender_outcome', $tender->tender_outcome) === 'won' ? 'selected' : '' }}>Awarded</option>
+                                <option value="lost" {{ old('tender_outcome', $tender->tender_outcome) === 'lost' ? 'selected' : '' }}>Not Awarded</option>
                                 <option value="cancelled" {{ old('tender_outcome', $tender->tender_outcome) === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <!-- Interest Status & Contact Person -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 mb-1">Interest / Bidding Intent</label>
+                            <select name="interest_status" class="w-full text-xs rounded-xl border-[#e5ded4] bg-stone-50/40">
+                                <option value="interested" {{ old('interest_status', $tender->interest_status) === 'interested' ? 'selected' : '' }}>🟢 Interested (Plan to Bid)</option>
+                                <option value="not_interested" {{ old('interest_status', $tender->interest_status) === 'not_interested' ? 'selected' : '' }}>⚪ Not Interested (Archived Lead)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 mb-1">Contact Person (Name, Designation, Phone)</label>
+                            <input type="text" name="contact_person" value="{{ old('contact_person', $tender->contact_person) }}" placeholder="e.g. Engr. Tariq (XEN) - 0300-1234567" class="w-full text-xs rounded-xl border-[#e5ded4] bg-stone-50/40">
                         </div>
                     </div>
 

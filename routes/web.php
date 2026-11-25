@@ -163,6 +163,7 @@ Route::middleware(['auth'])->group(function () {
 
 // Public tender browsing
 Route::get('/tenders', [TenderController::class, 'index'])->name('tenders.index');
+Route::get('/tenders/{tender}/download-document', [TenderController::class, 'downloadDocument'])->name('tenders.download-document');
 Route::get('/tenders/{tender}', [TenderController::class, 'show'])->name('tenders.show');
 
 require __DIR__.'/auth.php';

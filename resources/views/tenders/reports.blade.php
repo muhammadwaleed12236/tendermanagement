@@ -12,7 +12,7 @@
                     </span>
                 </div>
                 <h2 class="font-black text-2xl text-stone-900 leading-tight flex items-center gap-2">
-                    <span>{{ __('Tenders, Work Orders & Financial Securities Report') }}</span>
+                    <span>{{ __('Tender & Contract Management') }}</span>
                     <span class="text-xs font-mono font-bold bg-stone-200 text-stone-700 px-2.5 py-0.5 rounded-full border border-stone-300">
                         {{ $totalCount }} Records
                     </span>
@@ -119,9 +119,9 @@
                         <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Outcome</label>
                         <select name="outcome" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
                             <option value="">All Outcomes</option>
-                            <option value="won" {{ request('outcome') === 'won' ? 'selected' : '' }}>🏆 Won / Awarded Only</option>
+                            <option value="won" {{ request('outcome') === 'won' ? 'selected' : '' }}>🏆 Awarded Only</option>
                             <option value="in_progress" {{ request('outcome') === 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                            <option value="lost" {{ request('outcome') === 'lost' ? 'selected' : '' }}>Lost / Disqualified</option>
+                            <option value="lost" {{ request('outcome') === 'lost' ? 'selected' : '' }}>Not Awarded</option>
                         </select>
                     </div>
 
@@ -174,7 +174,7 @@
             <div class="hidden print:block border-b-2 border-stone-800 pb-4 mb-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h1 class="text-xl font-black text-stone-900 uppercase">Tenders, Work Orders & Financial Securities Ledger</h1>
+                        <h1 class="text-xl font-black text-stone-900 uppercase">Tender & Contract Management Ledger</h1>
                         <p class="text-xs text-stone-600">Official Audit & Executive Summary Report — Generated on {{ now()->format('d/m/Y h:i A') }}</p>
                     </div>
                     <div class="text-right text-xs">

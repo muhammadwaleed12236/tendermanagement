@@ -97,12 +97,12 @@
                         @if($tender->isWon())
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-xs">
                                 <svg class="w-4 h-4 text-emerald-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                🏆 FINAL RESULT: WON / AWARDED
+                                🏆 FINAL RESULT: AWARDED
                             </span>
                         @elseif($tender->isLost())
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black bg-rose-100 text-rose-900 border border-rose-300 shadow-xs">
                                 <svg class="w-4 h-4 text-rose-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                ❌ FINAL RESULT: LOST / DISQUALIFIED
+                                ❌ FINAL RESULT: NOT AWARDED
                             </span>
                         @else
                             <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black bg-blue-100 text-blue-900 border border-blue-200 shadow-xs">
@@ -320,16 +320,16 @@
                                         <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-emerald-300 bg-emerald-50/50 cursor-pointer hover:bg-emerald-50 transition" onclick="toggleWinDocInputs(true)">
                                             <input type="radio" name="stage_2_action" value="win" required checked class="mt-0.5 text-emerald-600 focus:ring-emerald-500">
                                             <div>
-                                                <div class="font-bold text-xs text-emerald-950">🏆 Final Award Won (Lowest Evaluated Bid)</div>
-                                                <div class="text-[11px] text-emerald-800 mt-0.5">Tender will be marked as WON / Awarded</div>
+                                                <div class="font-bold text-xs text-emerald-950">🏆 Final Award (Awarded)</div>
+                                                <div class="text-[11px] text-emerald-800 mt-0.5">Tender will be marked as Awarded</div>
                                             </div>
                                         </label>
 
                                         <label class="flex items-start gap-3 p-3.5 rounded-xl border-2 border-rose-300 bg-rose-50/50 cursor-pointer hover:bg-rose-50 transition" onclick="toggleWinDocInputs(false)">
                                             <input type="radio" name="stage_2_action" value="lose" required class="mt-0.5 text-rose-600 focus:ring-rose-500">
                                             <div>
-                                                <div class="font-bold text-xs text-rose-950">✗ Financial Bid Lost</div>
-                                                <div class="text-[11px] text-rose-800 mt-0.5">Tender will be marked as LOST / Closed</div>
+                                                <div class="font-bold text-xs text-rose-950">✗ Not Awarded</div>
+                                                <div class="text-[11px] text-rose-800 mt-0.5">Tender will be marked as Not Awarded</div>
                                             </div>
                                         </label>
                                     </div>
@@ -425,7 +425,7 @@
                                         <div class="flex items-center justify-between">
                                             <div class="font-black text-xs text-emerald-950 flex items-center gap-1.5">
                                                 <svg class="w-4 h-4 text-emerald-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                                <span>🏆 Mark as WON / Awarded</span>
+                                                <span>🏆 Mark as Awarded</span>
                                             </div>
                                         </div>
 
@@ -463,7 +463,7 @@
                                         <input type="text" name="notes" placeholder="Award notes / remarks (optional)..." class="w-full text-xs rounded-xl border-stone-200">
 
                                         <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-xs transition">
-                                            Confirm Tender WON
+                                            Confirm Tender Awarded
                                         </button>
                                     </form>
 
@@ -475,16 +475,16 @@
                                         <div class="space-y-2">
                                             <div class="font-black text-xs text-rose-950 flex items-center gap-1.5">
                                                 <svg class="w-4 h-4 text-rose-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                                <span>❌ Mark as LOST / Disqualified</span>
+                                                <span>Mark as Not Awarded</span>
                                             </div>
                                             <p class="text-[11px] text-stone-600">
-                                                Mark tender as lost if bid was not shortlisted or lost during financial opening. Process ends immediately.
+                                                Mark tender as not awarded if bid was not shortlisted or lost during financial opening. Process ends immediately.
                                             </p>
                                             <input type="text" name="notes" placeholder="Reason / remarks..." class="w-full text-xs rounded-xl border-stone-200">
                                         </div>
 
-                                        <button type="submit" class="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow-xs transition" onclick="return confirm('Confirm marking this tender as LOST?')">
-                                            Confirm Tender LOST
+                                        <button type="submit" class="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow-xs transition" onclick="return confirm('Confirm marking this tender as Not Awarded?')">
+                                            Confirm Tender Not Awarded
                                         </button>
                                     </form>
                                 </div>
@@ -994,22 +994,27 @@
                             </div>
                         @endif
 
-                        @if($tender->document_path)
-                            <div class="pt-4 border-t border-[#e5ded4] flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                    </div>
-                                    <div>
-                                        <div class="text-sm font-bold text-stone-900">Official Tender Dossier / RFP Document</div>
-                                        <div class="text-xs text-stone-500">Download attached bidding specifications</div>
+                        <div class="pt-4 border-t border-[#e5ded4] flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-stone-900">Official Tender Dossier / RFP Document</div>
+                                    <div class="text-xs text-stone-500">
+                                        @if($tender->document_path)
+                                            Download attached RFP bidding specifications
+                                        @else
+                                            Official RFP specifications & tender dossier
+                                        @endif
                                     </div>
                                 </div>
-                                <a href="{{ asset('storage/' . $tender->document_path) }}" target="_blank" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition">
-                                    Download RFP
-                                </a>
                             </div>
-                        @endif
+                            <a href="{{ route('tenders.download-document', $tender) }}" target="_blank" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition inline-flex items-center gap-1.5 shadow-xs">
+                                <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download RFP</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -1040,6 +1045,26 @@
                                 <span class="text-stone-500 font-medium">Bidding Procedure</span>
                                 <span class="font-bold text-stone-900 text-right">{{ $tender->procedure_label }}</span>
                             </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Bidding Intent</span>
+                                @if($tender->isInterested())
+                                    <span class="text-[11px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                        🟢 Interested
+                                    </span>
+                                @else
+                                    <span class="text-[11px] font-black text-stone-600 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">
+                                        ⚪ Not Interested
+                                    </span>
+                                @endif
+                            </div>
+
+                            @if($tender->contact_person)
+                                <div class="pt-2 flex justify-between">
+                                    <span class="text-stone-500 font-medium">Contact Person</span>
+                                    <span class="font-bold text-stone-900 text-right">{{ $tender->contact_person }}</span>
+                                </div>
+                            @endif
 
                             @if($tender->isWon())
                                 <div class="pt-2 flex justify-between items-center">
@@ -1148,6 +1173,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Bottom Navigation: Back to Tenders Register -->
+            <div class="flex items-center justify-between pt-2">
+                <a href="{{ route('tenders.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-[#e5ded4] text-stone-700 hover:text-stone-900 hover:bg-stone-50 font-bold text-xs shadow-xs transition">
+                    <svg class="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <span>Back to Tenders Register</span>
+                </a>
             </div>
 
         </div>

@@ -73,6 +73,10 @@ class Tender extends Model
         'documents_completed_at',
         'document_path',
         'status',
+        'interest_status',
+        'contact_person',
+        'is_fully_processed',
+        'initial_entry_only',
         'created_by',
     ];
 
@@ -91,6 +95,8 @@ class Tender extends Model
             'stage_2_completed_at' => 'datetime',
             'has_letter_of_intent' => 'boolean',
             'has_award_letter' => 'boolean',
+            'is_fully_processed' => 'boolean',
+            'initial_entry_only' => 'boolean',
             'letter_of_intent_date' => 'date',
             'award_letter_date' => 'date',
             'documents_completed_at' => 'datetime',
@@ -146,6 +152,16 @@ class Tender extends Model
     public function isExpired(): bool
     {
         return $this->submission_deadline < now();
+    }
+
+    public function isInterested(): bool
+    {
+        return ($this->interest_status ?? 'interested') === 'interested';
+    }
+
+    public function isNotInterested(): bool
+    {
+        return $this->interest_status === 'not_interested';
     }
 
     public function isOpen(): bool
