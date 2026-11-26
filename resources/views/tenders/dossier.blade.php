@@ -91,9 +91,6 @@
                     <div>
                         <span class="text-stone-400 block font-semibold">Issuing Department:</span>
                         <span class="font-bold text-stone-900">{{ $tender->department?->name ?: 'Public Procurement Division' }}</span>
-                        @if($tender->department?->code)
-                            <span class="text-stone-500">({{ $tender->department->code }})</span>
-                        @endif
                     </div>
                     <div>
                         <span class="text-stone-400 block font-semibold">Bidding Procedure:</span>

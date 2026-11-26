@@ -10,14 +10,10 @@
                     <span class="font-mono text-xs font-bold bg-stone-200 text-stone-800 px-2 py-0.5 rounded border border-stone-300">
                         {{ $tender->effective_tender_no }}
                     </span>
-                    <span class="text-stone-300">•</span>
                     @if($tender->isEpad())
+                        <span class="text-stone-300">•</span>
                         <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-300">
                             EPAD 2.0
-                        </span>
-                    @else
-                        <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-stone-100 text-stone-700 border border-stone-200">
-                            Tender
                         </span>
                     @endif
                     <span class="text-stone-300">•</span>
@@ -1000,19 +996,19 @@
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                 </div>
                                 <div>
-                                    <div class="text-sm font-bold text-stone-900">Official Tender Dossier / RFP Document</div>
+                                    <div class="text-sm font-bold text-stone-900">Tender Document</div>
                                     <div class="text-xs text-stone-500">
                                         @if($tender->document_path)
-                                            Download attached RFP bidding specifications
+                                            Download attached official tender document
                                         @else
-                                            Official RFP specifications & tender dossier
+                                            Official tender specifications & document
                                         @endif
                                     </div>
                                 </div>
                             </div>
                             <a href="{{ route('tenders.download-document', $tender) }}" target="_blank" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition inline-flex items-center gap-1.5 shadow-xs">
                                 <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                <span>Download RFP</span>
+                                <span>Download Tender Document</span>
                             </a>
                         </div>
                     </div>
@@ -1046,18 +1042,6 @@
                                 <span class="font-bold text-stone-900 text-right">{{ $tender->procedure_label }}</span>
                             </div>
 
-                            <div class="pt-2 flex justify-between items-center">
-                                <span class="text-stone-500 font-medium">Bidding Intent</span>
-                                @if($tender->isInterested())
-                                    <span class="text-[11px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                                        🟢 Interested
-                                    </span>
-                                @else
-                                    <span class="text-[11px] font-black text-stone-600 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">
-                                        ⚪ Not Interested
-                                    </span>
-                                @endif
-                            </div>
 
                             @if($tender->contact_person)
                                 <div class="pt-2 flex justify-between">
@@ -1111,18 +1095,20 @@
                                         {{ $tender->submission_deadline ? $tender->submission_deadline->format('d/m/Y \a\t h:i A') : '-' }}
                                     </span>
                                 </div>
-
-                                <div class="pt-2 flex justify-between">
-                                    <span class="text-stone-500 font-medium">Bid Opening Date</span>
-                                    <span class="font-bold text-stone-900 text-right">
-                                        @if($tender->isTwoEnvelope())
-                                            Tech: {{ ($tender->technical_opening_date ?: $tender->opening_date) ? ($tender->technical_opening_date ?: $tender->opening_date)->format('d/m/Y h:i A') : '-' }}
-                                        @else
-                                            {{ $tender->opening_date ? $tender->opening_date->format('d/m/Y h:i A') : '-' }}
-                                        @endif
-                                    </span>
-                                </div>
                             @endif
+
+                            <div class="pt-2 flex justify-between items-start">
+                                <span class="text-stone-500 font-medium">Bid Opening Date</span>
+                                <div class="font-bold text-stone-900 text-right text-xs">
+                                    @if($tender->isTwoEnvelope())
+                                        <div>Technical: {{ ($tender->technical_opening_date ?: $tender->opening_date) ? ($tender->technical_opening_date ?: $tender->opening_date)->format('d/m/Y') : '-' }}</div>
+                                        <div class="text-[10px] text-stone-400 font-semibold my-0.5">and</div>
+                                        <div>Financial: {{ $tender->financial_opening_date ? $tender->financial_opening_date->format('d/m/Y') : '-' }}</div>
+                                    @else
+                                        {{ $tender->opening_date ? $tender->opening_date->format('d/m/Y') : '-' }}
+                                    @endif
+                                </div>
+                            </div>
 
                             @if($tender->budget)
                                 <div class="pt-2 flex justify-between">
@@ -1146,15 +1132,15 @@
                             <div class="pt-2 flex justify-between">
                                 <span class="text-stone-500 font-medium">Tender Document Fee</span>
                                 <div class="text-right">
-                                    @if($tender->tender_fee_amount)
-                                        <span class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->tender_fee_amount) }}</span>
+                                    @if($tender->tender_fee_amount || $tender->is_tender_fee_paid)
+                                        <span class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->tender_fee_amount ?: 0) }}</span>
                                         @if($tender->is_tender_fee_paid)
-                                            <span class="text-[10px] font-bold text-emerald-700">Paid ✓</span>
+                                            <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>
                                         @else
-                                            <span class="text-[10px] font-bold text-rose-600">Unpaid ✗</span>
+                                            <span class="text-[10px] font-bold text-rose-600 ml-1">Unpaid / Pending</span>
                                         @endif
                                     @else
-                                        <span class="text-stone-400 font-mono text-[11px]">No Fee</span>
+                                        <span class="text-stone-400 font-mono text-[11px]">Unpaid / Pending</span>
                                     @endif
                                 </div>
                             </div>

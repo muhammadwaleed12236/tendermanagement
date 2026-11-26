@@ -313,33 +313,114 @@ class TenderController extends Controller
         });
 
         $allTenders = (clone $query)->get();
-        $tenders = $query->latest('submission_deadline')->paginate(25)->withQueryString();
 
-        // 10 Summary Cards for Tender Management
-        // Row 1: The 5 Cards Relocated from Tender Details
+        // 12 Summary Cards for Tender Management
+        // Row 1: Tender & Workflow Status (6 Cards)
         $totalCount = $allTenders->count();
-        $inProgressCount = $allTenders->where('tender_outcome', 'in_progress')->count();
+        $cancelledCount = $allTenders->filter(fn($t) => $t->status === 'cancelled' || $t->tender_outcome === 'cancelled')->count();
+        $pendingCount = $allTenders->filter(fn($t) => ($t->tender_outcome === 'in_progress' || $t->status === 'published' || $t->status === 'draft') && !$t->isWon() && !$t->isLost() && $t->status !== 'cancelled')->count();
         $wonTenders = $allTenders->filter(fn($t) => $t->isWon());
         $wonCount = $wonTenders->count();
         $lostCount = $allTenders->filter(fn($t) => $t->isLost())->count();
-        $cancelledCount = $allTenders->filter(fn($t) => $t->status === 'cancelled' || $t->tender_outcome === 'cancelled')->count();
+        $pendingDocsCount = $wonTenders->filter(fn($t) => !$t->isDocumentsCompleted())->count();
 
-        // Row 2: The 5 Redesigned Financial/Award Cards
+        // Row 2: Bidding & Security Financials (6 Cards)
         $totalWonValue = $wonTenders->sum(function ($t) {
-            return $t->awarded_amount ?: $t->budget;
+            return $t->awarded_amount ?: ($t->budget ?: 0);
         });
-        $totalBudget = $allTenders->sum('budget');
         $totalTenderFeesPaid = $allTenders->where('is_tender_fee_paid', true)->sum('tender_fee_amount');
         $totalBidSecuritySubmitted = $allTenders->where('bid_security_status', 'submitted')->sum('bid_security_amount');
         $totalBidSecurityReleased = $allTenders->where('bid_security_status', 'released_returned')->sum('bid_security_amount');
-        $docsCompletedCount = $wonTenders->filter(fn($t) => $t->isDocumentsCompleted())->count();
+        $totalPerfSecurityPaid = $wonTenders->sum(function ($t) {
+            return $t->awarded_amount ? round($t->awarded_amount * 0.10, 2) : round(($t->budget ?: 0) * 0.10, 2);
+        });
+        $totalPerfSecurityReleased = $wonTenders->filter(fn($t) => $t->isDocumentsCompleted())->sum(function ($t) {
+            return $t->awarded_amount ? round($t->awarded_amount * 0.08, 2) : round(($t->budget ?: 0) * 0.08, 2);
+        });
 
-        // Percentages for Gauges
-        $inProgressPct = $totalCount > 0 ? min(100, round(($inProgressCount / $totalCount) * 100)) : 0;
-        $wonPct = $totalCount > 0 ? min(100, round(($wonCount / $totalCount) * 100)) : 0;
-        $lostPct = $totalCount > 0 ? min(100, round(($lostCount / $totalCount) * 100)) : 0;
-        $cancelledPct = $totalCount > 0 ? min(100, round(($cancelledCount / $totalCount) * 100)) : 0;
-        $docsCompletedPct = $wonCount > 0 ? min(100, round(($docsCompletedCount / $wonCount) * 100)) : 0;
+        // Apply Card-click Filters to Paginated Table
+        $cardFilter = $request->input('card_filter');
+        if ($cardFilter) {
+            switch ($cardFilter) {
+                case 'cancelled':
+                case 'cancelled_tenders':
+                    $query->where(function ($q) {
+                        $q->where('status', 'cancelled')->orWhere('tender_outcome', 'cancelled');
+                    });
+                    break;
+                case 'pending':
+                case 'pending_tenders':
+                    $query->where(function ($q) {
+                        $q->where('tender_outcome', 'in_progress')
+                          ->orWhere('status', 'published')
+                          ->orWhere('status', 'draft');
+                    })->where('status', '!=', 'cancelled')
+                      ->where('status', '!=', 'awarded')
+                      ->where('tender_outcome', '!=', 'won')
+                      ->where('tender_outcome', '!=', 'lost');
+                    break;
+                case 'awarded':
+                case 'awarded_tenders':
+                case 'awarded_value':
+                    $query->where(function ($q) {
+                        $q->where('tender_outcome', 'won')
+                          ->orWhere('status', 'awarded')
+                          ->orWhere('stage_2_status', 'won');
+                    });
+                    break;
+                case 'not_awarded':
+                case 'not_awarded_tenders':
+                    $query->where(function ($q) {
+                        $q->where('tender_outcome', 'lost')
+                          ->orWhere('status', 'lost')
+                          ->orWhere('stage_1_status', 'disqualified');
+                    });
+                    break;
+                case 'pending_docs':
+                case 'pending_award_docs':
+                    $query->where(function ($q) {
+                        $q->where('tender_outcome', 'won')
+                          ->orWhere('status', 'awarded');
+                    })->where(function ($q) {
+                        $q->where('has_letter_of_intent', false)
+                          ->orWhere('has_award_letter', false)
+                          ->orWhereNull('has_letter_of_intent')
+                          ->orWhereNull('has_award_letter');
+                    });
+                    break;
+                case 'tender_fees':
+                    $query->where('is_tender_fee_paid', true);
+                    break;
+                case 'bid_security_paid':
+                case 'bid_sec_paid':
+                    $query->where('bid_security_status', 'submitted');
+                    break;
+                case 'bid_security_refunded':
+                case 'bid_sec_refunded':
+                    $query->where('bid_security_status', 'released_returned');
+                    break;
+                case 'perf_security_paid':
+                case 'perf_sec_paid':
+                    $query->where(function ($q) {
+                        $q->where('tender_outcome', 'won')
+                          ->orWhere('status', 'awarded');
+                    });
+                    break;
+                case 'perf_security_released':
+                case 'perf_sec_released':
+                    $query->where(function ($q) {
+                        $q->where('tender_outcome', 'won')
+                          ->orWhere('status', 'awarded');
+                    })->where('has_letter_of_intent', true)->where('has_award_letter', true);
+                    break;
+                case 'total':
+                case 'total_tenders':
+                default:
+                    break;
+            }
+        }
+
+        $tenders = $query->latest('submission_deadline')->paginate(25)->withQueryString();
 
         $departments = Department::where('status', 'active')->orderBy('name')->get();
         $companies = Company::where(function ($q) {
@@ -355,23 +436,20 @@ class TenderController extends Controller
         return view('tenders.reports', compact(
             'tenders',
             'allTenders',
+            'cardFilter',
             'totalCount',
-            'inProgressCount',
+            'cancelledCount',
+            'pendingCount',
             'wonCount',
             'lostCount',
-            'cancelledCount',
+            'pendingDocsCount',
             'totalWonValue',
-            'totalBudget',
             'totalTenderFeesPaid',
             'totalBidSecuritySubmitted',
             'totalBidSecurityReleased',
+            'totalPerfSecurityPaid',
+            'totalPerfSecurityReleased',
             'wonTenders',
-            'docsCompletedCount',
-            'inProgressPct',
-            'wonPct',
-            'lostPct',
-            'cancelledPct',
-            'docsCompletedPct',
             'departments',
             'companies',
             'bankAccounts'
@@ -441,9 +519,12 @@ class TenderController extends Controller
             'submission_deadline' => 'nullable|date',
             'opening_date' => 'nullable|date',
             'technical_opening_date' => 'nullable|date',
+            'financial_opening_date' => 'nullable|date',
+            'is_draft' => 'nullable|boolean',
+            'action' => 'nullable|string',
             'description' => 'nullable|string',
             'requirements' => 'nullable|string',
-            'document' => 'nullable|file|mimes:pdf,docx,zip|max:20480',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,zip|max:51200',
         ]);
 
         $tenderType = $validated['tender_type'] ?? 'tender';
@@ -476,7 +557,9 @@ class TenderController extends Controller
                     ? $validated['technical_opening_date'] 
                     : ($validated['opening_date'] ?? null);
                 $generalOpening = $technicalOpening;
-                $financialOpening = null;
+                $financialOpening = !empty($validated['financial_opening_date']) 
+                    ? $validated['financial_opening_date'] 
+                    : null;
             } else {
                 $generalOpening = !empty($validated['opening_date']) 
                     ? $validated['opening_date'] 
@@ -548,6 +631,8 @@ class TenderController extends Controller
             $bidSecurityStatus = $validated['bid_security_status'] ?? 'submitted';
         }
 
+        $isDraft = $request->boolean('is_draft') || $request->input('action') === 'draft';
+
         $tender = Tender::create([
             'title' => $validated['title'],
             'reference_no' => $referenceNo,
@@ -593,7 +678,7 @@ class TenderController extends Controller
             'description' => $validated['description'] ?? $validated['title'],
             'requirements' => $validated['requirements'] ?? null,
             'document_path' => $docPath,
-            'status' => 'published',
+            'status' => $isDraft ? 'draft' : 'published',
             'interest_status' => 'pending',
             'contact_person' => $validated['contact_person'] ?? null,
             'is_fully_processed' => false,
@@ -604,16 +689,23 @@ class TenderController extends Controller
         ActivityLog::record(
             'create',
             'Tender',
-            "Created tender '{$tender->tender_no}' with procedure '{$tender->procedure_label}'",
+            "Created tender '{$tender->tender_no}' with procedure '{$tender->procedure_label}'" . ($isDraft ? ' (Draft)' : ''),
             $tender,
             [
                 'bidding_procedure' => $tender->bidding_procedure,
                 'submission_deadline' => $tender->submission_deadline,
                 'department_id' => $tender->department_id,
+                'status' => $tender->status,
             ]
         );
 
-        \App\Services\NotificationService::tenderCreated($tender);
+        if (!$isDraft) {
+            \App\Services\NotificationService::tenderCreated($tender);
+        }
+
+        if ($isDraft) {
+            return redirect()->route('tenders.index')->with('success', "Tender '{$tenderNo}' saved as draft successfully.");
+        }
 
         return redirect()->route('tenders.index')->with('success', "Tender '{$tenderNo}' created successfully! Please decide your bidding interest below.");
     }
@@ -652,6 +744,7 @@ class TenderController extends Controller
         }
 
         $validated = $request->validate([
+            'budget' => 'nullable|numeric|min:0',
             'tender_fee_amount' => 'nullable|numeric|min:0',
             'is_tender_fee_paid' => 'nullable|boolean',
             'tender_fee_bank_account_id' => 'nullable|exists:bank_accounts,id',
@@ -683,7 +776,7 @@ class TenderController extends Controller
 
         $isTenderFeePaid = $request->boolean('is_tender_fee_paid');
 
-        $tender->update([
+        $tenderData = [
             'tender_fee_amount' => $validated['tender_fee_amount'] ?? null,
             'is_tender_fee_paid' => $isTenderFeePaid,
             'tender_fee_bank_account_id' => $validated['tender_fee_bank_account_id'] ?? null,
@@ -705,7 +798,13 @@ class TenderController extends Controller
             'interest_status' => 'interested',
             'is_fully_processed' => true,
             'tender_outcome' => 'in_progress',
-        ]);
+        ];
+
+        if ($request->has('budget')) {
+            $tenderData['budget'] = $validated['budget'] ?? null;
+        }
+
+        $tender->update($tenderData);
 
         ActivityLog::record(
             'update',
@@ -852,7 +951,7 @@ class TenderController extends Controller
             'tender_outcome' => 'required|in:in_progress,won,lost,cancelled',
             'description' => 'nullable|string',
             'requirements' => 'nullable|string',
-            'document' => 'nullable|file|mimes:pdf,docx,zip|max:20480',
+            'document' => 'nullable|file|mimes:pdf,doc,docx,zip|max:51200',
         ]);
 
         if (($validated['tender_type'] ?? 'tender') === 'epad') {
@@ -899,6 +998,15 @@ class TenderController extends Controller
             $validated['upload_date'] = $validated['collection_start_date'];
         }
 
+        if (($validated['bidding_procedure'] ?? '') === 'single_stage_two_envelope') {
+            $validated['opening_date'] = $validated['technical_opening_date'] ?? $validated['opening_date'] ?? null;
+        } elseif (($validated['bidding_procedure'] ?? '') === 'single_stage_one_envelope') {
+            $generalDate = $validated['opening_date'] ?? $validated['technical_opening_date'] ?? null;
+            $validated['opening_date'] = $generalDate;
+            $validated['technical_opening_date'] = $generalDate;
+            $validated['financial_opening_date'] = $generalDate;
+        }
+
         $tender->update($validated);
 
         ActivityLog::record(
@@ -922,6 +1030,7 @@ class TenderController extends Controller
 
         $request->validate([
             'tender_fee_amount' => 'nullable|numeric|min:0',
+            'is_tender_fee_paid' => 'nullable|boolean',
             'tender_fee_bank_account_id' => 'nullable|exists:bank_accounts,id',
             'tender_fee_payment_mode' => 'nullable|string|max:50',
             'tender_fee_ref_no' => 'nullable|string|max:255',

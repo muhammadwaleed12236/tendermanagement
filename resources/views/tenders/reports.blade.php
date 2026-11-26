@@ -37,250 +37,363 @@
         </div>
     </x-slot>
 
+    <!-- Custom CSS to Guarantee Pixel-Perfect 3D Card Visuals matching client reference -->
+    <style>
+        .stat-card-3d-wrap {
+            position: relative;
+            transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+        .stat-card-3d-wrap:hover {
+            transform: translateY(-4px);
+        }
+        .stat-card-3d {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1.45rem;
+            transition: all 0.25s ease;
+        }
+        .stat-card-vertical {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            text-align: center !important;
+            min-height: 172px !important;
+            padding: 1.25rem 0.75rem !important;
+        }
+        .stat-card-vertical .stat-candy-icon {
+            margin: 0 auto 0.45rem auto !important;
+            width: 2.85rem !important;
+            height: 2.85rem !important;
+            border-radius: 1rem !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+        }
+        .stat-card-vertical .stat-card-label {
+            text-align: center !important;
+            width: 100% !important;
+            margin-bottom: 0.25rem !important;
+            font-size: 0.72rem !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.05em !important;
+            text-transform: uppercase !important;
+            display: block !important;
+        }
+        .stat-card-vertical .stat-card-value {
+            display: block !important;
+            text-align: center !important;
+            width: 100% !important;
+            font-weight: 900 !important;
+            color: #1c1917 !important;
+            line-height: 1.2 !important;
+        }
+
+        /* 3D Borders Preserving Existing System Geometry */
+        .stat-card-blue { border: 2.5px solid #0056d2 !important; border-bottom: 6px solid #07255e !important; box-shadow: 0 14px 28px -6px rgba(0, 86, 210, 0.22) !important; }
+        .stat-card-rose { border: 2.5px solid #e11d48 !important; border-bottom: 6px solid #881337 !important; box-shadow: 0 14px 28px -6px rgba(225, 29, 72, 0.22) !important; }
+        .stat-card-navy { border: 2.5px solid #2B2D4B !important; border-bottom: 6px solid #141525 !important; box-shadow: 0 14px 28px -6px rgba(43, 45, 75, 0.22) !important; }
+        .stat-card-green { border: 2.5px solid #0d9467 !important; border-bottom: 6px solid #064e3b !important; box-shadow: 0 14px 28px -6px rgba(13, 148, 103, 0.22) !important; }
+        .stat-card-maroon { border: 2.5px solid #dc2626 !important; border-bottom: 6px solid #7f1d1d !important; box-shadow: 0 14px 28px -6px rgba(220, 38, 38, 0.22) !important; }
+        .stat-card-cyan { border: 2.5px solid #0284c7 !important; border-bottom: 6px solid #0369a1 !important; box-shadow: 0 14px 28px -6px rgba(2, 132, 199, 0.22) !important; }
+        .stat-card-orange { border: 2.5px solid #ea580c !important; border-bottom: 6px solid #9a3412 !important; box-shadow: 0 14px 28px -6px rgba(234, 88, 12, 0.22) !important; }
+        .stat-card-lime { border: 2.5px solid #65a30d !important; border-bottom: 6px solid #3f6212 !important; box-shadow: 0 14px 28px -6px rgba(101, 163, 13, 0.22) !important; }
+
+        /* Candy Icon Backgrounds */
+        .candy-icon-blue { background: #0056d2 !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #07255e !important; box-shadow: 0 8px 16px rgba(0, 86, 210, 0.35) !important; }
+        .candy-icon-rose { background: #e11d48 !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #881337 !important; box-shadow: 0 8px 16px rgba(225, 29, 72, 0.35) !important; }
+        .candy-icon-navy { background: #2B2D4B !important; border-top: 1.5px solid rgba(255,255,255,0.3) !important; border-bottom: 3.5px solid #141525 !important; box-shadow: 0 8px 16px rgba(43, 45, 75, 0.35) !important; }
+        .candy-icon-green { background: #0d9467 !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #064e3b !important; box-shadow: 0 8px 16px rgba(13, 148, 103, 0.35) !important; }
+        .candy-icon-maroon { background: #dc2626 !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #7f1d1d !important; box-shadow: 0 8px 16px rgba(220, 38, 38, 0.35) !important; }
+        .candy-icon-cyan { background: #0284c7 !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #0369a1 !important; box-shadow: 0 8px 16px rgba(2, 132, 199, 0.35) !important; }
+        .candy-icon-orange { background: #ea580c !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #9a3412 !important; box-shadow: 0 8px 16px rgba(234, 88, 12, 0.35) !important; }
+        .candy-icon-lime { background: #65a30d !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #3f6212 !important; box-shadow: 0 8px 16px rgba(101, 163, 13, 0.35) !important; }
+
+        /* Typography Colors matching reference */
+        .stat-card-blue .stat-card-label { color: #0056d2 !important; }
+        .stat-card-rose .stat-card-label { color: #e11d48 !important; }
+        .stat-card-navy .stat-card-label { color: #2B2D4B !important; }
+        .stat-card-green .stat-card-label { color: #0d9467 !important; }
+        .stat-card-maroon .stat-card-label { color: #dc2626 !important; }
+        .stat-card-cyan .stat-card-label { color: #0284c7 !important; }
+        .stat-card-orange .stat-card-label { color: #ea580c !important; }
+        .stat-card-lime .stat-card-label { color: #65a30d !important; }
+    </style>
+
     <div class="py-6 font-sans">
         <div class="max-w-full px-4 sm:px-6 lg:px-8 space-y-6">
 
-            <!-- Exactly 10 Summary KPI Cards in 3D System (5 Relocated from Tender Details + 5 Redesigned Management Cards) -->
-            <div class="space-y-4">
-                <!-- ROW 1: The 5 Cards Relocated from Tender Details -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-                    <!-- 1. Total Tenders (Electric Blue 3D Theme) -->
-                    <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-blue">
-                            <div class="stat-candy-icon candy-icon-blue">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Total Tenders</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</span>
-                                </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">All Tenders</div>
-                            </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="100% Listed">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#dbeafe" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-xs font-black font-mono text-[#0056d2]">100%</span>
-                            </div>
-                        </div>
+            <!-- Active Card Filter Indicator (if filtered) -->
+            @if(request('card_filter'))
+                <div class="p-3.5 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-between text-xs text-blue-900 font-bold shadow-2xs print:hidden">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        <span>Active Filter: <strong class="uppercase text-blue-950 font-black">{{ str_replace('_', ' ', request('card_filter')) }}</strong></span>
                     </div>
+                    <a href="{{ route('tenders.reports') }}" class="px-3 py-1 bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 rounded-xl text-[11px] font-black transition flex items-center gap-1">
+                        &times; Clear Filter
+                    </a>
+                </div>
+            @endif
 
-                    <!-- 2. Cancel Tenders (Amber 3D Theme) -->
-                    <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-amber">
-                            <div class="stat-candy-icon candy-icon-amber">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Cancel Tenders</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($cancelledCount ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
-                                </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Cancelled / Closed</div>
-                            </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $cancelledPct }}% Cancelled">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#fef3c7" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d97706" stroke-width="3.5" 
-                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $cancelledPct / 100) }}" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-xs font-black font-mono text-[#d97706]">{{ $cancelledPct }}%</span>
+            <!-- ------------------------------------------------------------- -->
+            <!-- SECTION 1: TENDER & WORKFLOW STATUS (6 CARDS)                 -->
+            <!-- ------------------------------------------------------------- -->
+            <div class="space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <h3 class="font-black text-lg text-stone-900 tracking-tight">Tender & Workflow Status</h3>
+                    
+                    <!-- Top Controls (Live EPADS Sync, Category Filter & Export Status) -->
+                    <div class="flex items-center gap-2 print:hidden" x-data="{ catOpen: false }">
+                        <div class="relative">
+                            <button @click="catOpen = !catOpen" type="button" class="px-3.5 py-1.5 bg-white hover:bg-stone-50 border border-[#e5ded4] text-stone-700 rounded-xl text-xs font-bold shadow-2xs transition flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                                <span>{{ request('category') ?: 'All Categories' }}</span>
+                                <svg class="w-3 h-3 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div x-show="catOpen" @click.outside="catOpen = false" class="absolute right-0 mt-1 w-56 bg-white border border-[#e5ded4] rounded-2xl shadow-xl p-2 z-30 space-y-1 text-xs" style="display: none;">
+                                <a href="{{ request()->fullUrlWithQuery(['category' => null]) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-bold {{ !request('category') ? 'text-orange-600 bg-orange-50' : 'text-stone-700' }}">All Categories</a>
+                                <a href="{{ request()->fullUrlWithQuery(['category' => 'Audio-Video & IT Systems']) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-semibold text-stone-700">Audio-Video & IT Systems</a>
+                                <a href="{{ request()->fullUrlWithQuery(['category' => 'Civil Works & Construction']) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-semibold text-stone-700">Civil Works & Construction</a>
+                                <a href="{{ request()->fullUrlWithQuery(['category' => 'Medical & Healthcare Logistics']) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-semibold text-stone-700">Medical & Healthcare Logistics</a>
+                                <a href="{{ request()->fullUrlWithQuery(['category' => 'Electrical & Power Systems']) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-semibold text-stone-700">Electrical & Power Systems</a>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- 3. In Progress (Navy 3D Theme) -->
-                    <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-navy">
-                            <div class="stat-candy-icon candy-icon-navy">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full" style="color: #2B2D4B !important;">In Progress</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-xl sm:text-2xl font-black stat-card-value" style="color: #2B2D4B !important;">{{ str_pad($inProgressCount, 2, '0', STR_PAD_LEFT) }}</span>
-                                </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Bids open / eval</div>
-                            </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $inProgressPct }}% In Progress">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#e2e4ee" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#2B2D4B" stroke-width="3.5" 
-                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $inProgressPct / 100) }}" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-xs font-black font-mono text-[#2B2D4B]">{{ $inProgressPct }}%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 4. Awarded (Emerald Green 3D Theme) -->
-                    <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-green">
-                            <div class="stat-candy-icon candy-icon-green">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Awarded</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</span>
-                                </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Awarded</div>
-                            </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $wonPct }}% Awarded">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
-                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $wonPct / 100) }}" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $wonPct }}%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 5. Not Awarded (Maroon 3D Theme) -->
-                    <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-maroon">
-                            <div class="stat-candy-icon candy-icon-maroon">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[13px] font-black tracking-wider block w-full">Not Awarded</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</span>
-                                </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Not Awarded</div>
-                            </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $lostPct }}% Not Awarded">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#881337" stroke-width="3.5" 
-                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $lostPct / 100) }}" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-xs font-black font-mono text-[#881337]">{{ $lostPct }}%</span>
-                            </div>
-                        </div>
+                        <button type="button" onclick="window.print()" class="px-3.5 py-1.5 bg-white hover:bg-stone-50 border border-[#e5ded4] text-stone-700 rounded-xl text-xs font-bold shadow-2xs transition flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span>Export Status</span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- ROW 2: The 5 Redesigned Financial/Award Management Cards -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-                    <!-- 6. Awarded Work Order Value (Emerald Green 3D Theme) -->
+                <!-- ROW 1 CARDS: 6 CARDS (Matching Image 2 in 3D ERP System) -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-3.5">
+                    <!-- 1. TOTAL TENDER (Blue) -->
                     <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-green">
-                            <div class="stat-candy-icon candy-icon-green">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Awarded Value</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-base sm:text-lg font-black text-emerald-950 truncate">PKR {{ number_format($totalWonValue) }}</span>
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'total']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-blue {{ in_array(request('card_filter'), ['total', 'total_tenders']) ? 'ring-4 ring-[#0056d2]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-blue w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                 </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">{{ $wonTenders->count() }} Tenders Awarded</div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">TOTAL TENDER</span>
+                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">All Listed Tender</div>
+                                </div>
                             </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $wonPct }}% Awarded Rate">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
-                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $wonPct / 100) }}" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-[11px] font-black font-mono text-[#0d9467]">WON</span>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
-                    <!-- 7. Total Awarded Work Order Value / Total Budget (Purple 3D Theme) -->
+                    <!-- 2. CANCELLED TENDER (Rose) -->
                     <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-purple">
-                            <div class="stat-candy-icon candy-icon-purple">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Total Budget Value</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-base sm:text-lg font-black text-indigo-950 truncate">PKR {{ number_format($totalBudget) }}</span>
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'cancelled']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-rose {{ in_array(request('card_filter'), ['cancelled', 'cancelled_tenders']) ? 'ring-4 ring-[#e11d48]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-rose w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
                                 </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">All {{ $totalCount }} tenders listed</div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">CANCELLED TENDER</span>
+                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($cancelledCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Closed / Dropped</div>
+                                </div>
                             </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="100% Volume">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ede9fe" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#6366f1" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-[11px] font-black font-mono text-[#6366f1]">VOL</span>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
-                    <!-- 8. Total Tender Fees Paid (Orange 3D Theme) -->
+                    <!-- 3. PENDING TENDER (Navy) -->
                     <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-orange">
-                            <div class="stat-candy-icon candy-icon-orange">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Tender Fees Paid</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-base sm:text-lg font-black text-orange-950 truncate">PKR {{ number_format($totalTenderFeesPaid) }}</span>
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'pending']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-navy {{ in_array(request('card_filter'), ['pending', 'pending_tenders']) ? 'ring-4 ring-[#2B2D4B]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-navy w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Paid from Bank / Cash</div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">PENDING TENDER</span>
+                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Action Pending / Not Started</div>
+                                </div>
                             </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Fees Paid">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ffedd5" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#ea580c" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-[11px] font-black font-mono text-[#ea580c]">FEE</span>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
-                    <!-- 9. Total Active Bid Security (Cyan 3D Theme) -->
+                    <!-- 4. AWARDED TENDER (Green) -->
                     <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-cyan">
-                            <div class="stat-candy-icon candy-icon-cyan">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate" style="color: #0284c7 !important;">Active Bid Security</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-base sm:text-lg font-black text-sky-950 truncate">PKR {{ number_format($totalBidSecuritySubmitted) }}</span>
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'awarded']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-green {{ in_array(request('card_filter'), ['awarded', 'awarded_tenders']) ? 'ring-4 ring-[#0d9467]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-green w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Locked in CDRs</div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">AWARDED TENDER</span>
+                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Won Contract</div>
+                                </div>
                             </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="Active CDR Security">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#e0f2fe" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-[11px] font-black font-mono text-[#0284c7]">CDR</span>
-                            </div>
-                        </div>
+                        </a>
                     </div>
 
-                    <!-- 10. Pending Award Documents Status (Rose/Teal 3D Theme) -->
+                    <!-- 5. NOT AWARDED TENDER (Maroon) -->
                     <div class="stat-card-3d-wrap group">
-                        <div class="stat-card-3d stat-card-green">
-                            <div class="stat-candy-icon candy-icon-green">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                                <span class="stat-card-label text-center text-xs sm:text-[12.5px] font-black tracking-wider block w-full truncate">Award Documents</span>
-                                <div class="w-full flex justify-center my-0.5">
-                                    <span class="text-base sm:text-lg font-black text-emerald-950 truncate">{{ $docsCompletedCount }} / {{ $wonTenders->count() }}</span>
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'not_awarded']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-maroon {{ in_array(request('card_filter'), ['not_awarded', 'not_awarded_tenders']) ? 'ring-4 ring-[#881337]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-maroon w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
-                                <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">LOI & Work Order</div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">NOT AWARDED TENDER</span>
+                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Unsuccessful Bid</div>
+                                </div>
                             </div>
-                            <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 58px; height: 58px;" title="{{ $docsCompletedPct }}% Docs Verified">
-                                <svg class="w-[58px] h-[58px] -rotate-90" viewBox="0 0 40 40">
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
-                                    <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
-                                            stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $docsCompletedPct / 100) }}" stroke-linecap="round" />
-                                </svg>
-                                <span class="absolute text-xs font-black font-mono text-[#0d9467]">{{ $docsCompletedPct }}%</span>
+                        </a>
+                    </div>
+
+                    <!-- 6. PENDING AWARD DOCS (Cyan) -->
+                    <div class="stat-card-3d-wrap group">
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'pending_docs']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-cyan {{ in_array(request('card_filter'), ['pending_docs', 'pending_award_docs']) ? 'ring-4 ring-[#0284c7]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-cyan w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">PENDING AWARD DOCS</span>
+                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingDocsCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">LOI / LOA Processing</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ------------------------------------------------------------- -->
+            <!-- SECTION 2: BIDDING & SECURITY FINANCIALS (6 CARDS)            -->
+            <!-- ------------------------------------------------------------- -->
+            <div class="space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <h3 class="font-black text-lg text-stone-900 tracking-tight">Bidding & Security Financials</h3>
+
+                    <!-- Controls: Filter by Fiscal Year & Export Report -->
+                    <div class="flex items-center gap-2 print:hidden" x-data="{ fyOpen: false }">
+                        <div class="relative">
+                            <button @click="fyOpen = !fyOpen" type="button" class="px-3.5 py-1.5 bg-white hover:bg-stone-50 border border-[#e5ded4] text-stone-700 rounded-xl text-xs font-bold shadow-2xs transition flex items-center gap-1.5">
+                                <svg class="w-3.5 h-3.5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                                <span>Filter by Fiscal Year</span>
+                                <svg class="w-3 h-3 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                            <div x-show="fyOpen" @click.outside="fyOpen = false" class="absolute right-0 mt-1 w-48 bg-white border border-[#e5ded4] rounded-2xl shadow-xl p-2 z-30 space-y-1 text-xs" style="display: none;">
+                                <a href="{{ request()->fullUrlWithQuery(['fy' => null]) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-bold {{ !request('fy') ? 'text-orange-600 bg-orange-50' : 'text-stone-700' }}">All Fiscal Years</a>
+                                <a href="{{ request()->fullUrlWithQuery(['fy' => '2026-27']) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-semibold text-stone-700">FY 2026-2027</a>
+                                <a href="{{ request()->fullUrlWithQuery(['fy' => '2025-26']) }}" class="block px-3 py-1.5 rounded-lg hover:bg-stone-50 font-semibold text-stone-700">FY 2025-2026</a>
                             </div>
                         </div>
+
+                        <button type="button" onclick="window.print()" class="px-3.5 py-1.5 bg-white hover:bg-stone-50 border border-[#e5ded4] text-stone-700 rounded-xl text-xs font-bold shadow-2xs transition flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            <span>Export Report</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ROW 2 CARDS: 6 FINANCIAL CARDS (Matching Image 2 in 3D ERP System) -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-3.5">
+                    <!-- 1. AWARDED VALUE (Green) -->
+                    <div class="stat-card-3d-wrap group">
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'awarded_value']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-green {{ in_array(request('card_filter'), ['awarded_value', 'awarded']) ? 'ring-4 ring-[#0d9467]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-green w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">AWARDED VALUE</span>
+                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalWonValue) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Total Work Order</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 2. TENDER FEES (Orange) -->
+                    <div class="stat-card-3d-wrap group">
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'tender_fees']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-orange {{ request('card_filter') === 'tender_fees' ? 'ring-4 ring-[#ea580c]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-orange w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">TENDER FEES</span>
+                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalTenderFeesPaid) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Paid Amount</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 3. BID SECURITY PAID (Navy/Dark Blue) -->
+                    <div class="stat-card-3d-wrap group">
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'bid_security_paid']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-navy {{ in_array(request('card_filter'), ['bid_security_paid', 'bid_sec_paid']) ? 'ring-4 ring-[#2B2D4B]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-navy w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">BID SECURITY PAID</span>
+                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecuritySubmitted) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Locked in CDRs / Bank Guarantees</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 4. BID SECURITY REFUNDED (Cyan) -->
+                    <div class="stat-card-3d-wrap group">
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'bid_security_refunded']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-cyan {{ in_array(request('card_filter'), ['bid_security_refunded', 'bid_sec_refunded']) ? 'ring-4 ring-[#0284c7]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-cyan w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 10h10a5 5 0 015 5v2m-15-7l4-4m-4 4l4 4"/></svg>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">BID SECURITY REFUNDED</span>
+                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecurityReleased) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Returned</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 5. PERF. SECURITY PAID (Blue) -->
+                    <div class="stat-card-3d-wrap group">
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'perf_security_paid']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-blue {{ in_array(request('card_filter'), ['perf_security_paid', 'perf_sec_paid']) ? 'ring-4 ring-[#0056d2]/30 scale-[1.02]' : '' }}">
+                                <div class="stat-candy-icon candy-icon-blue w-11 h-11 rounded-2xl flex items-center justify-center shrink-0">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">PERF. SECURITY PAID</span>
+                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityPaid) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Retention & Guarantees</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 6. PERF. SECURITY RELEASED (Lime) -->
+                    <div class="stat-card-3d-wrap group">
+                        <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'perf_security_released']) }}" class="block">
+                            <div class="stat-card-3d stat-card-vertical stat-card-lime {{ in_array(request('card_filter'), ['perf_security_released', 'perf_sec_released']) ? 'ring-4 ring-[#65a30d]/30 scale-[1.02]' : '' }}" style="border-color: #65a30d !important; border-bottom-color: #4d7c0f !important;">
+                                <div class="stat-candy-icon candy-icon-lime w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style="background-color: #65a30d !important;">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                                </div>
+                                <div class="w-full flex flex-col items-center">
+                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center" style="color: #65a30d !important;">PERF. SECURITY RELEASED</span>
+                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityReleased) }}</div>
+                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Returned Guarantee</div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -288,6 +401,10 @@
             <!-- FILTER BAR (Hidden on Print) -->
             <div class="bg-white rounded-3xl border border-[#e5ded4] p-5 shadow-xs print:hidden">
                 <form method="GET" action="{{ route('tenders.reports') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+                    @if(request('card_filter'))
+                        <input type="hidden" name="card_filter" value="{{ request('card_filter') }}">
+                    @endif
+
                     <!-- Search -->
                     <div class="lg:col-span-2">
                         <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Search Keyword</label>
@@ -330,16 +447,6 @@
                         </select>
                     </div>
 
-                    <!-- Tender Fee Status -->
-                    <div>
-                        <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Tender Fee</label>
-                        <select name="tender_fee_status" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
-                            <option value="">All Fees Status</option>
-                            <option value="paid" {{ request('tender_fee_status') === 'paid' ? 'selected' : '' }}>Paid Only</option>
-                            <option value="unpaid" {{ request('tender_fee_status') === 'unpaid' ? 'selected' : '' }}>Unpaid Only</option>
-                        </select>
-                    </div>
-
                     <!-- Action Buttons -->
                     <div class="flex items-end gap-2">
                         <button type="submit" class="flex-1 py-2 px-3 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition">
@@ -371,17 +478,17 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs print:text-[10px]">
                         <thead>
-                            <tr class="bg-stone-100/90 text-stone-900 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider print:bg-stone-200 text-center">
+                            <tr class="bg-stone-100/90 text-stone-900 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider print:bg-stone-200">
                                 <th class="py-3 px-3 text-center w-12 border-r border-[#e5ded4]">S.#</th>
-                                <th class="py-3 px-3 min-w-[140px] border-r border-[#e5ded4]">Tender No. / Code</th>
-                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Description of Items</th>
-                                <th class="py-3 px-4 min-w-[240px] border-r border-[#e5ded4]">Department Name</th>
-                                <th class="py-3 px-3 min-w-[130px] border-r border-[#e5ded4]">Budget (PKR)</th>
-                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4]">Work Order / Award Value</th>
-                                <th class="py-3 px-3 min-w-[160px] border-r border-[#e5ded4]">Tender Fee</th>
-                                <th class="py-3 px-3 min-w-[170px] border-r border-[#e5ded4]">Bid Security (CDR / PO)</th>
-                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4]">Status</th>
-                                <th class="py-3 px-3 min-w-[120px] border-r border-[#e5ded4]">Received Award Documents</th>
+                                <th class="py-3 px-3 text-left min-w-[140px] border-r border-[#e5ded4]">Tender No.</th>
+                                <th class="py-3 px-4 text-left min-w-[240px] border-r border-[#e5ded4]">Description of Items</th>
+                                <th class="py-3 px-4 text-left min-w-[220px] border-r border-[#e5ded4]">Department Name & Vendor Name</th>
+                                <th class="py-3 px-3 text-left min-w-[130px] border-r border-[#e5ded4]">Budget (PKR)</th>
+                                <th class="py-3 px-3 text-left min-w-[150px] border-r border-[#e5ded4]">Work Order / Award Value</th>
+                                <th class="py-3 px-3 text-left min-w-[150px] border-r border-[#e5ded4]">Tender Fee</th>
+                                <th class="py-3 px-3 text-left min-w-[170px] border-r border-[#e5ded4]">Bid Security (CDR / PO)</th>
+                                <th class="py-3 px-3 text-center min-w-[120px] border-r border-[#e5ded4]">Status</th>
+                                <th class="py-3 px-3 text-center min-w-[130px] border-r border-[#e5ded4]">Received Award Documents</th>
                                 <th class="py-3 px-3 text-center min-w-[70px] print:hidden">Action</th>
                             </tr>
                         </thead>
@@ -393,8 +500,8 @@
                                         {{ str_pad($tenders->firstItem() + $idx, 2, '0', STR_PAD_LEFT) }}
                                     </td>
 
-                                    <!-- Tender No. -->
-                                    <td class="py-3 px-3 font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
+                                    <!-- Tender No. (Left-Aligned) -->
+                                    <td class="py-3 px-3 font-mono font-bold text-stone-900 border-r border-[#e5ded4] text-left">
                                         {{ $t->effective_tender_no }}
                                         <div class="mt-0.5">
                                             @if($t->isEpad())
@@ -406,16 +513,18 @@
                                         <div class="text-[10px] text-stone-500 font-sans font-normal">{{ $t->procedure_label }}</div>
                                     </td>
 
-                                    <!-- Item of Description -->
-                                    <td class="py-3 px-4 border-r border-[#e5ded4]">
+                                    <!-- Item of Description (Left-Aligned) -->
+                                    <td class="py-3 px-4 border-r border-[#e5ded4] text-left">
                                         <a href="{{ route('tenders.show', $t) }}" class="font-bold text-stone-900 hover:text-orange-700 transition leading-snug block">
                                             {{ $t->title }}
                                         </a>
                                     </td>
 
-                                    <!-- Department -->
-                                    <td class="py-3 px-4 border-r border-[#e5ded4]">
-                                        <span class="font-bold text-stone-800 block">{{ $t->department?->name ?: 'General' }}</span>
+                                    <!-- Department Name & Vendor Name (Left-Aligned, Phase 6.2) -->
+                                    <td class="py-3 px-4 border-r border-[#e5ded4] text-left">
+                                        <div class="font-bold text-stone-900 leading-snug">
+                                            {{ $t->department ? $t->department->name : '-' }}
+                                        </div>
                                         @if($t->company)
                                             <div class="text-[11px] text-orange-800 font-semibold mt-0.5">
                                                 {{ $t->company->company_name ?: $t->company->name }}
@@ -423,13 +532,13 @@
                                         @endif
                                     </td>
 
-                                    <!-- Estimated Budget -->
-                                    <td class="py-3 px-3 text-right font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
+                                    <!-- Estimated Budget (Left-Aligned with Currency) -->
+                                    <td class="py-3 px-3 text-left font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
                                         {{ $t->budget ? 'PKR ' . number_format($t->budget) : '-' }}
                                     </td>
 
-                                    <!-- Work Order / Awarded Value -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
+                                    <!-- Work Order / Awarded Value (Left-Aligned) -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-left">
                                         @if($t->isWon())
                                             <div class="font-mono font-black text-emerald-800 text-xs">
                                                 PKR {{ number_format($t->awarded_amount ?: $t->budget) }}
@@ -446,15 +555,15 @@
                                         @endif
                                     </td>
 
-                                    <!-- Tender Fee -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
+                                    <!-- Tender Fee (Left-Aligned, Correct Fee Status) -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-left">
                                         @if($t->tender_fee_amount || $t->is_tender_fee_paid)
                                             <div class="flex items-center gap-1.5">
                                                 <span class="font-mono font-bold text-stone-900">PKR {{ number_format($t->tender_fee_amount ?: 0) }}</span>
                                                 @if($t->is_tender_fee_paid)
                                                     <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">Paid ✓</span>
                                                 @else
-                                                    <span class="text-[9px] font-extrabold text-rose-700 bg-rose-50 px-1.5 py-0.2 rounded border border-rose-200">Unpaid ✗</span>
+                                                    <span class="text-[9px] font-extrabold text-rose-700 bg-rose-50 px-1.5 py-0.2 rounded border border-rose-200">Unpaid / Pending</span>
                                                 @endif
                                             </div>
                                             <div class="text-[10px] text-stone-500 mt-0.5">
@@ -470,12 +579,12 @@
                                         @elseif($t->tender_type === 'epad')
                                             <span class="text-rose-700 font-bold text-[10px] bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">EPAD (Free)</span>
                                         @else
-                                            <span class="text-stone-400 font-mono text-[11px]">No Fee</span>
+                                            <span class="text-stone-400 font-mono text-[11px]">Unpaid / Pending</span>
                                         @endif
                                     </td>
 
-                                    <!-- Bid Security (CDR / Pay Order) -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4]">
+                                    <!-- Bid Security (CDR / Pay Order) (Left-Aligned) -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-left">
                                         @if($t->bid_security_amount)
                                             <div class="flex items-center gap-1.5">
                                                 <span class="font-mono font-bold text-blue-900">PKR {{ number_format($t->bid_security_amount) }}</span>
@@ -499,24 +608,32 @@
                                         @endif
                                     </td>
 
-                                    <!-- Outcome -->
+                                    <!-- Status (Centered) -->
                                     <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
                                         @if($t->isWon())
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                                                🏆 WON
+                                                Awarded
                                             </span>
                                         @elseif($t->isLost())
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-900 border border-rose-300">
-                                                ✗ LOST
+                                                Not Awarded
+                                            </span>
+                                        @elseif($t->status === 'cancelled' || $t->tender_outcome === 'cancelled')
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-stone-200 text-stone-800 border border-stone-300">
+                                                Cancelled
+                                            </span>
+                                        @elseif($t->status === 'draft')
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
+                                                Draft
                                             </span>
                                         @else
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-900 border border-blue-200">
-                                                Active
+                                                In Progress
                                             </span>
                                         @endif
                                     </td>
 
-                                    <!-- Post-Award Docs Status -->
+                                    <!-- Received Award Documents (Centered) -->
                                     <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
                                         @if($t->isWon())
                                             @if($t->isDocumentsCompleted())
@@ -533,7 +650,7 @@
                                         @endif
                                     </td>
 
-                                    <!-- Action -->
+                                    <!-- Action (Centered) -->
                                     <td class="py-3 px-3 text-center print:hidden">
                                         <a href="{{ route('tenders.show', $t) }}" class="p-1.5 text-stone-600 hover:text-orange-700 hover:bg-stone-100 rounded-lg transition inline-block" title="View Tender">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>

@@ -267,11 +267,6 @@
                                         <div class="font-bold text-stone-900 leading-snug">
                                             {{ $tender->department ? $tender->department->name : '-' }}
                                         </div>
-                                        @if($tender->department && $tender->department->code)
-                                            <span class="text-[10px] font-mono font-bold text-stone-400 uppercase">
-                                                {{ $tender->department->code }}
-                                            </span>
-                                        @endif
                                     </td>
 
                                     <!-- 4. Tender Description (Left-Aligned) -->
@@ -287,17 +282,13 @@
                                     <!-- 5. Tender No. (Center-Aligned) -->
                                     <td class="py-3 px-3 font-mono font-bold text-stone-900 border-r border-[#e5ded4] text-center">
                                         <div>{{ $tender->effective_tender_no }}</div>
-                                        <div class="mt-0.5 flex justify-center">
-                                            @if($tender->isEpad())
+                                        @if($tender->isEpad())
+                                            <div class="mt-0.5 flex justify-center">
                                                 <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-200">
                                                     EPAD 2.0
                                                 </span>
-                                            @else
-                                                <span class="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase tracking-wider bg-stone-100 text-stone-600 border border-stone-200">
-                                                    Tender
-                                                </span>
-                                            @endif
-                                        </div>
+                                            </div>
+                                        @endif
                                     </td>
 
                                     <!-- 6. Bidding Procedure (Center-Aligned) -->
