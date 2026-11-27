@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tenders/{tender}/post-award-documents', [TenderController::class, 'updatePostAwardDocuments'])->name('tenders.post-award-documents');
     Route::post('/tenders/{tender}/financial-securities', [TenderController::class, 'updateFinancialSecurities'])->name('tenders.financial-securities');
     Route::post('/tenders/{tender}/release-bid-security', [TenderController::class, 'releaseBidSecurity'])->name('tenders.release-bid-security');
+    Route::post('/tenders/{tender}/descriptions', [TenderController::class, 'updateDescriptions'])->name('tenders.descriptions.update');
     Route::delete('/tenders/{tender}', [TenderController::class, 'destroy'])->name('tenders.destroy');
 
     // ePads 2.0 Module (Dedicated & Completely Separate)

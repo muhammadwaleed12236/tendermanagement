@@ -180,8 +180,36 @@ class TenderController extends Controller
             $query->where('status', $request->status);
         }
 
-        if ($request->filled('outcome')) {
-            $query->where('tender_outcome', $request->outcome);
+        $statusFilter = $request->input('status') ?: $request->input('outcome');
+        if (!empty($statusFilter)) {
+            if ($statusFilter === 'cancelled') {
+                $query->where(function ($q) {
+                    $q->where('status', 'cancelled')->orWhere('tender_outcome', 'cancelled');
+                });
+            } elseif ($statusFilter === 'won' || $statusFilter === 'awarded') {
+                $query->where(function ($q) {
+                    $q->where('tender_outcome', 'won')->orWhere('status', 'awarded');
+                });
+            } elseif ($statusFilter === 'lost' || $statusFilter === 'not_awarded') {
+                $query->where(function ($q) {
+                    $q->where('tender_outcome', 'lost')->orWhere('status', 'lost')->orWhere('status', 'closed');
+                });
+            } elseif ($statusFilter === 'in_progress') {
+                $query->where(function ($q) {
+                    $q->where('tender_outcome', 'in_progress')
+                      ->orWhereNull('tender_outcome')
+                      ->orWhere('status', 'published')
+                      ->orWhere('status', 'draft');
+                })->where('status', '!=', 'cancelled')
+                  ->where('tender_outcome', '!=', 'cancelled')
+                  ->where('status', '!=', 'awarded')
+                  ->where('tender_outcome', '!=', 'won')
+                  ->where('tender_outcome', '!=', 'lost');
+            } else {
+                $query->where(function ($q) use ($statusFilter) {
+                    $q->where('tender_outcome', $statusFilter)->orWhere('status', $statusFilter);
+                });
+            }
         } else {
             // Default: focus on active/in-progress pipeline tenders
             $query->where(function ($q) {
@@ -244,8 +272,36 @@ class TenderController extends Controller
             });
         }
 
-        if ($request->filled('outcome')) {
-            $query->where('tender_outcome', $request->outcome);
+        $statusFilter = $request->input('status') ?: $request->input('outcome');
+        if (!empty($statusFilter)) {
+            if ($statusFilter === 'cancelled') {
+                $query->where(function ($q) {
+                    $q->where('status', 'cancelled')->orWhere('tender_outcome', 'cancelled');
+                });
+            } elseif ($statusFilter === 'won' || $statusFilter === 'awarded') {
+                $query->where(function ($q) {
+                    $q->where('tender_outcome', 'won')->orWhere('status', 'awarded');
+                });
+            } elseif ($statusFilter === 'lost' || $statusFilter === 'not_awarded') {
+                $query->where(function ($q) {
+                    $q->where('tender_outcome', 'lost')->orWhere('status', 'lost')->orWhere('status', 'closed');
+                });
+            } elseif ($statusFilter === 'in_progress') {
+                $query->where(function ($q) {
+                    $q->where('tender_outcome', 'in_progress')
+                      ->orWhereNull('tender_outcome')
+                      ->orWhere('status', 'published')
+                      ->orWhere('status', 'draft');
+                })->where('status', '!=', 'cancelled')
+                  ->where('tender_outcome', '!=', 'cancelled')
+                  ->where('status', '!=', 'awarded')
+                  ->where('tender_outcome', '!=', 'won')
+                  ->where('tender_outcome', '!=', 'lost');
+            } else {
+                $query->where(function ($q) use ($statusFilter) {
+                    $q->where('tender_outcome', $statusFilter)->orWhere('status', $statusFilter);
+                });
+            }
         }
 
         if ($request->filled('department_id')) {
@@ -307,6 +363,8 @@ class TenderController extends Controller
             $q->where('is_fully_processed', true)
               ->orWhere('tender_outcome', 'won')
               ->orWhere('status', 'awarded')
+              ->orWhere('status', 'cancelled')
+              ->orWhere('tender_outcome', 'cancelled')
               ->orWhere(function ($sub) {
                   $sub->where('initial_entry_only', false)->orWhereNull('initial_entry_only');
               });
@@ -530,12 +588,18 @@ class TenderController extends Controller
         $tenderType = $validated['tender_type'] ?? 'tender';
         $closingDate = $validated['closing_date'] ?? null;
 
+        $isDraft = $request->boolean('is_draft') || $request->input('is_draft') == '1' || $request->input('action') === 'draft';
+
         if ($tenderType === 'epad') {
             if (empty($closingDate)) {
                 $closingDate = $validated['submission_deadline'] ?? null;
             }
             if (empty($closingDate)) {
-                return back()->withErrors(['closing_date' => 'Closing Date & Time is required for EPAD 2.0.'])->withInput();
+                if ($isDraft) {
+                    $closingDate = now()->addDays(30);
+                } else {
+                    return back()->withErrors(['closing_date' => 'Closing Date & Time is required for EPAD 2.0.'])->withInput();
+                }
             }
             $submissionDeadline = $closingDate;
             $generalOpening = $closingDate;
@@ -549,7 +613,11 @@ class TenderController extends Controller
         } else {
             $submissionDeadline = $validated['submission_deadline'] ?? $closingDate;
             if (empty($submissionDeadline)) {
-                return back()->withErrors(['submission_deadline' => 'Tender Submission Deadline is required.'])->withInput();
+                if ($isDraft) {
+                    $submissionDeadline = now()->addDays(30);
+                } else {
+                    return back()->withErrors(['submission_deadline' => 'Tender Submission Deadline is required.'])->withInput();
+                }
             }
             $isTwoEnvelope = ($validated['bidding_procedure'] === 'single_stage_two_envelope');
             if ($isTwoEnvelope) {
@@ -777,6 +845,7 @@ class TenderController extends Controller
         $isTenderFeePaid = $request->boolean('is_tender_fee_paid');
 
         $tenderData = [
+            'budget' => $validated['budget'] ?? $tender->budget,
             'tender_fee_amount' => $validated['tender_fee_amount'] ?? null,
             'is_tender_fee_paid' => $isTenderFeePaid,
             'tender_fee_bank_account_id' => $validated['tender_fee_bank_account_id'] ?? null,
@@ -863,9 +932,35 @@ class TenderController extends Controller
         return view('tenders.show', compact('tender', 'userBid', 'bankAccounts'));
     }
 
-    public function downloadDocument(Tender $tender)
+    public function downloadDocument(Request $request, Tender $tender)
     {
         $tender->load(['creator', 'department', 'company', 'tenderFeeBankAccount', 'bidSecurityBankAccount']);
+
+        $type = $request->get('type', 'document');
+
+        if ($type === 'fee_receipt' && $tender->tender_fee_receipt_file && Storage::disk('public')->exists($tender->tender_fee_receipt_file)) {
+            $extension = pathinfo($tender->tender_fee_receipt_file, PATHINFO_EXTENSION) ?: 'pdf';
+            $fileName = Str::slug($tender->effective_tender_no ?: $tender->title) . '-fee-receipt.' . $extension;
+            return Storage::disk('public')->download($tender->tender_fee_receipt_file, $fileName);
+        }
+
+        if ($type === 'bid_security' && $tender->bid_security_file && Storage::disk('public')->exists($tender->bid_security_file)) {
+            $extension = pathinfo($tender->bid_security_file, PATHINFO_EXTENSION) ?: 'pdf';
+            $fileName = Str::slug($tender->effective_tender_no ?: $tender->title) . '-bid-security-cdr.' . $extension;
+            return Storage::disk('public')->download($tender->bid_security_file, $fileName);
+        }
+
+        if ($type === 'loi' && $tender->letter_of_intent_file && Storage::disk('public')->exists($tender->letter_of_intent_file)) {
+            $extension = pathinfo($tender->letter_of_intent_file, PATHINFO_EXTENSION) ?: 'pdf';
+            $fileName = Str::slug($tender->effective_tender_no ?: $tender->title) . '-loi.' . $extension;
+            return Storage::disk('public')->download($tender->letter_of_intent_file, $fileName);
+        }
+
+        if ($type === 'award' && $tender->award_letter_file && Storage::disk('public')->exists($tender->award_letter_file)) {
+            $extension = pathinfo($tender->award_letter_file, PATHINFO_EXTENSION) ?: 'pdf';
+            $fileName = Str::slug($tender->effective_tender_no ?: $tender->title) . '-award-letter.' . $extension;
+            return Storage::disk('public')->download($tender->award_letter_file, $fileName);
+        }
 
         if ($tender->document_path && Storage::disk('public')->exists($tender->document_path)) {
             $extension = pathinfo($tender->document_path, PATHINFO_EXTENSION) ?: 'pdf';
@@ -1426,6 +1521,46 @@ class TenderController extends Controller
             $missingText = implode(' and ', $missing);
             return redirect()->route('tenders.show', $tender)->with('info', "Post-award documentation updated. Status remains PENDING: {$missingText} must be submitted.");
         }
+    }
+
+    /**
+     * Update Scope of Work & Work Order Descriptions
+     */
+    public function updateDescriptions(Request $request, Tender $tender)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'description' => 'nullable|string',
+            'stage_1_notes' => 'nullable|string',
+            'requirements' => 'nullable|string',
+        ]);
+
+        $updateData = [];
+        if ($request->filled('description')) {
+            $updateData['description'] = $request->description;
+        }
+        if ($request->has('stage_1_notes')) {
+            $updateData['stage_1_notes'] = $request->stage_1_notes;
+        }
+        if ($request->has('requirements')) {
+            $updateData['requirements'] = $request->requirements;
+        }
+
+        if (!empty($updateData)) {
+            $tender->update($updateData);
+        }
+
+        ActivityLog::record(
+            'update_descriptions',
+            'Tender',
+            "Updated Scope of Work & Work Order descriptions for '{$tender->tender_no}'",
+            $tender
+        );
+
+        return back()->with('success', 'Scope of Work & Work Order descriptions saved successfully! ✅');
     }
 
     public function destroy(Tender $tender)

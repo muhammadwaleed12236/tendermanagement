@@ -30,7 +30,7 @@
                 @if(Auth::check() && Auth::user()->isAdmin())
                     <a href="{{ route('tenders.create') }}" class="px-4 py-2 text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white rounded-full shadow-xs transition flex items-center gap-1.5">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                        <span>Create New Tender</span>
+                        <span>+ Create New Tender</span>
                     </a>
                 @endif
             </div>
@@ -78,9 +78,9 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                         </div>
                         <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full">Total Tender Created</span>
+                            <span class="stat-card-label text-center text-sm sm:text-[15.5px] font-black tracking-wider block w-full">Total Tender Created</span>
                             <div class="w-full flex justify-center my-0.5">
-                                <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($totalTenderCreated ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="text-2xl sm:text-[26px] font-black stat-card-value">{{ str_pad($totalTenderCreated ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">All tenders logged</div>
                         </div>
@@ -101,9 +101,9 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full" style="color: #0284c7 !important;">Total Active Tender</span>
+                            <span class="stat-card-label text-center text-sm sm:text-[15.5px] font-black tracking-wider block w-full" style="color: #0284c7 !important;">Total Active Tender</span>
                             <div class="w-full flex justify-center my-0.5">
-                                <span class="text-xl sm:text-2xl font-black stat-card-value" style="color: #0284c7 !important;">{{ str_pad($totalActiveTender ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="text-2xl sm:text-[26px] font-black stat-card-value" style="color: #0284c7 !important;">{{ str_pad($totalActiveTender ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Bidding open</div>
                         </div>
@@ -125,9 +125,9 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                         <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full">Total Tender Interested</span>
+                            <span class="stat-card-label text-center text-sm sm:text-[15.5px] font-black tracking-wider block w-full">Total Tender Interested</span>
                             <div class="w-full flex justify-center my-0.5">
-                                <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($totalInterested ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="text-2xl sm:text-[26px] font-black stat-card-value">{{ str_pad($totalInterested ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Ready to bid</div>
                         </div>
@@ -149,9 +149,9 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
                         </div>
                         <div class="min-w-0 flex-1 flex flex-col justify-center items-center text-center">
-                            <span class="stat-card-label text-center text-xs sm:text-[13.5px] font-black tracking-wider block w-full">Total Not Interested</span>
+                            <span class="stat-card-label text-center text-sm sm:text-[15.5px] font-black tracking-wider block w-full">Total Not Interested</span>
                             <div class="w-full flex justify-center my-0.5">
-                                <span class="text-xl sm:text-2xl font-black stat-card-value">{{ str_pad($totalNotInterested ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="text-2xl sm:text-[26px] font-black stat-card-value">{{ str_pad($totalNotInterested ?? 0, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Skipped / Archived</div>
                         </div>

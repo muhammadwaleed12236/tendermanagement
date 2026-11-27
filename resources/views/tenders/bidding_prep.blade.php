@@ -3,8 +3,8 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                    <a href="{{ route('tenders.index') }}" class="text-xs font-bold text-orange-700 hover:text-orange-800 transition flex items-center gap-1">
-                        &larr; Back to Tenders Directory
+                    <a href="{{ route('tenders.show', $tender) }}" class="text-xs font-bold text-orange-700 hover:text-orange-800 transition flex items-center gap-1">
+                        &larr; Back to Tender Details
                     </a>
                     <span class="text-stone-300">•</span>
                     <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-emerald-100 text-emerald-900 border border-emerald-300">
@@ -197,12 +197,36 @@
                         </div>
                     </div>
 
+                    <!-- ESTIMATED PROCUREMENT BUDGET (PKR) -->
+                    <div class="p-5 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] shadow-2xs">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <label class="block text-xs font-black uppercase tracking-wider text-stone-900 mb-1">
+                                    Estimated Procurement Budget (PKR) <span class="text-rose-500">*</span>
+                                </label>
+                                <p class="text-xs text-stone-500">
+                                    Official tender estimated value. Rate % below calculates the Bid Security amount based on this budget.
+                                </p>
+                            </div>
+                            <div class="w-full sm:w-80 shrink-0">
+                                <div class="flex rounded-xl border border-[#e5ded4] bg-white overflow-hidden shadow-2xs focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-200 transition">
+                                    <span class="inline-flex items-center px-3.5 bg-stone-100/90 text-stone-600 font-bold text-xs border-r border-[#e5ded4] select-none shrink-0">PKR</span>
+                                    <input type="number" step="0.01" name="budget" id="tender_budget" 
+                                           value="{{ old('budget', $tender->budget) }}" 
+                                           placeholder="e.g. 12,500,000"
+                                           oninput="calculateBidSecurityFromBudget()"
+                                           class="w-full text-xs font-bold text-stone-900 border-0 bg-transparent px-3.5 py-2.5 focus:ring-0 focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- SECTION B: BID SECURITY / EARNEST MONEY (CDR / PAY ORDER) -->
-                    <div class="p-5 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-4">
+                    <div class="p-5 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] space-y-4">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
-                                <h4 class="font-black text-xs uppercase tracking-wider text-amber-950">B. Bid Security / Earnest Money Deposit (CDR / Pay Order)</h4>
+                                <h4 class="font-black text-xs uppercase tracking-wider text-stone-900">B. Bid Security / Earnest Money Deposit (CDR / Pay Order)</h4>
                             </div>
                             <span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">
                                 Must be submitted with Tender Bid
@@ -211,13 +235,7 @@
 
                         <p class="text-xs text-stone-600">
                             As per SPPRA/PPRA rules, Bid Security (typically 1% - 5% of bid amount) must be deposited via Call Deposit Receipt (CDR) or Pay Order in favor of the Procuring Agency.
-                            @if($tender->budget)
-                                <span class="block mt-0.5 text-stone-500 font-semibold">Tender Estimated Budget: <strong class="text-stone-900">PKR {{ number_format($tender->budget) }}</strong></span>
-                            @endif
                         </p>
-
-                        <!-- Preserved Hidden Budget Input for Bid Security Calculation -->
-                        <input type="hidden" name="budget" id="tender_budget" value="{{ $tender->budget ?? 0 }}">
 
                         <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
                             <div>
@@ -319,7 +337,7 @@
 
                     <!-- SUBMIT ACTIONS -->
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#e5ded4]">
-                        <a href="{{ route('tenders.index') }}" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
+                        <a href="{{ route('tenders.show', $tender) }}" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
                             &larr; Return to Tender Details
                         </a>
 

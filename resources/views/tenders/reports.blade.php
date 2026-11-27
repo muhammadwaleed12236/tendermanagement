@@ -76,7 +76,7 @@
             text-align: center !important;
             width: 100% !important;
             margin-bottom: 0.25rem !important;
-            font-size: 0.72rem !important;
+            font-size: 0.82rem !important; /* +2px from 0.72rem */
             font-weight: 900 !important;
             letter-spacing: 0.05em !important;
             text-transform: uppercase !important;
@@ -179,9 +179,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">TOTAL TENDER</span>
-                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">All Listed Tender</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">TOTAL TENDER</span>
+                                    <div class="stat-card-value text-[28px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">All Listed Tender</div>
                                 </div>
                             </div>
                         </a>
@@ -195,9 +195,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">CANCELLED TENDER</span>
-                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($cancelledCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Closed / Dropped</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">CANCELLED TENDER</span>
+                                    <div class="stat-card-value text-[28px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($cancelledCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Closed / Dropped</div>
                                 </div>
                             </div>
                         </a>
@@ -211,9 +211,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">PENDING TENDER</span>
-                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Action Pending / Not Started</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">PENDING TENDER</span>
+                                    <div class="stat-card-value text-[28px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Action Pending / Not Started</div>
                                 </div>
                             </div>
                         </a>
@@ -227,9 +227,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">AWARDED TENDER</span>
-                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Won Contract</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">AWARDED TENDER</span>
+                                    <div class="stat-card-value text-[28px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Won Contract</div>
                                 </div>
                             </div>
                         </a>
@@ -243,9 +243,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">NOT AWARDED TENDER</span>
-                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Unsuccessful Bid</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">NOT AWARDED TENDER</span>
+                                    <div class="stat-card-value text-[28px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Unsuccessful Bid</div>
                                 </div>
                             </div>
                         </a>
@@ -259,9 +259,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">PENDING AWARD DOCS</span>
-                                    <div class="stat-card-value text-2xl font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingDocsCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">LOI / LOA Processing</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">PENDING AWARD DOCS</span>
+                                    <div class="stat-card-value text-[28px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingDocsCount, 2, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">LOI / LOA Processing</div>
                                 </div>
                             </div>
                         </a>
@@ -308,9 +308,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">AWARDED VALUE</span>
-                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalWonValue) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Total Work Order</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">AWARDED VALUE</span>
+                                    <div class="stat-card-value text-base sm:text-[18px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalWonValue) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Total Work Order</div>
                                 </div>
                             </div>
                         </a>
@@ -324,9 +324,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">TENDER FEES</span>
-                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalTenderFeesPaid) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Paid Amount</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">TENDER FEES</span>
+                                    <div class="stat-card-value text-base sm:text-[18px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalTenderFeesPaid) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Paid Amount</div>
                                 </div>
                             </div>
                         </a>
@@ -340,9 +340,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">BID SECURITY PAID</span>
-                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecuritySubmitted) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Locked in CDRs / Bank Guarantees</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">BID SECURITY PAID</span>
+                                    <div class="stat-card-value text-base sm:text-[18px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecuritySubmitted) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Locked in CDRs / Bank Guarantees</div>
                                 </div>
                             </div>
                         </a>
@@ -356,9 +356,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 10h10a5 5 0 015 5v2m-15-7l4-4m-4 4l4 4"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">BID SECURITY REFUNDED</span>
-                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecurityReleased) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Returned</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">BID SECURITY REFUNDED</span>
+                                    <div class="stat-card-value text-base sm:text-[18px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecurityReleased) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Returned</div>
                                 </div>
                             </div>
                         </a>
@@ -372,9 +372,9 @@
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center">PERF. SECURITY PAID</span>
-                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityPaid) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Retention & Guarantees</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center">PERF. SECURITY PAID</span>
+                                    <div class="stat-card-value text-base sm:text-[18px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityPaid) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Retention & Guarantees</div>
                                 </div>
                             </div>
                         </a>
@@ -383,14 +383,14 @@
                     <!-- 6. PERF. SECURITY RELEASED (Lime) -->
                     <div class="stat-card-3d-wrap group">
                         <a href="{{ request()->fullUrlWithQuery(['card_filter' => 'perf_security_released']) }}" class="block">
-                            <div class="stat-card-3d stat-card-vertical stat-card-lime {{ in_array(request('card_filter'), ['perf_security_released', 'perf_sec_released']) ? 'ring-4 ring-[#65a30d]/30 scale-[1.02]' : '' }}" style="border-color: #65a30d !important; border-bottom-color: #4d7c0f !important;">
-                                <div class="stat-candy-icon candy-icon-lime w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style="background-color: #65a30d !important;">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
+                            <div class="stat-card-3d stat-card-vertical stat-card-lime {{ in_array(request('card_filter'), ['perf_security_released', 'perf_sec_released']) ? 'ring-4 ring-[#65a30d]/30 scale-[1.02]' : '' }}" style="border: 2.5px solid #65a30d !important; border-bottom: 6px solid #3f6212 !important; box-shadow: 0 14px 28px -6px rgba(101, 163, 13, 0.22) !important;">
+                                <div class="stat-candy-icon candy-icon-lime w-11 h-11 rounded-2xl flex items-center justify-center shrink-0" style="background: #65a30d !important; border-top: 1.5px solid rgba(255,255,255,0.4) !important; border-bottom: 3.5px solid #3f6212 !important; box-shadow: 0 8px 16px rgba(101, 163, 13, 0.35) !important;">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>
                                 </div>
                                 <div class="w-full flex flex-col items-center">
-                                    <span class="stat-card-label text-[11px] font-black uppercase tracking-wider block text-center" style="color: #65a30d !important;">PERF. SECURITY RELEASED</span>
-                                    <div class="stat-card-value text-xs sm:text-sm font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityReleased) }}</div>
-                                    <div class="text-[10px] text-stone-500 font-medium truncate text-center w-full">Returned Guarantee</div>
+                                    <span class="stat-card-label text-[15px] font-black uppercase tracking-wider block text-center" style="color: #65a30d !important;">PERF. SECURITY RELEASED</span>
+                                    <div class="stat-card-value text-base sm:text-[18px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityReleased) }}</div>
+                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Returned Guarantee</div>
                                 </div>
                             </div>
                         </a>
@@ -400,12 +400,12 @@
 
             <!-- FILTER BAR (Hidden on Print) -->
             <div class="bg-white rounded-3xl border border-[#e5ded4] p-5 shadow-xs print:hidden">
-                <form method="GET" action="{{ route('tenders.reports') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+                <form method="GET" action="{{ route('tenders.reports') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                     @if(request('card_filter'))
                         <input type="hidden" name="card_filter" value="{{ request('card_filter') }}">
                     @endif
 
-                    <!-- Search -->
+                    <!-- Search Keyword -->
                     <div class="lg:col-span-2">
                         <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Search Keyword</label>
                         <input type="text" name="search" value="{{ request('search') }}" 
@@ -413,24 +413,15 @@
                                class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
                     </div>
 
-                    <!-- Outcome Filter -->
+                    <!-- Status Filter (Section 15: Status replaces Outcome) -->
                     <div>
-                        <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Outcome</label>
-                        <select name="outcome" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
-                            <option value="">All Outcomes</option>
-                            <option value="won" {{ request('outcome') === 'won' ? 'selected' : '' }}>🏆 Awarded Only</option>
-                            <option value="in_progress" {{ request('outcome') === 'in_progress' ? 'selected' : '' }}>In Progress</option>
-                            <option value="lost" {{ request('outcome') === 'lost' ? 'selected' : '' }}>Not Awarded</option>
-                        </select>
-                    </div>
-
-                    <!-- Tender Mode Filter -->
-                    <div>
-                        <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Mode</label>
-                        <select name="tender_type" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
-                            <option value="">All Modes</option>
-                            <option value="tender" {{ request('tender_type') === 'tender' ? 'selected' : '' }}>Tender (Paper)</option>
-                            <option value="epad" {{ request('tender_type') === 'epad' ? 'selected' : '' }}>EPAD 2.0</option>
+                        <label class="block text-[11px] font-black uppercase tracking-wider text-stone-600 mb-1">Status</label>
+                        <select name="status" class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-stone-50/40 focus:bg-white focus:border-orange-500 focus:ring-orange-500">
+                            <option value="">All Statuses</option>
+                            <option value="awarded" {{ in_array(request('status') ?: request('outcome'), ['awarded', 'won']) ? 'selected' : '' }}>Awarded</option>
+                            <option value="in_progress" {{ (request('status') ?: request('outcome')) === 'in_progress' ? 'selected' : '' }}>In Progress</option>
+                            <option value="not_awarded" {{ in_array(request('status') ?: request('outcome'), ['not_awarded', 'lost']) ? 'selected' : '' }}>Not Awarded</option>
+                            <option value="cancelled" {{ (request('status') ?: request('outcome')) === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                         </select>
                     </div>
 
@@ -480,74 +471,119 @@
                         <thead>
                             <tr class="bg-stone-100/90 text-stone-900 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider print:bg-stone-200">
                                 <th class="py-3 px-3 text-center w-12 border-r border-[#e5ded4]">S.#</th>
-                                <th class="py-3 px-3 text-left min-w-[140px] border-r border-[#e5ded4]">Tender No.</th>
+                                <th class="py-3 px-3 text-left min-w-[140px] border-r border-[#e5ded4]">Tender No. / Code</th>
                                 <th class="py-3 px-4 text-left min-w-[240px] border-r border-[#e5ded4]">Description of Items</th>
-                                <th class="py-3 px-4 text-left min-w-[220px] border-r border-[#e5ded4]">Department Name & Vendor Name</th>
-                                <th class="py-3 px-3 text-left min-w-[130px] border-r border-[#e5ded4]">Budget (PKR)</th>
-                                <th class="py-3 px-3 text-left min-w-[150px] border-r border-[#e5ded4]">Work Order / Award Value</th>
+                                <th class="py-3 px-4 text-left min-w-[220px] border-r border-[#e5ded4]">Department Name</th>
+                                <th class="py-3 px-3 text-center min-w-[130px] border-r border-[#e5ded4]">Budget (PKR)</th>
+                                <th class="py-3 px-3 text-center min-w-[150px] border-r border-[#e5ded4]">Work Order / Award Value</th>
                                 <th class="py-3 px-3 text-left min-w-[150px] border-r border-[#e5ded4]">Tender Fee</th>
                                 <th class="py-3 px-3 text-left min-w-[170px] border-r border-[#e5ded4]">Bid Security (CDR / PO)</th>
                                 <th class="py-3 px-3 text-center min-w-[120px] border-r border-[#e5ded4]">Status</th>
                                 <th class="py-3 px-3 text-center min-w-[130px] border-r border-[#e5ded4]">Received Award Documents</th>
-                                <th class="py-3 px-3 text-center min-w-[70px] print:hidden">Action</th>
+                                <th class="py-3 px-3 text-center min-w-[90px] print:hidden">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#e5ded4] text-stone-800">
                             @forelse($tenders as $idx => $t)
+                                @php
+                                    $postDocsHtml = '';
+                                    if ($t->isWon()) {
+                                        if ($t->isDocumentsCompleted()) {
+                                            $postDocsHtml = '<span class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Complete ✓</span>';
+                                        } else {
+                                            $postDocsHtml = '<span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">Pending (' . $t->completedDocumentsCount() . '/2) ⚠️</span>';
+                                        }
+                                    } else {
+                                        $postDocsHtml = '<span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">Pending (1/2) ⚠️</span>';
+                                    }
+
+                                    $feeHtml = 'Unpaid / Pending';
+                                    if ($t->is_tender_fee_paid) {
+                                        $feeHtml = '<span class="font-mono font-bold text-stone-900">PKR ' . number_format($t->tender_fee_amount ?: 0) . '</span> <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>';
+                                    } elseif ($t->tender_fee_amount) {
+                                        $feeHtml = '<span class="font-mono font-bold text-stone-900">PKR ' . number_format($t->tender_fee_amount) . '</span> <span class="text-[10px] font-bold text-rose-600 ml-1">Unpaid</span>';
+                                    }
+
+                                    $bidSecHtml = '-';
+                                    if ($t->bid_security_amount) {
+                                        $typeStr = strtoupper($t->bid_security_type ?: 'PAY_ORDER');
+                                        $instStr = $t->bid_security_instrument_no ?: '-';
+                                        $bidSecHtml = '<div class="font-mono font-bold text-stone-900">PKR ' . number_format($t->bid_security_amount) . '</div><div class="text-[10px] text-stone-400 font-mono uppercase">' . $typeStr . ' # ' . $instStr . '</div>';
+                                    }
+
+                                    $tenderModalJson = json_encode([
+                                        'effective_tender_no' => $t->effective_tender_no,
+                                        'description' => $t->description ?: ($t->title ?: 'No description provided.'),
+                                        'technical_eligibility' => $t->technical_eligibility ?: 'Valid PEC Licence',
+                                        'download_url' => route('tenders.download-document', $t),
+                                        'has_document' => (bool)$t->document_path,
+                                        'department' => $t->department?->name ?: 'General',
+                                        'firm' => $t->company ? ($t->company->company_name ?: $t->company->name) : 'Al Madina Enterprises',
+                                        'procedure' => $t->procedure_label,
+                                        'contact' => $t->contact_person ?: 'Rizwanullah Khan',
+                                        'post_docs_html' => $postDocsHtml,
+                                        'deadline' => $t->submission_date ? $t->submission_date->format('d/m/Y \a\t h:i A') : '-',
+                                        'opening' => $t->opening_date ? $t->opening_date->format('d/m/Y') : '-',
+                                        'budget' => $t->budget ? 'PKR ' . number_format($t->budget, 2) : '-',
+                                        'awarded' => ($t->isWon() && ($t->awarded_amount || $t->budget)) ? ('PKR ' . number_format($t->awarded_amount ?: $t->budget, 2)) : ($t->budget ? ('PKR ' . number_format($t->budget, 2)) : '-'),
+                                        'fee_html' => $feeHtml,
+                                        'bid_sec_html' => $bidSecHtml,
+                                    ]);
+                                @endphp
                                 <tr class="hover:bg-amber-50/20 transition-colors {{ $t->isWon() ? 'bg-emerald-50/15' : '' }}">
-                                    <!-- S.# -->
+                                    <!-- S.# (Centered) -->
                                     <td class="py-3 px-3 text-center font-bold text-stone-600 border-r border-[#e5ded4]">
                                         {{ str_pad($tenders->firstItem() + $idx, 2, '0', STR_PAD_LEFT) }}
                                     </td>
 
-                                    <!-- Tender No. (Left-Aligned) -->
+                                    <!-- Tender No. / Code (Left-Aligned per Reference) -->
                                     <td class="py-3 px-3 font-mono font-bold text-stone-900 border-r border-[#e5ded4] text-left">
-                                        {{ $t->effective_tender_no }}
-                                        <div class="mt-0.5">
-                                            @if($t->isEpad())
+                                        <div class="font-mono font-bold text-stone-900">{{ $t->effective_tender_no }}</div>
+                                        @if($t->isEpad())
+                                            <div class="mt-0.5">
                                                 <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-200">
                                                     EPAD 2.0
                                                 </span>
-                                            @endif
-                                        </div>
-                                        <div class="text-[10px] text-stone-500 font-sans font-normal">{{ $t->procedure_label }}</div>
+                                            </div>
+                                        @endif
+                                        <div class="text-[10px] text-stone-500 font-sans font-normal mt-0.5">{{ $t->procedure_label }}</div>
                                     </td>
 
-                                    <!-- Item of Description (Left-Aligned) -->
+                                    <!-- Description of Items (Left-Aligned per Reference) -->
                                     <td class="py-3 px-4 border-r border-[#e5ded4] text-left">
-                                        <a href="{{ route('tenders.show', $t) }}" class="font-bold text-stone-900 hover:text-orange-700 transition leading-snug block">
+                                        <a href="{{ route('tenders.show', ['tender' => $t, 'from' => 'reports']) }}" class="font-bold text-stone-900 hover:text-orange-700 transition leading-snug inline-block max-w-md">
                                             {{ $t->title }}
                                         </a>
                                     </td>
 
-                                    <!-- Department Name & Vendor Name (Left-Aligned, Phase 6.2) -->
+                                    <!-- Department Name & Vendor Name (Left-Aligned, No Short Codes) -->
                                     <td class="py-3 px-4 border-r border-[#e5ded4] text-left">
                                         <div class="font-bold text-stone-900 leading-snug">
                                             {{ $t->department ? $t->department->name : '-' }}
                                         </div>
                                         @if($t->company)
-                                            <div class="text-[11px] text-orange-800 font-semibold mt-0.5">
+                                            <div class="text-[11px] text-[#c2410c] font-bold mt-0.5">
                                                 {{ $t->company->company_name ?: $t->company->name }}
                                             </div>
                                         @endif
                                     </td>
 
-                                    <!-- Estimated Budget (Left-Aligned with Currency) -->
-                                    <td class="py-3 px-3 text-left font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
+                                    <!-- Estimated Budget (Center-Aligned) -->
+                                    <td class="py-3 px-3 text-center font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
                                         {{ $t->budget ? 'PKR ' . number_format($t->budget) : '-' }}
                                     </td>
 
-                                    <!-- Work Order / Awarded Value (Left-Aligned) -->
-                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-left">
+                                    <!-- Work Order / Awarded Value (Center-Aligned) -->
+                                    <td class="py-3 px-3 border-r border-[#e5ded4] text-center">
                                         @if($t->isWon())
                                             <div class="font-mono font-black text-emerald-800 text-xs">
                                                 PKR {{ number_format($t->awarded_amount ?: $t->budget) }}
                                             </div>
-                                            <div class="text-[10px] text-stone-600 mt-0.5">
+                                            <div class="text-[10px] text-emerald-700 font-semibold mt-0.5">
                                                 @if($t->effective_work_order_no)
                                                     <span class="font-bold text-stone-700">W.O:</span> {{ $t->effective_work_order_no }}
                                                 @else
-                                                    <span class="italic text-stone-400">Awarded</span>
+                                                    <span>Awarded</span>
                                                 @endif
                                             </div>
                                         @else
@@ -555,22 +591,22 @@
                                         @endif
                                     </td>
 
-                                    <!-- Tender Fee (Left-Aligned, Correct Fee Status) -->
+                                    <!-- Tender Fee (Left-Aligned per Reference) -->
                                     <td class="py-3 px-3 border-r border-[#e5ded4] text-left">
                                         @if($t->tender_fee_amount || $t->is_tender_fee_paid)
-                                            <div class="flex items-center gap-1.5">
+                                            <div class="flex items-center justify-start gap-1.5">
                                                 <span class="font-mono font-bold text-stone-900">PKR {{ number_format($t->tender_fee_amount ?: 0) }}</span>
                                                 @if($t->is_tender_fee_paid)
                                                     <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200">Paid ✓</span>
                                                 @else
-                                                    <span class="text-[9px] font-extrabold text-rose-700 bg-rose-50 px-1.5 py-0.2 rounded border border-rose-200">Unpaid / Pending</span>
+                                                    <span class="text-[9px] font-extrabold text-rose-700 bg-rose-50 px-1.5 py-0.2 rounded border border-rose-200">Unpaid</span>
                                                 @endif
                                             </div>
-                                            <div class="text-[10px] text-stone-500 mt-0.5">
+                                            <div class="text-[10px] text-stone-500 mt-0.5 text-left">
                                                 @if($t->tenderFeeBankAccount)
                                                     <span class="font-semibold text-stone-700">A/c:</span> {{ $t->tenderFeeBankAccount->bank_name }}
                                                 @elseif($t->tender_fee_payment_mode)
-                                                    <span>{{ ucfirst($t->tender_fee_payment_mode) }}</span>
+                                                    <span>{{ ucfirst(str_replace('_', ' ', $t->tender_fee_payment_mode)) }}</span>
                                                 @endif
                                                 @if($t->tender_fee_ref_no)
                                                     <span>({{ $t->tender_fee_ref_no }})</span>
@@ -579,14 +615,14 @@
                                         @elseif($t->tender_type === 'epad')
                                             <span class="text-rose-700 font-bold text-[10px] bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">EPAD (Free)</span>
                                         @else
-                                            <span class="text-stone-400 font-mono text-[11px]">Unpaid / Pending</span>
+                                            <span class="text-stone-400 font-mono text-[11px]">No Fee</span>
                                         @endif
                                     </td>
 
-                                    <!-- Bid Security (CDR / Pay Order) (Left-Aligned) -->
+                                    <!-- Bid Security (CDR / Pay Order) (Left-Aligned per Reference) -->
                                     <td class="py-3 px-3 border-r border-[#e5ded4] text-left">
                                         @if($t->bid_security_amount)
-                                            <div class="flex items-center gap-1.5">
+                                            <div class="flex items-center justify-start gap-1.5">
                                                 <span class="font-mono font-bold text-blue-900">PKR {{ number_format($t->bid_security_amount) }}</span>
                                                 @if($t->bid_security_status === 'released_returned')
                                                     <span class="text-[9px] font-extrabold text-teal-700 bg-teal-50 px-1.5 py-0.2 rounded border border-teal-200">Returned</span>
@@ -594,7 +630,7 @@
                                                     <span class="text-[9px] font-extrabold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200">Active</span>
                                                 @endif
                                             </div>
-                                            <div class="text-[10px] text-stone-500 mt-0.5">
+                                            <div class="text-[10px] text-stone-500 mt-0.5 text-left">
                                                 <span class="font-bold text-stone-700">{{ strtoupper($t->bid_security_type ?: 'CDR') }}:</span>
                                                 <span>{{ $t->bid_security_instrument_no ?: '-' }}</span>
                                                 @if($t->bidSecurityBankAccount)
@@ -612,11 +648,11 @@
                                     <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
                                         @if($t->isWon())
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                                                Awarded
+                                                🏆 WON
                                             </span>
                                         @elseif($t->isLost())
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-900 border border-rose-300">
-                                                Not Awarded
+                                                ❌ LOST
                                             </span>
                                         @elseif($t->status === 'cancelled' || $t->tender_outcome === 'cancelled')
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-stone-200 text-stone-800 border border-stone-300">
@@ -628,7 +664,7 @@
                                             </span>
                                         @else
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-900 border border-blue-200">
-                                                In Progress
+                                                Active
                                             </span>
                                         @endif
                                     </td>
@@ -652,9 +688,20 @@
 
                                     <!-- Action (Centered) -->
                                     <td class="py-3 px-3 text-center print:hidden">
-                                        <a href="{{ route('tenders.show', $t) }}" class="p-1.5 text-stone-600 hover:text-orange-700 hover:bg-stone-100 rounded-lg transition inline-block" title="View Tender">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                        </a>
+                                        <div class="flex items-center justify-center gap-1">
+                                            <!-- Information / i Button (Opens Exact 2-Card Layout Modal) -->
+                                            <button type="button" 
+                                                    onclick='openReportTenderModal({!! htmlspecialchars($tenderModalJson, ENT_QUOTES, "UTF-8") !!})' 
+                                                    class="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition inline-flex items-center justify-center" 
+                                                    title="View Tender Specifications & Summary">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                            </button>
+
+                                            <!-- View Details Button -->
+                                            <a href="{{ route('tenders.show', ['tender' => $t, 'from' => 'reports']) }}" class="p-1.5 text-stone-600 hover:text-orange-700 hover:bg-stone-100 rounded-lg transition inline-flex items-center justify-center" title="View Tender Details">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
@@ -693,4 +740,176 @@
 
         </div>
     </div>
+
+    <!-- TENDER INFORMATION MODAL (Matching Image 1 Exact Layout) -->
+    <div id="reportTenderInfoModal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-6">
+        <div class="bg-[#ede5d8] rounded-3xl border border-[#e5ded4] shadow-2xl max-w-5xl w-full overflow-hidden flex flex-col max-h-[92vh]">
+            <!-- Modal Header -->
+            <div class="p-4 px-6 bg-white/80 backdrop-blur-xs border-b border-[#e5ded4] flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-black text-sm text-stone-900 truncate">Tender Specifications & Scope of Work</h4>
+                        <span id="repModalHeaderNo" class="text-[11px] font-mono text-stone-500 font-bold"></span>
+                    </div>
+                </div>
+                <button type="button" onclick="closeReportTenderModal()" class="text-stone-400 hover:text-stone-800 p-1 font-bold text-2xl leading-none">&times;</button>
+            </div>
+
+            <!-- Modal Body (Two Cards Exactly Matching media_1795786846205_e4b7ea45.jpg) -->
+            <div class="p-5 sm:p-7 overflow-y-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    
+                    <!-- Left Card: Scope & Eligibility & Document -->
+                    <div class="lg:col-span-7 bg-white p-7 rounded-3xl border border-[#e5ded4] shadow-xs space-y-5">
+                        <!-- Scope of Work & Tender Description -->
+                        <div>
+                            <h4 class="text-[11px] font-black text-stone-500 uppercase tracking-wider mb-2">Scope of Work & Tender Description</h4>
+                            <div id="repModalDesc" class="text-sm font-bold text-stone-900 leading-relaxed whitespace-pre-line">
+                            </div>
+                        </div>
+
+                        <hr class="border-[#e5ded4]">
+
+                        <!-- Technical Eligibility & Requirements -->
+                        <div>
+                            <h4 class="text-[11px] font-black text-stone-500 uppercase tracking-wider mb-2">Technical Eligibility & Requirements</h4>
+                            <div id="repModalElig" class="p-4 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] text-xs text-stone-800 font-medium leading-relaxed min-h-[60px]">
+                            </div>
+                        </div>
+
+                        <hr class="border-[#e5ded4]">
+
+                        <!-- Tender Document Download Row -->
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-2xl bg-orange-100/70 border border-orange-200/60 flex items-center justify-center text-orange-600 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-stone-900">Tender Document</div>
+                                    <div class="text-xs text-stone-500">Download attached official tender document</div>
+                                </div>
+                            </div>
+                            <a id="repModalDownloadLink" href="#" target="_blank" class="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition inline-flex items-center gap-2 shadow-xs shrink-0">
+                                <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                <span>Download Tender Document</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Card: Tender Summary & Parameters -->
+                    <div class="lg:col-span-5 bg-white p-7 rounded-3xl border border-[#e5ded4] shadow-xs space-y-4">
+                        <h4 class="font-black text-stone-900 text-xs uppercase tracking-wider">Tender Summary & Parameters</h4>
+
+                        <div class="space-y-2.5 divide-y divide-[#e5ded4] text-xs">
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Tender No.</span>
+                                <span id="repModalParamNo" class="font-mono font-bold text-stone-900"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Department</span>
+                                <span id="repModalParamDept" class="font-bold text-stone-900 text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Our Bidding Firm</span>
+                                <span id="repModalParamFirm" class="font-bold text-[#c2410c] text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Bidding Procedure</span>
+                                <span id="repModalParamProc" class="font-bold text-stone-900 text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Contact Person</span>
+                                <span id="repModalParamContact" class="font-bold text-stone-900 text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Post-Award Docs</span>
+                                <div id="repModalParamDocs" class="text-right"></div>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Submission Deadline</span>
+                                <span id="repModalParamDeadline" class="font-bold text-stone-900 text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Bid Opening Date</span>
+                                <span id="repModalParamOpening" class="font-bold text-stone-900 text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Estimated Budget</span>
+                                <span id="repModalParamBudget" class="font-mono font-bold text-emerald-700 text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Awarded Work Order</span>
+                                <span id="repModalParamAwarded" class="font-mono font-bold text-emerald-700 text-right"></span>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-center">
+                                <span class="text-stone-500 font-medium">Tender Document Fee</span>
+                                <div id="repModalParamFee" class="text-right text-stone-500"></div>
+                            </div>
+
+                            <div class="pt-2 flex justify-between items-start">
+                                <span class="text-stone-500 font-medium pt-0.5">Bid Security (CDR)</span>
+                                <div id="repModalParamBidSec" class="text-right"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-3 px-6 bg-white/80 border-t border-[#e5ded4] flex items-center justify-end shrink-0">
+                <button type="button" onclick="closeReportTenderModal()" class="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openReportTenderModal(data) {
+            document.getElementById('repModalHeaderNo').textContent = data.effective_tender_no || '';
+            document.getElementById('repModalDesc').textContent = data.description || '';
+            document.getElementById('repModalElig').textContent = data.technical_eligibility || 'Valid PEC Licence';
+            document.getElementById('repModalDownloadLink').href = data.download_url || '#';
+            
+            document.getElementById('repModalParamNo').textContent = data.effective_tender_no || '';
+            document.getElementById('repModalParamDept').textContent = data.department || '-';
+            document.getElementById('repModalParamFirm').textContent = data.firm || '-';
+            document.getElementById('repModalParamProc').textContent = data.procedure || '-';
+            document.getElementById('repModalParamContact').textContent = data.contact || '-';
+            document.getElementById('repModalParamDocs').innerHTML = data.post_docs_html || '-';
+            document.getElementById('repModalParamDeadline').textContent = data.deadline || '-';
+            document.getElementById('repModalParamOpening').textContent = data.opening || '-';
+            document.getElementById('repModalParamBudget').textContent = data.budget || '-';
+            document.getElementById('repModalParamAwarded').textContent = data.awarded || '-';
+            document.getElementById('repModalParamFee').innerHTML = data.fee_html || '-';
+            document.getElementById('repModalParamBidSec').innerHTML = data.bid_sec_html || '-';
+
+            const modal = document.getElementById('reportTenderInfoModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeReportTenderModal() {
+            const modal = document.getElementById('reportTenderInfoModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+    </script>
 </x-app-layout>

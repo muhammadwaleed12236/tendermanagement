@@ -61,35 +61,45 @@
                     <input type="hidden" name="awarded_amount" value="{{ $tender->awarded_amount }}">
                     <input type="hidden" name="work_order_no" value="{{ $tender->work_order_no }}">
 
-                    <!-- TOP TOOLBAR: MODE & PROCEDURE SELECTOR -->
-                    <div class="p-3.5 rounded-2xl bg-stone-50/70 border border-[#e5ded4] shadow-2xs">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <!-- TOP TOOLBAR: MODE & PROCEDURE SELECTOR (Exact matching previous pill design) -->
+                    <div class="p-3 sm:p-3.5 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] shadow-xs">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <!-- MODE SELECTION (Tender Paper Only) -->
                             <div class="flex items-center gap-3">
-                                <span class="text-[11px] font-black uppercase text-stone-500 tracking-wider">MODE:</span>
-                                <div class="inline-flex items-center gap-1.5 bg-white p-1 rounded-xl border border-[#e5ded4] shadow-2xs">
-                                    <label class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold border bg-orange-50/80 text-orange-950 border-orange-300 ring-1 ring-orange-200 cursor-default">
+                                <span class="text-[11px] font-black uppercase text-stone-700 tracking-wider">MODE:</span>
+                                <div class="inline-flex items-center">
+                                    <label id="card_type_tender"
+                                           class="flex items-center gap-2 py-1.5 px-4 rounded-full border-2 font-bold text-xs border-orange-500 bg-orange-50/80 text-stone-900 ring-2 ring-orange-200 cursor-default">
+                                        <span class="w-3.5 h-3.5 rounded-full border-2 border-orange-600 flex items-center justify-center shrink-0">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>
+                                        </span>
                                         <input type="hidden" name="tender_type" id="mode_tender_radio" value="tender">
-                                        <svg class="w-3.5 h-3.5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                        <span>Tender (Paper)</span>
+                                        <span class="font-extrabold text-stone-900">Tender (Paper)</span>
                                     </label>
                                 </div>
                             </div>
 
                             <!-- PROCEDURE SELECTION -->
                             <div class="flex items-center gap-3">
-                                <span class="text-[11px] font-black uppercase text-stone-500 tracking-wider">PROCEDURE:</span>
-                                <div class="inline-flex items-center gap-1.5 bg-white p-1 rounded-xl border border-[#e5ded4] shadow-2xs">
-                                    <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border"
-                                           id="proc_1e_label" onclick="selectEditProcedure('single_stage_one_envelope')">
+                                <span class="text-[11px] font-black uppercase text-stone-700 tracking-wider">PROCEDURE:</span>
+                                <div class="inline-flex items-center gap-2">
+                                    <label id="proc_1e_label" onclick="selectEditProcedure('single_stage_one_envelope')"
+                                           class="flex items-center gap-2 py-1.5 px-4 rounded-full border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50/80 text-stone-900 ring-2 ring-orange-200">
                                         <input type="radio" name="bidding_procedure" id="proc_1e_radio" value="single_stage_one_envelope" 
                                                {{ old('bidding_procedure', $tender->bidding_procedure) !== 'single_stage_two_envelope' ? 'checked' : '' }} class="hidden">
+                                        <span id="proc_1e_dot" class="w-3.5 h-3.5 rounded-full border-2 border-orange-600 flex items-center justify-center shrink-0">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>
+                                        </span>
                                         <span>Single Stage 1E</span>
                                     </label>
-                                    <label class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border"
-                                           id="proc_2e_label" onclick="selectEditProcedure('single_stage_two_envelope')">
+
+                                    <label id="proc_2e_label" onclick="selectEditProcedure('single_stage_two_envelope')"
+                                           class="flex items-center gap-2 py-1.5 px-4 rounded-full border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50">
                                         <input type="radio" name="bidding_procedure" id="proc_2e_radio" value="single_stage_two_envelope" 
                                                {{ old('bidding_procedure', $tender->bidding_procedure) === 'single_stage_two_envelope' ? 'checked' : '' }} class="hidden">
+                                        <span id="proc_2e_dot" class="w-3.5 h-3.5 rounded-full border-2 border-stone-400 flex items-center justify-center shrink-0">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>
+                                        </span>
                                         <span>Single Stage 2E</span>
                                     </label>
                                 </div>
@@ -100,7 +110,7 @@
                     <!-- ======================================================== -->
                     <!-- SECTION 1: GENERAL INFORMATION                            -->
                     <!-- ======================================================== -->
-                    <div class="p-6 rounded-2xl bg-white border border-[#e5ded4] shadow-2xs space-y-4">
+                    <div class="p-6 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] shadow-2xs space-y-4">
                         <div class="flex items-center gap-2 pb-2 border-b border-[#e5ded4]">
                             <div class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-black text-xs">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -115,7 +125,7 @@
                                     Procuring Department / Agency <span class="text-rose-500">*</span>
                                 </label>
                                 <select name="department_id" id="input_department_id" required 
-                                        class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
+                                        class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
                                     <option value="">-- Choose Department / Client --</option>
                                     @foreach($departments as $dept)
                                         <option value="{{ $dept->id }}" {{ old('department_id', $tender->department_id) == $dept->id ? 'selected' : '' }}>
@@ -134,7 +144,7 @@
                                 </div>
                                 <input type="text" name="tender_no" id="input_tender_no" value="{{ old('tender_no', $tender->tender_no) }}" 
                                        placeholder="e.g. P&DD/GOS/TD/001/2025-26" 
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
+                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
                             </div>
                         </div>
 
@@ -145,7 +155,7 @@
                             </label>
                             <textarea name="title" id="input_title" rows="2" required 
                                       placeholder="e.g. Supply, Installation, Testing & Commissioning of Audio-Video System..." 
-                                      class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition p-3">{{ old('title', $tender->title) }}</textarea>
+                                      class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition p-3">{{ old('title', $tender->title) }}</textarea>
                         </div>
 
                         <!-- Row 3: Estimated Budget (PKR) & Contact Person (Optional) -->
@@ -154,13 +164,11 @@
                                 <label class="block text-xs font-bold text-stone-700 mb-1.5">
                                     Estimated Budget (PKR)
                                 </label>
-                                <div class="relative rounded-xl shadow-2xs">
-                                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-xs font-black text-stone-500">
-                                        PKR
-                                    </div>
+                                <div class="flex rounded-xl border border-[#e5ded4] bg-white overflow-hidden shadow-2xs focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-200 transition">
+                                    <span class="inline-flex items-center px-3.5 bg-stone-100/90 text-stone-600 font-bold text-xs border-r border-[#e5ded4] select-none shrink-0">PKR</span>
                                     <input type="number" step="0.01" name="budget" id="input_budget" value="{{ old('budget', $tender->budget) }}" 
                                            placeholder="e.g. 12,500,000" 
-                                           class="w-full text-xs font-bold text-emerald-900 rounded-xl border-[#e5ded4] bg-[#FCFAF7] pl-12 pr-3.5 py-2.5 focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition">
+                                           class="w-full text-xs font-bold text-stone-900 border-0 bg-transparent px-3.5 py-2.5 focus:ring-0 focus:outline-none">
                                 </div>
                                 <span class="text-[10px] text-stone-400 mt-1 block">Enter total estimated value</span>
                             </div>
@@ -175,7 +183,7 @@
                                     </div>
                                     <input type="text" name="contact_person" id="input_contact_person" value="{{ old('contact_person', $tender->contact_person) }}" 
                                            placeholder="e.g. Engr. Tariq (XEN) - 0300-1234567" 
-                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] pl-10 pr-3.5 py-2.5 focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition">
+                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white pl-10 pr-3.5 py-2.5 focus:border-orange-500 focus:ring-orange-500 transition">
                                 </div>
                             </div>
                         </div>
@@ -184,7 +192,7 @@
                     <!-- ======================================================== -->
                     <!-- SECTION 2: SCHEDULE & TIMELINE                            -->
                     <!-- ======================================================== -->
-                    <div class="p-6 rounded-2xl bg-white border border-[#e5ded4] shadow-2xs space-y-4">
+                    <div class="p-6 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] shadow-2xs space-y-4">
                         <div class="flex items-center gap-2 pb-2 border-b border-[#e5ded4]">
                             <div class="w-6 h-6 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center font-black text-xs">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -200,7 +208,7 @@
                                 </label>
                                 <input type="datetime-local" name="submission_deadline" id="input_submission_deadline" required 
                                        value="{{ old('submission_deadline', $tender->submission_deadline ? $tender->submission_deadline->format('Y-m-d\TH:i') : '') }}"
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
+                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
                                 <p class="text-[10px] text-stone-400 mt-1">Submission cutoff date and time</p>
                             </div>
 
@@ -210,7 +218,7 @@
                                 </label>
                                 <input type="datetime-local" name="opening_date" id="input_opening_date" 
                                        value="{{ old('opening_date', $tender->opening_date ? $tender->opening_date->format('Y-m-d\TH:i') : '') }}"
-                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
+                                       class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
                                 <p class="text-[10px] text-stone-400 mt-1">Joint Technical & Financial bid opening date</p>
                             </div>
                         </div>
@@ -224,7 +232,7 @@
                                     </label>
                                     <input type="datetime-local" name="submission_deadline_2e" id="input_submission_deadline_2e" 
                                            value="{{ old('submission_deadline', $tender->submission_deadline ? $tender->submission_deadline->format('Y-m-d\TH:i') : '') }}"
-                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
+                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
                                     <p class="text-[10px] text-stone-400 mt-1">Submission cutoff time</p>
                                 </div>
 
@@ -234,7 +242,7 @@
                                     </label>
                                     <input type="datetime-local" name="technical_opening_date" id="input_technical_opening_date" 
                                            value="{{ old('technical_opening_date', $tender->technical_opening_date ? $tender->technical_opening_date->format('Y-m-d\TH:i') : ($tender->opening_date ? $tender->opening_date->format('Y-m-d\TH:i') : '')) }}"
-                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
+                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
                                     <p class="text-[10px] text-stone-400 mt-1">Technical proposal opening</p>
                                 </div>
 
@@ -244,7 +252,7 @@
                                     </label>
                                     <input type="datetime-local" name="financial_opening_date" id="input_financial_opening_date" 
                                            value="{{ old('financial_opening_date', $tender->financial_opening_date ? $tender->financial_opening_date->format('Y-m-d\TH:i') : '') }}"
-                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
+                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition py-2.5">
                                     <p class="text-[10px] text-stone-400 mt-1">Financial bid opening</p>
                                 </div>
                             </div>
@@ -254,7 +262,7 @@
                     <!-- ======================================================== -->
                     <!-- SECTION 3: ELIGIBILITY & DOCUMENTATION                    -->
                     <!-- ======================================================== -->
-                    <div class="p-6 rounded-2xl bg-white border border-[#e5ded4] shadow-2xs space-y-4">
+                    <div class="p-6 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] shadow-2xs space-y-4">
                         <div class="flex items-center gap-2 pb-2 border-b border-[#e5ded4]">
                             <div class="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-black text-xs">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -269,7 +277,7 @@
                             </label>
                             <textarea name="requirements" rows="3" 
                                       placeholder="e.g. 1. Valid PEC registration, 2. Minimum 3 years experience, 3. Turn over > PKR 50M..." 
-                                      class="w-full text-xs font-medium rounded-xl border-[#e5ded4] bg-[#FCFAF7] focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition p-3">{{ old('requirements', $tender->requirements) }}</textarea>
+                                      class="w-full text-xs font-medium rounded-xl border-[#e5ded4] bg-white focus:border-orange-500 focus:ring-orange-500 transition p-3">{{ old('requirements', $tender->requirements) }}</textarea>
                         </div>
 
                         <!-- Existing Attached Document Indicator (if present) -->
@@ -313,7 +321,7 @@
                                 
                                 <!-- Empty State Container (Click to browse/upload) -->
                                 <div id="tender_file_empty_box" 
-                                     class="border-2 border-dashed border-[#d8d0c5] hover:border-orange-400 rounded-2xl p-6 text-center bg-[#FCFAF7] hover:bg-orange-50/20 transition group cursor-pointer flex flex-col items-center justify-center space-y-2"
+                                     class="border-2 border-dashed border-[#d8d0c5] hover:border-orange-400 rounded-2xl p-6 text-center bg-white hover:bg-orange-50/20 transition group cursor-pointer flex flex-col items-center justify-center space-y-2"
                                      onclick="document.getElementById('tender_document_file').click()">
                                     <div class="w-10 h-10 rounded-full bg-orange-100/70 text-orange-600 flex items-center justify-center pointer-events-none">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
@@ -363,7 +371,7 @@
                     <!-- ======================================================== -->
                     <!-- SECTION 4: BIDDING DETAILS                                -->
                     <!-- ======================================================== -->
-                    <div class="p-6 rounded-2xl bg-white border border-[#e5ded4] shadow-2xs space-y-4">
+                    <div class="p-6 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] shadow-2xs space-y-4">
                         <div class="flex items-center gap-2 pb-2 border-b border-[#e5ded4]">
                             <div class="w-6 h-6 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center font-black text-xs">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
@@ -379,7 +387,7 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                                     </div>
                                     <select name="company_id" 
-                                            class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] pl-10 pr-3.5 py-2.5 focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition">
+                                            class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white pl-10 pr-3.5 py-2.5 focus:border-orange-500 focus:ring-orange-500 transition">
                                         <option value="">-- Choose Company (Optional) --</option>
                                         @foreach($companies as $comp)
                                             <option value="{{ $comp->id }}" {{ old('company_id', $tender->company_id) == $comp->id ? 'selected' : '' }}>
@@ -397,7 +405,7 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                                     </div>
                                     <input type="text" name="category" id="input_category" value="{{ old('category', $tender->category ?: 'Audio-Video & IT Systems') }}" list="cat_list" 
-                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-[#FCFAF7] pl-10 pr-3.5 py-2.5 focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition">
+                                           class="w-full text-xs font-semibold rounded-xl border-[#e5ded4] bg-white pl-10 pr-3.5 py-2.5 focus:border-orange-500 focus:ring-orange-500 transition">
                                     <datalist id="cat_list">
                                         <option value="Audio-Video & IT Systems">
                                         <option value="Civil Works & Construction">
@@ -412,12 +420,21 @@
                     <!-- ======================================================== -->
                     <!-- FOOTER ACTIONS: CANCEL, DELETE, SAVE CHANGES             -->
                     <!-- ======================================================== -->
-                    <div class="mt-8 pt-6 pb-2 border-t border-[#e5ded4] flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <a href="{{ route('tenders.show', $tender) }}" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
-                            &larr; Cancel & Return to Tender
-                        </a>
+                    <div class="mt-8 pt-6 pb-4 px-2 sm:px-4 border-t border-[#e5ded4] flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('tenders.show', $tender) }}" class="px-4 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
+                                &larr; Cancel & Return to Tender
+                            </a>
 
-                        <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                            @if($tender->status === 'draft' || $tender->is_draft)
+                                <button type="button" onclick="confirmDeleteDraft()" class="px-4 py-2.5 text-xs font-bold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl transition flex items-center gap-1.5 shadow-2xs">
+                                    <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    <span>Delete Draft Tender</span>
+                                </button>
+                            @endif
+                        </div>
+
+                        <div class="flex items-center gap-3 w-full sm:w-auto justify-end pr-1 sm:pr-2">
                             <button type="submit" 
                                     class="px-8 py-2.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-black rounded-xl shadow-xs transition flex items-center gap-2">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
@@ -427,6 +444,20 @@
                     </div>
 
                 </form>
+
+                @if($tender->status === 'draft' || $tender->is_draft)
+                    <form id="deleteDraftForm" action="{{ route('tenders.destroy', $tender) }}" method="POST" class="hidden">
+                        @csrf
+                        @method('DELETE')
+                    </form>
+                    <script>
+                        function confirmDeleteDraft() {
+                            if (confirm("Are you sure you want to permanently delete this draft tender? This action cannot be undone.")) {
+                                document.getElementById('deleteDraftForm').submit();
+                            }
+                        }
+                    </script>
+                @endif
             </div>
         </div>
     </div>
@@ -455,51 +486,52 @@
         let selectedFileBlob = null;
         let selectedFileType = '';
 
-        function selectEditMode(mode) {
-            const radTender = document.getElementById('mode_tender_radio');
-            const radEpad = document.getElementById('mode_epad_radio');
-            const lblTender = document.getElementById('mode_tender_label');
-            const lblEpad = document.getElementById('mode_epad_label');
-
-            if (mode === 'tender') {
-                radTender.checked = true;
-                lblTender.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-orange-50/80 text-orange-950 border-orange-300 ring-1 ring-orange-200";
-                lblEpad.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-transparent text-stone-600 border-transparent hover:text-stone-900";
-            } else {
-                radEpad.checked = true;
-                lblEpad.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-orange-50/80 text-orange-950 border-orange-300 ring-1 ring-orange-200";
-                lblTender.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-transparent text-stone-600 border-transparent hover:text-stone-900";
-            }
-        }
-
         function selectEditProcedure(proc) {
             const rad1 = document.getElementById('proc_1e_radio');
             const rad2 = document.getElementById('proc_2e_radio');
             const lbl1 = document.getElementById('proc_1e_label');
             const lbl2 = document.getElementById('proc_2e_label');
+            const dot1 = document.getElementById('proc_1e_dot');
+            const dot2 = document.getElementById('proc_2e_dot');
             const box1 = document.getElementById('schedule_1e_container');
             const box2 = document.getElementById('schedule_2e_container');
             const subInput1 = document.getElementById('input_submission_deadline');
             const subInput2 = document.getElementById('input_submission_deadline_2e');
 
             if (proc === 'single_stage_one_envelope') {
-                rad1.checked = true;
-                lbl1.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-orange-50/80 text-orange-950 border-orange-300 ring-1 ring-orange-200";
-                lbl2.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-transparent text-stone-600 border-transparent hover:text-stone-900";
-                box1.classList.remove('hidden');
-                box2.classList.add('hidden');
-                subInput1.required = true;
-                subInput2.required = false;
-                if (subInput2.value && !subInput1.value) subInput1.value = subInput2.value;
+                if (rad1) rad1.checked = true;
+                if (lbl1) lbl1.className = "flex items-center gap-2 py-1.5 px-4 rounded-full border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50/80 text-stone-900 ring-2 ring-orange-200";
+                if (lbl2) lbl2.className = "flex items-center gap-2 py-1.5 px-4 rounded-full border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50";
+                if (dot1) {
+                    dot1.className = "w-3.5 h-3.5 rounded-full border-2 border-orange-600 flex items-center justify-center shrink-0";
+                    dot1.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>';
+                }
+                if (dot2) {
+                    dot2.className = "w-3.5 h-3.5 rounded-full border-2 border-stone-400 flex items-center justify-center shrink-0";
+                    dot2.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>';
+                }
+                if (box1) box1.classList.remove('hidden');
+                if (box2) box2.classList.add('hidden');
+                if (subInput1) subInput1.required = true;
+                if (subInput2) subInput2.required = false;
+                if (subInput2 && subInput1 && subInput2.value && !subInput1.value) subInput1.value = subInput2.value;
             } else {
-                rad2.checked = true;
-                lbl2.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-orange-50/80 text-orange-950 border-orange-300 ring-1 ring-orange-200";
-                lbl1.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-lg cursor-pointer text-xs font-bold transition border bg-transparent text-stone-600 border-transparent hover:text-stone-900";
-                box1.classList.add('hidden');
-                box2.classList.remove('hidden');
-                subInput1.required = false;
-                subInput2.required = true;
-                if (subInput1.value && !subInput2.value) subInput2.value = subInput1.value;
+                if (rad2) rad2.checked = true;
+                if (lbl2) lbl2.className = "flex items-center gap-2 py-1.5 px-4 rounded-full border-2 cursor-pointer font-bold text-xs transition border-orange-500 bg-orange-50/80 text-stone-900 ring-2 ring-orange-200";
+                if (lbl1) lbl1.className = "flex items-center gap-2 py-1.5 px-4 rounded-full border-2 cursor-pointer font-bold text-xs transition border-[#e5ded4] bg-white text-stone-700 hover:bg-stone-50";
+                if (dot2) {
+                    dot2.className = "w-3.5 h-3.5 rounded-full border-2 border-orange-600 flex items-center justify-center shrink-0";
+                    dot2.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-orange-600"></span>';
+                }
+                if (dot1) {
+                    dot1.className = "w-3.5 h-3.5 rounded-full border-2 border-stone-400 flex items-center justify-center shrink-0";
+                    dot1.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-transparent"></span>';
+                }
+                if (box1) box1.classList.add('hidden');
+                if (box2) box2.classList.remove('hidden');
+                if (subInput1) subInput1.required = false;
+                if (subInput2) subInput2.required = true;
+                if (subInput1 && subInput2 && subInput1.value && !subInput2.value) subInput2.value = subInput1.value;
             }
         }
 
@@ -520,13 +552,6 @@
                 selectEditProcedure('single_stage_two_envelope');
             } else {
                 selectEditProcedure('single_stage_one_envelope');
-            }
-
-            const radEpad = document.getElementById('mode_epad_radio');
-            if (radEpad && radEpad.checked) {
-                selectEditMode('epad');
-            } else {
-                selectEditMode('tender');
             }
         });
 
