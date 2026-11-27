@@ -104,177 +104,6 @@
             @endif
 
             <!-- ------------------------------------------------------------- -->
-            <!-- TENDER SPECIFICATIONS & SCOPE OF WORK (Matching Image 1)     -->
-            <!-- ------------------------------------------------------------- -->
-            <div id="tenderSpecsSection" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                <!-- Left Card: Scope of Work, Technical Eligibility & Documents -->
-                <div class="lg:col-span-7 bg-white p-7 rounded-3xl border border-[#e5ded4] shadow-xs space-y-5">
-                    <!-- Scope of Work & Tender Description -->
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-[11px] font-black text-stone-500 uppercase tracking-wider">Scope of Work & Tender Description</h4>
-                            <button type="button" onclick="toggleEditScope()" class="text-[11px] font-bold text-orange-700 hover:text-orange-900 bg-orange-50 hover:bg-orange-100 px-2.5 py-0.5 rounded-lg border border-orange-200 transition shadow-2xs flex items-center gap-1">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                <span id="btnScopeText">Edit</span>
-                            </button>
-                        </div>
-                        <div id="scopeDisplayArea" class="text-sm font-bold text-stone-900 leading-relaxed whitespace-pre-line">
-                            {{ $tender->description ?: ($tender->title ?: 'No description provided.') }}
-                        </div>
-                        <form id="scopeEditForm" action="{{ route('tenders.descriptions.update', $tender) }}" method="POST" class="hidden space-y-3 pt-2">
-                            @csrf
-                            <textarea name="description" rows="3" class="w-full text-xs font-medium rounded-xl border-[#e5ded4] bg-white p-3 focus:border-orange-500 focus:ring-orange-500 transition" placeholder="Enter tender description or scope of work...">{{ old('description', $tender->description ?: $tender->title) }}</textarea>
-                            <div class="flex items-center justify-end gap-2">
-                                <button type="button" onclick="toggleEditScope()" class="px-3 py-1.5 text-xs font-bold text-stone-600 hover:text-stone-900 bg-white border border-stone-200 rounded-lg">Cancel</button>
-                                <button type="submit" class="px-4 py-1.5 text-xs font-bold text-white bg-orange-600 hover:bg-orange-500 rounded-lg shadow-xs">Save</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <hr class="border-[#e5ded4]">
-
-                    <!-- Technical Eligibility & Requirements -->
-                    <div>
-                        <h4 class="text-[11px] font-black text-stone-500 uppercase tracking-wider mb-2">Technical Eligibility & Requirements</h4>
-                        <div class="p-4 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] text-xs text-stone-800 font-medium leading-relaxed min-h-[60px]">
-                            {{ $tender->technical_eligibility ?: ($tender->requirements ?: 'Valid PEC Licence') }}
-                        </div>
-                    </div>
-
-                    <hr class="border-[#e5ded4]">
-
-                    <!-- Tender Document Download Row -->
-                    <div class="flex items-center justify-between gap-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-2xl bg-orange-100/70 border border-orange-200/60 flex items-center justify-center text-orange-600 shrink-0">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            </div>
-                            <div>
-                                <div class="text-sm font-bold text-stone-900">Tender Document</div>
-                                <div class="text-xs text-stone-500">
-                                    @if($tender->document_path)
-                                        Download attached official tender document
-                                    @else
-                                        Official tender specifications & document
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <a href="{{ route('tenders.download-document', $tender) }}" target="_blank" class="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition inline-flex items-center gap-2 shadow-xs shrink-0">
-                            <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            <span>Download Tender Document</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Right Card: Tender Summary & Parameters -->
-                <div class="lg:col-span-5 bg-white p-7 rounded-3xl border border-[#e5ded4] shadow-xs space-y-4">
-                    <h4 class="font-black text-stone-900 text-xs uppercase tracking-wider">Tender Summary & Parameters</h4>
-
-                    <div class="space-y-2.5 divide-y divide-[#e5ded4] text-xs">
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Tender No.</span>
-                            <span class="font-mono font-bold text-stone-900">{{ $tender->effective_tender_no }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Department</span>
-                            <span class="font-bold text-stone-900 text-right">{{ $tender->department?->name ?: 'General' }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Our Bidding Firm</span>
-                            <span class="font-bold text-[#c2410c] text-right">{{ $tender->company ? ($tender->company->company_name ?: $tender->company->name) : 'Al Madina Enterprises' }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Bidding Procedure</span>
-                            <span class="font-bold text-stone-900 text-right">{{ $tender->procedure_label }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Contact Person</span>
-                            <span class="font-bold text-stone-900 text-right">{{ $tender->contact_person ?: 'Rizwanullah Khan' }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Post-Award Docs</span>
-                            @if($tender->isWon())
-                                @if($tender->isDocumentsCompleted())
-                                    <span class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                                        Complete ✓
-                                    </span>
-                                @else
-                                    <span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">
-                                        Pending ({{ $tender->completedDocumentsCount() }}/2) ⚠️
-                                    </span>
-                                @endif
-                            @else
-                                <span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">
-                                    Pending (1/2) ⚠️
-                                </span>
-                            @endif
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Submission Deadline</span>
-                            <span class="font-bold text-stone-900 text-right">{{ $tender->submission_date ? $tender->submission_date->format('d/m/Y \a\t h:i A') : ($tender->submission_deadline ? $tender->submission_deadline->format('d/m/Y \a\t h:i A') : '-') }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Bid Opening Date</span>
-                            <span class="font-bold text-stone-900 text-right">{{ $tender->opening_date ? $tender->opening_date->format('d/m/Y') : '-' }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Estimated Budget</span>
-                            <span class="font-mono font-bold text-emerald-700 text-right">{{ $tender->budget ? 'PKR ' . number_format($tender->budget, 2) : '-' }}</span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Awarded Work Order</span>
-                            <span class="font-mono font-bold text-emerald-700 text-right">
-                                @if($tender->isWon() && ($tender->awarded_amount || $tender->budget))
-                                    PKR {{ number_format($tender->awarded_amount ?: $tender->budget, 2) }}
-                                @elseif($tender->budget)
-                                    PKR {{ number_format($tender->budget, 2) }}
-                                @else
-                                    -
-                                @endif
-                            </span>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-center">
-                            <span class="text-stone-500 font-medium">Tender Document Fee</span>
-                            <div class="text-right">
-                                @if($tender->is_tender_fee_paid)
-                                    <span class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->tender_fee_amount ?: 0) }}</span>
-                                    <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>
-                                @elseif($tender->tender_fee_amount)
-                                    <span class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->tender_fee_amount) }}</span>
-                                    <span class="text-[10px] font-bold text-rose-600 ml-1">Unpaid</span>
-                                @else
-                                    <span class="text-stone-400 font-medium">Unpaid / Pending</span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="pt-2 flex justify-between items-start">
-                            <span class="text-stone-500 font-medium pt-0.5">Bid Security (CDR)</span>
-                            <div class="text-right">
-                                @if($tender->bid_security_amount)
-                                    <div class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->bid_security_amount) }}</div>
-                                    <div class="text-[10px] text-stone-400 font-mono uppercase">{{ strtoupper($tender->bid_security_type ?: 'PAY_ORDER') }} # {{ $tender->bid_security_instrument_no ?: '-' }}</div>
-                                @else
-                                    <div class="text-stone-400 font-mono">-</div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ------------------------------------------------------------- -->
             <!-- STAGE TRACKER & INTERACTIVE STATUS CONTROLLER                 -->
             <!-- ------------------------------------------------------------- -->
             <div class="bg-white rounded-3xl border border-[#e5ded4] p-6 sm:p-7 shadow-xs space-y-6">
@@ -617,7 +446,7 @@
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <!-- WIN FORM WITH THE 2 LETTERS CHECKBOXES -->
-                                    <form method="POST" action="{{ route('tenders.stage-status', $tender) }}" enctype="multipart/form-data" class="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200 space-y-3">
+                                    <form id="win_award_form" method="POST" action="{{ route('tenders.stage-status', $tender) }}" enctype="multipart/form-data" class="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200 space-y-3">
                                         @csrf
                                         <input type="hidden" name="outcome" value="won">
 
@@ -686,6 +515,44 @@
                                             Confirm Tender Not Awarded
                                         </button>
                                     </form>
+                                </div>
+
+                                <!-- PERFORMANCE SECURITY & BID SECURITY REFUND (Below Green Box) -->
+                                <div class="p-4 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] space-y-3">
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                        <div>
+                                            <h5 class="font-black text-xs text-stone-900 uppercase tracking-wider">Performance Security & Bid Security Refund</h5>
+                                            <p class="text-[11px] text-stone-500">Optional while awarding: add Performance Certificate, Performance Security Fee, and optionally refund Bid Security.</p>
+                                        </div>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold {{ $tender->isPerformanceSecurityPaid() ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
+                                            {{ $tender->isPerformanceSecurityPaid() ? 'Paid' : 'No Fees' }}
+                                        </span>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <div>
+                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Certificate</label>
+                                            <input type="text" form="win_award_form" name="performance_certificate_no" value="{{ old('performance_certificate_no', $tender->performance_certificate_no) }}" placeholder="Certificate / Ref #" class="w-full text-xs rounded-xl border-stone-200 bg-white">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security Fee (PKR)</label>
+                                            <input type="number" step="0.01" form="win_award_form" name="performance_security_amount" value="{{ old('performance_security_amount', $tender->performance_security_amount) }}" placeholder="e.g. 50000" class="w-full text-xs rounded-xl border-stone-200 bg-white">
+                                        </div>
+                                        <div>
+                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Certificate / Legal PDF Upload</label>
+                                            <input type="file" form="win_award_form" name="performance_security_file" accept=".pdf,.doc,.docx,.zip,.jpg,.jpeg,.png" class="w-full text-[11px] text-stone-600 bg-white rounded-xl border border-stone-200 p-1.5">
+                                        </div>
+                                    </div>
+                                    @if($tender->bid_security_amount)
+                                        <div class="pt-2 border-t border-[#e5ded4] flex flex-wrap items-center justify-between gap-2">
+                                            <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-stone-800">
+                                                <input type="checkbox" form="win_award_form" name="refund_bid_security" value="1" {{ $tender->bid_security_status === 'released_returned' ? 'checked disabled' : '' }} class="w-4 h-4 text-emerald-600 rounded border-stone-300 focus:ring-emerald-500">
+                                                <span>Refund / Release Bid Security (PKR {{ number_format($tender->bid_security_amount) }})</span>
+                                            </label>
+                                            <span class="text-[11px] font-bold {{ $tender->bid_security_status === 'released_returned' ? 'text-emerald-700' : 'text-amber-700' }}">
+                                                Current Bid Security: {{ $tender->bid_security_status === 'released_returned' ? 'Refunded / Released' : 'Active' }}
+                                            </span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         @endif
@@ -876,6 +743,64 @@
                             </button>
                         </div>
                     </form>
+                </div>
+
+                <!-- ------------------------------------------------------------- -->
+                <!-- PERFORMANCE SECURITY & BID SECURITY REFUND CARD (POST-AWARD)  -->
+                <!-- ------------------------------------------------------------- -->
+                <div class="bg-white rounded-3xl border border-[#e5ded4] p-6 sm:p-7 shadow-xs space-y-4" id="performance_security_card">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#e5ded4] pb-4">
+                        <div>
+                            <h3 class="font-black text-lg text-stone-900">Performance Security & Bid Security Refund</h3>
+                            <p class="text-xs text-stone-600">Manage Performance Certificate, Performance Security Fee (PKR), and Bid Security refund upon receiving legal certificate / release PDF.</p>
+                        </div>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black {{ $tender->isPerformanceSecurityPaid() ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
+                            {{ $tender->isPerformanceSecurityPaid() ? 'Paid — PKR ' . number_format($tender->performance_security_amount, 2) : 'No Fees' }}
+                        </span>
+                    </div>
+
+                    @if(Auth::check() && Auth::user()->isAdmin())
+                        <form method="POST" action="{{ route('tenders.performance-security', $tender) }}" enctype="multipart/form-data" class="space-y-4">
+                            @csrf
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Certificate</label>
+                                    <input type="text" name="performance_certificate_no" value="{{ old('performance_certificate_no', $tender->performance_certificate_no) }}" placeholder="Certificate / Ref #" class="w-full text-xs rounded-xl border-[#e5ded4] bg-[#FCFAF7]">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security Fee / Amount (PKR)</label>
+                                    <input type="number" step="0.01" name="performance_security_amount" value="{{ old('performance_security_amount', $tender->performance_security_amount) }}" placeholder="Enter amount (leave empty for No Fees)" class="w-full text-xs rounded-xl border-[#e5ded4] bg-[#FCFAF7]">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Certificate / Legal PDF Upload</label>
+                                    <input type="file" name="performance_security_file" accept=".pdf,.doc,.docx,.zip,.jpg,.jpeg,.png" class="w-full text-xs text-stone-600 bg-[#FCFAF7] rounded-xl border border-[#e5ded4] p-1.5">
+                                    @if($tender->performance_security_file)
+                                        <a href="{{ route('tenders.download-document', ['tender' => $tender, 'type' => 'performance_security']) }}" class="inline-flex items-center gap-1 mt-1 text-[11px] font-bold text-orange-700 hover:underline">
+                                            Download Uploaded Certificate ({{ basename($tender->performance_security_file) }})
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+
+                            @if($tender->bid_security_amount)
+                                <div class="p-3.5 rounded-2xl bg-amber-50/60 border border-amber-200 flex flex-wrap items-center justify-between gap-3">
+                                    <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-stone-900">
+                                        <input type="checkbox" name="refund_bid_security" value="1" {{ $tender->bid_security_status === 'released_returned' ? 'checked disabled' : '' }} class="w-4 h-4 text-emerald-600 rounded border-stone-300 focus:ring-emerald-500">
+                                        <span>Refund / Release Bid Security (PKR {{ number_format($tender->bid_security_amount, 2) }})</span>
+                                    </label>
+                                    <span class="text-xs font-black {{ $tender->bid_security_status === 'released_returned' ? 'text-emerald-700' : 'text-amber-800' }}">
+                                        Status: {{ $tender->bid_security_status === 'released_returned' ? 'Refunded / Released' : 'Active' }}
+                                    </span>
+                                </div>
+                            @endif
+
+                            <div class="flex justify-end">
+                                <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-xs transition">
+                                    Save Performance Security
+                                </button>
+                            </div>
+                        </form>
+                    @endif
                 </div>
             @endif
 
@@ -1167,8 +1092,235 @@
                         </div>
                     </form>
                 @endif
+
+                @if($tender->financialHistories->isNotEmpty())
+                    <div class="pt-4 border-t border-[#e5ded4] space-y-2.5">
+                        <h4 class="text-xs font-black uppercase tracking-wider text-stone-700">Security & Financial Action History</h4>
+                        <div class="overflow-x-auto rounded-2xl border border-[#e5ded4]">
+                            <table class="w-full text-xs text-left">
+                                <thead class="bg-stone-50 text-[11px] uppercase text-stone-500 font-bold border-b border-[#e5ded4]">
+                                    <tr>
+                                        <th class="py-2 px-3">Date</th>
+                                        <th class="py-2 px-3">Transaction Type</th>
+                                        <th class="py-2 px-3">Amount</th>
+                                        <th class="py-2 px-3">Status</th>
+                                        <th class="py-2 px-3">Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-[#e5ded4] bg-white">
+                                    @foreach($tender->financialHistories as $hist)
+                                        <tr>
+                                            <td class="py-2 px-3 text-stone-600">{{ $hist->action_date?->format('d/m/Y h:i A') ?: $hist->created_at->format('d/m/Y h:i A') }}</td>
+                                            <td class="py-2 px-3 font-bold text-stone-900">{{ str_replace('_', ' ', ucwords($hist->transaction_type, '_')) }}</td>
+                                            <td class="py-2 px-3 font-mono font-bold text-stone-900">PKR {{ number_format($hist->amount, 2) }}</td>
+                                            <td class="py-2 px-3">
+                                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-stone-100 text-stone-800">{{ $hist->current_status }}</span>
+                                            </td>
+                                            <td class="py-2 px-3 text-stone-600">{{ $hist->notes ?: '-' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
             </div>
             @endif
+
+            <!-- ------------------------------------------------------------- -->
+            <!-- TENDER SPECIFICATIONS, DESCRIPTION & SUMMARY CARDS (BOTTOM)   -->
+            <!-- ------------------------------------------------------------- -->
+            <div id="tenderSpecsSection" class="grid grid-cols-1 lg:grid-cols-12 items-start" style="gap: 24px;">
+                <!-- Left Card: Scope of Work, Technical Eligibility & Documents -->
+                <div class="lg:col-span-7 bg-white border border-[#e5ded4] shadow-xs space-y-5" style="padding: 28px; border-radius: 24px;">
+                    <!-- Scope of Work & Tender Description (Inline Message Box) -->
+                    <div>
+                        <h4 class="text-[11px] font-black text-stone-500 uppercase tracking-wider mb-2">Scope of Work & Tender Description</h4>
+                        <form action="{{ route('tenders.descriptions.update', $tender) }}" method="POST" class="space-y-2">
+                            @csrf
+                            <textarea name="description" rows="4"
+                                      oninput="document.getElementById('saveScopeBtn').classList.remove('hidden')"
+                                      onfocus="document.getElementById('saveScopeBtn').classList.remove('hidden')"
+                                      class="w-full rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] text-sm font-medium text-stone-900 leading-relaxed focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition"
+                                      style="padding: 16px;"
+                                      placeholder="Enter tender description or scope of work...">{{ old('description', $tender->description ?: $tender->title) }}</textarea>
+                            @if(Auth::check() && Auth::user()->isAdmin())
+                                <div id="saveScopeBtn" class="hidden flex justify-end">
+                                    <button type="submit" class="px-4 py-1.5 text-xs font-bold text-white bg-orange-600 hover:bg-orange-500 rounded-xl shadow-xs transition">
+                                        Save Scope of Work
+                                    </button>
+                                </div>
+                            @endif
+                        </form>
+                    </div>
+
+                    <hr class="border-[#e5ded4]">
+
+                    <!-- Technical Eligibility & Requirements (Inline Message Box) -->
+                    <div>
+                        <h4 class="text-[11px] font-black text-stone-500 uppercase tracking-wider mb-2">Technical Eligibility & Requirements</h4>
+                        <form action="{{ route('tenders.descriptions.update', $tender) }}" method="POST" class="space-y-2">
+                            @csrf
+                            <textarea name="requirements" rows="3"
+                                      oninput="document.getElementById('saveReqBtn').classList.remove('hidden')"
+                                      onfocus="document.getElementById('saveReqBtn').classList.remove('hidden')"
+                                      class="w-full rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] text-sm font-medium text-stone-900 leading-relaxed focus:bg-white focus:border-orange-500 focus:ring-orange-500 transition"
+                                      style="padding: 16px;"
+                                      placeholder="Enter technical eligibility & requirements...">{{ old('requirements', $tender->technical_eligibility ?: ($tender->requirements ?: 'Valid PEC Licence')) }}</textarea>
+                            @if(Auth::check() && Auth::user()->isAdmin())
+                                <div id="saveReqBtn" class="hidden flex justify-end">
+                                    <button type="submit" class="px-4 py-1.5 text-xs font-bold text-white bg-orange-600 hover:bg-orange-500 rounded-xl shadow-xs transition">
+                                        Save Eligibility
+                                    </button>
+                                </div>
+                            @endif
+                        </form>
+                    </div>
+
+                    <hr class="border-[#e5ded4]">
+
+                    <!-- Tender Document Download Row -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 pt-1">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-orange-100/70 border border-orange-200/60 flex items-center justify-center text-orange-600 shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-sm font-bold text-stone-900">Tender Document</div>
+                                <div class="text-xs text-stone-500">
+                                    @if($tender->document_path)
+                                        Download attached official tender document ({{ basename($tender->document_path) }})
+                                    @else
+                                        Download official tender specifications & dossier
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{{ route('tenders.download-document', $tender) }}" download class="px-5 py-2.5 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition inline-flex items-center gap-2 shadow-xs shrink-0">
+                            <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span>Download Tender Document</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Card: Tender Summary & Parameters -->
+                <div class="lg:col-span-5 bg-white border border-[#e5ded4] shadow-xs space-y-4" style="padding: 28px; border-radius: 24px;">
+                    <h4 class="font-black text-stone-900 text-xs uppercase tracking-wider">Tender Summary & Parameters</h4>
+
+                    <div class="space-y-2.5 divide-y divide-[#e5ded4] text-xs">
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Tender No.</span>
+                            <span class="font-mono font-bold text-stone-900">{{ $tender->effective_tender_no }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Department</span>
+                            <span class="font-bold text-stone-900 text-right">{{ $tender->department?->name ?: 'General' }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Our Bidding Firm</span>
+                            <span class="font-bold text-[#c2410c] text-right">{{ $tender->company ? ($tender->company->company_name ?: $tender->company->name) : 'Al Madina Enterprises' }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Bidding Procedure</span>
+                            <span class="font-bold text-stone-900 text-right">{{ $tender->procedure_label }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Contact Person</span>
+                            <span class="font-bold text-stone-900 text-right">{{ $tender->contact_person ?: '-' }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Post-Award Docs</span>
+                            @if($tender->isWon())
+                                @if($tender->isDocumentsCompleted())
+                                    <span class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                        Complete ✓
+                                    </span>
+                                @else
+                                    <span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">
+                                        Pending ({{ $tender->completedDocumentsCount() }}/2) ⚠️
+                                    </span>
+                                @endif
+                            @else
+                                <span class="text-[11px] font-black text-stone-500 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">
+                                    -
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Submission Deadline</span>
+                            <span class="font-bold text-stone-900 text-right">{{ $tender->submission_date ? $tender->submission_date->format('d/m/Y \a\t h:i A') : ($tender->submission_deadline ? $tender->submission_deadline->format('d/m/Y \a\t h:i A') : '-') }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Bid Opening Date</span>
+                            <span class="font-bold text-stone-900 text-right">{{ $tender->opening_date ? $tender->opening_date->format('d/m/Y') : '-' }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Estimated Budget</span>
+                            <span class="font-mono font-bold text-emerald-700 text-right">{{ $tender->budget ? 'PKR ' . number_format($tender->budget, 2) : '-' }}</span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Awarded Work Order</span>
+                            <span class="font-mono font-bold text-emerald-700 text-right">
+                                @if($tender->isWon() && ($tender->awarded_amount || $tender->budget))
+                                    PKR {{ number_format($tender->awarded_amount ?: $tender->budget, 2) }}
+                                @else
+                                    -
+                                @endif
+                            </span>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Tender Document Fee</span>
+                            <div class="text-right">
+                                @if($tender->is_tender_fee_paid)
+                                    <span class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->tender_fee_amount ?: 0) }}</span>
+                                    <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>
+                                @elseif($tender->tender_fee_amount)
+                                    <span class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->tender_fee_amount) }}</span>
+                                    <span class="text-[10px] font-bold text-rose-600 ml-1">Unpaid</span>
+                                @else
+                                    <span class="text-stone-400 font-medium">Unpaid / Pending</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-start">
+                            <span class="text-stone-500 font-medium pt-0.5">Bid Security (CDR)</span>
+                            <div class="text-right">
+                                @if($tender->bid_security_amount)
+                                    <div class="font-mono font-bold text-stone-900">PKR {{ number_format($tender->bid_security_amount) }}</div>
+                                    <div class="text-[10px] font-bold {{ $tender->bid_security_status === 'released_returned' ? 'text-emerald-700' : 'text-amber-700' }}">
+                                        {{ $tender->bid_security_status === 'released_returned' ? 'Refunded / Released' : 'Active' }}
+                                    </div>
+                                @else
+                                    <div class="text-stone-400 font-mono">-</div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="pt-2 flex justify-between items-center">
+                            <span class="text-stone-500 font-medium">Performance Security</span>
+                            <div class="text-right">
+                                @if($tender->isPerformanceSecurityPaid())
+                                    <span class="font-mono font-bold text-emerald-700">PKR {{ number_format($tender->performance_security_amount, 2) }}</span>
+                                    <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>
+                                @else
+                                    <span class="text-stone-500 font-bold">No Fees</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Bottom Navigation: Back to Tenders Register / Management -->
             <div class="flex items-center justify-between pt-2">

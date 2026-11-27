@@ -1,8 +1,10 @@
 <x-app-layout>
     <!-- Funky, Colorful, Ultra-Attractive 3D SaaS Stylesheet matching media_1794958310999_435bfd77 -->
     <style>
-        body {
+        html, body {
             background-color: #e6e0d4 !important;
+            overflow-x: hidden;
+            max-width: 100%;
         }
 
         .dashboard-canvas {
@@ -10,8 +12,9 @@
             background-image: none;
             min-height: 100vh;
             width: 100%;
+            max-width: 100%;
             position: relative;
-            overflow-x: hidden;
+            overflow-x: clip;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
@@ -24,160 +27,187 @@
             box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.18), 0 4px 12px rgba(0, 0, 0, 0.05);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
         }
 
-        .glass-panel:hover {
-            transform: translateY(-4px);
-            border-bottom: 7px solid #07255e;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.28);
+        @media (hover: hover) {
+            .glass-panel:hover {
+                transform: translateY(-4px);
+                border-bottom: 7px solid #07255e;
+                box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.28);
+            }
         }
 
         /* ------------------------------------------------------------- */
         /* ROW 2 & ROW 3 COLORFUL THEMED 3D GLASS CARDS                  */
         /* ------------------------------------------------------------- */
-        .card-theme-blue {
-            background: #ffffff;
-            border-radius: 1.45rem;
-            border: 2.5px solid #0056d2;
-            border-bottom: 6px solid #07255e;
-            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-        .card-theme-blue:hover {
-            transform: translateY(-4px);
-            border-bottom: 7.5px solid #07255e;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
-        }
-
-        .card-theme-maroon {
-            background: #ffffff;
-            border-radius: 1.45rem;
-            border: 2.5px solid #881337;
-            border-bottom: 6px solid #4c0519;
-            box-shadow: 0 16px 32px -6px rgba(136, 19, 55, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-        .card-theme-maroon:hover {
-            transform: translateY(-4px);
-            border-bottom: 7.5px solid #3b0313;
-            box-shadow: 0 24px 44px -8px rgba(136, 19, 55, 0.35);
-        }
-
-        .card-theme-orange {
-            background: #ffffff;
-            border-radius: 1.45rem;
-            border: 2.5px solid #cd3805;
-            border-bottom: 6px solid #9a3412;
-            box-shadow: 0 16px 32px -6px rgba(205, 56, 5, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-        .card-theme-orange:hover {
-            transform: translateY(-4px);
-            border-bottom: 7.5px solid #7c2d12;
-            box-shadow: 0 24px 44px -8px rgba(205, 56, 5, 0.35);
-        }
-
-        .card-theme-green {
-            background: #ffffff;
-            border-radius: 1.45rem;
-            border: 2.5px solid #0d9467;
-            border-bottom: 6px solid #064e3b;
-            box-shadow: 0 16px 32px -6px rgba(13, 148, 103, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-        .card-theme-green:hover {
-            transform: translateY(-4px);
-            border-bottom: 7.5px solid #064e3b;
-            box-shadow: 0 24px 44px -8px rgba(13, 148, 103, 0.35);
-        }
-
-        .card-theme-amber {
-            background: #ffffff;
-            border-radius: 1.45rem;
-            border: 2.5px solid #0056d2;
-            border-bottom: 6px solid #07255e;
-            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-        .card-theme-amber:hover {
-            transform: translateY(-4px);
-            border-bottom: 7.5px solid #07255e;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
-        }
-
+        .card-theme-blue,
+        .card-theme-maroon,
+        .card-theme-orange,
+        .card-theme-green,
+        .card-theme-amber,
         .card-theme-tasks {
             background: #ffffff;
             border-radius: 1.45rem;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .card-theme-blue {
             border: 2.5px solid #0056d2;
             border-bottom: 6px solid #07255e;
             box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
         }
-        .card-theme-tasks:hover {
-            transform: translateY(-4px);
-            border-bottom: 7.5px solid #07255e;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
+        .card-theme-maroon {
+            border: 2.5px solid #881337;
+            border-bottom: 6px solid #4c0519;
+            box-shadow: 0 16px 32px -6px rgba(136, 19, 55, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .card-theme-orange {
+            border: 2.5px solid #cd3805;
+            border-bottom: 6px solid #9a3412;
+            box-shadow: 0 16px 32px -6px rgba(205, 56, 5, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .card-theme-green {
+            border: 2.5px solid #0d9467;
+            border-bottom: 6px solid #064e3b;
+            box-shadow: 0 16px 32px -6px rgba(13, 148, 103, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .card-theme-amber {
+            border: 2.5px solid #0056d2;
+            border-bottom: 6px solid #07255e;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .card-theme-tasks {
+            border: 2.5px solid #0056d2;
+            border-bottom: 6px solid #07255e;
+            box-shadow: 0 16px 32px -6px rgba(0, 86, 210, 0.22), 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* Explicit Grid Definitions that NEVER break or collapse */
+        @media (hover: hover) {
+            .card-theme-blue:hover,
+            .card-theme-amber:hover,
+            .card-theme-tasks:hover {
+                transform: translateY(-4px);
+                border-bottom: 7.5px solid #07255e;
+                box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.35);
+            }
+            .card-theme-maroon:hover {
+                transform: translateY(-4px);
+                border-bottom: 7.5px solid #3b0313;
+                box-shadow: 0 24px 44px -8px rgba(136, 19, 55, 0.35);
+            }
+            .card-theme-orange:hover {
+                transform: translateY(-4px);
+                border-bottom: 7.5px solid #7c2d12;
+                box-shadow: 0 24px 44px -8px rgba(205, 56, 5, 0.35);
+            }
+            .card-theme-green:hover {
+                transform: translateY(-4px);
+                border-bottom: 7.5px solid #064e3b;
+                box-shadow: 0 24px 44px -8px rgba(13, 148, 103, 0.35);
+            }
+        }
+
+        /* Explicit Responsive Grid Definitions with minmax(0, ...) to prevent grid blowout */
+        .stat-cards-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1rem;
+            width: 100%;
+        }
+        @media (min-width: 640px) {
+            .stat-cards-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1.15rem;
+            }
+        }
+        @media (min-width: 1280px) {
+            .stat-cards-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 1.25rem;
+            }
+        }
+
         .row2-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
             gap: 1.25rem;
             align-items: stretch;
             width: 100%;
         }
-        @media (min-width: 1024px) {
+        @media (min-width: 768px) {
             .row2-grid {
-                grid-template-columns: 1.55fr 1.25fr 1.2fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .row2-chart-col {
+                grid-column: span 2;
             }
         }
-        @media (min-width: 1400px) {
+        @media (min-width: 1280px) {
             .row2-grid {
-                grid-template-columns: 1.8fr 1.1fr 1.1fr;
+                grid-template-columns: minmax(0, 1.65fr) minmax(0, 1.2fr) minmax(0, 1.15fr);
+            }
+            .row2-chart-col {
+                grid-column: span 1;
+            }
+        }
+        @media (min-width: 1440px) {
+            .row2-grid {
+                grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.1fr) minmax(0, 1.1fr);
             }
         }
 
         .row3-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
             gap: 1.25rem;
             align-items: stretch;
             width: 100%;
         }
         @media (min-width: 640px) {
             .row3-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
-        @media (min-width: 1024px) {
+        @media (min-width: 1280px) {
             .row3-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(4, minmax(0, 1fr));
             }
         }
 
-        /* Solid Row 4 Grid: Department Performance (45%) / Invoices (30%) / AI Smart Insight (25%) */
+        /* Solid Row 4 Grid: Department Performance / Invoices / AI Smart Insight */
         .row4-grid {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
             gap: 1.25rem;
             align-items: stretch;
             width: 100%;
         }
-        @media (min-width: 1024px) {
+        @media (min-width: 768px) {
             .row4-grid {
-                grid-template-columns: 1.65fr 1.15fr 1.2fr;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .row4-dept-col {
+                grid-column: span 2;
             }
         }
-        @media (min-width: 1400px) {
+        @media (min-width: 1280px) {
             .row4-grid {
-                grid-template-columns: 1.7fr 1.1fr 1.2fr;
+                grid-template-columns: minmax(0, 1.65fr) minmax(0, 1.15fr) minmax(0, 1.2fr);
+            }
+            .row4-dept-col {
+                grid-column: span 1;
+            }
+        }
+        @media (min-width: 1440px) {
+            .row4-grid {
+                grid-template-columns: minmax(0, 1.75fr) minmax(0, 1.1fr) minmax(0, 1.15fr);
             }
         }
 
@@ -191,12 +221,16 @@
             color: #ffffff;
             position: relative;
             overflow: hidden;
+            min-width: 0;
+            max-width: 100%;
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .card-theme-ai:hover {
-            transform: translateY(-4px);
-            border-bottom: 7px solid #031535;
-            box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.45);
+        @media (hover: hover) {
+            .card-theme-ai:hover {
+                transform: translateY(-4px);
+                border-bottom: 7px solid #031535;
+                box-shadow: 0 24px 44px -8px rgba(0, 86, 210, 0.45);
+            }
         }
 
         /* 3D Elevated Tender Micro-Card */
@@ -207,40 +241,70 @@
             border-bottom: 4.5px solid #cbd5e1;
             box-shadow: 0 8px 18px -4px rgba(0, 0, 0, 0.06);
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-            padding: 1.15rem;
+            padding: 1.05rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
         }
-        .tender-card-3d:hover {
-            transform: translateY(-4px);
-            border-color: #94a3b8;
-            border-bottom: 5.5px solid #64748b;
-            box-shadow: 0 18px 32px -6px rgba(100, 116, 139, 0.20);
+        @media (hover: hover) {
+            .tender-card-3d:hover {
+                transform: translateY(-4px);
+                border-color: #94a3b8;
+                border-bottom: 5.5px solid #64748b;
+                box-shadow: 0 18px 32px -6px rgba(100, 116, 139, 0.20);
+            }
         }
 
         /* ------------------------------------------------------------- */
-        /* TOP 4 VIBRANT 3D STAT CARDS (EXACT MATCH TO media_1794960037908_15a2248a) */
+        /* TOP 4 VIBRANT 3D STAT CARDS                                   */
         /* ------------------------------------------------------------- */
         .stat-card-3d-wrap {
             position: relative;
             transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
+            min-width: 0;
+            max-width: 100%;
         }
-        .stat-card-3d-wrap:hover {
-            transform: translateY(-5px);
+        @media (hover: hover) {
+            .stat-card-3d-wrap:hover {
+                transform: translateY(-5px);
+            }
         }
 
         .stat-card-3d {
             position: relative;
             background: #ffffff;
             border-radius: 1.45rem;
-            padding: 1.15rem 1.25rem;
+            padding: 0.95rem 1rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0.85rem;
+            gap: 0.65rem;
             transition: all 0.25s ease;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        @media (min-width: 640px) {
+            .stat-card-3d {
+                padding: 1.1rem 1.15rem;
+                gap: 0.75rem;
+            }
+        }
+        @media (min-width: 1280px) {
+            .stat-card-3d {
+                padding: 1rem 1rem;
+                gap: 0.55rem;
+            }
+        }
+        @media (min-width: 1440px) {
+            .stat-card-3d {
+                padding: 1.15rem 1.25rem;
+                gap: 0.85rem;
+            }
         }
 
         /* 1. Electric Blue Card (TOTAL BUDGET AMOUNT) */
@@ -268,7 +332,7 @@
             box-shadow: 0 22px 42px -6px rgba(13, 148, 103, 0.38);
         }
 
-        /* 3. Sunset Orange Card (TOTAL COMMISSION) - Exact Match to #cd3805 */
+        /* 3. Sunset Orange Card (TOTAL COMMISSION) */
         .stat-card-orange {
             background: #ffffff;
             border: 2.5px solid #cd3805;
@@ -296,9 +360,9 @@
 
         /* 3D Extruded Candy Icon Tile on Left */
         .stat-candy-icon {
-            width: 3.35rem;
-            height: 3.35rem;
-            border-radius: 1.15rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: 0.95rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -306,8 +370,180 @@
             color: #ffffff;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        @media (min-width: 640px) {
+            .stat-candy-icon {
+                width: 3.1rem;
+                height: 3.1rem;
+                border-radius: 1.1rem;
+            }
+        }
+        @media (min-width: 1280px) {
+            .stat-candy-icon {
+                width: 2.75rem;
+                height: 2.75rem;
+                border-radius: 0.95rem;
+            }
+        }
+        @media (min-width: 1440px) {
+            .stat-candy-icon {
+                width: 3.35rem;
+                height: 3.35rem;
+                border-radius: 1.15rem;
+            }
+        }
         .stat-card-3d-wrap:hover .stat-candy-icon {
-            transform: scale(1.1) rotate(-4deg);
+            transform: scale(1.08) rotate(-4deg);
+        }
+
+        .stat-donut-wrap {
+            width: 56px;
+            height: 56px;
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+        }
+        @media (min-width: 640px) {
+            .stat-donut-wrap {
+                width: 68px;
+                height: 68px;
+            }
+        }
+        @media (min-width: 1280px) {
+            .stat-donut-wrap {
+                width: 58px;
+                height: 58px;
+            }
+        }
+        @media (min-width: 1440px) {
+            .stat-donut-wrap {
+                width: 74px;
+                height: 74px;
+            }
+        }
+
+        .stat-donut-pct {
+            font-size: 0.78rem;
+        }
+        @media (min-width: 640px) {
+            .stat-donut-pct { font-size: 1rem; }
+        }
+        @media (min-width: 1280px) {
+            .stat-donut-pct { font-size: 0.85rem; }
+        }
+        @media (min-width: 1536px) {
+            .stat-donut-pct { font-size: 1.1rem; }
+        }
+
+        .analytics-donut-wrap {
+            width: 96px;
+            height: 96px;
+        }
+        @media (min-width: 640px) {
+            .analytics-donut-wrap { width: 116px; height: 116px; }
+        }
+        @media (min-width: 1280px) {
+            .analytics-donut-wrap { width: 106px; height: 106px; }
+        }
+        @media (min-width: 1536px) {
+            .analytics-donut-wrap { width: 124px; height: 124px; }
+        }
+
+        .stock-donut-wrap {
+            width: 94px;
+            height: 94px;
+        }
+        @media (min-width: 640px) {
+            .stock-donut-wrap { width: 112px; height: 112px; }
+        }
+        @media (min-width: 1280px) {
+            .stock-donut-wrap { width: 102px; height: 102px; }
+        }
+        @media (min-width: 1536px) {
+            .stock-donut-wrap { width: 120px; height: 120px; }
+        }
+
+        .dept-ring-wrap {
+            width: 4rem;
+            height: 4rem;
+        }
+        @media (min-width: 640px) {
+            .dept-ring-wrap { width: 5rem; height: 5rem; }
+        }
+        @media (min-width: 1280px) {
+            .dept-ring-wrap { width: 4rem; height: 4rem; }
+        }
+        @media (min-width: 1536px) {
+            .dept-ring-wrap { width: 5rem; height: 5rem; }
+        }
+
+        .ai-mascot-svg {
+            width: 5rem;
+            height: 5rem;
+        }
+        @media (min-width: 640px) {
+            .ai-mascot-svg { width: 6rem; height: 6rem; }
+        }
+        @media (min-width: 1536px) {
+            .ai-mascot-svg { width: 7rem; height: 7rem; }
+        }
+
+        /* Top Header Bar - Rock-Solid Responsive Layout */
+        .dashboard-header-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+        @media (min-width: 1024px) {
+            .dashboard-header-bar {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+        .dashboard-header-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+        @media (min-width: 640px) {
+            .dashboard-header-left {
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+        .dashboard-clock-wrap {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            width: 100%;
+        }
+        .dashboard-clock-card {
+            width: 100%;
+        }
+        @media (min-width: 1024px) {
+            .dashboard-clock-wrap,
+            .dashboard-clock-card {
+                width: auto;
+            }
+        }
+
+        .chart-wave-container {
+            position: relative;
+            width: 100%;
+            height: 13rem;
+            padding-top: 1rem;
+            overflow: hidden;
+        }
+        @media (min-width: 640px) {
+            .chart-wave-container {
+                height: 14rem;
+            }
         }
 
         .candy-icon-blue {
@@ -338,72 +574,75 @@
         /* High-Contrast Card Typography */
         .stat-card-label {
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-            font-size: 0.92rem !important;
+            font-size: clamp(0.66rem, 0.8vw, 0.85rem) !important;
             font-weight: 900;
-            letter-spacing: 0.05em;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.03em;
+            line-height: 1.25;
             text-transform: uppercase;
             display: block;
             margin-bottom: 0.15rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .stat-card-blue .stat-card-label {
-            color: #0056d2 !important; /* Exact 0056d2 theme */
-        }
-        .stat-card-green .stat-card-label {
-            color: #059669 !important; /* Elegant medium emerald */
-        }
-        .stat-card-orange .stat-card-label {
-            color: #ea580c !important; /* Vibrant orange */
-        }
-        .stat-card-maroon .stat-card-label {
-            color: #9f1239 !important; /* Deep Reddish Maroon Label */
-        }
+        .stat-card-blue .stat-card-label { color: #0056d2 !important; }
+        .stat-card-green .stat-card-label { color: #059669 !important; }
+        .stat-card-orange .stat-card-label { color: #ea580c !important; }
+        .stat-card-maroon .stat-card-label { color: #9f1239 !important; }
 
         .stat-card-value {
             font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
             font-weight: 900;
+            font-size: clamp(1.05rem, 4vw, 1.35rem);
+            line-height: 1.15;
             color: #0f172a;
             letter-spacing: -0.02em;
             font-feature-settings: "tnum";
             font-variant-numeric: tabular-nums;
-            display: inline-flex;
+            display: flex;
+            flex-wrap: wrap;
             align-items: baseline;
+            max-width: 100%;
+            word-break: break-word;
             text-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
             -webkit-font-smoothing: antialiased;
         }
+        @media (min-width: 640px) {
+            .stat-card-value {
+                font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+            }
+        }
+        @media (min-width: 1280px) {
+            .stat-card-value {
+                font-size: clamp(0.95rem, 1.25vw, 1.45rem);
+            }
+        }
+        @media (min-width: 1536px) {
+            .stat-card-value {
+                font-size: clamp(1.2rem, 1.35vw, 1.65rem);
+            }
+        }
 
         .stat-card-currency {
-            font-size: 0.8em;
+            font-size: 0.78em;
             font-weight: 900;
             color: #0f172a;
-            margin-right: 0.35rem;
+            margin-right: 0.25rem;
             letter-spacing: 0.01em;
         }
 
-        /* 1. Deep Electric Blue Amount & Currency (#0056d2) */
         .stat-card-blue .stat-card-value,
-        .stat-card-blue .stat-card-currency {
-            color: #0056d2 !important;
-        }
+        .stat-card-blue .stat-card-currency { color: #0056d2 !important; }
 
-        /* 2. Deep Dark Green Amount & Currency (#064e3b) */
         .stat-card-green .stat-card-value,
-        .stat-card-green .stat-card-currency {
-            color: #064e3b !important;
-        }
+        .stat-card-green .stat-card-currency { color: #064e3b !important; }
 
-        /* 3. Deep Dark Orange Amount & Currency (#cd3805) */
         .stat-card-orange .stat-card-value,
-        .stat-card-orange .stat-card-currency {
-            color: #cd3805 !important;
-        }
+        .stat-card-orange .stat-card-currency { color: #cd3805 !important; }
 
-        /* 4. Deep Reddish Maroon Amount & Currency (#4c0519) */
         .stat-card-maroon .stat-card-value,
-        .stat-card-maroon .stat-card-currency {
-            color: #4c0519 !important;
-        }
+        .stat-card-maroon .stat-card-currency { color: #4c0519 !important; }
 
         /* 3D Elevated Filter Pill Dropdowns */
         .filter-pill {
@@ -532,7 +771,6 @@
             transform: translateY(2px);
             border-bottom-width: 1.5px;
         }
-        }
 
         /* Dynamic Hand Wave Animation */
         @keyframes wave-hand {
@@ -585,66 +823,66 @@
         $userRole = auth()->check() ? (auth()->user()->role ?? 'Administrator') : 'Admin';
     @endphp
 
-    <div class="dashboard-canvas py-6 px-4 sm:px-6 lg:px-8 xl:px-10">
+    <div class="dashboard-canvas py-6 px-3 sm:px-6 lg:px-8 xl:px-10">
         <div class="w-full space-y-6">
 
             <!-- 1. TOP HEADER BAR WITH DYNAMIC TIME-OF-DAY GREETING & EXECUTIVE TIME DISPLAY -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-panel p-5 sm:p-6">
+            <div class="dashboard-header-bar glass-panel p-4 sm:p-6">
 
                 <!-- Left: Dynamic Time Greeting, 3D Icon & Live Info -->
-                <div class="flex items-center gap-4 min-w-0">
+                <div class="dashboard-header-left">
                     <div id="dynamicGreetingIconWrap"
-                         class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 relative"
+                         class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 relative"
                          style="background: {{ $timeGradient }}; border-bottom: 4px solid #07255e; box-shadow: 0 10px 24px -4px rgba(0, 86, 210, 0.35);">
-                        <span id="dynamicGreetingIcon" class="text-3xl select-none filter drop-shadow">{{ $timeEmoji }}</span>
+                        <span id="dynamicGreetingIcon" class="text-2xl sm:text-3xl select-none filter drop-shadow">{{ $timeEmoji }}</span>
                         <!-- Pulsing live indicator dot -->
-                        <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-white animate-pulse"></span>
+                        <span class="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-400 border-2 border-white animate-pulse"></span>
                     </div>
 
-                    <div class="min-w-0">
-                        <div class="flex items-center flex-wrap gap-2.5">
-                            <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                    <div class="min-w-0 flex-1">
+                        <div class="flex items-center flex-wrap gap-2">
+                            <h1 class="text-lg sm:text-2xl lg:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-1.5 sm:gap-2 flex-wrap">
                                 <span id="dynamicGreetingText">{{ $timeGreeting }}, {{ $userName }}</span>
                                 <span class="animate-wave">👋</span>
                             </h1>
-                            <span id="dynamicGreetingBadge" class="px-3 py-1 rounded-full text-xs font-black text-white inline-flex items-center gap-1.5 shadow-xs"
+                            <span id="dynamicGreetingBadge" class="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[11px] sm:text-xs font-black text-white inline-flex items-center gap-1.5 shadow-xs shrink-0"
                                   style="background: #0d9467; border-bottom: 2px solid #064e3b;">
                                 <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                                 <span id="dynamicBadgeLabel">{{ $timeBadge }}</span>
                             </span>
                         </div>
-                        <p id="dynamicGreetingSubtitle" class="text-xs sm:text-sm font-semibold text-slate-500 mt-1 flex items-center gap-2 flex-wrap">
-                            <span class="text-[#0056d2] font-black uppercase text-[11px] tracking-wider bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 shadow-xs">{{ ucfirst($userRole) }}</span>
-                            <span class="text-slate-300">•</span>
+                        <p id="dynamicGreetingSubtitle" class="text-xs sm:text-sm font-semibold text-slate-500 mt-1.5 flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                            <span class="text-[#0056d2] font-black uppercase text-[10px] sm:text-[11px] tracking-wider bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 shadow-xs shrink-0">{{ ucfirst($userRole) }}</span>
+                            <span class="text-slate-300 hidden sm:inline">•</span>
                             <span id="dynamicSubtitleText">{{ $timeSubtitle }}</span>
                         </p>
                     </div>
                 </div>
 
                 <!-- Right: Executive 3D Time & Date Display Card -->
-                <div class="flex items-center gap-3 shrink-0 self-start md:self-auto">
-                    <div class="flex items-center gap-3.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-sm hover:border-[#0056d2] transition-all">
-                        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white shrink-0 shadow-xs"
+                <div class="dashboard-clock-wrap">
+                    <div class="dashboard-clock-card flex items-center gap-3 sm:gap-3.5 px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-slate-300 shadow-sm hover:border-[#0056d2] transition-all">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center text-white shrink-0 shadow-xs"
                              style="background-color: #0056d2; border-bottom: 3px solid #07255e;">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
-                        <div class="flex flex-col">
-                            <div class="flex items-center gap-2">
-                                <span id="dynamicLiveClock" class="font-mono font-black text-xl sm:text-2xl text-slate-900 tracking-tight leading-none">
+                        <div class="flex flex-col min-w-0 flex-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span id="dynamicLiveClock" class="font-mono font-black text-lg sm:text-2xl text-slate-900 tracking-tight leading-none">
                                     {{ now()->format('h:i:s A') }}
                                 </span>
-                                <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200">
+                                <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 shrink-0">
                                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                     <span>Live</span>
                                 </span>
                             </div>
-                            <div class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mt-1">
+                            <div class="flex items-center gap-1.5 text-xs font-bold text-slate-500 mt-1 min-w-0">
                                 <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                <span id="dynamicLiveDate" class="font-extrabold uppercase tracking-wider text-[11px] text-slate-600">
+                                <span id="dynamicLiveDate" class="font-extrabold uppercase tracking-wider text-[10px] sm:text-[11px] text-slate-600 truncate">
                                     {{ now()->format('l, d M Y') }}
                                 </span>
                             </div>
@@ -653,15 +891,15 @@
                 </div>
             </div>
 
-            <!-- 2. TOP 4 VIBRANT 3D STAT CARDS (EXACT MATCH TO media_1794960037908_15a2248a) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            <!-- 2. TOP 4 VIBRANT 3D STAT CARDS -->
+            <div class="stat-cards-grid">
 
                 <!-- CARD 1: TOTAL BILL AMOUNT (Electric Blue 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-blue">
                         <!-- Left: 3D Candy Icon Button -->
                         <div class="stat-candy-icon candy-icon-blue">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                                 <line x1="3" y1="6" x2="21" y2="6"></line>
                                 <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -669,34 +907,34 @@
                         </div>
 
                         <!-- Center: Content -->
-                        <div class="min-w-0 flex-1 px-1">
+                        <div class="min-w-0 flex-1 px-0.5 sm:px-1">
                             <span class="stat-card-label">TOTAL BILL AMOUNT</span>
-                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
+                            <div class="stat-card-value my-0.5">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}">
                                     {{ number_format($stats['total_budget'] > 0 ? $stats['total_budget'] : 910000000) }}
                                 </span>
                             </div>
-                            <div class="mt-1 flex items-center">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50/90 text-blue-900 border border-blue-100">
-                                    <span class="text-emerald-600 font-bold flex items-center">
+                            <div class="mt-1 flex items-center flex-wrap">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-blue-50/90 text-blue-900 border border-blue-100 max-w-full">
+                                    <span class="text-emerald-600 font-bold flex items-center shrink-0">
                                         <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
                                         +12.5%
                                     </span>
-                                    <span class="text-slate-600 font-medium">vs last month</span>
+                                    <span class="text-slate-600 font-medium truncate">vs last month</span>
                                 </span>
                             </div>
                         </div>
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $bPct = (int)($stats['billed_pct'] ?? 68); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $bPct }}% Billed">
-                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="stat-donut-wrap" title="{{ $bPct }}% Billed">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#dbeafe" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#0056d2" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $bPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xl font-black font-mono text-[#0056d2]">{{ $bPct }}%</span>
+                            <span class="absolute stat-donut-pct font-black font-mono text-[#0056d2]">{{ $bPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -706,41 +944,41 @@
                     <div class="stat-card-3d stat-card-green">
                         <!-- Left: 3D Candy Icon Button -->
                         <div class="stat-candy-icon candy-icon-green">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                             </svg>
                         </div>
 
                         <!-- Center: Content -->
-                        <div class="min-w-0 flex-1 px-1">
+                        <div class="min-w-0 flex-1 px-0.5 sm:px-1">
                             <span class="stat-card-label">TOTAL CHEQUE AMOUNT</span>
-                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
+                            <div class="stat-card-value my-0.5">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ (int)($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}">
                                     {{ number_format($stats['total_released'] > 0 ? $stats['total_released'] : 265000000) }}
                                 </span>
                             </div>
-                            <div class="mt-1 flex items-center">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50/90 text-emerald-900 border border-emerald-100">
-                                    <span class="text-emerald-600 font-bold flex items-center">
+                            <div class="mt-1 flex items-center flex-wrap">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-emerald-50/90 text-emerald-900 border border-emerald-100 max-w-full">
+                                    <span class="text-emerald-600 font-bold flex items-center shrink-0">
                                         <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
                                         +8.2%
                                     </span>
-                                    <span class="text-slate-600 font-medium">vs last month</span>
+                                    <span class="text-slate-600 font-medium truncate">vs last month</span>
                                 </span>
                             </div>
                         </div>
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $cValPct = (int)($stats['cheque_pct'] ?? 82); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $cValPct }}% Cleared">
-                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="stat-donut-wrap" title="{{ $cValPct }}% Cleared">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#d1fae5" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#0d9467" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $cValPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xl font-black font-mono text-[#0d9467]">{{ $cValPct }}%</span>
+                            <span class="absolute stat-donut-pct font-black font-mono text-[#0d9467]">{{ $cValPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -750,7 +988,7 @@
                     <div class="stat-card-3d stat-card-orange">
                         <!-- Left: Dedicated Commission Icon Button -->
                         <div class="stat-candy-icon candy-icon-orange">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="9.5"></circle>
                                 <path d="M15 8.5l-6 7"></path>
                                 <circle cx="9.5" cy="9.5" r="1.5" fill="currentColor"></circle>
@@ -759,37 +997,37 @@
                         </div>
 
                         <!-- Center: Content -->
-                        <div class="min-w-0 flex-1 px-1">
+                        <div class="min-w-0 flex-1 px-0.5 sm:px-1">
                             <span class="stat-card-label">TOTAL COMMISSION</span>
                             @php
                                 $commissionAmount = (float)($stats['total_commission'] ?? 0);
                             @endphp
-                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap">
+                            <div class="stat-card-value my-0.5">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span data-counter-target="{{ $commissionAmount }}" data-counter-decimals="2">
                                     {{ number_format($commissionAmount, 2) }}
                                 </span>
                             </div>
-                            <div class="mt-1 flex items-center">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-orange-50/90 text-orange-950 border border-orange-200">
-                                    <span class="text-emerald-700 font-bold flex items-center">
+                            <div class="mt-1 flex items-center flex-wrap">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-orange-50/90 text-orange-950 border border-orange-200 max-w-full">
+                                    <span class="text-emerald-700 font-bold flex items-center shrink-0">
                                         <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                         Cheques
                                     </span>
-                                    <span class="text-slate-600 font-medium">all time</span>
+                                    <span class="text-slate-600 font-medium truncate">all time</span>
                                 </span>
                             </div>
                         </div>
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $commPct = (int)($stats['commission_pct'] ?? 45); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $commPct }}% Commission Rate">
-                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="stat-donut-wrap" title="{{ $commPct }}% Commission Rate">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#ffedd5" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#cd3805" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $commPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xl font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
+                            <span class="absolute stat-donut-pct font-black font-mono text-[#cd3805]">{{ $commPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -799,7 +1037,7 @@
                     <div class="stat-card-3d stat-card-maroon">
                         <!-- Left: 3D Candy Icon Button -->
                         <div class="stat-candy-icon candy-icon-maroon">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                 <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                                 <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
                                 <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
@@ -807,12 +1045,12 @@
                         </div>
 
                         <!-- Center: Content with Eye Toggle Button -->
-                        <div x-data="{ showProfit: false }" class="min-w-0 flex-1 px-1">
-                            <div class="flex items-center gap-1.5">
+                        <div x-data="{ showProfit: false }" class="min-w-0 flex-1 px-0.5 sm:px-1">
+                            <div class="flex items-center gap-1.5 min-w-0">
                                 <span class="stat-card-label">VENDOR PROFIT</span>
                                 <button type="button" 
                                         @click="showProfit = !showProfit" 
-                                        class="p-0.5 rounded text-rose-900/60 hover:text-[#881337] hover:bg-rose-100/60 transition focus:outline-none" 
+                                        class="p-0.5 rounded text-rose-900/60 hover:text-[#881337] hover:bg-rose-100/60 transition focus:outline-none shrink-0" 
                                         :title="showProfit ? 'Hide Balance' : 'Show Balance'">
                                     <svg x-show="showProfit" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -827,7 +1065,7 @@
                             @php
                                 $profitVal = (float)($stats['total_vendor_profit'] > 0 ? $stats['total_vendor_profit'] : ($stats['available_balance'] > 0 ? $stats['available_balance'] : 246861588));
                             @endphp
-                            <div class="text-xl xl:text-2xl 2xl:text-3xl stat-card-value my-0.5 whitespace-nowrap select-none">
+                            <div class="stat-card-value my-0.5 select-none">
                                 <span class="stat-card-currency">Rs.</span>
                                 <span x-show="showProfit" data-counter-target="{{ (int)$profitVal }}">
                                     {{ number_format($profitVal) }}
@@ -836,26 +1074,26 @@
                                     ••••••••
                                 </span>
                             </div>
-                            <div class="mt-1 flex items-center">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-50/90 text-rose-900 border border-rose-100">
-                                    <span class="text-emerald-600 font-bold flex items-center">
+                            <div class="mt-1 flex items-center flex-wrap">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-semibold bg-rose-50/90 text-rose-900 border border-rose-100 max-w-full">
+                                    <span class="text-emerald-600 font-bold flex items-center shrink-0">
                                         <svg class="w-3 h-3 inline mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
                                         +15.6%
                                     </span>
-                                    <span class="text-slate-600 font-medium">vs last month</span>
+                                    <span class="text-slate-600 font-medium truncate">vs last month</span>
                                 </span>
                             </div>
                         </div>
 
                         <!-- Right: Dynamic Donut Circle -->
                         @php $profPct = (int)($stats['profit_pct'] ?? 88); @endphp
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 75px; height: 75px;" title="{{ $profPct }}% Profit Margin">
-                            <svg class="w-[75px] h-[75px] -rotate-90" viewBox="0 0 36 36">
+                        <div class="stat-donut-wrap" title="{{ $profPct }}% Profit Margin">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
                                 <circle cx="18" cy="18" r="14" fill="none" stroke="#881337" stroke-width="3.5" 
                                         stroke-dasharray="88" stroke-dashoffset="{{ 88 - (88 * min(100, max(0, $profPct)) / 100) }}" stroke-linecap="round" />
                             </svg>
-                            <span class="absolute text-xl font-black font-mono text-[#881337]">{{ $profPct }}%</span>
+                            <span class="absolute stat-donut-pct font-black font-mono text-[#881337]">{{ $profPct }}%</span>
                         </div>
                     </div>
                 </div>
@@ -865,8 +1103,8 @@
             <!-- 3. ROW 2: 3 COLUMNS (Rock-Solid Row 2 Grid: 50% / 25% / 25% with Vibrant 3D Color Themes) -->
             <div class="row2-grid">
 
-                <!-- COLUMN 1 (50%): Sales & Purchases Overview (Dual Wave Chart - Vibrant Blue / Cyan Theme) -->
-                <div class="card-theme-blue p-5 flex flex-col justify-between">
+                <!-- COLUMN 1: Sales & Purchases Overview (Dual Wave Chart - Vibrant Blue / Cyan Theme) -->
+                <div class="row2-chart-col card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
 
                     <!-- Header -->
                     <div class="flex items-center justify-between gap-2 pb-3 border-b border-sky-100 min-w-0">
@@ -874,7 +1112,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #0056d2; border-bottom: 2.5px solid #07255e;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Sales & Purchases Overview</h2>
+                            <h2 class="text-xs sm:text-base font-bold text-slate-900 tracking-tight truncate">Sales & Purchases Overview</h2>
                         </div>
 
                         <div class="flex items-center gap-2 shrink-0">
@@ -890,9 +1128,9 @@
                     </div>
 
                     <!-- Dual Interactive Wave Chart Container -->
-                    <div class="relative w-full h-56 pt-3">
+                    <div class="chart-wave-container">
                         <!-- Y-Axis Labels & Grid Lines -->
-                        <div class="absolute inset-0 flex flex-col justify-between pointer-events-none text-[10px] font-mono font-bold text-slate-400 pb-6 pr-2">
+                        <div class="absolute inset-0 flex flex-col justify-between pointer-events-none text-[9px] sm:text-[10px] font-mono font-bold text-slate-400 pb-6 pr-2 pt-4">
                             <div class="flex items-center gap-2 w-full"><span class="w-6 shrink-0">4M</span><div class="flex-1 border-b border-dashed border-sky-100"></div></div>
                             <div class="flex items-center gap-2 w-full"><span class="w-6 shrink-0">3M</span><div class="flex-1 border-b border-dashed border-sky-100"></div></div>
                             <div class="flex items-center gap-2 w-full"><span class="w-6 shrink-0">2M</span><div class="flex-1 border-b border-dashed border-sky-100"></div></div>
@@ -901,8 +1139,8 @@
                         </div>
 
                         <!-- SVG Dual Wave Lines (Stretches edge-to-edge from Y-axis to right boundary) -->
-                        <div style="position: absolute; left: 32px; right: 8px; top: 8px; bottom: 24px;">
-                            <svg viewBox="0 0 600 160" class="w-full h-full overflow-visible" preserveAspectRatio="none">
+                        <div style="position: absolute; left: 32px; right: 8px; top: 16px; bottom: 24px;">
+                            <svg viewBox="0 0 600 160" class="w-full h-full" preserveAspectRatio="none">
                                 <defs>
                                     <filter id="waveGlowBlue" x="-10%" y="-10%" width="120%" height="120%">
                                         <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#0284c7" flood-opacity="0.4"/>
@@ -931,15 +1169,15 @@
                             </svg>
 
                             <!-- Tooltip at 21 Nov (450/600 = 75%) -->
-                            <div class="absolute left-[75%] top-[12%] -translate-x-1/2 -translate-y-full bg-slate-900 border border-sky-400 text-white px-2.5 py-1 rounded-lg shadow-xl flex flex-col items-center pointer-events-none z-10"
-                                 style="box-shadow: 0 8px 18px rgba(2, 132, 199, 0.45);">
-                                <span class="text-[11px] font-black font-mono">Rs. 3.64M</span>
+                            <div class="absolute left-[75%] -translate-x-1/2 -translate-y-full bg-slate-900 border border-sky-400 text-white px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg shadow-xl flex flex-col items-center pointer-events-none z-10 whitespace-nowrap"
+                                 style="top: 22%; box-shadow: 0 8px 18px rgba(2, 132, 199, 0.45);">
+                                <span class="text-[10px] sm:text-[11px] font-black font-mono">Rs. 3.64M</span>
                                 <span class="text-[8px] font-bold text-sky-400">Sales</span>
                             </div>
                         </div>
 
                         <!-- X-Axis Labels (Stretches edge-to-edge from Y-axis to right boundary) -->
-                        <div style="position: absolute; left: 32px; right: 8px; bottom: 0;" class="flex justify-between text-[10px] font-bold text-slate-400 font-mono">
+                        <div style="position: absolute; left: 32px; right: 8px; bottom: 0;" class="flex justify-between text-[9px] sm:text-[10px] font-bold text-slate-400 font-mono">
                             <span>1 Nov</span>
                             <span>7 Nov</span>
                             <span>14 Nov</span>
@@ -958,7 +1196,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #881337; border-bottom: 2.5px solid #4c0519;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Business Analytics</h2>
+                            <h2 class="text-xs sm:text-base font-bold text-slate-900 tracking-tight truncate">Business Analytics</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2.5 py-1">
                             <span>This Year</span>
@@ -966,16 +1204,16 @@
                         </button>
                     </div>
 
-                    <!-- Middle: Donut Chart with fixed explicit sizing + Legend -->
+                    <!-- Middle: Donut Chart with responsive sizing + Legend -->
                     @php
                         $baSalesPct = (int)($stats['sales_pct'] ?? 68);
                         $baPurchPct = (int)($stats['purchases_pct'] ?? 32);
                         $baSalesOffset = round(238.76 - (238.76 * $baSalesPct / 100), 1);
                     @endphp
-                    <div class="flex items-center justify-center gap-3 sm:gap-4 py-2">
-                        <!-- Donut SVG with strict bounded dimensions -->
-                        <div class="relative shrink-0 flex items-center justify-center" style="width: 125px; height: 125px;">
-                            <svg width="125" height="125" viewBox="0 0 100 100" class="-rotate-90">
+                    <div class="flex items-center justify-center gap-3 sm:gap-4 py-2 min-w-0">
+                        <!-- Donut SVG with responsive bounded dimensions -->
+                        <div class="relative shrink-0 flex items-center justify-center analytics-donut-wrap">
+                            <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="13"/>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#881337" stroke-width="13"
                                         stroke-dasharray="238.76" stroke-dashoffset="0" stroke-linecap="round"/>
@@ -985,44 +1223,44 @@
 
                             <!-- Center Text -->
                             <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                                <span class="text-2xl font-black font-mono text-slate-900 leading-none" data-counter-target="{{ $baSalesPct }}" data-counter-suffix="%">{{ $baSalesPct }}%</span>
-                                <span class="text-[10px] font-bold text-slate-400 mt-1">Growth</span>
+                                <span class="text-lg sm:text-2xl font-black font-mono text-slate-900 leading-none" data-counter-target="{{ $baSalesPct }}" data-counter-suffix="%">{{ $baSalesPct }}%</span>
+                                <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 mt-1">Growth</span>
                             </div>
                         </div>
 
                         <!-- Right Legend -->
-                        <div class="space-y-2 text-xs font-bold shrink-0">
+                        <div class="space-y-2 text-[11px] sm:text-xs font-bold min-w-0">
                             <div class="flex items-center gap-1.5">
-                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #0056d2;"></span>
-                                <span class="text-slate-600">Sales</span>
-                                <span class="font-mono text-slate-900 ml-1.5 font-black">{{ $baSalesPct }}%</span>
+                                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" style="background-color: #0056d2;"></span>
+                                <span class="text-slate-600 truncate">Sales</span>
+                                <span class="font-mono text-slate-900 ml-1 font-black shrink-0">{{ $baSalesPct }}%</span>
                             </div>
                             <div class="flex items-center gap-1.5">
-                                <span class="w-3 h-3 rounded-full shrink-0" style="background-color: #881337;"></span>
-                                <span class="text-slate-600">Purchases</span>
-                                <span class="font-mono text-slate-900 ml-1.5 font-black">{{ $baPurchPct }}%</span>
+                                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full shrink-0" style="background-color: #881337;"></span>
+                                <span class="text-slate-600 truncate">Purchases</span>
+                                <span class="font-mono text-slate-900 ml-1 font-black shrink-0">{{ $baPurchPct }}%</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Bottom 2 Cards (Revenue & Expenses) -->
                     <div class="grid grid-cols-2 gap-2 pt-1">
-                        <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-2.5 flex items-center gap-2">
+                        <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-2 sm:p-2.5 flex items-center gap-2 min-w-0">
                             <div class="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center shrink-0">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                             </div>
-                            <div class="min-w-0">
-                                <span class="text-[9px] font-bold text-emerald-800 uppercase block leading-none">Revenue</span>
+                            <div class="min-w-0 flex-1">
+                                <span class="text-[9px] font-bold text-emerald-800 uppercase block leading-none truncate">Revenue</span>
                                 <span class="text-[11px] font-black font-mono text-slate-900 truncate block mt-0.5" data-counter-target="45.2" data-counter-float data-counter-suffix="M">45.2M</span>
                             </div>
                         </div>
 
-                        <div class="bg-rose-50/80 border border-rose-200 rounded-xl p-2.5 flex items-center gap-2">
+                        <div class="bg-rose-50/80 border border-rose-200 rounded-xl p-2 sm:p-2.5 flex items-center gap-2 min-w-0">
                             <div class="w-7 h-7 rounded-lg text-white flex items-center justify-center shrink-0" style="background-color: #881337; border-bottom: 2px solid #4c0519;">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                             </div>
-                            <div class="min-w-0">
-                                <span class="text-[9px] font-bold text-rose-900 uppercase block leading-none">Expenses</span>
+                            <div class="min-w-0 flex-1">
+                                <span class="text-[9px] font-bold text-rose-900 uppercase block leading-none truncate">Expenses</span>
                                 <span class="text-[11px] font-black font-mono text-slate-900 truncate block mt-0.5" data-counter-target="18.1" data-counter-float data-counter-suffix="M">18.1M</span>
                             </div>
                         </div>
@@ -1038,7 +1276,7 @@
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #cd3805; border-bottom: 2.5px solid #9a3412;">
                                 <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Activities</h2>
+                            <h2 class="text-xs sm:text-base font-bold text-slate-900 tracking-tight truncate">Recent Activities</h2>
                         </div>
                         <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#cd3805] hover:text-[#9a3412] shrink-0 whitespace-nowrap">View All ›</a>
                     </div>
@@ -1047,7 +1285,7 @@
                     <div class="space-y-3 py-1">
                         @if(isset($recentActivities) && $recentActivities->count() > 0)
                             @foreach($recentActivities->take(4) as $act)
-                                <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center justify-between gap-2 min-w-0">
                                     <div class="flex items-center gap-2 min-w-0 flex-1">
                                         <div class="w-8 h-8 rounded-xl bg-[#cd3805] text-white flex items-center justify-center shrink-0 shadow-xs">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
@@ -1061,12 +1299,12 @@
                                 </div>
                             @endforeach
                         @else
-                            <div class="flex items-center justify-between gap-2">
-                                <div class="flex items-center gap-2 min-w-0">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                                     </div>
-                                    <div class="min-w-0">
+                                    <div class="min-w-0 flex-1">
                                         <div class="text-xs font-bold text-slate-800 truncate">New Sale #INV-118</div>
                                         <div class="text-[10px] text-slate-400 truncate">Ahmed Ali • 2m ago</div>
                                     </div>
@@ -1074,12 +1312,12 @@
                                 <span class="tag-pill-sale shrink-0">Sale</span>
                             </div>
 
-                            <div class="flex items-center justify-between gap-2">
-                                <div class="flex items-center gap-2 min-w-0">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-xl bg-[#0056d2] text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                                     </div>
-                                    <div class="min-w-0">
+                                    <div class="min-w-0 flex-1">
                                         <div class="text-xs font-bold text-slate-800 truncate">Purchase #PUR-067</div>
                                         <div class="text-[10px] text-slate-400 truncate">Sara Khan • 5m ago</div>
                                     </div>
@@ -1087,12 +1325,12 @@
                                 <span class="tag-pill-purchase shrink-0">Purchase</span>
                             </div>
 
-                            <div class="flex items-center justify-between gap-2">
-                                <div class="flex items-center gap-2 min-w-0">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-xl bg-[#cd3805] text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                     </div>
-                                    <div class="min-w-0">
+                                    <div class="min-w-0 flex-1">
                                         <div class="text-xs font-bold text-slate-800 truncate">Paid: Rs. 250k</div>
                                         <div class="text-[10px] text-slate-400 truncate">ABC Traders • 8m ago</div>
                                     </div>
@@ -1100,12 +1338,12 @@
                                 <span class="tag-pill-payment shrink-0">Payment</span>
                             </div>
 
-                            <div class="flex items-center justify-between gap-2">
-                                <div class="flex items-center gap-2 min-w-0">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-xl bg-[#881337] text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                                     </div>
-                                    <div class="min-w-0">
+                                    <div class="min-w-0 flex-1">
                                         <div class="text-xs font-bold text-slate-800 truncate">Stock: 500 units</div>
                                         <div class="text-[10px] text-slate-400 truncate">Rice 5kg • 12m ago</div>
                                     </div>
@@ -1119,33 +1357,33 @@
             </div>
 
             <!-- 3.5 ACTIVE TENDERS & PROCUREMENT CENTRAL BOARD -->
-            <div class="glass-panel p-5 sm:p-6 min-w-0">
+            <div class="glass-panel p-4 sm:p-6 min-w-0">
 
                 <!-- Section Header -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                    <div class="flex items-center gap-3">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                    <div class="flex items-start sm:items-center gap-3 min-w-0">
                         <div class="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm"
                              style="background: #0056d2;">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h2 class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">Active Tenders & Procurement Board</h2>
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200">
+                        <div class="min-w-0 flex-1">
+                            <div class="flex items-center flex-wrap gap-2">
+                                <h2 class="text-sm sm:text-lg font-bold text-slate-900 tracking-tight">Active Tenders & Procurement Board</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-black text-emerald-700 bg-emerald-50 border border-emerald-200 shrink-0">
                                     {{ $stats['total_tenders'] ?? 7 }} Total
                                 </span>
                             </div>
-                            <p class="text-xs font-semibold text-slate-400 mt-0.5">
+                            <p class="text-[11px] sm:text-xs font-semibold text-slate-400 mt-0.5">
                                 Live tenders, evaluation pipelines, contractor bids & budget clearance
                             </p>
                         </div>
                     </div>
 
                     <!-- Right Quick Actions: Independent EPADS 2.0 and Tenders Management Buttons -->
-                    <div class="flex items-center gap-2 self-start sm:self-auto flex-wrap">
-                        <div class="hidden md:flex items-center gap-2 mr-1">
+                    <div class="flex items-center gap-2 self-start md:self-auto flex-wrap">
+                        <div class="hidden xl:flex items-center gap-2 mr-1">
                             <span class="px-2.5 py-1 rounded-xl text-xs font-extrabold text-sky-700 bg-sky-50 border border-sky-200 flex items-center gap-1.5 shadow-2xs">
                                 <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
                                 <span>{{ $stats['active_tenders'] ?? 2 }} Open Bidding</span>
@@ -1156,18 +1394,18 @@
                             </span>
                         </div>
                         <!-- 1. EPADS 2.0 Independent Option -->
-                        <a href="{{ route('tenders.index') }}?tender_type=epad" class="px-3.5 py-2 rounded-xl text-xs font-black text-[#881337] bg-rose-50 hover:bg-rose-100 border-2 border-rose-200 transition-all shadow-2xs flex items-center gap-1.5">
-                            <span class="w-2 h-2 rounded-full bg-rose-600"></span>
+                        <a href="{{ route('tenders.index') }}?tender_type=epad" class="px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-black text-[#881337] bg-rose-50 hover:bg-rose-100 border-2 border-rose-200 transition-all shadow-2xs flex items-center gap-1.5 whitespace-nowrap">
+                            <span class="w-2 h-2 rounded-full bg-rose-600 shrink-0"></span>
                             <span>EPADS 2.0</span>
                         </a>
                         <!-- 2. Tenders Management Independent Option -->
-                        <a href="{{ route('tenders.index') }}" class="px-3.5 py-2 rounded-xl text-xs font-black text-[#0056d2] bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 transition-all shadow-2xs flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5 text-[#0056d2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <a href="{{ route('tenders.index') }}" class="px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-black text-[#0056d2] bg-blue-50 hover:bg-blue-100 border-2 border-blue-200 transition-all shadow-2xs flex items-center gap-1.5 whitespace-nowrap">
+                            <svg class="w-3.5 h-3.5 text-[#0056d2] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             <span>Tenders Management</span>
                         </a>
                         <!-- New Tender -->
-                        <a href="{{ route('tenders.create') }}" class="btn-funky-tender px-3.5 py-2 text-xs flex items-center gap-1.5 shadow-sm">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                        <a href="{{ route('tenders.create') }}" class="btn-funky-tender px-3.5 py-2 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-sm whitespace-nowrap">
+                            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                             <span>+ Float Tender</span>
                         </a>
                     </div>
@@ -1326,10 +1564,10 @@
                 <!-- CARD 2: Stock Status (Lush Emerald Theme) -->
                 <div class="card-theme-green p-4 sm:p-5 flex flex-col justify-between min-w-0">
 
-                    <div class="flex items-center justify-between pb-3 border-b border-emerald-100 min-w-0">
-                        <div class="flex items-center gap-2 min-w-0">
+                    <div class="flex items-center justify-between gap-2 pb-3 border-b border-emerald-100 min-w-0">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
                             <span class="text-base shrink-0">🧊</span>
-                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Stock Status</h2>
+                            <h2 class="text-xs sm:text-base font-bold text-slate-900 tracking-tight truncate">Stock Status</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2 py-1">
                             <span>All</span>
@@ -1337,9 +1575,9 @@
                         </button>
                     </div>
 
-                    <div class="flex items-center justify-center gap-3 py-1">
-                        <div class="relative shrink-0 flex items-center justify-center" style="width: 120px; height: 120px;">
-                            <svg width="120" height="120" viewBox="0 0 100 100" class="-rotate-90">
+                    <div class="flex items-center justify-center gap-3 py-2 min-w-0">
+                        <div class="relative shrink-0 flex items-center justify-center stock-donut-wrap">
+                            <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#f1f5f9" stroke-width="12"/>
                                 <circle cx="50" cy="50" r="38" fill="none" stroke="#ef4444" stroke-width="12"
                                         stroke-dasharray="238.7" stroke-dashoffset="215"/>
@@ -1349,26 +1587,26 @@
                                         stroke-dasharray="238.7" stroke-dashoffset="67" stroke-linecap="round"/>
                             </svg>
                             <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                                <span class="text-xl font-black font-mono text-slate-900 leading-none" data-counter-target="72" data-counter-suffix="%">72%</span>
-                                <span class="text-[9px] font-bold text-slate-400 mt-1">In Stock</span>
+                                <span class="text-base sm:text-xl font-black font-mono text-slate-900 leading-none" data-counter-target="72" data-counter-suffix="%">72%</span>
+                                <span class="text-[8px] sm:text-[9px] font-bold text-slate-400 mt-1">In Stock</span>
                             </div>
                         </div>
 
-                        <div class="space-y-1.5 text-[11px] font-bold shrink-0">
+                        <div class="space-y-1.5 text-[10px] sm:text-[11px] font-bold min-w-0">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
-                                <span class="text-slate-600">In Stock</span>
-                                <span class="font-mono text-slate-900 ml-auto font-black pl-2">72%</span>
+                                <span class="text-slate-600 truncate">In Stock</span>
+                                <span class="font-mono text-slate-900 ml-auto font-black pl-1.5 shrink-0">72%</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
-                                <span class="text-slate-600">Low</span>
-                                <span class="font-mono text-slate-900 ml-auto font-black pl-2">18%</span>
+                                <span class="text-slate-600 truncate">Low</span>
+                                <span class="font-mono text-slate-900 ml-auto font-black pl-1.5 shrink-0">18%</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0"></span>
-                                <span class="text-slate-600">Out</span>
-                                <span class="font-mono text-slate-900 ml-auto font-black pl-2">10%</span>
+                                <span class="text-slate-600 truncate">Out</span>
+                                <span class="font-mono text-slate-900 ml-auto font-black pl-1.5 shrink-0">10%</span>
                             </div>
                         </div>
                     </div>
@@ -1475,16 +1713,16 @@
             <!-- 5. ROW 4: 3 PANELS matching media_1794961202820_b9f1955f (Dept Performance, Recent Invoices, AI Smart Insight) -->
             <div class="row4-grid">
 
-                <!-- PANEL 1: Department Performance (4 Circular Ring Gauges - 45% width) -->
-                <div class="card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
+                <!-- PANEL 1: Department Performance (4 Circular Ring Gauges) -->
+                <div class="row4-dept-col card-theme-blue p-4 sm:p-5 flex flex-col justify-between min-w-0">
 
                     <!-- Header -->
-                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-sky-100 min-w-0">
-                        <div class="flex items-center gap-2 min-w-0">
+                    <div class="flex items-center justify-between gap-2 pb-3 border-b border-sky-100 min-w-0">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #0056d2; border-bottom: 2.5px solid #07255e;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Department Performance</h2>
+                            <h2 class="text-xs sm:text-base font-bold text-slate-900 tracking-tight truncate">Department Performance</h2>
                         </div>
                         <button class="filter-pill shrink-0 whitespace-nowrap text-[10px] px-2.5 py-1">
                             <span>This Year</span>
@@ -1496,8 +1734,8 @@
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 items-center justify-around">
 
                         <!-- Ring 1: Sales Dept -->
-                        <div class="flex flex-col items-center text-center">
-                            <div class="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+                        <div class="flex flex-col items-center text-center min-w-0">
+                            <div class="relative dept-ring-wrap flex items-center justify-center">
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -1506,13 +1744,13 @@
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="92" data-counter-suffix="%">92%</span>
                             </div>
-                            <span class="text-xs font-black text-slate-800 mt-2 truncate max-w-[100px]">Sales Dept</span>
+                            <span class="text-xs font-black text-slate-800 mt-2 truncate w-full px-1">Sales Dept</span>
                             <span class="text-[10px] font-extrabold text-slate-400 font-mono mt-0.5">Rs. 18.2M</span>
                         </div>
 
                         <!-- Ring 2: Purchase Dept -->
-                        <div class="flex flex-col items-center text-center">
-                            <div class="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+                        <div class="flex flex-col items-center text-center min-w-0">
+                            <div class="relative dept-ring-wrap flex items-center justify-center">
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -1521,13 +1759,13 @@
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="78" data-counter-suffix="%">78%</span>
                             </div>
-                            <span class="text-xs font-black text-slate-800 mt-2 truncate max-w-[100px]">Purchase Dept</span>
+                            <span class="text-xs font-black text-slate-800 mt-2 truncate w-full px-1">Purchase Dept</span>
                             <span class="text-[10px] font-extrabold text-slate-400 font-mono mt-0.5">Rs. 12.4M</span>
                         </div>
 
                         <!-- Ring 3: Inventory Dept -->
-                        <div class="flex flex-col items-center text-center">
-                            <div class="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+                        <div class="flex flex-col items-center text-center min-w-0">
+                            <div class="relative dept-ring-wrap flex items-center justify-center">
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -1536,13 +1774,13 @@
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="65" data-counter-suffix="%">65%</span>
                             </div>
-                            <span class="text-xs font-black text-slate-800 mt-2 truncate max-w-[100px]">Inventory Dept</span>
+                            <span class="text-xs font-black text-slate-800 mt-2 truncate w-full px-1">Inventory Dept</span>
                             <span class="text-[10px] font-extrabold text-slate-400 font-mono mt-0.5">Rs. 8.2M</span>
                         </div>
 
                         <!-- Ring 4: Accounts Dept -->
-                        <div class="flex flex-col items-center text-center">
-                            <div class="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+                        <div class="flex flex-col items-center text-center min-w-0">
+                            <div class="relative dept-ring-wrap flex items-center justify-center">
                                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                                     <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none"
                                           d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -1551,22 +1789,22 @@
                                 </svg>
                                 <span class="absolute text-xs sm:text-sm font-black font-mono text-slate-900" data-counter-target="95" data-counter-suffix="%">95%</span>
                             </div>
-                            <span class="text-xs font-black text-slate-800 mt-2 truncate max-w-[100px]">Accounts Dept</span>
+                            <span class="text-xs font-black text-slate-800 mt-2 truncate w-full px-1">Accounts Dept</span>
                             <span class="text-[10px] font-extrabold text-slate-400 font-mono mt-0.5">Rs. 16.8M</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- PANEL 2: Recent Invoices (30% width) -->
+                <!-- PANEL 2: Recent Invoices -->
                 <div class="card-theme-maroon p-4 sm:p-5 flex flex-col justify-between min-w-0">
 
                     <!-- Header -->
-                    <div class="flex items-center justify-between gap-1 pb-3 border-b border-rose-100 min-w-0">
-                        <div class="flex items-center gap-2 min-w-0">
+                    <div class="flex items-center justify-between gap-2 pb-3 border-b border-rose-100 min-w-0">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
                             <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl text-white flex items-center justify-center font-bold shadow-xs shrink-0" style="background-color: #881337; border-bottom: 2.5px solid #4c0519;">
                                 <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             </span>
-                            <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight whitespace-nowrap truncate">Recent Invoices</h2>
+                            <h2 class="text-xs sm:text-base font-bold text-slate-900 tracking-tight truncate">Recent Invoices</h2>
                         </div>
                         <a href="{{ route('bills.index') }}" class="text-xs font-black text-[#881337] hover:text-[#4c0519] shrink-0 whitespace-nowrap">View All →</a>
                     </div>
@@ -1575,18 +1813,18 @@
                     <div class="space-y-3 py-2">
                         @if(isset($recentBills) && $recentBills->count() > 0)
                             @foreach($recentBills->take(3) as $bill)
-                                <div class="flex items-center justify-between gap-2.5">
-                                    <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                                <div class="flex items-center justify-between gap-2 min-w-0">
+                                    <div class="flex items-center gap-2 min-w-0 flex-1">
                                         <div class="w-8 h-8 rounded-xl {{ $bill->status == 'paid' ? 'bg-blue-500' : 'bg-emerald-500' }} text-white flex items-center justify-center shrink-0 shadow-xs">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                         </div>
                                         <div class="min-w-0 flex-1">
-                                            <div class="text-xs font-extrabold text-slate-800 truncate font-mono">{{ $bill->bill_number }}</div>
+                                            <div class="text-[11px] sm:text-xs font-extrabold text-slate-800 truncate font-mono">{{ $bill->bill_number }}</div>
                                             <div class="text-[10px] text-slate-400 truncate">{{ $bill->created_at ? $bill->created_at->format('d M Y') : '15 Nov 2026' }}</div>
                                         </div>
                                     </div>
                                     <div class="text-right shrink-0">
-                                        <span class="text-xs font-black font-mono text-slate-900 block" data-counter-target="{{ (int)$bill->net_amount }}" data-counter-prefix="Rs. ">Rs. {{ number_format($bill->net_amount) }}</span>
+                                        <span class="text-[11px] sm:text-xs font-black font-mono text-slate-900 block" data-counter-target="{{ (int)$bill->net_amount }}" data-counter-prefix="Rs. ">Rs. {{ number_format($bill->net_amount) }}</span>
                                     </div>
                                     <span class="{{ $bill->status == 'paid' ? 'tag-pill-sale' : 'tag-pill-purchase' }} shrink-0 text-[10px]">
                                         {{ ucfirst($bill->status) }}
@@ -1594,65 +1832,65 @@
                                 </div>
                             @endforeach
                         @else
-                            <div class="flex items-center justify-between gap-2.5">
-                                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-xl bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <div class="text-xs font-extrabold text-slate-800 truncate font-mono">INV-2026-118</div>
+                                        <div class="text-[11px] sm:text-xs font-extrabold text-slate-800 truncate font-mono">INV-2026-118</div>
                                         <div class="text-[10px] text-slate-400 truncate">15 Nov 2026</div>
                                     </div>
                                 </div>
-                                <span class="text-xs font-black font-mono text-slate-900 shrink-0" data-counter-target="250000" data-counter-prefix="Rs. ">Rs. 250,000</span>
+                                <span class="text-[11px] sm:text-xs font-black font-mono text-slate-900 shrink-0" data-counter-target="250000" data-counter-prefix="Rs. ">Rs. 250,000</span>
                                 <span class="tag-pill-sale shrink-0 text-[10px]">Paid</span>
                             </div>
 
-                            <div class="flex items-center justify-between gap-2.5">
-                                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <div class="text-xs font-extrabold text-slate-800 truncate font-mono">PUR-2026-067</div>
+                                        <div class="text-[11px] sm:text-xs font-extrabold text-slate-800 truncate font-mono">PUR-2026-067</div>
                                         <div class="text-[10px] text-slate-400 truncate">14 Nov 2026</div>
                                     </div>
                                 </div>
-                                <span class="text-xs font-black font-mono text-slate-900 shrink-0" data-counter-target="180000" data-counter-prefix="Rs. ">Rs. 180,000</span>
+                                <span class="text-[11px] sm:text-xs font-black font-mono text-slate-900 shrink-0" data-counter-target="180000" data-counter-prefix="Rs. ">Rs. 180,000</span>
                                 <span class="tag-pill-purchase shrink-0 text-[10px]">Pending</span>
                             </div>
 
-                            <div class="flex items-center justify-between gap-2.5">
-                                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                            <div class="flex items-center justify-between gap-2 min-w-0">
+                                <div class="flex items-center gap-2 min-w-0 flex-1">
                                     <div class="w-8 h-8 rounded-xl bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-xs">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <div class="text-xs font-extrabold text-slate-800 truncate font-mono">INV-2026-117</div>
+                                        <div class="text-[11px] sm:text-xs font-extrabold text-slate-800 truncate font-mono">INV-2026-117</div>
                                         <div class="text-[10px] text-slate-400 truncate">13 Nov 2026</div>
                                     </div>
                                 </div>
-                                <span class="text-xs font-black font-mono text-slate-900 shrink-0" data-counter-target="420000" data-counter-prefix="Rs. ">Rs. 420,000</span>
+                                <span class="text-[11px] sm:text-xs font-black font-mono text-slate-900 shrink-0" data-counter-target="420000" data-counter-prefix="Rs. ">Rs. 420,000</span>
                                 <span class="tag-pill-sale shrink-0 text-[10px]">Paid</span>
                             </div>
                         @endif
                     </div>
                 </div>
 
-                <!-- PANEL 3: Smart Business Insight (3D Cyberpunk AI Widget - 25% width) -->
+                <!-- PANEL 3: Smart Business Insight (3D Cyberpunk AI Widget) -->
                 <div class="card-theme-ai p-4 sm:p-5 flex flex-col justify-between min-w-0">
                     <!-- Holographic Background Elements -->
                     <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-blue-400/10 blur-2xl pointer-events-none"></div>
                     <div class="absolute -bottom-10 -left-10 w-44 h-44 rounded-full bg-blue-600/10 blur-2xl pointer-events-none"></div>
 
                     <!-- Header -->
-                    <div class="flex items-center justify-between gap-2 pb-2 relative z-10">
-                        <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-1 rounded-xl bg-white/20 border border-white/30 text-white text-xs font-black flex items-center gap-1.5 shadow-xs backdrop-blur-md">
+                    <div class="flex items-center justify-between gap-2 pb-2 relative z-10 min-w-0">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            <span class="px-2.5 py-1 rounded-xl bg-white/20 border border-white/30 text-white text-xs font-black flex items-center gap-1.5 shadow-xs backdrop-blur-md shrink-0">
                                 <svg class="w-3.5 h-3.5 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
                                 <span>AI</span>
                             </span>
-                            <h2 class="text-xs sm:text-sm font-bold text-white tracking-tight">Smart Business Insight</h2>
+                            <h2 class="text-xs sm:text-sm font-bold text-white tracking-tight truncate">Smart Business Insight</h2>
                         </div>
                         <span class="text-[10px] text-emerald-300 font-extrabold flex items-center gap-1 shrink-0">
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -1661,21 +1899,21 @@
                     </div>
 
                     <!-- Content & 3D Visual Mascot -->
-                    <div class="flex items-center justify-between gap-2 py-1 relative z-10">
+                    <div class="flex items-center justify-between gap-2 py-1 relative z-10 min-w-0">
                         <!-- Left Content -->
                         <div class="flex-1 min-w-0 pr-1">
                             <p class="text-xs font-medium text-white/90 leading-relaxed">
                                 Your sales have increased by <span class="text-cyan-300 font-black" data-counter-target="12.5" data-counter-float data-counter-suffix="%">+12.5%</span> this month compared to last month. Keep up the great work!
                             </p>
-                            <a href="{{ route('bills.index') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black text-white bg-white/20 hover:bg-white/30 border border-white/40 shadow-md backdrop-blur-md transition-all mt-3">
+                            <a href="{{ route('bills.index') }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black text-white bg-white/20 hover:bg-white/30 border border-white/40 shadow-md backdrop-blur-md transition-all mt-3 whitespace-nowrap">
                                 <span>View Details</span>
                                 <span class="text-cyan-300">›</span>
                             </a>
                         </div>
 
                         <!-- Right: Cute 3D Floating AI Robot Mascot -->
-                        <div class="shrink-0 -mr-2">
-                            <svg viewBox="0 0 140 140" class="w-24 h-24 sm:w-28 sm:h-28 drop-shadow-2xl overflow-visible">
+                        <div class="shrink-0">
+                            <svg viewBox="0 0 140 140" class="ai-mascot-svg drop-shadow-2xl">
                                 <!-- 3D Ascending Bars at the bottom -->
                                 <rect x="75" y="110" width="12" height="25" rx="3" fill="#ffffff" opacity="0.6"/>
                                 <rect x="90" y="98" width="12" height="37" rx="3" fill="#ffffff" opacity="0.8"/>

@@ -317,12 +317,11 @@
                             </label>
 
                             <div class="relative">
-                                <input type="file" name="document" id="tender_document_file" accept=".pdf,.doc,.docx,.zip" class="hidden" onchange="handleFileSelect(this)">
+                                <input type="file" name="document" id="tender_document_file" accept=".pdf,.doc,.docx,.zip" class="sr-only" onclick="this.value=null" onchange="handleFileSelect(this)">
                                 
                                 <!-- Empty State Container (Click to browse/upload) -->
-                                <div id="tender_file_empty_box" 
-                                     class="border-2 border-dashed border-[#d8d0c5] hover:border-orange-400 rounded-2xl p-6 text-center bg-white hover:bg-orange-50/20 transition group cursor-pointer flex flex-col items-center justify-center space-y-2"
-                                     onclick="document.getElementById('tender_document_file').click()">
+                                <label for="tender_document_file" id="tender_file_empty_box" 
+                                     class="border-2 border-dashed border-[#d8d0c5] hover:border-orange-400 rounded-2xl p-6 text-center bg-white hover:bg-orange-50/20 transition group cursor-pointer flex flex-col items-center justify-center space-y-2">
                                     <div class="w-10 h-10 rounded-full bg-orange-100/70 text-orange-600 flex items-center justify-center pointer-events-none">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
                                     </div>
@@ -332,10 +331,10 @@
                                     <p class="text-[11px] text-stone-400 pointer-events-none">
                                         Supports PDF, DOCX, ZIP • Max size 50MB (Leave empty to keep existing file)
                                     </p>
-                                    <button type="button" class="mt-1 px-4 py-1.5 bg-white border border-[#e5ded4] hover:bg-stone-50 rounded-lg text-xs font-bold text-stone-700 shadow-2xs pointer-events-none">
+                                    <span class="mt-1 px-4 py-1.5 bg-white border border-[#e5ded4] hover:bg-stone-50 rounded-lg text-xs font-bold text-stone-700 shadow-2xs pointer-events-none inline-block">
                                         Choose Replacement File
-                                    </button>
-                                </div>
+                                    </span>
+                                </label>
 
                                 <!-- Selected File Container (Filename inside field with Eye icon preview) -->
                                 <div id="tender_file_selected_box" class="hidden p-3.5 bg-emerald-50/80 rounded-2xl border border-emerald-300 shadow-2xs items-center justify-between">
@@ -355,9 +354,9 @@
                                             <span>Preview</span>
                                         </button>
                                         <!-- Change File Button -->
-                                        <button type="button" onclick="document.getElementById('tender_document_file').click()" class="px-3 py-2 text-stone-600 hover:text-stone-900 bg-white hover:bg-stone-50 rounded-xl border border-stone-200 transition text-xs font-bold shadow-2xs">
+                                        <label for="tender_document_file" class="cursor-pointer px-3 py-2 text-stone-600 hover:text-stone-900 bg-white hover:bg-stone-50 rounded-xl border border-stone-200 transition text-xs font-bold shadow-2xs inline-flex items-center">
                                             Change
-                                        </button>
+                                        </label>
                                         <!-- Remove Button -->
                                         <button type="button" onclick="removeSelectedFile()" class="p-2 text-stone-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition" title="Cancel replacement">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>

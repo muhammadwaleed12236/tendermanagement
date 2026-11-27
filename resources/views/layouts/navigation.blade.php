@@ -167,24 +167,147 @@
         animation: bell-ring 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
         transform-origin: top center;
     }
+
+    /* Responsive Navbar Protections (No Overlap, No Mobile Cutoff) */
+    .nav-top-bar {
+        min-height: 3.75rem;
+        height: auto;
+        overflow-x: clip;
+    }
+    @media (min-width: 640px) {
+        .nav-top-bar {
+            min-height: 4rem;
+        }
+    }
+    .nav-tier2-bar {
+        height: auto !important;
+        min-height: 0;
+    }
+    @media (min-width: 1024px) {
+        .nav-tier2-bar {
+            min-height: 3.5rem;
+            padding-top: 0.4rem !important;
+            padding-bottom: 0.4rem !important;
+        }
+    }
+    .nav-tier2-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.35rem 0.4rem;
+        width: 100%;
+    }
+    .nav-tier2-links {
+        display: none;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.1rem;
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    @media (min-width: 1024px) {
+        .nav-tier2-links {
+            display: flex;
+        }
+        .nav-tier2-links .nav-pill-item {
+            padding: 0.45rem 0.48rem !important;
+            font-size: 12px !important;
+            gap: 0.28rem !important;
+        }
+        .nav-tier2-links .nav-pill-item svg.nav-main-icon {
+            width: 15px !important;
+            height: 15px !important;
+            min-width: 15px !important;
+            max-width: 15px !important;
+        }
+        .nav-tier2-links .nav-pill-item svg.nav-chevron-icon {
+            width: 11px !important;
+            height: 11px !important;
+            min-width: 11px !important;
+            max-width: 11px !important;
+        }
+        .nav-epad-badge {
+            display: none !important;
+        }
+        .nav-tier2-actions {
+            gap: 0.35rem !important;
+        }
+        .nav-tier2-actions .nav-btn-tender,
+        .nav-tier2-actions .nav-btn-bill {
+            padding: 0.45rem 0.65rem !important;
+            font-size: 12px !important;
+        }
+    }
+    @media (min-width: 1440px) {
+        .nav-tier2-links {
+            gap: 0.15rem;
+        }
+        .nav-tier2-links .nav-pill-item {
+            padding: 0.48rem 0.56rem !important;
+            font-size: 12.5px !important;
+            gap: 0.3rem !important;
+        }
+        .nav-tier2-links .nav-pill-item svg.nav-main-icon {
+            width: 16px !important;
+            height: 16px !important;
+            min-width: 16px !important;
+            max-width: 16px !important;
+        }
+        .nav-tier2-links .nav-pill-item svg.nav-chevron-icon {
+            width: 12px !important;
+            height: 12px !important;
+            min-width: 12px !important;
+            max-width: 12px !important;
+        }
+        .nav-epad-badge {
+            display: none !important;
+        }
+        .nav-tier2-actions {
+            gap: 0.4rem !important;
+        }
+        .nav-tier2-actions .nav-btn-tender,
+        .nav-tier2-actions .nav-btn-bill {
+            padding: 0.48rem 0.72rem !important;
+            font-size: 12.5px !important;
+        }
+    }
+    @media (min-width: 1600px) {
+        .nav-tier2-links {
+            gap: 0.25rem;
+        }
+        .nav-tier2-links .nav-pill-item {
+            padding: 0.55rem 0.85rem !important;
+            font-size: 13.5px !important;
+            gap: 0.42rem !important;
+        }
+        .nav-epad-badge {
+            display: inline-block !important;
+        }
+        .nav-tier2-actions .nav-btn-tender,
+        .nav-tier2-actions .nav-btn-bill {
+            padding: 0.55rem 0.9rem !important;
+            font-size: 13.5px !important;
+        }
+    }
 </style>
 <!-- Two-Tier ERP Navigation Header -->
-<div x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 15)" class="sticky top-0 z-50 transition-all duration-300" :class="{ 'shadow-xl shadow-slate-900/10': scrolled }">
+<div x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 15)" class="sticky top-0 z-50 transition-all duration-300 w-full max-w-full" :class="{ 'shadow-xl shadow-slate-900/10': scrolled }">
     <!-- Top Bar: Executive Midnight Slate (#090d16) -->
-    <div class="bg-[#090d16] border-b border-slate-800/80 text-white select-none shadow-sm transition-all duration-300" :class="scrolled ? 'h-13 sm:h-14' : 'h-16 sm:h-17'" style="background: linear-gradient(90deg, #090d16 0%, #0f172a 45%, #0d1527 100%);">
-        <div class="max-w-full px-4 sm:px-6 lg:px-8 xl:px-10 h-full flex items-center justify-between gap-4">
+    <div class="nav-top-bar bg-[#090d16] border-b border-slate-800/80 text-white select-none shadow-sm transition-all duration-300 flex items-center" style="background: linear-gradient(90deg, #090d16 0%, #0f172a 45%, #0d1527 100%);">
+        <div class="w-full max-w-full px-3 sm:px-6 lg:px-8 xl:px-10 py-2 flex items-center justify-between gap-2 sm:gap-4 min-w-0">
             <!-- Left: Logo & Company Pill -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                 <!-- Logo Monogram & Name: ProWave Technologies -->
-                <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 group">
-                    <div class="w-10 h-10 rounded-xl bg-[#0056d2] border border-sky-300/40 border-b-3 border-[#07255e] flex items-center justify-center font-black text-white text-sm shadow-md shadow-blue-500/25 group-hover:scale-105 group-hover:-rotate-3 transition duration-200">
+                <a href="{{ route('dashboard') }}" class="flex items-center gap-2 sm:gap-2.5 group min-w-0">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#0056d2] border border-sky-300/40 border-b-3 border-[#07255e] flex items-center justify-center font-black text-white text-xs sm:text-sm shadow-md shadow-blue-500/25 group-hover:scale-105 group-hover:-rotate-3 transition duration-200 shrink-0">
                         PW
                     </div>
-                    <div class="flex flex-col leading-tight">
-                        <span class="font-black text-[15px] sm:text-[17px] tracking-tight text-white whitespace-nowrap flex items-center gap-1.5">
+                    <div class="flex flex-col leading-tight min-w-0">
+                        <span class="font-black text-[13px] sm:text-[17px] tracking-tight text-white flex items-center gap-1 truncate">
                             PROWAVE <span class="text-sky-400 font-extrabold">TECHNOLOGIES</span>
                         </span>
-                        <span class="text-[11px] text-slate-300 font-bold tracking-wider uppercase">
+                        <span class="text-[9px] sm:text-[11px] text-slate-300 font-bold tracking-wider uppercase truncate">
                             Tender & Procurement ERP
                         </span>
                     </div>
@@ -192,10 +315,10 @@
 
                 @auth
                     <!-- Dynamic Client Company Pill (Al-Madina Enterprises) -->
-                    <div class="hidden md:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-800/95 border border-slate-700 text-slate-200 text-xs sm:text-[13px] font-bold whitespace-nowrap ms-1.5 shadow-xs backdrop-blur-sm">
+                    <div class="hidden md:inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-800/95 border border-slate-700 text-slate-200 text-xs sm:text-[13px] font-bold whitespace-nowrap ms-1.5 shadow-xs backdrop-blur-sm shrink-0">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
                         <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Client:</span>
-                        <span class="truncate max-w-[240px] font-bold text-white tracking-wide">
+                        <span class="truncate max-w-[180px] xl:max-w-[240px] font-bold text-white tracking-wide">
                             {{ Auth::user()->company_name ?: 'Al-Madina Enterprises' }}
                         </span>
                         <span class="text-[9px] uppercase font-black px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30">VERIFIED</span>
@@ -204,15 +327,15 @@
             </div>
 
             <!-- Right: Support Contact, Status & Controls -->
-            <div class="flex items-center gap-3 sm:gap-3.5">
+            <div class="flex items-center gap-2 sm:gap-3.5 shrink-0">
                 <!-- Phone Contact with Cyan Circular Icon -->
-                <a href="tel:+923259385085" class="inline-flex items-center gap-2 text-white font-bold text-xs sm:text-[13px] hover:text-sky-300 transition whitespace-nowrap">
+                <a href="tel:+923259385085" class="inline-flex items-center gap-2 text-white font-bold text-xs sm:text-[13px] hover:text-sky-300 transition whitespace-nowrap" title="+92 325 9385 085">
                     <span class="w-7 h-7 rounded-full bg-[#0056d2] border-b-2 border-[#07255e] flex items-center justify-center text-white shrink-0 shadow-xs">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                         </svg>
                     </span>
-                    <span class="font-mono tracking-tight text-xs sm:text-[13.5px] font-extrabold text-slate-200">+92 325 9385 085</span>
+                    <span class="hidden sm:inline font-mono tracking-tight text-xs sm:text-[13.5px] font-extrabold text-slate-200">+92 325 9385 085</span>
                 </a>
 
                 <!-- Vertical Divider -->
@@ -225,7 +348,7 @@
                 </a>
 
                 <!-- Online Status Pill -->
-                <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs sm:text-[13px] font-extrabold whitespace-nowrap">
+                <span class="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 text-xs sm:text-[13px] font-extrabold whitespace-nowrap">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     <span>Online</span>
                 </span>
@@ -242,9 +365,9 @@
                         $userUnreadCount = Auth::user()->unreadNotifications()->count();
                         $latestNotifs = Auth::user()->notifications()->latest()->limit(6)->get();
                     @endphp
-                    <div class="relative hidden sm:block" x-data="{ notifOpen: false }">
+                    <div class="relative" x-data="{ notifOpen: false }">
                         <button @click="notifOpen = !notifOpen" 
-                                class="hover-bell relative p-2.5 text-slate-300 hover:text-white transition rounded-full hover:bg-slate-800/80 focus:outline-none"
+                                class="hover-bell relative p-2 text-slate-300 hover:text-white transition rounded-full hover:bg-slate-800/80 focus:outline-none"
                                 title="Notifications">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
@@ -412,10 +535,13 @@
                 @endauth
 
                 <!-- Mobile Hamburger Toggle -->
-                <div class="-me-2 flex items-center lg:hidden">
-                    <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <div class="flex items-center lg:hidden shrink-0">
+                    <button @click="open = ! open" type="button" aria-label="Toggle Navigation Menu" class="inline-flex items-center justify-center p-2 rounded-xl text-white bg-slate-800/90 hover:bg-slate-700 border border-slate-700 transition focus:outline-none">
+                        <svg x-show="!open" class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg x-show="open" class="h-5 w-5" stroke="currentColor" fill="none" viewBox="0 0 24 24" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
                 </div>
@@ -427,12 +553,11 @@
     <div class="nav-accent-strip"></div>
 
     <!-- Bottom Tier: Luminous Clean Glass Navigation Bar with Dropdowns -->
-    <nav class="bg-white/95 backdrop-blur-md border-b border-slate-200/90 text-slate-700 select-none shadow-xs transition-all duration-300"
-         :class="scrolled ? 'h-14 sm:h-14.5 py-1' : 'h-15 sm:h-15.5 py-1.5'">
-        <div class="max-w-full px-4 sm:px-6 lg:px-8 xl:px-10 h-full">
-            <div class="flex items-center justify-between h-full gap-3">
+    <nav class="nav-tier2-bar bg-white/95 backdrop-blur-md border-b border-slate-200/90 text-slate-700 select-none shadow-xs transition-all duration-300">
+        <div class="hidden lg:block max-w-full px-3 lg:px-3 xl:px-4 2xl:px-8">
+            <div class="nav-tier2-row">
                 <!-- Navigation Items with 2-Column Mega Dropdowns -->
-                <div class="hidden lg:flex items-center gap-1 xl:gap-1.5 flex-1 min-w-0">
+                <div class="nav-tier2-links">
                     @auth
                         <!-- 1. Dashboard -->
                         <a href="{{ route('dashboard') }}" 
@@ -515,7 +640,7 @@
                                     class="nav-pill-item inline-flex items-center gap-1.5 px-3 xl:px-3.5 py-2 sm:py-2.5 rounded-xl text-[13px] xl:text-[13.5px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('epads.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#881337]' }}">
                                 <span class="w-2 h-2 rounded-full bg-rose-600 shrink-0"></span>
                                 <span>{{ __('EPADS 2.0') }}</span>
-                                <span class="px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider {{ request()->routeIs('epads.*') ? 'bg-white/20 text-white border border-white/30' : 'bg-rose-100 text-[#881337] border border-rose-200' }}">EPAD</span>
+                                <span class="nav-epad-badge px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider {{ request()->routeIs('epads.*') ? 'bg-white/20 text-white border border-white/30' : 'bg-rose-100 text-[#881337] border border-rose-200' }}">EPAD</span>
                                 <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('epads.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
 
@@ -1037,7 +1162,7 @@
                 </div>
 
                 <!-- Right Quick CTA Action Buttons (Solid 3D Tactile Buttons) -->
-                <div class="hidden lg:flex items-center gap-2 shrink-0">
+                <div class="nav-tier2-actions hidden lg:flex items-center gap-2 shrink-0">
                     <a href="{{ route('tenders.create') }}" class="nav-btn-tender px-3.5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-[13px] font-black tracking-tight inline-flex items-center gap-1.5 whitespace-nowrap">
                         <svg width="16" height="16" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                         <span>New Tender</span>

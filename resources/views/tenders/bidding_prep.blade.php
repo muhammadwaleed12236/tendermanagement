@@ -3,8 +3,8 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
                 <div class="flex items-center gap-2 mb-1">
-                    <a href="{{ route('tenders.show', $tender) }}" class="text-xs font-bold text-orange-700 hover:text-orange-800 transition flex items-center gap-1">
-                        &larr; Back to Tender Details
+                    <a href="{{ route('tenders.index') }}" class="text-xs font-bold text-orange-700 hover:text-orange-800 transition flex items-center gap-1">
+                        &larr; Back to Tenders Directory
                     </a>
                     <span class="text-stone-300">•</span>
                     <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider bg-emerald-100 text-emerald-900 border border-emerald-300">
@@ -164,16 +164,16 @@
                             <div>
                                 <label class="block text-[11px] font-bold text-stone-700 mb-1">Upload Tender Fee Receipt</label>
                                 <div class="relative">
-                                    <input type="file" name="tender_fee_receipt" id="tender_fee_receipt_input" accept=".pdf,.docx,.doc,.jpg,.jpeg,.png" 
-                                           onchange="handleFeeReceiptChange(this)" class="hidden">
+                                    <input type="file" name="tender_fee_receipt" id="tender_fee_receipt_input" accept=".pdf,.doc,.docx,.zip,.jpg,.jpeg,.png" 
+                                           onclick="this.value=null" onchange="handleFeeReceiptChange(this)" class="sr-only">
                                     
                                     <!-- Empty State Container -->
-                                    <div id="feeReceiptEmptyBox" class="{{ $tender->tender_fee_receipt_file ? 'hidden' : 'flex' }} items-center justify-between border border-[#e5ded4] bg-white rounded-xl px-3 py-2 cursor-pointer hover:border-orange-400 transition" onclick="document.getElementById('tender_fee_receipt_input').click()">
-                                        <span class="text-xs text-stone-400 truncate">Choose receipt (PDF, DOCX)...</span>
+                                    <label for="tender_fee_receipt_input" id="feeReceiptEmptyBox" class="{{ $tender->tender_fee_receipt_file ? 'hidden' : 'flex' }} items-center justify-between border border-[#e5ded4] bg-white rounded-xl px-3 py-2 cursor-pointer hover:border-orange-400 transition">
+                                        <span class="text-xs text-stone-400 truncate">Choose receipt (PDF, DOCX, ZIP)...</span>
                                         <span class="text-[10px] font-bold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-md border border-orange-200 shrink-0">Browse</span>
-                                    </div>
+                                    </label>
 
-                                    <!-- Selected / Attached State Container (Filename inside field with Eye icon preview) -->
+                                    <!-- Selected / Attached State Container (Filename inside field with Download icon) -->
                                     <div id="feeReceiptFileBox" class="{{ $tender->tender_fee_receipt_file ? 'flex' : 'hidden' }} items-center justify-between border border-orange-300 bg-orange-50/70 rounded-xl px-3 py-1.5 text-xs">
                                         <div class="flex items-center gap-1.5 min-w-0 pr-1">
                                             <svg class="w-4 h-4 text-orange-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>
@@ -182,14 +182,14 @@
                                             </span>
                                         </div>
                                         <div class="flex items-center gap-1 shrink-0">
-                                            <!-- Eye icon button for preview -->
-                                            <button type="button" onclick="openFeeReceiptModal()" class="p-1 text-orange-700 hover:text-orange-950 hover:bg-orange-100 rounded-md transition" title="Preview Document">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            <!-- Download icon button -->
+                                            <button type="button" onclick="downloadFeeReceipt()" class="p-1 text-orange-700 hover:text-orange-950 hover:bg-orange-100 rounded-md transition" title="Download Document">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                             </button>
                                             <!-- Change button -->
-                                            <button type="button" onclick="document.getElementById('tender_fee_receipt_input').click()" class="text-[10px] font-bold text-stone-600 hover:text-stone-900 bg-white hover:bg-stone-50 px-1.5 py-0.5 rounded border border-stone-200 transition">
+                                            <label for="tender_fee_receipt_input" class="cursor-pointer text-[10px] font-bold text-stone-600 hover:text-stone-900 bg-white hover:bg-stone-50 px-1.5 py-0.5 rounded border border-stone-200 transition inline-flex items-center">
                                                 Change
-                                            </button>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -197,36 +197,12 @@
                         </div>
                     </div>
 
-                    <!-- ESTIMATED PROCUREMENT BUDGET (PKR) -->
-                    <div class="p-5 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] shadow-2xs">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div>
-                                <label class="block text-xs font-black uppercase tracking-wider text-stone-900 mb-1">
-                                    Estimated Procurement Budget (PKR) <span class="text-rose-500">*</span>
-                                </label>
-                                <p class="text-xs text-stone-500">
-                                    Official tender estimated value. Rate % below calculates the Bid Security amount based on this budget.
-                                </p>
-                            </div>
-                            <div class="w-full sm:w-80 shrink-0">
-                                <div class="flex rounded-xl border border-[#e5ded4] bg-white overflow-hidden shadow-2xs focus-within:border-orange-500 focus-within:ring-2 focus-within:ring-orange-200 transition">
-                                    <span class="inline-flex items-center px-3.5 bg-stone-100/90 text-stone-600 font-bold text-xs border-r border-[#e5ded4] select-none shrink-0">PKR</span>
-                                    <input type="number" step="0.01" name="budget" id="tender_budget" 
-                                           value="{{ old('budget', $tender->budget) }}" 
-                                           placeholder="e.g. 12,500,000"
-                                           oninput="calculateBidSecurityFromBudget()"
-                                           class="w-full text-xs font-bold text-stone-900 border-0 bg-transparent px-3.5 py-2.5 focus:ring-0 focus:outline-none">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- SECTION B: BID SECURITY / EARNEST MONEY (CDR / PAY ORDER) -->
-                    <div class="p-5 rounded-2xl bg-[#FCFAF7] border border-[#e5ded4] space-y-4">
+                    <div class="p-5 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-4">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-amber-600"></span>
-                                <h4 class="font-black text-xs uppercase tracking-wider text-stone-900">B. Bid Security / Earnest Money Deposit (CDR / Pay Order)</h4>
+                                <h4 class="font-black text-xs uppercase tracking-wider text-amber-950">B. Bid Security / Earnest Money Deposit (CDR / Pay Order)</h4>
                             </div>
                             <span class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">
                                 Must be submitted with Tender Bid
@@ -235,7 +211,13 @@
 
                         <p class="text-xs text-stone-600">
                             As per SPPRA/PPRA rules, Bid Security (typically 1% - 5% of bid amount) must be deposited via Call Deposit Receipt (CDR) or Pay Order in favor of the Procuring Agency.
+                            @if($tender->budget)
+                                <span class="block mt-0.5 text-stone-500 font-semibold">Tender Estimated Budget: <strong class="text-stone-900">PKR {{ number_format($tender->budget) }}</strong></span>
+                            @endif
                         </p>
+
+                        <!-- Preserved Hidden Budget Input for Bid Security Calculation -->
+                        <input type="hidden" name="budget" id="tender_budget" value="{{ $tender->budget ?? 0 }}">
 
                         <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
                             <div>
@@ -302,16 +284,16 @@
                             <div>
                                 <label class="block text-[10.5px] font-bold text-stone-700 mb-1 whitespace-nowrap overflow-visible">Upload CDR / Bank Guarantee Copy</label>
                                 <div class="relative">
-                                    <input type="file" name="bid_security_scan" id="bid_security_scan_input" accept=".pdf,.docx,.doc,.jpg,.jpeg,.png" 
-                                           onchange="handleBidSecurityChange(this)" class="hidden">
+                                    <input type="file" name="bid_security_scan" id="bid_security_scan_input" accept=".pdf,.doc,.docx,.zip,.jpg,.jpeg,.png" 
+                                           onclick="this.value=null" onchange="handleBidSecurityChange(this)" class="sr-only">
                                     
                                     <!-- Empty State Container -->
-                                    <div id="bidSecurityEmptyBox" class="{{ $tender->bid_security_file ? 'hidden' : 'flex' }} items-center justify-between border border-amber-200 bg-white rounded-xl px-3 py-2 cursor-pointer hover:border-amber-400 transition" onclick="document.getElementById('bid_security_scan_input').click()">
-                                        <span class="text-xs text-stone-400 truncate">Choose file (PDF, DOCX)...</span>
+                                    <label for="bid_security_scan_input" id="bidSecurityEmptyBox" class="{{ $tender->bid_security_file ? 'hidden' : 'flex' }} items-center justify-between border border-amber-200 bg-white rounded-xl px-3 py-2 cursor-pointer hover:border-amber-400 transition">
+                                        <span class="text-xs text-stone-400 truncate">Choose file (PDF, DOCX, ZIP)...</span>
                                         <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200 shrink-0">Browse</span>
-                                    </div>
+                                    </label>
 
-                                    <!-- Selected / Attached State Container (Filename inside field with Eye icon preview) -->
+                                    <!-- Selected / Attached State Container (Filename inside field with Download icon) -->
                                     <div id="bidSecurityFileBox" class="{{ $tender->bid_security_file ? 'flex' : 'hidden' }} items-center justify-between border border-amber-300 bg-amber-50/70 rounded-xl px-3 py-1.5 text-xs">
                                         <div class="flex items-center gap-1.5 min-w-0 pr-1">
                                             <svg class="w-4 h-4 text-amber-700 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg>
@@ -320,14 +302,14 @@
                                             </span>
                                         </div>
                                         <div class="flex items-center gap-1 shrink-0">
-                                            <!-- Eye icon button for preview -->
-                                            <button type="button" onclick="openBidSecurityModal()" class="p-1 text-amber-800 hover:text-amber-950 hover:bg-amber-100 rounded-md transition" title="Preview Document">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            <!-- Download icon button -->
+                                            <button type="button" onclick="downloadBidSecurity()" class="p-1 text-amber-800 hover:text-amber-950 hover:bg-amber-100 rounded-md transition" title="Download Document">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                             </button>
                                             <!-- Change button -->
-                                            <button type="button" onclick="document.getElementById('bid_security_scan_input').click()" class="text-[10px] font-bold text-stone-600 hover:text-stone-900 bg-white hover:bg-stone-50 px-1.5 py-0.5 rounded border border-stone-200 transition">
+                                            <label for="bid_security_scan_input" class="cursor-pointer text-[10px] font-bold text-stone-600 hover:text-stone-900 bg-white hover:bg-stone-50 px-1.5 py-0.5 rounded border border-stone-200 transition inline-flex items-center">
                                                 Change
-                                            </button>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -337,8 +319,8 @@
 
                     <!-- SUBMIT ACTIONS -->
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#e5ded4]">
-                        <a href="{{ route('tenders.show', $tender) }}" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
-                            &larr; Return to Tender Details
+                        <a href="{{ route('tenders.index') }}" class="px-5 py-2.5 text-xs font-bold text-stone-600 hover:text-stone-900 transition flex items-center gap-1.5">
+                            &larr; Return to Tenders Directory
                         </a>
 
                         <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black rounded-xl shadow-xs transition flex items-center justify-center gap-2">
@@ -352,57 +334,13 @@
         </div>
     </div>
 
-    <!-- REUSABLE INTERACTIVE DOCUMENT PREVIEW MODAL (Large Max-w-5xl & 90vh) -->
-    <div id="prepDocPreviewModal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 hidden">
-        <div class="bg-white rounded-3xl max-w-5xl w-full h-[90vh] max-h-[92vh] flex flex-col shadow-2xl border border-stone-200 overflow-hidden">
-            <div class="px-6 py-4 border-b border-stone-200 flex items-center justify-between bg-stone-100/90 shrink-0">
-                <div class="flex items-center gap-3 min-w-0">
-                    <div class="w-9 h-9 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold shrink-0">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    </div>
-                    <div class="min-w-0">
-                        <h4 id="prepDocPreviewTitle" class="text-sm font-black text-stone-900 truncate max-w-lg">Document Preview</h4>
-                        <p id="prepDocPreviewMeta" class="text-xs text-stone-500">File viewer</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 shrink-0">
-                    <a id="prepDocDownloadLink" href="#" target="_blank" class="px-3 py-1.5 text-xs font-bold text-stone-700 hover:text-stone-900 bg-white border border-stone-300 rounded-xl transition">
-                        Open in New Tab
-                    </a>
-                    <button type="button" onclick="closePrepDocModal()" class="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-700 flex items-center justify-center transition font-black">
-                        ✕
-                    </button>
-                </div>
-            </div>
-
-            <div class="flex-1 p-4 overflow-auto flex items-center justify-center bg-stone-50 min-h-[550px] h-full">
-                <iframe id="prepDocIframe" src="" class="w-full h-full min-h-[600px] rounded-2xl border border-stone-300 bg-white hidden" style="min-height: 600px; height: 72vh;"></iframe>
-                <img id="prepDocImg" src="" alt="Preview" class="max-h-[72vh] max-w-full rounded-2xl border border-stone-300 shadow-md object-contain hidden" />
-                <div id="prepDocUnsupported" class="p-8 text-center text-stone-600 hidden">
-                    <div class="w-14 h-14 mx-auto rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mb-3">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                    </div>
-                    <p class="font-bold text-stone-800 text-sm">Direct inline preview not supported for this file type.</p>
-                    <p class="text-xs text-stone-500 mt-1">You can download or open the file in Microsoft Word or in a new browser tab.</p>
-                </div>
-            </div>
-
-            <div class="px-6 py-3 border-t border-stone-200 bg-white flex items-center justify-between shrink-0">
-                <span class="text-[11px] text-stone-500 font-medium">Use mouse wheel or scrollbar to read document</span>
-                <button type="button" onclick="closePrepDocModal()" class="px-5 py-2 bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold rounded-xl transition">
-                    Close Preview
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Track file states
-        let feeReceiptFileUrl = "{{ $tender->tender_fee_receipt_file ? asset('storage/' . $tender->tender_fee_receipt_file) : '' }}";
+        let feeReceiptFileUrl = "{{ $tender->tender_fee_receipt_file ? route('tenders.download-document', ['tender' => $tender, 'type' => 'fee_receipt']) : '' }}";
         let feeReceiptFileName = "{{ $tender->tender_fee_receipt_file ? basename($tender->tender_fee_receipt_file) : '' }}";
         let isFeeReceiptLocal = false;
 
-        let bidSecurityFileUrl = "{{ $tender->bid_security_file ? asset('storage/' . $tender->bid_security_file) : '' }}";
+        let bidSecurityFileUrl = "{{ $tender->bid_security_file ? route('tenders.download-document', ['tender' => $tender, 'type' => 'bid_security']) : '' }}";
         let bidSecurityFileName = "{{ $tender->bid_security_file ? basename($tender->bid_security_file) : '' }}";
         let isBidSecurityLocal = false;
 
@@ -466,62 +404,26 @@
             }
         }
 
-        function openFeeReceiptModal() {
-            if (!feeReceiptFileUrl) return;
-            showDocumentModal(feeReceiptFileUrl, feeReceiptFileName);
-        }
-
-        function openBidSecurityModal() {
-            if (!bidSecurityFileUrl) return;
-            showDocumentModal(bidSecurityFileUrl, bidSecurityFileName);
-        }
-
-        function showDocumentModal(url, filename) {
-            const modal = document.getElementById('prepDocPreviewModal');
-            const iframe = document.getElementById('prepDocIframe');
-            const img = document.getElementById('prepDocImg');
-            const unsupp = document.getElementById('prepDocUnsupported');
-            const title = document.getElementById('prepDocPreviewTitle');
-            const dlLink = document.getElementById('prepDocDownloadLink');
-
-            title.textContent = filename || 'Document Preview';
-            dlLink.href = url;
-
-            iframe.classList.add('hidden');
-            img.classList.add('hidden');
-            unsupp.classList.add('hidden');
-
-            const lower = (filename || url).toLowerCase();
-            if (lower.endsWith('.pdf')) {
-                iframe.src = url;
-                iframe.classList.remove('hidden');
-            } else if (lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.png') || lower.endsWith('.webp')) {
-                img.src = url;
-                img.classList.remove('hidden');
-            } else if (lower.endsWith('.docx') || lower.endsWith('.doc')) {
-                if (url.startsWith('http://') || url.startsWith('https://')) {
-                    iframe.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(url) + '&embedded=true';
-                    iframe.classList.remove('hidden');
-                } else {
-                    unsupp.classList.remove('hidden');
-                }
-            } else {
-                unsupp.classList.remove('hidden');
+        function triggerDirectDownload(url, filename) {
+            if (!url) return;
+            const a = document.createElement('a');
+            a.href = url;
+            if (filename) {
+                a.download = filename;
             }
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
 
-        function closePrepDocModal() {
-            const modal = document.getElementById('prepDocPreviewModal');
-            const iframe = document.getElementById('prepDocIframe');
-            const img = document.getElementById('prepDocImg');
+        function downloadFeeReceipt() {
+            if (!feeReceiptFileUrl) return;
+            triggerDirectDownload(feeReceiptFileUrl, isFeeReceiptLocal ? feeReceiptFileName : '');
+        }
 
-            iframe.src = '';
-            img.src = '';
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+        function downloadBidSecurity() {
+            if (!bidSecurityFileUrl) return;
+            triggerDirectDownload(bidSecurityFileUrl, isBidSecurityLocal ? bidSecurityFileName : '');
         }
 
         // Initialize calculation on page load if amount is empty and budget exists

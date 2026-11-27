@@ -35,6 +35,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Admin Tender Management & Reporting (Create, Reports & Pipeline before {tender})
     Route::get('/tenders/reports', [TenderController::class, 'reports'])->name('tenders.reports');
+    Route::get('/tenders/reports/export', [TenderController::class, 'exportReports'])->name('tenders.reports.export');
     Route::get('/tenders/pipeline', [TenderController::class, 'pipeline'])->name('tenders.pipeline');
     Route::get('/tenders/create', [TenderController::class, 'create'])->name('tenders.create');
     Route::post('/tenders', [TenderController::class, 'store'])->name('tenders.store');
@@ -47,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tenders/{tender}/post-award-documents', [TenderController::class, 'updatePostAwardDocuments'])->name('tenders.post-award-documents');
     Route::post('/tenders/{tender}/financial-securities', [TenderController::class, 'updateFinancialSecurities'])->name('tenders.financial-securities');
     Route::post('/tenders/{tender}/release-bid-security', [TenderController::class, 'releaseBidSecurity'])->name('tenders.release-bid-security');
+    Route::post('/tenders/{tender}/performance-security', [TenderController::class, 'updatePerformanceSecurity'])->name('tenders.performance-security');
     Route::post('/tenders/{tender}/descriptions', [TenderController::class, 'updateDescriptions'])->name('tenders.descriptions.update');
     Route::delete('/tenders/{tender}', [TenderController::class, 'destroy'])->name('tenders.destroy');
 

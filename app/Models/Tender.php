@@ -45,7 +45,14 @@ class Tender extends Model
         'bid_security_expiry_date',
         'bid_security_status',
         'bid_security_released_at',
+        'bid_security_refund_amount',
+        'bid_security_refund_notes',
         'bid_security_file',
+        'performance_security_amount',
+        'performance_security_status',
+        'performance_certificate_no',
+        'performance_security_date',
+        'performance_security_file',
         'awarded_amount',
         'work_order_no',
         'work_order_date',
@@ -109,6 +116,9 @@ class Tender extends Model
             'bid_security_date' => 'date',
             'bid_security_expiry_date' => 'date',
             'bid_security_released_at' => 'datetime',
+            'bid_security_refund_amount' => 'decimal:2',
+            'performance_security_amount' => 'decimal:2',
+            'performance_security_date' => 'date',
             'awarded_amount' => 'decimal:2',
             'work_order_date' => 'date',
         ];
@@ -147,6 +157,16 @@ class Tender extends Model
     public function bills(): HasMany
     {
         return $this->hasMany(Bill::class);
+    }
+
+    public function financialHistories(): HasMany
+    {
+        return $this->hasMany(TenderFinancialHistory::class)->latest('action_date');
+    }
+
+    public function isPerformanceSecurityPaid(): bool
+    {
+        return $this->performance_security_status === 'paid' && (float) ($this->performance_security_amount ?? 0) > 0;
     }
 
     public function isExpired(): bool

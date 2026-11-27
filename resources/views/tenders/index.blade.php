@@ -9,9 +9,9 @@
                     <span class="text-stone-300">•</span>
                     <span class="text-xs font-semibold text-stone-500">Tenders Register & Directory</span>
                 </div>
-                <h2 class="font-black text-2xl text-stone-900 leading-tight flex items-center gap-2">
+                <h2 class="font-black text-xl sm:text-2xl text-stone-900 leading-tight flex items-center flex-wrap gap-2">
                     <span>{{ __('Tender Register Management') }}</span>
-                    <span class="text-xs font-mono font-bold bg-stone-200 text-stone-700 px-2.5 py-0.5 rounded-full border border-stone-300">
+                    <span class="text-xs font-mono font-bold bg-stone-200 text-stone-700 px-2.5 py-0.5 rounded-full border border-stone-300 shrink-0">
                         {{ $totalCount }} {{ Str::plural('Tender', $totalCount) }}
                     </span>
                 </h2>
@@ -21,15 +21,15 @@
             </div>
 
             <!-- Header Quick Actions -->
-            <div class="flex items-center gap-2">
-                <a href="{{ route('tenders.reports') }}" class="px-4 py-2 text-xs font-bold bg-stone-900 hover:bg-stone-800 text-white rounded-full shadow-xs transition flex items-center gap-2">
+            <div class="flex items-center flex-wrap gap-2">
+                <a href="{{ route('tenders.reports') }}" class="px-3.5 sm:px-4 py-2 text-xs font-bold bg-stone-900 hover:bg-stone-800 text-white rounded-full shadow-xs transition flex items-center gap-2 whitespace-nowrap">
                     <span class="w-2 h-2 rounded-full bg-orange-500 shrink-0"></span>
                     <span>Tender & Contract Management</span>
                 </a>
 
                 @if(Auth::check() && Auth::user()->isAdmin())
-                    <a href="{{ route('tenders.create') }}" class="px-4 py-2 text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white rounded-full shadow-xs transition flex items-center gap-1.5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                    <a href="{{ route('tenders.create') }}" class="px-3.5 sm:px-4 py-2 text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white rounded-full shadow-xs transition flex items-center gap-1.5 whitespace-nowrap">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                         <span>+ Create New Tender</span>
                     </a>
                 @endif
@@ -37,8 +37,115 @@
         </div>
     </x-slot>
 
-    <div class="py-6 font-sans">
-        <div class="max-w-full px-4 sm:px-6 lg:px-8 space-y-6">
+    <style>
+        .tenders-index-page {
+            overflow-x: clip;
+            max-width: 100%;
+        }
+        .tenders-index-page input,
+        .tenders-index-page select {
+            min-width: 0;
+            max-width: 100%;
+        }
+        .tenders-kpi-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0.85rem;
+            width: 100%;
+        }
+        @media (min-width: 640px) {
+            .tenders-kpi-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1rem;
+            }
+        }
+        @media (min-width: 1280px) {
+            .tenders-kpi-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+        .tenders-kpi-grid .stat-card-3d-wrap,
+        .tenders-kpi-grid .stat-card-3d {
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+        }
+        .tenders-kpi-grid .stat-card-3d {
+            padding: 0.9rem 1rem;
+            gap: 0.65rem;
+        }
+        .tenders-kpi-grid .stat-card-label {
+            font-size: clamp(0.68rem, 0.85vw, 0.9rem) !important;
+            line-height: 1.2;
+        }
+        .tenders-kpi-donut {
+            width: 54px;
+            height: 54px;
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+        }
+        @media (min-width: 640px) {
+            .tenders-kpi-donut { width: 62px; height: 62px; }
+        }
+        @media (min-width: 1280px) {
+            .tenders-kpi-donut { width: 54px; height: 54px; }
+        }
+        @media (min-width: 1536px) {
+            .tenders-kpi-donut { width: 64px; height: 64px; }
+        }
+
+        /* Responsive Table vs Cards (Zero Horizontal Scroll) */
+        .tenders-desktop-table-wrap {
+            display: none;
+        }
+        .tenders-mobile-cards {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+        }
+        @media (min-width: 768px) {
+            .tenders-mobile-cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                padding: 1.25rem;
+            }
+        }
+        @media (min-width: 1280px) {
+            .tenders-desktop-table-wrap {
+                display: block;
+                width: 100%;
+                overflow: hidden;
+            }
+            .tenders-mobile-cards {
+                display: none;
+            }
+        }
+        .tenders-desktop-table {
+            width: 100%;
+            table-layout: auto;
+        }
+        .tenders-desktop-table th,
+        .tenders-desktop-table td {
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            padding: 0.65rem 0.5rem;
+            font-size: 11.5px;
+        }
+        @media (min-width: 1536px) {
+            .tenders-desktop-table th,
+            .tenders-desktop-table td {
+                padding: 0.75rem 0.75rem;
+                font-size: 12px;
+            }
+        }
+    </style>
+
+    <div class="tenders-index-page py-4 sm:py-6 font-sans">
+        <div class="max-w-full px-3 sm:px-6 lg:px-8 space-y-5 sm:space-y-6">
 
             <!-- Flash Alerts -->
             @if(session('success'))
@@ -70,7 +177,7 @@
             @endphp
 
             <!-- Circular Ring 3D KPI Metric Cards (4 Relocated Cards from Create Tender) -->
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+            <div class="tenders-kpi-grid">
                 <!-- 1. Total Tender Created (Electric Blue 3D Theme) -->
                 <div class="stat-card-3d-wrap group">
                     <div class="stat-card-3d stat-card-blue">
@@ -84,8 +191,8 @@
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">All tenders logged</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="100% Created">
-                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                        <div class="tenders-kpi-donut" title="100% Created">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 40 40">
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#dbeafe" stroke-width="3.5" />
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#0056d2" stroke-width="3.5" stroke-dasharray="100.5" stroke-dashoffset="0" stroke-linecap="round" />
                             </svg>
@@ -107,8 +214,8 @@
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Bidding open</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $activePct }}% Active">
-                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                        <div class="tenders-kpi-donut" title="{{ $activePct }}% Active">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 40 40">
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#e0f2fe" stroke-width="3.5" />
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#0284c7" stroke-width="3.5" 
                                         stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $activePct / 100) }}" stroke-linecap="round" />
@@ -131,8 +238,8 @@
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Ready to bid</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $interestedPct }}% Interested">
-                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                        <div class="tenders-kpi-donut" title="{{ $interestedPct }}% Interested">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 40 40">
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#d1fae5" stroke-width="3.5" />
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#0d9467" stroke-width="3.5" 
                                         stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $interestedPct / 100) }}" stroke-linecap="round" />
@@ -155,8 +262,8 @@
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium truncate text-center w-full">Skipped / Archived</div>
                         </div>
-                        <div class="relative shrink-0 flex items-center justify-center self-center" style="width: 64px; height: 64px;" title="{{ $notInterestedPct }}% Not Interested">
-                            <svg class="w-[64px] h-[64px] -rotate-90" viewBox="0 0 40 40">
+                        <div class="tenders-kpi-donut" title="{{ $notInterestedPct }}% Not Interested">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 40 40">
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#ffe4e6" stroke-width="3.5" />
                                 <circle cx="20" cy="20" r="16" fill="none" stroke="#881337" stroke-width="3.5" 
                                         stroke-dasharray="100.5" stroke-dashoffset="{{ 100.5 - (100.5 * $notInterestedPct / 100) }}" stroke-linecap="round" />
@@ -220,22 +327,22 @@
                 </form>
             </div>
 
-            <!-- Tenders Table matching user's exact uploaded table format -->
+            <!-- Tenders Table & Responsive Mobile/Tablet Cards (Zero Horizontal Scroll) -->
             <div class="bg-white rounded-3xl border border-[#e5ded4] shadow-xs overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
+                <div class="tenders-desktop-table-wrap">
+                    <table class="tenders-desktop-table w-full text-left border-collapse text-xs">
                         <thead>
-                            <tr class="bg-stone-100/80 text-stone-800 border-b border-[#e5ded4] text-[11px] font-black uppercase tracking-wider text-center">
-                                <th class="py-3 px-3 text-center w-12 border-r border-[#e5ded4]">S. No.</th>
-                                <th class="py-3 px-3.5 min-w-[150px] border-r border-[#e5ded4] text-center">Vendor Name</th>
-                                <th class="py-3 px-3.5 min-w-[160px] border-r border-[#e5ded4] text-center">Department Name</th>
-                                <th class="py-3 px-4 min-w-[280px] border-r border-[#e5ded4] text-center">Tender Description</th>
-                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4] text-center">Tender No.</th>
-                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4] text-center">Bidding Procedure</th>
-                                <th class="py-3 px-3 min-w-[150px] border-r border-[#e5ded4] text-center">Tender Submission<br><span class="text-[10px] font-semibold text-stone-500">Date/Time</span></th>
-                                <th class="py-3 px-3 min-w-[180px] border-r border-[#e5ded4] text-center">Tender / Bid Opening Date<br><span class="text-[10px] font-semibold text-stone-500">(Technical & Financial)</span></th>
-                                <th class="py-3 px-3 min-w-[160px] border-r border-[#e5ded4] text-center">Interest Decision</th>
-                                <th class="py-3 px-3 text-center min-w-[90px]">Action</th>
+                            <tr class="bg-stone-100/80 text-stone-800 border-b border-[#e5ded4] text-[10.5px] font-black uppercase tracking-wider text-center">
+                                <th class="py-3 px-2 text-center w-10 border-r border-[#e5ded4]">S. No.</th>
+                                <th class="py-3 px-2.5 border-r border-[#e5ded4] text-center">Vendor Name</th>
+                                <th class="py-3 px-2.5 border-r border-[#e5ded4] text-center">Department Name</th>
+                                <th class="py-3 px-3 w-[22%] border-r border-[#e5ded4] text-center">Tender Description</th>
+                                <th class="py-3 px-2 border-r border-[#e5ded4] text-center">Tender No.</th>
+                                <th class="py-3 px-2 border-r border-[#e5ded4] text-center">Bidding Procedure</th>
+                                <th class="py-3 px-2 border-r border-[#e5ded4] text-center">Tender Submission<br><span class="text-[9.5px] font-semibold text-stone-500">Date/Time</span></th>
+                                <th class="py-3 px-2 border-r border-[#e5ded4] text-center">Tender / Bid Opening Date<br><span class="text-[9.5px] font-semibold text-stone-500">(Technical & Financial)</span></th>
+                                <th class="py-3 px-2 border-r border-[#e5ded4] text-center">Interest Decision</th>
+                                <th class="py-3 px-2 text-center w-24">Action</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#e5ded4] text-stone-800">
@@ -427,7 +534,7 @@
                                         @endif
                                     </td>
 
-                                    <!-- 10. Action (ONLY View and Edit) -->
+                                    <!-- 10. Action (View, Edit & Delete) -->
                                     <td class="py-3 px-3 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
                                             <a href="{{ route('tenders.show', $tender) }}" 
@@ -439,6 +546,11 @@
                                                    class="p-1.5 text-stone-600 hover:text-blue-700 hover:bg-stone-100 rounded-lg transition" title="Edit Tender Details">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                                 </a>
+                                                <button type="button"
+                                                        onclick="openDeleteTenderModal('{{ route('tenders.destroy', $tender) }}', '{{ addslashes($tender->effective_tender_no) }}')"
+                                                        class="p-1.5 text-stone-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition" title="Delete Tender">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                </button>
                                             @endif
                                         </div>
                                     </td>
@@ -460,6 +572,133 @@
                     </table>
                 </div>
 
+                <!-- Mobile & Tablet Responsive Cards (< 1280px) -->
+                <div class="tenders-mobile-cards">
+                    @forelse($tenders as $index => $tender)
+                        <div class="rounded-2xl border border-[#e5ded4] p-4 flex flex-col justify-between gap-3 shadow-2xs {{ $tender->isNotInterested() ? 'bg-rose-50/40 border-l-4 border-l-rose-500' : ($tender->isWon() ? 'bg-emerald-50/15' : 'bg-[#FCFAF7]') }}">
+                            <!-- Top Meta: S.No, Tender No, Procedure -->
+                            <div class="flex items-start justify-between gap-2 flex-wrap">
+                                <div class="flex items-center gap-2 min-w-0">
+                                    <span class="px-2 py-0.5 rounded-lg bg-stone-200 text-stone-700 font-mono font-black text-[11px] shrink-0">
+                                        #{{ str_pad($tenders->firstItem() + $index, 2, '0', STR_PAD_LEFT) }}
+                                    </span>
+                                    <span class="font-mono font-black text-xs text-stone-900 break-all">{{ $tender->effective_tender_no }}</span>
+                                    @if($tender->isEpad())
+                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-rose-100 text-rose-900 border border-rose-200 shrink-0">EPAD 2.0</span>
+                                    @endif
+                                </div>
+                                @if($tender->isTwoEnvelope())
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-orange-100 text-orange-900 border border-orange-200 shrink-0">
+                                        Single Stage 2E
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-stone-100 text-stone-800 border border-stone-200 shrink-0">
+                                        Single Stage 1E
+                                    </span>
+                                @endif
+                            </div>
+
+                            <!-- Title & Description -->
+                            <div>
+                                <a href="{{ route('tenders.show', $tender) }}" class="font-black text-sm text-stone-900 hover:text-orange-700 transition leading-snug block">
+                                    {{ $tender->title }}
+                                </a>
+                                @if(!empty($tender->description) && $tender->description !== $tender->title)
+                                    <div class="text-[11px] text-stone-500 line-clamp-2 mt-0.5">{{ $tender->description }}</div>
+                                @endif
+                            </div>
+
+                            <!-- Vendor & Department -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs bg-white rounded-xl p-2.5 border border-[#e5ded4]">
+                                <div class="min-w-0">
+                                    <span class="text-[10px] font-bold uppercase text-stone-400 block">Vendor</span>
+                                    <span class="font-bold text-stone-900 block truncate">
+                                        {{ $tender->company ? ($tender->company->company_name ?: $tender->company->name) : '-' }}
+                                    </span>
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="text-[10px] font-bold uppercase text-stone-400 block">Department</span>
+                                    <span class="font-bold text-stone-900 block truncate">
+                                        {{ $tender->department ? $tender->department->name : '-' }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Dates Grid -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs bg-white rounded-xl p-2.5 border border-[#e5ded4]">
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase text-stone-400 block">Submission Deadline</span>
+                                    @if($tender->isEpad())
+                                        <span class="font-black text-rose-950">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y h:i A') }}</span>
+                                    @else
+                                        <span class="font-bold text-stone-900">{{ $tender->submission_deadline ? $tender->submission_deadline->format('d/m/Y h:i A') : '-' }}</span>
+                                    @endif
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-bold uppercase text-stone-400 block">Bid Opening Date</span>
+                                    @if($tender->isEpad())
+                                        <span class="font-bold text-stone-900">{{ ($tender->closing_date ?: $tender->submission_deadline)?->format('d/m/Y') }} (Auto)</span>
+                                    @elseif($tender->isTwoEnvelope())
+                                        <div class="text-[11px]">
+                                            <span class="text-stone-500 font-bold">Tech:</span>
+                                            <span class="font-bold text-stone-900">{{ ($tender->technical_opening_date ?: $tender->opening_date)?->format('d/m/Y h:i A') ?: '-' }}</span>
+                                        </div>
+                                        <div class="text-[11px]">
+                                            <span class="text-stone-500 font-bold">Fin:</span>
+                                            <span class="font-bold text-emerald-800">{{ $tender->financial_opening_date ? $tender->financial_opening_date->format('d/m/Y h:i A') : 'Pending' }}</span>
+                                        </div>
+                                    @else
+                                        <span class="font-bold text-stone-900">{{ $tender->opening_date ? $tender->opening_date->format('d/m/Y h:i A') : '-' }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <!-- Interest Decision & Actions Footer -->
+                            <div class="pt-2 border-t border-[#e5ded4] flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex flex-wrap items-center gap-1.5">
+                                    @if($tender->isNotInterested())
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-rose-100 text-rose-900 border border-rose-300">Not Interested</span>
+                                        <a href="{{ route('tenders.bidding-prep', $tender) }}" class="text-[10px] font-bold text-emerald-700 hover:underline">Switch &rarr;</a>
+                                    @elseif($tender->isInterested() && $tender->is_fully_processed)
+                                        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-900 border border-emerald-300">Interested (Ready)</span>
+                                        <form method="POST" action="{{ route('tenders.interest-status', $tender) }}" class="inline">
+                                            @csrf
+                                            <input type="hidden" name="status" value="not_interested">
+                                            <button type="submit" class="text-[10px] font-semibold text-stone-500 hover:text-rose-700 underline">Not Interested</button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('tenders.bidding-prep', $tender) }}" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-black bg-emerald-600 hover:bg-emerald-500 text-white shadow-2xs">Interested</a>
+                                        <form method="POST" action="{{ route('tenders.interest-status', $tender) }}" class="inline">
+                                            @csrf
+                                            <input type="hidden" name="status" value="not_interested">
+                                            <button type="submit" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-white text-stone-600 hover:text-rose-700 border border-stone-200">Not Interested</button>
+                                        </form>
+                                    @endif
+                                </div>
+
+                                <div class="flex items-center gap-1 ml-auto">
+                                    <a href="{{ route('tenders.show', $tender) }}" class="p-1.5 text-stone-600 hover:text-orange-700 bg-white border border-stone-200 rounded-lg" title="View">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                    </a>
+                                    @if(Auth::check() && Auth::user()->isAdmin())
+                                        <a href="{{ route('tenders.edit', $tender) }}" class="p-1.5 text-stone-600 hover:text-blue-700 bg-white border border-stone-200 rounded-lg" title="Edit">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                        </a>
+                                        <button type="button" onclick="openDeleteTenderModal('{{ route('tenders.destroy', $tender) }}', '{{ addslashes($tender->effective_tender_no) }}')" class="p-1.5 text-stone-600 hover:text-rose-700 bg-white border border-stone-200 rounded-lg" title="Delete">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        </button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="col-span-full py-10 text-center text-stone-500">
+                            <div class="font-bold text-stone-700 text-sm">No tenders found</div>
+                            <div class="text-xs text-stone-500 mt-0.5">Click "Create New Tender" to publish your first tender.</div>
+                        </div>
+                    @endforelse
+                </div>
+
                 @if($tenders->hasPages())
                     <div class="p-4 border-t border-[#e5ded4] bg-stone-50/50">
                         {{ $tenders->links() }}
@@ -469,4 +708,49 @@
 
         </div>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteTenderModal" class="fixed inset-0 z-50 bg-stone-900/60 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-white rounded-2xl border border-[#e5ded4] shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </div>
+                <div>
+                    <h3 class="text-base font-black text-stone-900">Delete Tender</h3>
+                    <p class="text-xs text-stone-600 mt-1">
+                        Are you sure you want to delete tender <strong id="deleteTenderLabel" class="text-stone-900"></strong>? This action cannot be undone.
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-2 border-t border-stone-100">
+                <button type="button" onclick="closeDeleteTenderModal()" class="px-4 py-2 text-xs font-bold text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-xl transition">
+                    Cancel
+                </button>
+                <form id="deleteTenderForm" method="POST" action="">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow-xs transition">
+                        Yes, Delete Tender
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openDeleteTenderModal(actionUrl, tenderLabel) {
+            document.getElementById('deleteTenderForm').action = actionUrl;
+            document.getElementById('deleteTenderLabel').textContent = tenderLabel || 'this tender';
+            const modal = document.getElementById('deleteTenderModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDeleteTenderModal() {
+            const modal = document.getElementById('deleteTenderModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    </script>
 </x-app-layout>
