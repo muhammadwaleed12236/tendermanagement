@@ -639,7 +639,7 @@
                             <button @click="open = !open" type="button"
                                     class="nav-pill-item inline-flex items-center gap-1.5 px-3 xl:px-3.5 py-2 sm:py-2.5 rounded-xl text-[13px] xl:text-[13.5px] font-black tracking-tight whitespace-nowrap {{ request()->routeIs('epads.*') ? 'nav-pill-active text-white' : 'text-slate-800 hover:text-[#881337]' }}">
                                 <span class="w-2 h-2 rounded-full bg-rose-600 shrink-0"></span>
-                                <span>{{ __('EPADS 2.0') }}</span>
+                                <span>{{ __('EPADS 2.0 Management') }}</span>
                                 <span class="nav-epad-badge px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider {{ request()->routeIs('epads.*') ? 'bg-white/20 text-white border border-white/30' : 'bg-rose-100 text-[#881337] border border-rose-200' }}">EPAD</span>
                                 <svg width="13" height="13" class="nav-chevron-icon w-[13px] h-[13px] shrink-0 {{ request()->routeIs('epads.*') ? 'text-white' : 'text-slate-400' }} transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                             </button>
@@ -651,16 +651,19 @@
                                  x-transition:leave="transition ease-in duration-120"
                                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                                  x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
-                                 class="absolute left-0 mt-2 w-[320px] sm:w-[350px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-rose-300 shadow-2xl shadow-rose-900/15 p-3.5 z-50 nav-dropdown-enter"
-                                 style="display: none; width: 340px;">
+                                 class="absolute left-0 mt-2 w-[340px] sm:w-[360px] mega-dropdown-panel rounded-2xl bg-white border-2 border-slate-200 border-b-4 border-b-rose-300 shadow-2xl shadow-rose-900/15 p-3.5 z-50 nav-dropdown-enter"
+                                 style="display: none; width: 350px;">
                                 
                                 <div class="space-y-1">
-                                    <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#881337] border-b border-rose-100 flex items-center gap-1.5">
-                                        <svg class="w-3.5 h-3.5 text-[#881337]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                        <span>EPADS 2.0 E-Procurement</span>
+                                    <div class="px-2.5 pb-2 mb-1.5 text-xs font-black uppercase tracking-wider text-[#881337] border-b border-rose-100 flex flex-col gap-0.5">
+                                        <div class="flex items-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5 text-[#881337]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                            <span>EPADS 2.0 Management</span>
+                                        </div>
+                                        <span class="text-[10px] font-bold text-slate-500 normal-case tracking-normal pl-5">EPAD 2.0 E-Procurement</span>
                                     </div>
 
-                                    <!-- 1. + Create EPADS 2.0 -->
+                                    <!-- 1. Create EPADS -->
                                     <a href="{{ route('epads.create') }}" @click="open = false" 
                                        class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.create') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
                                         <div class="item-icon-box w-8 h-8 rounded-lg bg-rose-100 text-[#881337] border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs">
@@ -668,33 +671,21 @@
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#881337] flex items-center gap-1.5 truncate">
-                                                <span>+ Create EPADS 2.0</span>
+                                                <span>Create EPADS</span>
                                             </div>
                                             <div class="text-[11px] font-medium text-slate-500 truncate">Quick e-procurement creation</div>
                                         </div>
                                     </a>
 
-                                    <!-- 2. EPADS 2.0 Directory -->
+                                    <!-- 2. EPADS Petty Cash / RFQ / Awards & Reports -->
                                     <a href="{{ route('epads.index') }}" @click="open = false" 
-                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.index') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
+                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.index') || request()->routeIs('epads.reports') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
                                         <div class="item-icon-box w-8 h-8 rounded-lg bg-rose-100 text-[#881337] border-b-2 border-rose-300 flex items-center justify-center shrink-0 shadow-2xs">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#881337] truncate">EPADS 2.0 Directory</div>
-                                            <div class="text-[11px] font-medium text-slate-500 truncate">Digital e-procurement contracts</div>
-                                        </div>
-                                    </a>
-
-                                    <!-- 3. EPAD Reports & Awards -->
-                                    <a href="{{ route('epads.reports') }}" @click="open = false" 
-                                       class="dropdown-col-item flex items-center gap-3 px-2.5 py-2 rounded-xl group {{ request()->routeIs('epads.reports') ? 'bg-rose-50 text-[#881337] font-black' : 'text-slate-700 hover:text-[#881337]' }}">
-                                        <div class="item-icon-box w-8 h-8 rounded-lg bg-emerald-100 text-[#0d9467] border-b-2 border-emerald-300 flex items-center justify-center shrink-0 shadow-2xs">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                                        </div>
-                                        <div class="flex-1 min-w-0">
-                                            <div class="text-[13.5px] font-bold text-slate-800 group-hover:text-[#881337] truncate">EPAD Reports & Awards</div>
-                                            <div class="text-[11px] font-medium text-slate-500 truncate">EPAD records & reports</div>
+                                            <div class="text-[13px] font-bold text-slate-800 group-hover:text-[#881337] truncate">EPADS Petty Cash / RFQ / Awards & Reports</div>
+                                            <div class="text-[11px] font-medium text-slate-500 truncate">EPADS records, directory & reports</div>
                                         </div>
                                     </a>
                                 </div>
@@ -1222,16 +1213,13 @@
 
                 <!-- EPADS 2.0 Section (Independent) -->
                 <div class="space-y-1">
-                    <div class="px-3 text-[10px] font-black uppercase tracking-wider text-rose-800">EPADS 2.0</div>
+                    <div class="px-3 text-[10px] font-black uppercase tracking-wider text-rose-800">EPADS 2.0 Management</div>
                     <a href="{{ route('epads.create') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
-                        <span>+ Create EPADS 2.0</span>
+                        <span>Create EPADS</span>
                     </a>
                     <a href="{{ route('epads.index') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
-                        <span>EPADS 2.0 Directory</span>
+                        <span>EPADS Petty Cash / RFQ / Awards & Reports</span>
                         <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-rose-100 text-rose-900 border border-rose-200">EPAD</span>
-                    </a>
-                    <a href="{{ route('epads.reports') }}" class="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-rose-50">
-                        <span>EPAD Reports & Awards</span>
                     </a>
                 </div>
 

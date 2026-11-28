@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Epad extends Tender
 {
@@ -39,13 +40,32 @@ class Epad extends Tender
                 $model->opening_date = $model->closing_date;
             }
             if (!empty($model->status)) {
-                if (strtolower($model->status) === 'accepted') {
+                $st = strtolower($model->status);
+                if (str_contains($st, 'accept') || str_contains($st, 'award')) {
                     $model->tender_outcome = 'won';
-                } elseif (strtolower($model->status) === 'rejected') {
+                } elseif (str_contains($st, 'reject') || str_contains($st, 'disqualif')) {
                     $model->tender_outcome = 'lost';
+                } else {
+                    $model->tender_outcome = 'in_progress';
                 }
             }
         });
+    }
+
+    /**
+     * Relationship to Vendor (Company)
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    /**
+     * Accessor for Vendor Name
+     */
+    public function getVendorNameAttribute(): string
+    {
+        return $this->company ? ($this->company->company_name ?: $this->company->name) : 'Al Madina Enterprises';
     }
 
     /**
@@ -117,18 +137,37 @@ class Epad extends Tender
     }
 
     /**
-     * Check if status is Accepted
+     * Check if status is Accepted / Awarded
      */
     public function isAccepted(): bool
     {
-        return strtolower(trim($this->status ?? '')) === 'accepted';
+        $st = strtolower(trim($this->status ?? ''));
+        return str_contains($st, 'accept') || str_contains($st, 'award') || $this->tender_outcome === 'won';
     }
 
     /**
-     * Check if status is Rejected
+     * Check if status is Under Evaluation / Pending
+     */
+    public function isUnderEvaluation(): bool
+    {
+        $st = strtolower(trim($this->status ?? ''));
+        return str_contains($st, 'evaluation') || str_contains($st, 'pending') || $st === 'draft' || $this->tender_outcome === 'in_progress';
+    }
+
+    /**
+     * Check if status is Rejected / Disqualified
      */
     public function isRejected(): bool
     {
-        return strtolower(trim($this->status ?? '')) === 'rejected';
+        $st = strtolower(trim($this->status ?? ''));
+        return str_contains($st, 'reject') || str_contains($st, 'disqualif') || $this->tender_outcome === 'lost';
+    }
+
+    /**
+     * Check if Letter of Intent (LOI) attachment exists
+     */
+    public function hasLoiAttachment(): bool
+    {
+        return !empty($this->letter_of_intent_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->letter_of_intent_file) || file_exists(public_path('storage/' . $this->letter_of_intent_file)));
     }
 }

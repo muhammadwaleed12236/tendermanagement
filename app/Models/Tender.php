@@ -166,7 +166,12 @@ class Tender extends Model
 
     public function isPerformanceSecurityPaid(): bool
     {
-        return $this->performance_security_status === 'paid' && (float) ($this->performance_security_amount ?? 0) > 0;
+        return in_array($this->performance_security_status, ['paid', 'released_returned']) && (float) ($this->performance_security_amount ?? 0) > 0;
+    }
+
+    public function isPerformanceSecurityRefunded(): bool
+    {
+        return $this->performance_security_status === 'released_returned';
     }
 
     public function isExpired(): bool

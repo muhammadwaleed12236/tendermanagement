@@ -58,10 +58,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/epads', [EpadController::class, 'store'])->name('epads.store');
     Route::get('/epads/reports', [EpadController::class, 'reports'])->name('epads.reports');
     Route::get('/epads/reports/export', [EpadController::class, 'exportReports'])->name('epads.reports.export');
+    Route::get('/epads/export', [EpadController::class, 'exportReports'])->name('epads.export');
     Route::get('/epads/{epad}/edit', [EpadController::class, 'edit'])->name('epads.edit');
     Route::put('/epads/{epad}', [EpadController::class, 'update'])->name('epads.update');
     Route::patch('/epads/{epad}/ref', [EpadController::class, 'updateRef'])->name('epads.update-ref');
     Route::patch('/epads/{epad}/status', [EpadController::class, 'updateStatus'])->name('epads.update-status');
+    Route::get('/epads/{epad}/download-loi', [EpadController::class, 'downloadLoi'])->name('epads.download-loi');
     Route::delete('/epads/{epad}', [EpadController::class, 'destroy'])->name('epads.destroy');
 
     // Bids

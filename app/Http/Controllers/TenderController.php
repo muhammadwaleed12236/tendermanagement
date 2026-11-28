@@ -18,6 +18,12 @@ class TenderController extends Controller
     {
         $query = Tender::with(['creator', 'bids', 'department', 'company', 'tenderFeeBankAccount', 'bidSecurityBankAccount']);
 
+        // Only show tenders in Tender Details that have not yet moved to Tender Management
+        $query->where(function ($q) {
+            $q->where('is_fully_processed', false)
+              ->orWhereNull('is_fully_processed');
+        });
+
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
@@ -81,6 +87,8 @@ class TenderController extends Controller
         // Metric Counters (Relocated from Create Tender to Tender Details)
         $paperTenders = Tender::where(function ($q) {
             $q->where('tender_type', 'tender')->orWhereNull('tender_type');
+        })->where(function ($q) {
+            $q->where('is_fully_processed', false)->orWhereNull('is_fully_processed');
         });
         $totalTenderCreated = (clone $paperTenders)->count();
         $totalActiveTender = (clone $paperTenders)->where('status', '!=', 'cancelled')->where(function ($q) {
@@ -259,6 +267,16 @@ class TenderController extends Controller
     private function buildReportsQuery(Request $request)
     {
         $query = Tender::with(['creator', 'department', 'company', 'tenderFeeBankAccount', 'bidSecurityBankAccount']);
+
+        // Only show tenders that have moved into Tender Management
+        $query->where(function ($q) {
+            $q->where('is_fully_processed', true)
+              ->orWhere('tender_outcome', 'won')
+              ->orWhere('status', 'awarded')
+              ->orWhereNotNull('awarded_amount')
+              ->orWhereNotNull('bid_security_file')
+              ->orWhereNotNull('performance_security_file');
+        });
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -461,9 +479,14 @@ class TenderController extends Controller
             case 'perf_security_released':
             case 'perf_sec_released':
                 $query->where(function ($q) {
-                    $q->where('tender_outcome', 'won')
-                      ->orWhere('status', 'awarded');
-                })->where('has_letter_of_intent', true)->where('has_award_letter', true);
+                    $q->where('performance_security_status', 'released_returned')
+                      ->orWhere(function ($sub) {
+                          $sub->where(function ($s) {
+                              $s->where('tender_outcome', 'won')
+                                ->orWhere('status', 'awarded');
+                          })->where('has_letter_of_intent', true)->where('has_award_letter', true);
+                      });
+                });
                 break;
             case 'total':
             case 'total_tenders':
@@ -495,9 +518,12 @@ class TenderController extends Controller
         $totalBidSecuritySubmitted = $allTenders->where('bid_security_status', 'submitted')->sum('bid_security_amount');
         $totalBidSecurityReleased = $allTenders->where('bid_security_status', 'released_returned')->sum('bid_security_amount');
         $totalPerfSecurityPaid = $allTenders->filter(fn($t) => $t->isPerformanceSecurityPaid())->sum('performance_security_amount');
-        $totalPerfSecurityReleased = $wonTenders->filter(fn($t) => $t->isDocumentsCompleted())->sum(function ($t) {
-            return $t->performance_security_amount ?: 0;
-        });
+        $totalPerfSecurityReleased = $allTenders->where('performance_security_status', 'released_returned')->sum('performance_security_amount');
+        if ($totalPerfSecurityReleased <= 0) {
+            $totalPerfSecurityReleased = $wonTenders->filter(fn($t) => $t->isDocumentsCompleted())->sum(function ($t) {
+                return $t->performance_security_amount ?: 0;
+            });
+        }
 
         // Apply Card-click Filters to Paginated Table
         $cardFilter = $request->input('card_filter');
@@ -961,6 +987,7 @@ class TenderController extends Controller
             // Move into Tender Management
             'interest_status' => 'interested',
             'is_fully_processed' => true,
+            'initial_entry_only' => false,
             'tender_outcome' => 'in_progress',
         ];
 
@@ -1613,6 +1640,7 @@ class TenderController extends Controller
             'award_letter_file' => 'nullable|file|mimes:pdf,docx,jpg,png|max:10240',
             'work_order_no' => 'nullable|string|max:255',
             'awarded_amount' => 'nullable|numeric|min:0',
+            'refund_performance_security' => 'nullable|boolean',
         ]);
 
         $hasLoi = $request->boolean('has_letter_of_intent');
@@ -1640,6 +1668,20 @@ class TenderController extends Controller
         $isDocsComplete = ($hasLoi && $hasAward);
         $updateData['documents_status'] = $isDocsComplete ? 'completed' : 'pending';
         $updateData['documents_completed_at'] = $isDocsComplete ? ($tender->documents_completed_at ?: now()) : null;
+
+        // Refund Performance Security when submitted from Award Letter box
+        if ($request->boolean('refund_performance_security') && $tender->performance_security_status !== 'released_returned') {
+            $perfRefundAmount = (float) ($tender->performance_security_amount ?? 0);
+            $updateData['performance_security_status'] = 'released_returned';
+            $this->recordFinancialHistory(
+                $tender,
+                'performance_security_refund',
+                $perfRefundAmount,
+                'Refunded / Released',
+                $tender->performance_security_file,
+                'Performance Security refunded upon Award Letter submission'
+            );
+        }
 
         $tender->update($updateData);
 

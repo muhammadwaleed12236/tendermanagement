@@ -534,13 +534,9 @@
                                         @endif
                                     </td>
 
-                                    <!-- 10. Action (View, Edit & Delete) -->
+                                    <!-- 10. Action (Edit & Delete only) -->
                                     <td class="py-3 px-3 text-center">
                                         <div class="flex items-center justify-center gap-1.5">
-                                            <a href="{{ route('tenders.show', $tender) }}" 
-                                               class="p-1.5 text-stone-600 hover:text-orange-700 hover:bg-stone-100 rounded-lg transition" title="View Tender Details">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                            </a>
                                             @if(Auth::check() && Auth::user()->isAdmin())
                                                 <a href="{{ route('tenders.edit', $tender) }}" 
                                                    class="p-1.5 text-stone-600 hover:text-blue-700 hover:bg-stone-100 rounded-lg transition" title="Edit Tender Details">
@@ -677,9 +673,6 @@
                                 </div>
 
                                 <div class="flex items-center gap-1 ml-auto">
-                                    <a href="{{ route('tenders.show', $tender) }}" class="p-1.5 text-stone-600 hover:text-orange-700 bg-white border border-stone-200 rounded-lg" title="View">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                    </a>
                                     @if(Auth::check() && Auth::user()->isAdmin())
                                         <a href="{{ route('tenders.edit', $tender) }}" class="p-1.5 text-stone-600 hover:text-blue-700 bg-white border border-stone-200 rounded-lg" title="Edit">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>

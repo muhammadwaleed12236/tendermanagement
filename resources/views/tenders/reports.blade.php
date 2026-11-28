@@ -164,7 +164,7 @@
             padding: 1rem 0.65rem !important;
         }
         .reports-6card-grid .stat-card-vertical .stat-card-label {
-            font-size: clamp(0.64rem, 0.78vw, 0.82rem) !important;
+            font-size: clamp(0.85rem, 0.85vw, 0.85rem) !important;
             line-height: 1.25 !important;
         }
         .reports-6card-grid .stat-card-vertical .stat-card-value {
@@ -232,13 +232,16 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: space-between !important;
-            gap: 0.35rem !important;
-            padding: 0.32rem 0.6rem !important;
+            gap: 0.25rem !important;
+            padding: 4px 6px !important;
             border-radius: 6px !important;
-            font-size: 11px !important;
+            font-size: 10.5px !important;
             font-weight: 700 !important;
             text-decoration: none !important;
             white-space: nowrap !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
             transition: all 0.15s ease !important;
             box-shadow: 0 1px 2px rgba(0,0,0,0.03) !important;
         }
@@ -322,6 +325,27 @@
     <div class="reports-page py-4 sm:py-6 font-sans">
         <div class="max-w-full px-3 sm:px-6 lg:px-8 space-y-5 sm:space-y-6">
 
+            <!-- Flash Message Alerts -->
+            @if(session('success'))
+                <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl text-xs font-bold flex items-center justify-between shadow-2xs print:hidden">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-emerald-700 hover:text-emerald-950 font-black text-sm">✕</button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="p-4 bg-rose-50 border border-rose-200 text-rose-800 rounded-2xl text-xs font-bold flex items-center justify-between shadow-2xs print:hidden">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span>{{ session('error') }}</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-rose-700 hover:text-rose-950 font-black text-sm">✕</button>
+                </div>
+            @endif
+
             <!-- Active Card Filter Indicator (if filtered) -->
             @if(request('card_filter'))
                 <div class="p-3.5 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-between text-xs text-blue-900 font-bold shadow-2xs print:hidden">
@@ -378,7 +402,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">TOTAL TENDER</span>
                                     <div class="stat-card-value text-[32px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($totalCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">All Listed Tender</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">All Listed Tender</div>
                                 </div>
                             </div>
                         </a>
@@ -394,7 +418,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">CANCELLED TENDER</span>
                                     <div class="stat-card-value text-[32px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($cancelledCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Closed / Dropped</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Closed / Dropped</div>
                                 </div>
                             </div>
                         </a>
@@ -410,7 +434,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">PENDING TENDER</span>
                                     <div class="stat-card-value text-[32px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Action Pending / Not Started</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Action Pending / Not Started</div>
                                 </div>
                             </div>
                         </a>
@@ -426,7 +450,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">AWARDED TENDER</span>
                                     <div class="stat-card-value text-[32px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($wonCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Won Contract</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Won Contract</div>
                                 </div>
                             </div>
                         </a>
@@ -442,7 +466,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">NOT AWARDED TENDER</span>
                                     <div class="stat-card-value text-[32px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($lostCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Unsuccessful Bid</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Unsuccessful Bid</div>
                                 </div>
                             </div>
                         </a>
@@ -458,7 +482,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">PENDING AWARD DOCS</span>
                                     <div class="stat-card-value text-[32px] font-black my-0.5 leading-tight text-center" style="color: #1c1917 !important;">{{ str_pad($pendingDocsCount, 2, '0', STR_PAD_LEFT) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">LOI / LOA Processing</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">LOI / LOA Processing</div>
                                 </div>
                             </div>
                         </a>
@@ -507,7 +531,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">AWARDED VALUE</span>
                                     <div class="stat-card-value text-lg sm:text-[21px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalWonValue) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Total Work Order</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Total Work Order</div>
                                 </div>
                             </div>
                         </a>
@@ -523,7 +547,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">TENDER FEES</span>
                                     <div class="stat-card-value text-lg sm:text-[21px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalTenderFeesPaid) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Paid Amount</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Paid Amount</div>
                                 </div>
                             </div>
                         </a>
@@ -539,7 +563,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">BID SECURITY PAID</span>
                                     <div class="stat-card-value text-lg sm:text-[21px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecuritySubmitted) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Locked in CDRs / Bank Guarantees</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Locked in CDRs / Bank Guarantees</div>
                                 </div>
                             </div>
                         </a>
@@ -555,7 +579,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">BID SECURITY REFUNDED</span>
                                     <div class="stat-card-value text-lg sm:text-[21px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalBidSecurityReleased) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Returned</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Returned</div>
                                 </div>
                             </div>
                         </a>
@@ -571,7 +595,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center">PERF. SECURITY PAID</span>
                                     <div class="stat-card-value text-lg sm:text-[21px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityPaid) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Retention & Guarantees</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Retention & Guarantees</div>
                                 </div>
                             </div>
                         </a>
@@ -587,7 +611,7 @@
                                 <div class="w-full flex flex-col items-center">
                                     <span class="stat-card-label text-[16px] font-black uppercase tracking-wider block text-center" style="color: #65a30d !important;">PERF. SECURITY RELEASED</span>
                                     <div class="stat-card-value text-lg sm:text-[21px] font-black my-0.5 leading-tight text-center truncate w-full" style="color: #1c1917 !important;">PKR {{ number_format($totalPerfSecurityReleased) }}</div>
-                                    <div class="text-[12px] text-stone-500 font-medium truncate text-center w-full">Returned Guarantee</div>
+                                    <div class="text-[13px] text-stone-500 font-medium truncate text-center w-full">Returned Guarantee</div>
                                 </div>
                             </div>
                         </a>
@@ -710,7 +734,7 @@
                                     <span class="block leading-tight">PERFORMANCE</span>
                                     <span class="block leading-tight">SECURITY</span>
                                 </th>
-                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap min-w-[290px] w-[290px]">
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap min-w-[315px] w-[315px]">
                                     <span class="block leading-tight">TENDER AWARD &</span>
                                     <span class="block leading-tight">SECURITY DOCUMENTS</span>
                                 </th>
@@ -755,7 +779,9 @@
                                     }
 
                                     $perfSecHtml = $t->isPerformanceSecurityPaid()
-                                        ? ('<span class="font-mono font-bold text-emerald-700">PKR ' . number_format($t->performance_security_amount, 2) . '</span> <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>')
+                                        ? ($t->performance_security_status === 'released_returned'
+                                            ? ('<span class="font-mono font-bold text-teal-700">PKR ' . number_format($t->performance_security_amount, 2) . '</span> <span class="text-[10px] font-bold text-teal-700 ml-1">Refunded / Released</span>')
+                                            : ('<span class="font-mono font-bold text-emerald-700">PKR ' . number_format($t->performance_security_amount, 2) . '</span> <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>'))
                                         : '<span class="text-stone-500 font-bold">No Fees</span>';
 
                                     $tenderModalJson = json_encode([
@@ -877,7 +903,11 @@
                                         @if($t->isPerformanceSecurityPaid())
                                             <div class="flex flex-col items-center justify-center gap-0.5">
                                                 <span class="font-mono font-black text-emerald-800 text-xs">PKR {{ number_format($t->performance_security_amount, 2) }}</span>
-                                                <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Paid</span>
+                                                @if($t->performance_security_status === 'released_returned')
+                                                    <span class="text-[9px] font-extrabold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">Refunded / Released</span>
+                                                @else
+                                                    <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Paid</span>
+                                                @endif
                                             </div>
                                         @else
                                             <span class="text-stone-400 font-medium text-xs">No Fees</span>
@@ -885,31 +915,31 @@
                                     </td>
 
                                     <!-- 12. Tender Award & Security Documents (Unified 2x2 Grid matching client exact reference) -->
-                                    <td class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap min-w-[290px] w-[290px]">
-                                        <div class="grid grid-cols-2 gap-1.5 w-full max-w-[285px] mx-auto">
+                                    <td class="py-2.5 px-2.5 text-center border-r border-[#e5ded4] whitespace-nowrap min-w-[315px] w-[315px]">
+                                        <div class="grid grid-cols-2 gap-1.5 w-full max-w-[305px] mx-auto">
                                             <!-- Row 1, Col 1: Bid Security -->
                                             @if($hasBidSecDoc)
                                                 <a href="{{ asset('storage/' . $t->bid_security_file) }}"
                                                    target="_blank"
                                                    onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->bid_security_file) }}', '{{ addslashes($tenderNoClean) }} - Bid Security', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'bid_security']) }}', 'bid_sec')"
                                                    class="doc-btn-pill doc-btn-bid group"
-                                                   style="background-color: #eaf3fd !important; border: 1px solid #c7dcf7 !important; color: #4b6f96 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   style="background-color: #eaf3fd !important; border: 1px solid #c7dcf7 !important; color: #4b6f96 !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                    title="Preview Bid Security (CDR / Pay Order)">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                    <span class="inline-flex items-center gap-1 min-w-0">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
-                                                        <span>Bid Security</span>
+                                                        <span class="truncate">Bid Security</span>
                                                     </span>
-                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-0.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
                                                 </a>
                                             @else
                                                 <span class="doc-btn-pill doc-btn-disabled"
-                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                       title="Bid Security not uploaded">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                    <span class="inline-flex items-center gap-1 min-w-0 opacity-60">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
-                                                        <span>Bid Security</span>
+                                                        <span class="truncate">Bid Security</span>
                                                     </span>
-                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
+                                                    <span class="text-[9px] text-stone-300 ml-0.5 shrink-0">-</span>
                                                 </span>
                                             @endif
 
@@ -919,23 +949,23 @@
                                                    target="_blank"
                                                    onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->letter_of_intent_file) }}', '{{ addslashes($tenderNoClean) }} - Letter of Intent', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'loi']) }}', 'loi')"
                                                    class="doc-btn-pill doc-btn-loi group"
-                                                   style="background-color: #ebf8f1 !important; border: 1px solid #bbf0d0 !important; color: #3b7d59 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   style="background-color: #ebf8f1 !important; border: 1px solid #bbf0d0 !important; color: #3b7d59 !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                    title="Preview Letter of Intent (LOI)">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                    <span class="inline-flex items-center gap-1 min-w-0">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                                        <span>Letter of Intent</span>
+                                                        <span class="truncate">Letter of Intent</span>
                                                     </span>
-                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-0.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
                                                 </a>
                                             @else
                                                 <span class="doc-btn-pill doc-btn-disabled"
-                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                       title="Letter of Intent not uploaded">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                    <span class="inline-flex items-center gap-1 min-w-0 opacity-60">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                                        <span>Letter of Intent</span>
+                                                        <span class="truncate">Letter of Intent</span>
                                                     </span>
-                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
+                                                    <span class="text-[9px] text-stone-300 ml-0.5 shrink-0">-</span>
                                                 </span>
                                             @endif
 
@@ -945,23 +975,23 @@
                                                    target="_blank"
                                                    onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->performance_security_file) }}', '{{ addslashes($tenderNoClean) }} - Performance Security', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'performance_security']) }}', 'perf_sec')"
                                                    class="doc-btn-pill doc-btn-perf group"
-                                                   style="background-color: #fef5e7 !important; border: 1px solid #fbdcb0 !important; color: #8c6734 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   style="background-color: #fef5e7 !important; border: 1px solid #fbdcb0 !important; color: #8c6734 !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                    title="Preview Performance Security Certificate">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                    <span class="inline-flex items-center gap-1 min-w-0">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                                                        <span>Perf. Security</span>
+                                                        <span class="truncate">Perf. Security</span>
                                                     </span>
-                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-0.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
                                                 </a>
                                             @else
                                                 <span class="doc-btn-pill doc-btn-disabled"
-                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                       title="Performance Security not uploaded">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                    <span class="inline-flex items-center gap-1 min-w-0 opacity-60">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                                                        <span>Perf. Security</span>
+                                                        <span class="truncate">Perf. Security</span>
                                                     </span>
-                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
+                                                    <span class="text-[9px] text-stone-300 ml-0.5 shrink-0">-</span>
                                                 </span>
                                             @endif
 
@@ -971,23 +1001,23 @@
                                                    target="_blank"
                                                    onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->award_letter_file) }}', '{{ addslashes($tenderNoClean) }} - Award Letter', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'award']) }}', 'award')"
                                                    class="doc-btn-pill doc-btn-award group"
-                                                   style="background-color: #f6edfc !important; border: 1px solid #e4ccf7 !important; color: #714e96 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   style="background-color: #f6edfc !important; border: 1px solid #e4ccf7 !important; color: #714e96 !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                    title="Preview Award Letter / Work Order">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                    <span class="inline-flex items-center gap-1 min-w-0">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-                                                        <span>Award Letter</span>
+                                                        <span class="truncate">Award Letter</span>
                                                     </span>
-                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-0.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
                                                 </a>
                                             @else
                                                 <span class="doc-btn-pill doc-btn-disabled"
-                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 3.5px 6px !important; font-size: 10.5px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important; width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;"
                                                       title="Award Letter not uploaded">
-                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                    <span class="inline-flex items-center gap-1 min-w-0 opacity-60">
                                                         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-                                                        <span>Award Letter</span>
+                                                        <span class="truncate">Award Letter</span>
                                                     </span>
-                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
+                                                    <span class="text-[9px] text-stone-300 ml-0.5 shrink-0">-</span>
                                                 </span>
                                             @endif
                                         </div>
@@ -1006,38 +1036,28 @@
                                         @endif
                                     </td>
 
-                                    <!-- 14. Action (4 Icons: View, Edit, Download, Delete) -->
+                                    <!-- 14. Action (Eye, Edit & Delete) -->
                                     <td class="py-3 px-3 text-center print:hidden whitespace-nowrap">
-                                        <div class="flex items-center justify-center gap-1">
-                                            <!-- 1. View Summary (Eye icon) -->
-                                            <button type="button" 
-                                                    onclick='openReportTenderModal({!! htmlspecialchars($tenderModalJson, ENT_QUOTES, "UTF-8") !!})' 
-                                                    class="p-1.5 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition inline-flex items-center justify-center" 
-                                                    title="View Tender Summary">
+                                        <div class="flex items-center justify-center gap-1.5">
+                                            <!-- 1. Eye / View (Opens Existing Tender Details / Performance Security Page) -->
+                                            <a href="{{ route('tenders.show', $t) }}" 
+                                               class="p-1.5 text-stone-600 hover:text-orange-700 hover:bg-stone-100 rounded-lg transition inline-flex items-center justify-center" 
+                                               title="View Tender Details / Performance Security">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                            </button>
-
-                                            @if(Auth::check() && Auth::user()->isAdmin())
-                                                <!-- 2. Edit (Pencil icon) -->
-                                                <a href="{{ route('tenders.edit', $t) }}" 
-                                                   class="p-1.5 text-stone-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition inline-flex items-center justify-center" 
-                                                   title="Edit Tender">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                                </a>
-                                            @endif
-
-                                            <!-- 3. Download Official Tender Document (Tray with down arrow icon) -->
-                                            <a href="{{ route('tenders.download-document', $t) }}" 
-                                               class="p-1.5 text-stone-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition inline-flex items-center justify-center" 
-                                               title="Download Tender Document / RFP">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                                             </a>
 
                                             @if(Auth::check() && Auth::user()->isAdmin())
-                                                <!-- 4. Delete (Trash icon) -->
+                                                <!-- 2. Edit (Opens Second Bid Security / Tender Document Fee Form) -->
+                                                <a href="{{ route('tenders.bidding-prep', $t) }}" 
+                                                   class="p-1.5 text-stone-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition inline-flex items-center justify-center" 
+                                                   title="Edit Bid Security / Tender Document Fee">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                                </a>
+
+                                                <!-- 3. Delete (Opens Delete Confirmation Popup) -->
                                                 <button type="button"
-                                                        onclick="openDeleteReportTenderModal('{{ route('tenders.destroy', $t) }}', '{{ addslashes($t->effective_tender_no) }}')"
-                                                        class="p-1.5 text-stone-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition inline-flex items-center justify-center"
+                                                        onclick="openDeleteReportTenderModal('{{ route('tenders.destroy', $t) }}', '{{ addslashes($tenderNoClean) }}')"
+                                                        class="p-1.5 text-stone-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition inline-flex items-center justify-center" 
                                                         title="Delete Tender">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                                 </button>
@@ -1091,7 +1111,9 @@
                             }
 
                             $perfSecHtml = $t->isPerformanceSecurityPaid()
-                                ? ('<span class="font-mono font-bold text-emerald-700">PKR ' . number_format($t->performance_security_amount, 2) . '</span> <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>')
+                                ? ($t->performance_security_status === 'released_returned'
+                                    ? ('<span class="font-mono font-bold text-teal-700">PKR ' . number_format($t->performance_security_amount, 2) . '</span> <span class="text-[10px] font-bold text-teal-700 ml-1">Refunded / Released</span>')
+                                    : ('<span class="font-mono font-bold text-emerald-700">PKR ' . number_format($t->performance_security_amount, 2) . '</span> <span class="text-[10px] font-bold text-emerald-700 ml-1">Paid ✓</span>'))
                                 : '<span class="text-stone-500 font-bold">No Fees</span>';
 
                             $tenderModalJsonCard = json_encode([
@@ -1198,6 +1220,11 @@
                                     <span class="text-[10px] font-bold uppercase text-stone-400 block">Perf. Security</span>
                                     @if($t->isPerformanceSecurityPaid())
                                         <span class="font-mono font-bold text-emerald-800 block truncate">PKR {{ number_format($t->performance_security_amount, 2) }}</span>
+                                        @if($t->performance_security_status === 'released_returned')
+                                            <span class="text-[9px] font-extrabold text-teal-700 bg-teal-50 px-1.5 py-0.2 rounded border border-teal-200 inline-block">Refunded / Released</span>
+                                        @else
+                                            <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded border border-emerald-200 inline-block">Paid</span>
+                                        @endif
                                     @else
                                         <span class="text-stone-400 font-medium">No Fees</span>
                                     @endif
@@ -1315,25 +1342,21 @@
                             </div>
 
                             <!-- Actions Footer -->
-                            <div class="pt-2 border-t border-[#e5ded4] flex items-center justify-end gap-1.5">
+                            <div class="pt-2 border-t border-[#e5ded4] flex items-center justify-end gap-2">
+                                <a href="{{ route('tenders.show', $t) }}" class="p-1.5 text-stone-600 hover:text-orange-700 bg-white border border-stone-200 rounded-lg inline-flex items-center justify-center" title="View Tender Details / Performance Security">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                </a>
                                 @if(Auth::check() && Auth::user()->isAdmin())
-                                    <a href="{{ route('tenders.edit', $t) }}" class="p-1.5 text-stone-600 hover:text-blue-700 bg-white border border-stone-200 rounded-lg" title="Edit Tender">
+                                    <a href="{{ route('tenders.bidding-prep', $t) }}" class="p-1.5 text-stone-600 hover:text-blue-700 bg-white border border-stone-200 rounded-lg inline-flex items-center justify-center" title="Edit Bid Security / Tender Document Fee">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                     </a>
-                                    <button type="button" onclick="openDeleteReportTenderModal('{{ route('tenders.destroy', $t) }}', '{{ addslashes($t->effective_tender_no) }}')" class="p-1.5 text-stone-600 hover:text-rose-700 bg-white border border-stone-200 rounded-lg" title="Delete Tender">
+                                    <button type="button" 
+                                            onclick="openDeleteReportTenderModal('{{ route('tenders.destroy', $t) }}', '{{ addslashes($tenderNoClean) }}')" 
+                                            class="p-1.5 text-stone-600 hover:text-rose-700 bg-white border border-stone-200 rounded-lg inline-flex items-center justify-center" 
+                                            title="Delete Tender">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                     </button>
                                 @endif
-                                <a href="{{ route('tenders.download-document', $t) }}" class="p-1.5 text-stone-600 hover:text-emerald-700 bg-white border border-stone-200 rounded-lg" title="Download Official Tender Document">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                </a>
-                                <a href="{{ route('tenders.show', ['tender' => $t, 'from' => 'reports']) }}" class="p-1.5 text-stone-600 hover:text-orange-700 bg-white border border-stone-200 rounded-lg" title="View Tender Details">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                </a>
-                                <button type="button" onclick='openReportTenderModal({!! htmlspecialchars($tenderModalJsonCard, ENT_QUOTES, "UTF-8") !!})' class="px-2.5 py-1.5 text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg text-[11px] font-bold inline-flex items-center gap-1" title="Quick View Summary">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                    <span>Quick View</span>
-                                </button>
                             </div>
                         </div>
                     @empty
@@ -1511,8 +1534,8 @@
     </div>
 
     <!-- Delete Confirmation Modal for Reports -->
-    <div id="deleteReportTenderModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4" style="background-color: rgba(28, 25, 23, 0.65); backdrop-filter: blur(4px);">
-        <div class="bg-white rounded-2xl border border-[#e5ded4] shadow-2xl max-w-md w-full p-6 space-y-4">
+    <div id="deleteReportTenderModal" onclick="if(event.target === this) closeDeleteReportTenderModal()" class="fixed inset-0 z-50 hidden items-center justify-center p-4 cursor-pointer" style="background-color: rgba(28, 25, 23, 0.65); backdrop-filter: blur(4px);">
+        <div class="bg-white rounded-2xl border border-[#e5ded4] shadow-2xl max-w-md w-full p-6 space-y-4 cursor-default" onclick="event.stopPropagation()">
             <div class="flex items-start gap-3">
                 <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>

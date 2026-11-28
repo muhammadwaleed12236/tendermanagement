@@ -530,15 +530,15 @@
                                     </div>
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                                         <div>
-                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Certificate</label>
+                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security</label>
                                             <input type="text" form="win_award_form" name="performance_certificate_no" value="{{ old('performance_certificate_no', $tender->performance_certificate_no) }}" placeholder="Certificate / Ref #" class="w-full text-xs rounded-xl border-stone-200 bg-white">
                                         </div>
                                         <div>
-                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security Fee (PKR)</label>
+                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security Fee / Amount (PKR)</label>
                                             <input type="number" step="0.01" form="win_award_form" name="performance_security_amount" value="{{ old('performance_security_amount', $tender->performance_security_amount) }}" placeholder="e.g. 50000" class="w-full text-xs rounded-xl border-stone-200 bg-white">
                                         </div>
                                         <div>
-                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Certificate / Legal PDF Upload</label>
+                                            <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security Upload</label>
                                             <input type="file" form="win_award_form" name="performance_security_file" accept=".pdf,.doc,.docx,.zip,.jpg,.jpeg,.png" class="w-full text-[11px] text-stone-600 bg-white rounded-xl border border-stone-200 p-1.5">
                                         </div>
                                     </div>
@@ -728,6 +728,27 @@
                                             </div>
                                         @endif
                                     </div>
+
+                                    <!-- Refund Performance Security (Inside Award Letter Box) -->
+                                    <div class="pt-2 border-t border-stone-200/70">
+                                        <div class="p-2.5 rounded-xl border {{ $tender->performance_security_status === 'released_returned' ? 'border-teal-300 bg-teal-50/50' : 'border-[#e5ded4] bg-white' }} flex flex-wrap items-center justify-between gap-2">
+                                            <label class="flex items-center gap-2 cursor-pointer">
+                                                <input type="checkbox" name="refund_performance_security" value="1" 
+                                                       {{ $tender->performance_security_status === 'released_returned' ? 'checked disabled' : '' }}
+                                                       class="w-4 h-4 text-emerald-600 rounded border-stone-300 focus:ring-emerald-500">
+                                                <span class="text-xs font-bold text-stone-900">Refund Performance Security</span>
+                                            </label>
+                                            @if($tender->performance_security_status === 'released_returned')
+                                                <span class="text-[10px] font-black text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                                                    Status: Refunded / Released
+                                                </span>
+                                            @elseif((float)($tender->performance_security_amount ?? 0) > 0)
+                                                <span class="text-[10px] font-bold text-stone-500">
+                                                    (PKR {{ number_format($tender->performance_security_amount, 2) }})
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -754,8 +775,14 @@
                             <h3 class="font-black text-lg text-stone-900">Performance Security & Bid Security Refund</h3>
                             <p class="text-xs text-stone-600">Manage Performance Certificate, Performance Security Fee (PKR), and Bid Security refund upon receiving legal certificate / release PDF.</p>
                         </div>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black {{ $tender->isPerformanceSecurityPaid() ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-stone-100 text-stone-600 border border-stone-200' }}">
-                            {{ $tender->isPerformanceSecurityPaid() ? 'Paid — PKR ' . number_format($tender->performance_security_amount, 2) : 'No Fees' }}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black {{ $tender->performance_security_status === 'released_returned' ? 'bg-teal-100 text-teal-900 border border-teal-300' : ($tender->isPerformanceSecurityPaid() ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' : 'bg-stone-100 text-stone-600 border border-stone-200') }}">
+                            @if($tender->performance_security_status === 'released_returned')
+                                Refunded / Released — PKR {{ number_format($tender->performance_security_amount, 2) }}
+                            @elseif($tender->isPerformanceSecurityPaid())
+                                Paid — PKR {{ number_format($tender->performance_security_amount, 2) }}
+                            @else
+                                No Fees
+                            @endif
                         </span>
                     </div>
 
@@ -764,7 +791,7 @@
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
-                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Certificate</label>
+                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security</label>
                                     <input type="text" name="performance_certificate_no" value="{{ old('performance_certificate_no', $tender->performance_certificate_no) }}" placeholder="Certificate / Ref #" class="w-full text-xs rounded-xl border-[#e5ded4] bg-[#FCFAF7]">
                                 </div>
                                 <div>
@@ -772,11 +799,11 @@
                                     <input type="number" step="0.01" name="performance_security_amount" value="{{ old('performance_security_amount', $tender->performance_security_amount) }}" placeholder="Enter amount (leave empty for No Fees)" class="w-full text-xs rounded-xl border-[#e5ded4] bg-[#FCFAF7]">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Certificate / Legal PDF Upload</label>
+                                    <label class="block text-[11px] font-bold text-stone-700 mb-1">Performance Security Upload</label>
                                     <input type="file" name="performance_security_file" accept=".pdf,.doc,.docx,.zip,.jpg,.jpeg,.png" class="w-full text-xs text-stone-600 bg-[#FCFAF7] rounded-xl border border-[#e5ded4] p-1.5">
                                     @if($tender->performance_security_file)
                                         <a href="{{ route('tenders.download-document', ['tender' => $tender, 'type' => 'performance_security']) }}" class="inline-flex items-center gap-1 mt-1 text-[11px] font-bold text-orange-700 hover:underline">
-                                            Download Uploaded Certificate ({{ basename($tender->performance_security_file) }})
+                                            Download Uploaded Perf. Security ({{ basename($tender->performance_security_file) }})
                                         </a>
                                     @endif
                                 </div>

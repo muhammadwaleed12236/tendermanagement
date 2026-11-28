@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
+use App\Models\Company;
 use App\Models\Department;
 use App\Models\Epad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class EpadController extends Controller
 {
     /**
-     * Page 1: Existing Records / ePads Listing
+     * EPADS 2.0 Management Dashboard & Listing (Combined Directory & Reports)
      */
     public function index(Request $request)
     {
-        $baseQuery = Epad::with('department');
+        $baseQuery = Epad::with(['department', 'company']);
 
+        // Search Keywords Filter (Items / Work Description, Ref #, Tender No, Department, Vendor)
         if ($request->filled('search')) {
             $search = trim($request->search);
             $baseQuery->where(function ($q) use ($search) {
@@ -27,54 +31,160 @@ class EpadController extends Controller
                   ->orWhereHas('department', function ($dq) use ($search) {
                       $dq->where('name', 'like', "%{$search}%")
                          ->orWhere('code', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('company', function ($cq) use ($search) {
+                      $cq->where('company_name', 'like', "%{$search}%")
+                         ->orWhere('name', 'like', "%{$search}%");
                   });
             });
         }
 
+        // Vendor Filter
+        if ($request->filled('vendor_id')) {
+            $baseQuery->where('company_id', $request->vendor_id);
+        } elseif ($request->filled('company_id')) {
+            $baseQuery->where('company_id', $request->company_id);
+        }
+
+        // Department Filter
         if ($request->filled('department_id')) {
             $baseQuery->where('department_id', $request->department_id);
         }
 
-        if ($request->filled('procurement_type')) {
+        // Procurement Type Filter
+        if ($request->filled('procurement_type') && $request->procurement_type !== 'All' && $request->procurement_type !== 'All Types') {
             $baseQuery->where('category', $request->procurement_type);
         }
 
-        if ($request->filled('status')) {
+        // Status Filter
+        if ($request->filled('status') && $request->status !== 'All' && $request->status !== 'All Statuses') {
             $st = trim($request->status);
-            $baseQuery->where('status', $st);
+            if (str_contains($st, 'Accept') || str_contains($st, 'Award')) {
+                $baseQuery->where(function ($q) {
+                    $q->where('status', 'like', '%Accepted%')
+                      ->orWhere('status', 'like', '%Awarded%')
+                      ->orWhere('tender_outcome', 'won');
+                });
+            } elseif (str_contains($st, 'Evaluation') || str_contains($st, 'Pending')) {
+                $baseQuery->where(function ($q) {
+                    $q->where('status', 'like', '%Evaluation%')
+                      ->orWhere('status', 'like', '%Pending%')
+                      ->orWhere('status', 'draft')
+                      ->orWhere('tender_outcome', 'in_progress');
+                });
+            } elseif (str_contains($st, 'Reject') || str_contains($st, 'Disqualif')) {
+                $baseQuery->where(function ($q) {
+                    $q->where('status', 'like', '%Rejected%')
+                      ->orWhere('status', 'like', '%Disqualified%')
+                      ->orWhere('tender_outcome', 'lost');
+                });
+            } else {
+                $baseQuery->where('status', $st);
+            }
         }
 
+        // Date Wise Filter
         if ($request->filled('date_from')) {
             $baseQuery->whereDate('closing_date', '>=', $request->date_from);
         }
-
         if ($request->filled('date_to')) {
             $baseQuery->whereDate('closing_date', '<=', $request->date_to);
         }
+        if ($request->filled('date_range')) {
+            $parts = explode(' - ', $request->date_range);
+            if (count($parts) === 2) {
+                $baseQuery->whereDate('closing_date', '>=', trim($parts[0]))
+                          ->whereDate('closing_date', '<=', trim($parts[1]));
+            }
+        }
 
-        // Summary Statistics (calculated dynamically from actual database records)
+        // Summary Cards Metric Calculations (from all EPAD records dynamically)
+        $allEpads = Epad::with(['department', 'company'])->get();
+        $totalRecords = $allEpads->count();
+        $acceptedRecords = $allEpads->filter(fn($e) => $e->isAccepted())->count();
+        $underEvalRecords = $allEpads->filter(fn($e) => $e->isUnderEvaluation())->count();
+        $rejectedRecords = $allEpads->filter(fn($e) => $e->isRejected())->count();
+        $pendingDocsRecords = $allEpads->filter(fn($e) => !$e->hasLoiAttachment())->count();
+        $totalBidAmount = (float) $allEpads->sum('budget');
+
         $stats = [
-            'total_count' => (clone $baseQuery)->count(),
-            'accepted_count' => (clone $baseQuery)->where('status', 'Accepted')->count(),
-            'rejected_count' => (clone $baseQuery)->where('status', 'Rejected')->count(),
-            'total_bid_amount' => (float) (clone $baseQuery)->sum('budget'),
+            'total_count' => $totalRecords,
+            'total_pct' => 100,
+            'accepted_count' => $acceptedRecords,
+            'accepted_pct' => $totalRecords > 0 ? min(100, round(($acceptedRecords / $totalRecords) * 100)) : 0,
+            'under_eval_count' => $underEvalRecords,
+            'under_eval_pct' => $totalRecords > 0 ? min(100, round(($underEvalRecords / $totalRecords) * 100)) : 0,
+            'rejected_count' => $rejectedRecords,
+            'rejected_pct' => $totalRecords > 0 ? min(100, round(($rejectedRecords / $totalRecords) * 100)) : 0,
+            'pending_docs_count' => $pendingDocsRecords,
+            'pending_docs_pct' => $totalRecords > 0 ? min(100, round(($pendingDocsRecords / $totalRecords) * 100)) : 0,
+            'total_bid_amount' => $totalBidAmount,
+            'bid_amount_pct' => 100,
         ];
 
-        $epads = (clone $baseQuery)->latest('id')->paginate(15)->withQueryString();
-        $departments = Department::where('status', 'active')->orderBy('name')->get();
+        // Card-click Filters
+        $cardFilter = $request->input('card_filter');
+        if ($cardFilter) {
+            switch ($cardFilter) {
+                case 'accepted':
+                    $baseQuery->where(function ($q) {
+                        $q->where('status', 'like', '%Accepted%')
+                          ->orWhere('status', 'like', '%Awarded%')
+                          ->orWhere('tender_outcome', 'won');
+                    });
+                    break;
+                case 'under_evaluation':
+                case 'under_eval':
+                    $baseQuery->where(function ($q) {
+                        $q->where('status', 'like', '%Evaluation%')
+                          ->orWhere('status', 'like', '%Pending%')
+                          ->orWhere('status', 'draft')
+                          ->orWhere('tender_outcome', 'in_progress');
+                    });
+                    break;
+                case 'rejected':
+                    $baseQuery->where(function ($q) {
+                        $q->where('status', 'like', '%Rejected%')
+                          ->orWhere('status', 'like', '%Disqualified%')
+                          ->orWhere('tender_outcome', 'lost');
+                    });
+                    break;
+                case 'pending_docs':
+                    $baseQuery->where(function ($q) {
+                        $q->whereNull('letter_of_intent_file')
+                          ->orWhere('letter_of_intent_file', '');
+                    });
+                    break;
+                case 'total':
+                case 'bid_amount':
+                default:
+                    break;
+            }
+        }
 
-        return view('epads.index', compact('epads', 'departments', 'stats'));
+        $epads = (clone $baseQuery)->latest('id')->paginate(15)->withQueryString();
+
+        $departments = Department::where('status', 'active')->orderBy('name')->get();
+        $companies = Company::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('company_name')->get();
+        $procurementTypes = ['Open Competitive Bid.', 'Petty Purchase', 'Request for Quotation'];
+
+        return view('epads.index', compact('epads', 'departments', 'companies', 'procurementTypes', 'stats', 'cardFilter'));
     }
 
     /**
-     * Page 2: + Create ePads Form
+     * Page: + Create EPADS Form (Matching Client Reference Screenshot 02)
      */
     public function create()
     {
         $departments = Department::where('status', 'active')->orderBy('name')->get();
-        $procurementTypes = ['Petty Purchase', 'Request for Quotation'];
+        $companies = Company::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('company_name')->get();
+        $procurementTypes = ['Open Competitive Bid.', 'Petty Purchase', 'Request for Quotation'];
 
-        return view('epads.create', compact('departments', 'procurementTypes'));
+        return view('epads.create', compact('departments', 'companies', 'procurementTypes'));
     }
 
     /**
@@ -82,43 +192,85 @@ class EpadController extends Controller
      */
     public function store(Request $request)
     {
+        $isDraft = $request->input('action') === 'draft' || $request->has('save_draft');
+
         $validated = $request->validate([
-            'items_description' => 'required|string|max:500',
+            'company_id' => 'required|exists:companies,id',
             'department_id' => 'required|exists:departments,id',
-            'procurement_type' => 'required|in:Petty Purchase,Request for Quotation',
-            'closing_date' => 'required|date',
+            'procurement_type' => 'required|string|max:100',
+            'ref_no' => 'required|string|max:100',
+            'items_description' => 'required|string',
+            'closing_date' => 'required',
             'bid_amount' => 'required|numeric|min:0',
-            'ref_no' => 'nullable|string|max:100|unique:tenders,reference_no',
-            'status' => 'nullable|in:Accepted,Rejected',
+            'status' => 'nullable|string',
+            'letter_of_intent_file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
         ], [
-            'items_description.required' => 'Items / Work Description is required.',
+            'company_id.required' => 'Please select a registered Vendor.',
             'department_id.required' => 'Please select a Department.',
-            'procurement_type.required' => 'Procurement Type must be Petty Purchase or Request for Quotation.',
+            'procurement_type.required' => 'Please select a Procurement Type.',
+            'ref_no.required' => 'Reference Number / Bid ID is required.',
+            'items_description.required' => 'Items / Work Description is required.',
             'closing_date.required' => 'Closing Date & Time is required.',
-            'bid_amount.required' => 'Bid Amount is required.',
-            'ref_no.unique' => 'This Ref # is already associated with another record.',
+            'bid_amount.required' => 'Bid Amount (PKR) is required.',
         ]);
 
         $epad = new Epad();
-        $epad->title = trim($validated['items_description']);
-        $epad->description = trim($validated['items_description']);
+        $epad->company_id = $validated['company_id'];
         $epad->department_id = $validated['department_id'];
         $epad->category = $validated['procurement_type'];
+        $epad->reference_no = trim($validated['ref_no']);
+        $epad->tender_no = $epad->reference_no;
+        $epad->title = trim($validated['items_description']);
+        $epad->description = trim($validated['items_description']);
         $epad->closing_date = $validated['closing_date'];
         $epad->submission_deadline = $validated['closing_date'];
         $epad->opening_date = $validated['closing_date'];
         $epad->budget = $validated['bid_amount'];
-        // Ref # is manually entered after bid submission; do not auto-generate
-        $epad->reference_no = !empty($validated['ref_no']) ? trim($validated['ref_no']) : null;
-        $epad->tender_no = $epad->reference_no;
-        $epad->status = $validated['status'] ?? 'Accepted';
-        $epad->tender_outcome = ($epad->status === 'Accepted') ? 'won' : 'lost';
+
+        // Status Workflow
+        $rawStatus = $request->input('status', 'Accepted / Awarded');
+        if ($isDraft) {
+            $epad->status = 'Under Evaluation / Pending';
+            $epad->tender_outcome = 'in_progress';
+        } elseif (str_contains($rawStatus, 'Accept') || str_contains($rawStatus, 'Award')) {
+            $epad->status = 'Accepted / Awarded';
+            $epad->tender_outcome = 'won';
+            $epad->awarded_amount = $validated['bid_amount'];
+        } elseif (str_contains($rawStatus, 'Reject') || str_contains($rawStatus, 'Disqualif')) {
+            $epad->status = 'Rejected / Disqualified';
+            $epad->tender_outcome = 'lost';
+        } else {
+            $epad->status = 'Under Evaluation / Pending';
+            $epad->tender_outcome = 'in_progress';
+        }
+
+        // LOI Attachment
+        if ($request->hasFile('letter_of_intent_file')) {
+            $loiPath = $request->file('letter_of_intent_file')->store('tender_documents', 'public');
+            $epad->letter_of_intent_file = $loiPath;
+            $epad->has_letter_of_intent = true;
+            $epad->letter_of_intent_ref = $epad->reference_no;
+            $epad->letter_of_intent_date = now()->toDateString();
+        }
+
         $epad->tender_type = 'epad';
         $epad->bidding_procedure = 'single_stage_one_envelope';
         $epad->created_by = Auth::id() ?? 1;
+        $epad->is_fully_processed = true;
         $epad->save();
 
-        return redirect()->route('epads.index')->with('success', 'ePads record created successfully.');
+        ActivityLog::record(
+            'create',
+            'Epad',
+            "Created e-Pads procurement entry '{$epad->reference_no}'",
+            $epad
+        );
+
+        $msg = $isDraft 
+            ? "e-Pads draft saved successfully for Ref # {$epad->reference_no}."
+            : "e-Pads procurement entry '{$epad->reference_no}' created successfully.";
+
+        return redirect()->route('epads.index')->with('success', $msg);
     }
 
     /**
@@ -127,9 +279,12 @@ class EpadController extends Controller
     public function edit(Epad $epad)
     {
         $departments = Department::where('status', 'active')->orderBy('name')->get();
-        $procurementTypes = ['Petty Purchase', 'Request for Quotation'];
+        $companies = Company::where(function ($q) {
+            $q->where('status', 'active')->orWhereNull('status');
+        })->orderBy('company_name')->get();
+        $procurementTypes = ['Open Competitive Bid.', 'Petty Purchase', 'Request for Quotation'];
 
-        return view('epads.edit', compact('epad', 'departments', 'procurementTypes'));
+        return view('epads.edit', compact('epad', 'departments', 'companies', 'procurementTypes'));
     }
 
     /**
@@ -137,83 +292,100 @@ class EpadController extends Controller
      */
     public function update(Request $request, Epad $epad)
     {
+        $isDraft = $request->input('action') === 'draft' || $request->has('save_draft');
+
         $validated = $request->validate([
-            'items_description' => 'required|string|max:500',
+            'company_id' => 'required|exists:companies,id',
             'department_id' => 'required|exists:departments,id',
-            'procurement_type' => 'required|in:Petty Purchase,Request for Quotation',
-            'closing_date' => 'required|date',
+            'procurement_type' => 'required|string|max:100',
+            'ref_no' => 'required|string|max:100',
+            'items_description' => 'required|string',
+            'closing_date' => 'required',
             'bid_amount' => 'required|numeric|min:0',
-            'ref_no' => ['nullable', 'string', 'max:100', Rule::unique('tenders', 'reference_no')->ignore($epad->id)],
-            'status' => 'required|in:Accepted,Rejected',
+            'status' => 'nullable|string',
+            'letter_of_intent_file' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
         ], [
-            'ref_no.unique' => 'This Ref # is already associated with another record.',
+            'company_id.required' => 'Please select a registered Vendor.',
+            'department_id.required' => 'Please select a Department.',
+            'procurement_type.required' => 'Please select a Procurement Type.',
+            'ref_no.required' => 'Reference Number / Bid ID is required.',
+            'items_description.required' => 'Items / Work Description is required.',
+            'closing_date.required' => 'Closing Date & Time is required.',
+            'bid_amount.required' => 'Bid Amount (PKR) is required.',
         ]);
 
-        $epad->title = trim($validated['items_description']);
-        $epad->description = trim($validated['items_description']);
+        $epad->company_id = $validated['company_id'];
         $epad->department_id = $validated['department_id'];
         $epad->category = $validated['procurement_type'];
+        $epad->reference_no = trim($validated['ref_no']);
+        $epad->tender_no = $epad->reference_no;
+        $epad->title = trim($validated['items_description']);
+        $epad->description = trim($validated['items_description']);
         $epad->closing_date = $validated['closing_date'];
         $epad->submission_deadline = $validated['closing_date'];
         $epad->opening_date = $validated['closing_date'];
         $epad->budget = $validated['bid_amount'];
-        $epad->reference_no = !empty($validated['ref_no']) ? trim($validated['ref_no']) : null;
-        $epad->tender_no = $epad->reference_no;
-        $epad->status = $validated['status'];
-        $epad->tender_outcome = ($validated['status'] === 'Accepted') ? 'won' : 'lost';
+
+        // Status Workflow
+        $rawStatus = $request->input('status', 'Accepted / Awarded');
+        if ($isDraft) {
+            $epad->status = 'Under Evaluation / Pending';
+            $epad->tender_outcome = 'in_progress';
+        } elseif (str_contains($rawStatus, 'Accept') || str_contains($rawStatus, 'Award')) {
+            $epad->status = 'Accepted / Awarded';
+            $epad->tender_outcome = 'won';
+            $epad->awarded_amount = $validated['bid_amount'];
+        } elseif (str_contains($rawStatus, 'Reject') || str_contains($rawStatus, 'Disqualif')) {
+            $epad->status = 'Rejected / Disqualified';
+            $epad->tender_outcome = 'lost';
+        } else {
+            $epad->status = 'Under Evaluation / Pending';
+            $epad->tender_outcome = 'in_progress';
+        }
+
+        // LOI Attachment
+        if ($request->boolean('remove_loi')) {
+            if ($epad->letter_of_intent_file && Storage::disk('public')->exists($epad->letter_of_intent_file)) {
+                Storage::disk('public')->delete($epad->letter_of_intent_file);
+            }
+            $epad->letter_of_intent_file = null;
+            $epad->has_letter_of_intent = false;
+        } elseif ($request->hasFile('letter_of_intent_file')) {
+            if ($epad->letter_of_intent_file && Storage::disk('public')->exists($epad->letter_of_intent_file)) {
+                Storage::disk('public')->delete($epad->letter_of_intent_file);
+            }
+            $loiPath = $request->file('letter_of_intent_file')->store('tender_documents', 'public');
+            $epad->letter_of_intent_file = $loiPath;
+            $epad->has_letter_of_intent = true;
+            $epad->letter_of_intent_ref = $epad->reference_no;
+            $epad->letter_of_intent_date = now()->toDateString();
+        }
+
         $epad->save();
 
-        return redirect()->route('epads.index')->with('success', 'ePads record updated successfully.');
+        ActivityLog::record(
+            'update',
+            'Epad',
+            "Updated e-Pads procurement entry '{$epad->reference_no}'",
+            $epad
+        );
+
+        return redirect()->route('epads.index')->with('success', "e-Pads procurement entry '{$epad->reference_no}' updated successfully.");
     }
 
     /**
-     * Quick Update Ref # after bid submission
+     * Download attached Letter of Intent (LOI)
      */
-    public function updateRef(Request $request, Epad $epad)
+    public function downloadLoi(Epad $epad)
     {
-        $validated = $request->validate([
-            'ref_no' => ['required', 'string', 'max:100', Rule::unique('tenders', 'reference_no')->ignore($epad->id)],
-        ], [
-            'ref_no.unique' => 'This Ref # is already associated with another record.',
-        ]);
-
-        $epad->reference_no = trim($validated['ref_no']);
-        $epad->tender_no = $epad->reference_no;
-        $epad->save();
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'ref_no' => $epad->reference_no,
-                'message' => 'Ref # updated successfully.',
-            ]);
+        if ($epad->hasLoiAttachment()) {
+            return Storage::disk('public')->download(
+                $epad->letter_of_intent_file,
+                'Letter_of_Intent_' . ($epad->reference_no ?: $epad->id) . '.' . pathinfo($epad->letter_of_intent_file, PATHINFO_EXTENSION)
+            );
         }
 
-        return back()->with('success', 'Ref # updated successfully for this ePads record.');
-    }
-
-    /**
-     * Quick Update Status (Accepted / Rejected)
-     */
-    public function updateStatus(Request $request, Epad $epad)
-    {
-        $validated = $request->validate([
-            'status' => 'required|in:Accepted,Rejected',
-        ]);
-
-        $epad->status = $validated['status'];
-        $epad->tender_outcome = ($validated['status'] === 'Accepted') ? 'won' : 'lost';
-        $epad->save();
-
-        if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'status' => $epad->status,
-                'message' => 'Status updated successfully.',
-            ]);
-        }
-
-        return back()->with('success', "Status updated to {$epad->status}.");
+        return back()->with('error', 'Letter of Intent (LOI) attachment is not available for this record.');
     }
 
     /**
@@ -221,16 +393,29 @@ class EpadController extends Controller
      */
     public function destroy(Epad $epad)
     {
+        $ref = $epad->reference_no ?: $epad->tender_no;
+        if ($epad->letter_of_intent_file && Storage::disk('public')->exists($epad->letter_of_intent_file)) {
+            Storage::disk('public')->delete($epad->letter_of_intent_file);
+        }
         $epad->delete();
-        return redirect()->route('epads.index')->with('success', 'ePads record deleted successfully.');
+
+        return redirect()->route('epads.index')->with('success', "e-Pads record '{$ref}' deleted successfully.");
     }
 
     /**
-     * Page 3: ePads Reports
+     * Legacy reports route redirect to index (merged view)
      */
     public function reports(Request $request)
     {
-        $query = Epad::with('department');
+        return $this->index($request);
+    }
+
+    /**
+     * Export ePads Reports as CSV (matching table structure)
+     */
+    public function exportReports(Request $request)
+    {
+        $query = Epad::with(['department', 'company']);
 
         if ($request->filled('search')) {
             $search = trim($request->search);
@@ -238,14 +423,11 @@ class EpadController extends Controller
                 $q->where('title', 'like', "%{$search}%")
                   ->orWhere('description', 'like', "%{$search}%")
                   ->orWhere('reference_no', 'like', "%{$search}%")
-                  ->orWhere('tender_no', 'like', "%{$search}%")
-                  ->orWhereHas('department', function ($dq) use ($search) {
-                      $dq->where('name', 'like', "%{$search}%");
-                  });
+                  ->orWhere('tender_no', 'like', "%{$search}%");
             });
         }
 
-        if ($request->filled('procurement_type')) {
+        if ($request->filled('procurement_type') && $request->procurement_type !== 'All Types') {
             $query->where('category', $request->procurement_type);
         }
 
@@ -253,73 +435,12 @@ class EpadController extends Controller
             $query->where('department_id', $request->department_id);
         }
 
-        if ($request->filled('status')) {
+        if ($request->filled('status') && $request->status !== 'All Statuses') {
             $query->where('status', $request->status);
         }
 
-        if ($request->filled('date_from')) {
-            $query->whereDate('closing_date', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('closing_date', '<=', $request->date_to);
-        }
-
-        // Real dynamic database metrics
-        $stats = [
-            'total_count' => (clone $query)->count(),
-            'accepted_count' => (clone $query)->where('status', 'Accepted')->count(),
-            'rejected_count' => (clone $query)->where('status', 'Rejected')->count(),
-            'total_bid_amount' => (float) (clone $query)->sum('budget'),
-        ];
-
-        $epads = $query->latest('closing_date')->paginate(20)->withQueryString();
-        $departments = Department::where('status', 'active')->orderBy('name')->get();
-        $procurementTypes = ['Petty Purchase', 'Request for Quotation'];
-
-        return view('epads.reports', compact('epads', 'departments', 'stats', 'procurementTypes'));
-    }
-
-    /**
-     * Export ePads Reports as CSV
-     */
-    public function exportReports(Request $request)
-    {
-        $query = Epad::with('department');
-
-        if ($request->filled('search')) {
-            $search = trim($request->search);
-            $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('reference_no', 'like', "%{$search}%")
-                  ->orWhereHas('department', function ($dq) use ($search) {
-                      $dq->where('name', 'like', "%{$search}%");
-                  });
-            });
-        }
-
-        if ($request->filled('procurement_type')) {
-            $query->where('category', $request->procurement_type);
-        }
-
-        if ($request->filled('department_id')) {
-            $query->where('department_id', $request->department_id);
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('date_from')) {
-            $query->whereDate('closing_date', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('closing_date', '<=', $request->date_to);
-        }
-
-        $records = $query->latest('closing_date')->get();
-        $fileName = 'epads_report_' . date('Y_m_d_His') . '.csv';
+        $records = $query->latest('id')->get();
+        $fileName = 'epads_records_' . date('Y_m_d_His') . '.csv';
 
         $headers = [
             'Content-Type' => 'text/csv; charset=utf-8',
@@ -331,19 +452,19 @@ class EpadController extends Controller
 
         $callback = function () use ($records) {
             $file = fopen('php://output', 'w');
-            // Add UTF-8 BOM for Excel compatibility
             fputs($file, "\xEF\xBB\xBF");
 
-            // CSV Header
             fputcsv($file, [
                 '#',
-                'Ref #',
-                'Items / Work Description',
+                'Vendor Name',
                 'Department Name',
                 'Procurement Type',
+                'Ref #',
+                'Items / Work Description',
                 'Closing Date & Time',
-                'Status',
                 'Bid Amount (PKR)',
+                'Status',
+                'Attachment (LOI)',
             ]);
 
             $index = 1;
@@ -355,17 +476,18 @@ class EpadController extends Controller
 
                 fputcsv($file, [
                     $index++,
-                    $record->reference_no ?: 'N/A',
-                    $record->title,
+                    $record->vendor_name,
                     $record->department?->name ?: 'N/A',
                     $record->category ?: 'Petty Purchase',
+                    $record->reference_no ?: $record->tender_no ?: 'N/A',
+                    $record->title ?: $record->description,
                     $record->closing_date ? $record->closing_date->format('d/m/Y h:i A') : 'N/A',
-                    $record->status ?: 'Accepted',
                     number_format($bidAmount, 2),
+                    $record->status ?: 'Accepted / Awarded',
+                    $record->hasLoiAttachment() ? 'Attached' : 'Pending',
                 ]);
             }
 
-            // Summary Row
             fputcsv($file, []);
             fputcsv($file, ['Total Records:', count($records), '', '', '', '', 'Total Amount (PKR):', number_format($totalAmount, 2)]);
 
