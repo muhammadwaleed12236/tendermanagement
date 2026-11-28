@@ -226,6 +226,97 @@
                 font-size: 11.5px;
             }
         }
+
+        /* Document Buttons Matching Client Reference Exact Design */
+        .doc-btn-pill {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            gap: 0.35rem !important;
+            padding: 0.32rem 0.6rem !important;
+            border-radius: 6px !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            transition: all 0.15s ease !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03) !important;
+        }
+        .doc-btn-bid {
+            background-color: #eaf3fd !important;
+            border: 1px solid #c7dcf7 !important;
+            color: #4b6f96 !important;
+        }
+        .doc-btn-bid:hover {
+            background-color: #dbeafc !important;
+            border-color: #a8cbf4 !important;
+            color: #2b527d !important;
+        }
+
+        .doc-btn-loi {
+            background-color: #ebf8f1 !important;
+            border: 1px solid #bbf0d0 !important;
+            color: #3b7d59 !important;
+        }
+        .doc-btn-loi:hover {
+            background-color: #d8f3e3 !important;
+            border-color: #97e7b5 !important;
+            color: #215e3b !important;
+        }
+
+        .doc-btn-perf {
+            background-color: #fef5e7 !important;
+            border: 1px solid #fbdcb0 !important;
+            color: #8c6734 !important;
+        }
+        .doc-btn-perf:hover {
+            background-color: #fdecd1 !important;
+            border-color: #f7ca8c !important;
+            color: #6e4e22 !important;
+        }
+
+        .doc-btn-award {
+            background-color: #f6edfc !important;
+            border: 1px solid #e4ccf7 !important;
+            color: #714e96 !important;
+        }
+        .doc-btn-award:hover {
+            background-color: #edd9fa !important;
+            border-color: #d6b0f2 !important;
+            color: #553478 !important;
+        }
+
+        .doc-btn-disabled {
+            background-color: #fafaf9 !important;
+            border: 1px dashed #e7e5e4 !important;
+            color: #a8a29e !important;
+            opacity: 0.55 !important;
+            cursor: not-allowed !important;
+        }
+
+        .doc-status-pending {
+            background-color: #fef7d8 !important;
+            border: 1px solid #fae69e !important;
+            color: #a87a2a !important;
+            font-weight: 700 !important;
+            border-radius: 6px !important;
+            padding: 4px 12px !important;
+            display: inline-block !important;
+            font-size: 11px !important;
+            letter-spacing: 0.01em !important;
+        }
+
+        .doc-status-completed {
+            background-color: #ebf8f1 !important;
+            border: 1px solid #bbf0d0 !important;
+            color: #3b7d59 !important;
+            font-weight: 700 !important;
+            border-radius: 6px !important;
+            padding: 4px 12px !important;
+            display: inline-block !important;
+            font-size: 11px !important;
+            letter-spacing: 0.01em !important;
+        }
     </style>
 
     <div class="reports-page py-4 sm:py-6 font-sans">
@@ -578,34 +669,76 @@
                     <table class="reports-desktop-table w-full text-center border-collapse text-xs print:text-[10px]">
                         <thead>
                             <tr class="bg-stone-100/90 text-stone-900 border-b border-[#e5ded4] text-[10px] font-black uppercase tracking-wider print:bg-stone-200">
-                                <th class="py-2.5 px-2 text-center w-10 border-r border-[#e5ded4]">S. No.</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Vendor Name</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Department Name</th>
-                                <th class="py-2.5 px-2.5 w-[14%] border-r border-[#e5ded4]">Tender Description</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Tender No.</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Bidding Procedure</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Work Order / Award Value</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Tender Fee</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Budget (PKR)</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Bid Security (CDR / PO)</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Performance Security (PKR)</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Status</th>
-                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4]">Received Award Documents</th>
-                                <th class="py-2.5 px-2 text-center w-24 print:hidden">Action</th>
+                                <th class="py-2.5 px-2 text-center w-12 border-r border-[#e5ded4]">
+                                    <span class="block leading-tight">S.</span>
+                                    <span class="block leading-tight">NO.</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    <span class="block leading-tight">VENDOR</span>
+                                    <span class="block leading-tight">NAME</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    <span class="block leading-tight">DEPARTMENT</span>
+                                    <span class="block leading-tight">NAME</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] min-w-[200px] max-w-[260px]">
+                                    TENDER DESCRIPTION
+                                </th>
+                                <th class="py-2.5 px-2 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    <span class="block leading-tight">TENDER</span>
+                                    <span class="block leading-tight">NO.</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    <span class="block leading-tight">BIDDING</span>
+                                    <span class="block leading-tight">PROCEDURE</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    <span class="block leading-tight">WORK ORDER /</span>
+                                    <span class="block leading-tight">AWARD VALUE</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    TENDER FEE
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    BUDGET
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    <span class="block leading-tight">BID SECURITY</span>
+                                    <span class="block leading-tight">(CDR / PO)</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    <span class="block leading-tight">PERFORMANCE</span>
+                                    <span class="block leading-tight">SECURITY</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap min-w-[290px] w-[290px]">
+                                    <span class="block leading-tight">TENDER AWARD &</span>
+                                    <span class="block leading-tight">SECURITY DOCUMENTS</span>
+                                </th>
+                                <th class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                    STATUS
+                                </th>
+                                <th class="py-2.5 px-3 text-center w-28 whitespace-nowrap print:hidden">
+                                    ACTION
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-[#e5ded4] text-stone-800">
                             @forelse($tenders as $idx => $t)
                                 @php
+                                    $hasBidSecDoc = !empty($t->bid_security_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->bid_security_file) || file_exists(public_path('storage/' . $t->bid_security_file)));
+                                    $hasLoiDoc = !empty($t->letter_of_intent_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->letter_of_intent_file) || file_exists(public_path('storage/' . $t->letter_of_intent_file)));
+                                    $hasPerfSecDoc = !empty($t->performance_security_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->performance_security_file) || file_exists(public_path('storage/' . $t->performance_security_file)));
+                                    $hasAwardDoc = !empty($t->award_letter_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->award_letter_file) || file_exists(public_path('storage/' . $t->award_letter_file)));
+
+                                    $isDocCompleted = ($hasBidSecDoc && $hasLoiDoc && $hasPerfSecDoc && $hasAwardDoc);
+                                    $tenderNoClean = $t->effective_tender_no ?: ('Tender #' . $t->id);
+
                                     $postDocsHtml = '';
-                                    if ($t->isWon()) {
-                                        if ($t->isDocumentsCompleted()) {
-                                            $postDocsHtml = '<span class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Complete ✓</span>';
-                                        } else {
-                                            $postDocsHtml = '<span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">Pending (' . $t->completedDocumentsCount() . '/2) ⚠️</span>';
-                                        }
+                                    if ($isDocCompleted) {
+                                        $postDocsHtml = '<span class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Completed ✓</span>';
                                     } else {
-                                        $postDocsHtml = '<span class="text-[11px] font-black text-stone-500 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">-</span>';
+                                        $docsCount = ($hasBidSecDoc ? 1 : 0) + ($hasLoiDoc ? 1 : 0) + ($hasPerfSecDoc ? 1 : 0) + ($hasAwardDoc ? 1 : 0);
+                                        $postDocsHtml = '<span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">Pending (' . $docsCount . '/4) ⚠️</span>';
                                     }
 
                                     $feeHtml = 'Unpaid / Pending';
@@ -645,31 +778,31 @@
                                         'perf_sec_html' => $perfSecHtml,
                                     ]);
                                 @endphp
-                                <tr class="hover:bg-amber-50/20 transition-colors {{ $t->isWon() ? 'bg-emerald-50/15' : '' }}">
+                                <tr class="hover:bg-amber-50/20 transition-colors {{ $isDocCompleted ? 'bg-emerald-50/15' : '' }}">
                                     <!-- 1. S. No. -->
-                                    <td class="py-3 px-3 text-center font-bold text-stone-600 border-r border-[#e5ded4]">
+                                    <td class="py-3 px-2 text-center font-bold text-stone-900 border-r border-[#e5ded4] text-xs">
                                         {{ str_pad($tenders->firstItem() + $idx, 2, '0', STR_PAD_LEFT) }}
                                     </td>
 
                                     <!-- 2. Vendor Name -->
-                                    <td class="py-3 px-3 text-center font-bold text-[#c2410c] border-r border-[#e5ded4]">
-                                        {{ $t->company ? ($t->company->company_name ?: $t->company->name) : '-' }}
+                                    <td class="py-3 px-3 text-center font-bold text-[#c2410c] border-r border-[#e5ded4] text-xs whitespace-normal max-w-[140px]">
+                                        {{ $t->company ? ($t->company->company_name ?: $t->company->name) : 'Al Madina Enterprises' }}
                                     </td>
 
                                     <!-- 3. Department Name -->
-                                    <td class="py-3 px-4 text-center font-bold text-stone-900 border-r border-[#e5ded4]">
+                                    <td class="py-3 px-3 text-center font-bold text-stone-900 border-r border-[#e5ded4] text-xs whitespace-normal max-w-[180px]">
                                         {{ $t->department ? $t->department->name : '-' }}
                                     </td>
 
                                     <!-- 4. Tender Description -->
-                                    <td class="py-3 px-4 text-center border-r border-[#e5ded4]">
-                                        <a href="{{ route('tenders.show', ['tender' => $t, 'from' => 'reports']) }}" class="font-bold text-stone-900 hover:text-orange-700 transition leading-snug inline-block max-w-md">
+                                    <td class="py-3 px-3 text-left font-bold text-stone-900 border-r border-[#e5ded4] text-xs whitespace-normal max-w-[240px] leading-snug">
+                                        <a href="{{ route('tenders.show', ['tender' => $t, 'from' => 'reports']) }}" class="text-stone-900 hover:text-orange-700 transition">
                                             {{ $t->title }}
                                         </a>
                                     </td>
 
                                     <!-- 5. Tender No. -->
-                                    <td class="py-3 px-3 text-center font-mono font-bold text-stone-900 border-r border-[#e5ded4]">
+                                    <td class="py-3 px-2 text-center font-mono font-bold text-stone-900 border-r border-[#e5ded4] text-xs whitespace-nowrap">
                                         {{ $t->effective_tender_no }}
                                         @if($t->isEpad())
                                             <div class="mt-0.5">
@@ -681,30 +814,32 @@
                                     </td>
 
                                     <!-- 6. Bidding Procedure -->
-                                    <td class="py-3 px-3 text-center text-xs font-semibold text-stone-700 border-r border-[#e5ded4]">
-                                        {{ $t->procedure_label }}
+                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                        <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-bold text-stone-700 bg-stone-50 border border-stone-200">
+                                            {{ $t->isTwoEnvelope() ? 'Single Stage 2E' : 'Single Stage 1E' }}
+                                        </span>
                                     </td>
 
-                                    <!-- 7. Work Order / Award Value (Sirf PKR amount) -->
-                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
+                                    <!-- 7. Work Order / Award Value -->
+                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
                                         @if($t->isWon())
-                                            <span class="font-mono font-black text-emerald-800 text-sm">
+                                            <span class="font-mono font-black text-stone-900 text-xs">
                                                 PKR {{ number_format($t->awarded_amount ?: $t->budget, 2) }}
                                             </span>
                                         @else
-                                            <span class="text-stone-400 font-mono">-</span>
+                                            <span class="text-stone-900 font-black text-sm select-none">—</span>
                                         @endif
                                     </td>
 
-                                    <!-- 8. Tender Fee (Sirf PKR amount + Paid/Unpaid tag) -->
-                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
+                                    <!-- 8. Tender Fee -->
+                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
                                         @if($t->tender_fee_amount || $t->is_tender_fee_paid)
-                                            <div class="inline-flex items-center justify-center gap-1.5 flex-wrap">
-                                                <span class="font-mono font-black text-stone-900 text-sm">PKR {{ number_format($t->tender_fee_amount ?: 0, 2) }}</span>
+                                            <div class="flex flex-col items-center justify-center gap-0.5">
+                                                <span class="font-mono font-black text-stone-900 text-xs">PKR {{ number_format($t->tender_fee_amount ?: 0, 2) }}</span>
                                                 @if($t->is_tender_fee_paid)
-                                                    <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Paid ✓</span>
+                                                    <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Paid ✓</span>
                                                 @else
-                                                    <span class="text-[9px] font-extrabold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">Unpaid</span>
+                                                    <span class="text-[9px] font-extrabold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">Unpaid</span>
                                                 @endif
                                             </div>
                                         @elseif($t->tender_type === 'epad')
@@ -714,113 +849,199 @@
                                         @endif
                                     </td>
 
-                                    <!-- 9. Budget (PKR) -->
-                                    <td class="py-3 px-3 text-center font-mono font-black text-stone-900 text-sm border-r border-[#e5ded4]">
+                                    <!-- 9. Budget -->
+                                    <td class="py-3 px-3 text-center font-mono font-black text-stone-900 text-xs border-r border-[#e5ded4] whitespace-nowrap">
                                         {{ $t->budget ? 'PKR ' . number_format($t->budget, 2) : '-' }}
                                     </td>
 
-                                    <!-- 10. Bid Security (CDR / PO) (After Budget, Sirf PKR amount + Active/Refunded tag) -->
-                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
+                                    <!-- 10. Bid Security (CDR / PO) -->
+                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
                                         @if($t->bid_security_amount)
-                                            <div class="inline-flex items-center justify-center gap-1.5 flex-wrap">
-                                                <span class="font-mono font-black text-blue-900 text-sm">PKR {{ number_format($t->bid_security_amount, 2) }}</span>
+                                            <div class="flex flex-col items-center justify-center gap-0.5">
+                                                <span class="font-mono font-black text-blue-900 text-xs">PKR {{ number_format($t->bid_security_amount, 2) }}</span>
                                                 @if($t->bid_security_status === 'released_returned')
-                                                    <span class="text-[9px] font-extrabold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">Refunded</span>
+                                                    <span class="text-[9px] font-extrabold text-teal-700 bg-teal-50 px-2 py-0.5 rounded border border-teal-200">Refunded</span>
                                                 @else
-                                                    <span class="text-[9px] font-extrabold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">Active</span>
+                                                    <span class="text-[9px] font-extrabold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Active</span>
                                                 @endif
                                             </div>
                                         @elseif($t->tender_type === 'epad')
                                             <span class="text-stone-400 font-mono text-xs">N/A</span>
                                         @else
-                                            <span class="text-stone-400 font-mono">-</span>
+                                            <span class="text-stone-400 font-mono text-xs">-</span>
                                         @endif
                                     </td>
 
-                                    <!-- 11. Performance Security (PKR) -->
-                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
+                                    <!-- 11. Performance Security -->
+                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
                                         @if($t->isPerformanceSecurityPaid())
-                                            <div class="inline-flex items-center justify-center gap-1.5 flex-wrap">
-                                                <span class="font-mono font-black text-emerald-800 text-sm">PKR {{ number_format($t->performance_security_amount, 2) }}</span>
-                                                <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">Paid</span>
+                                            <div class="flex flex-col items-center justify-center gap-0.5">
+                                                <span class="font-mono font-black text-emerald-800 text-xs">PKR {{ number_format($t->performance_security_amount, 2) }}</span>
+                                                <span class="text-[9px] font-extrabold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Paid</span>
                                             </div>
                                         @else
-                                            <span class="text-stone-400 font-bold text-xs">No Fees</span>
+                                            <span class="text-stone-400 font-medium text-xs">No Fees</span>
                                         @endif
                                     </td>
 
-                                    <!-- 12. Status (Centered) -->
-                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
-                                        @if($t->isWon())
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">
-                                                🏆 WON
-                                            </span>
-                                        @elseif($t->isLost())
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-900 border border-rose-300">
-                                                ❌ LOST
-                                            </span>
-                                        @elseif($t->status === 'cancelled' || $t->tender_outcome === 'cancelled')
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-stone-200 text-stone-800 border border-stone-300">
-                                                Cancelled
-                                            </span>
-                                        @elseif($t->status === 'draft')
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
-                                                Draft
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-900 border border-blue-200">
-                                                Active
-                                            </span>
-                                        @endif
-                                    </td>
-
-                                    <!-- 13. Received Award Documents (Centered) -->
-                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4]">
-                                        @if($t->isWon())
-                                            @if($t->isDocumentsCompleted())
-                                                <span class="text-[10px] font-extrabold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                                                    Complete ✓
-                                                </span>
+                                    <!-- 12. Tender Award & Security Documents (Unified 2x2 Grid matching client exact reference) -->
+                                    <td class="py-2.5 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap min-w-[290px] w-[290px]">
+                                        <div class="grid grid-cols-2 gap-1.5 w-full max-w-[285px] mx-auto">
+                                            <!-- Row 1, Col 1: Bid Security -->
+                                            @if($hasBidSecDoc)
+                                                <a href="{{ asset('storage/' . $t->bid_security_file) }}"
+                                                   target="_blank"
+                                                   onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->bid_security_file) }}', '{{ addslashes($tenderNoClean) }} - Bid Security', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'bid_security']) }}', 'bid_sec')"
+                                                   class="doc-btn-pill doc-btn-bid group"
+                                                   style="background-color: #eaf3fd !important; border: 1px solid #c7dcf7 !important; color: #4b6f96 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   title="Preview Bid Security (CDR / Pay Order)">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+                                                        <span>Bid Security</span>
+                                                    </span>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                </a>
                                             @else
-                                                <span class="text-[10px] font-extrabold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">
-                                                    Pending ({{ $t->completedDocumentsCount() }}/2) ⚠️
+                                                <span class="doc-btn-pill doc-btn-disabled"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      title="Bid Security not uploaded">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+                                                        <span>Bid Security</span>
+                                                    </span>
+                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
                                                 </span>
                                             @endif
+
+                                            <!-- Row 1, Col 2: Letter of Intent -->
+                                            @if($hasLoiDoc)
+                                                <a href="{{ asset('storage/' . $t->letter_of_intent_file) }}"
+                                                   target="_blank"
+                                                   onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->letter_of_intent_file) }}', '{{ addslashes($tenderNoClean) }} - Letter of Intent', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'loi']) }}', 'loi')"
+                                                   class="doc-btn-pill doc-btn-loi group"
+                                                   style="background-color: #ebf8f1 !important; border: 1px solid #bbf0d0 !important; color: #3b7d59 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   title="Preview Letter of Intent (LOI)">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                        <span>Letter of Intent</span>
+                                                    </span>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                </a>
+                                            @else
+                                                <span class="doc-btn-pill doc-btn-disabled"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      title="Letter of Intent not uploaded">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                        <span>Letter of Intent</span>
+                                                    </span>
+                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
+                                                </span>
+                                            @endif
+
+                                            <!-- Row 2, Col 1: Perf. Security -->
+                                            @if($hasPerfSecDoc)
+                                                <a href="{{ asset('storage/' . $t->performance_security_file) }}"
+                                                   target="_blank"
+                                                   onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->performance_security_file) }}', '{{ addslashes($tenderNoClean) }} - Performance Security', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'performance_security']) }}', 'perf_sec')"
+                                                   class="doc-btn-pill doc-btn-perf group"
+                                                   style="background-color: #fef5e7 !important; border: 1px solid #fbdcb0 !important; color: #8c6734 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   title="Preview Performance Security Certificate">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                                        <span>Perf. Security</span>
+                                                    </span>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                </a>
+                                            @else
+                                                <span class="doc-btn-pill doc-btn-disabled"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      title="Performance Security not uploaded">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                                        <span>Perf. Security</span>
+                                                    </span>
+                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
+                                                </span>
+                                            @endif
+
+                                            <!-- Row 2, Col 2: Award Letter -->
+                                            @if($hasAwardDoc)
+                                                <a href="{{ asset('storage/' . $t->award_letter_file) }}"
+                                                   target="_blank"
+                                                   onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->award_letter_file) }}', '{{ addslashes($tenderNoClean) }} - Award Letter', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'award']) }}', 'award')"
+                                                   class="doc-btn-pill doc-btn-award group"
+                                                   style="background-color: #f6edfc !important; border: 1px solid #e4ccf7 !important; color: #714e96 !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 700 !important; text-decoration: none !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                   title="Preview Award Letter / Work Order">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                                                        <span>Award Letter</span>
+                                                    </span>
+                                                    <svg class="w-2.5 h-2.5 shrink-0 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                                </a>
+                                            @else
+                                                <span class="doc-btn-pill doc-btn-disabled"
+                                                      style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; border-radius: 6px !important; padding: 4px 7px !important; font-size: 11px !important; font-weight: 600 !important; opacity: 0.65 !important; display: inline-flex !important; align-items: center !important; justify-content: space-between !important;"
+                                                      title="Award Letter not uploaded">
+                                                    <span class="inline-flex items-center gap-1.5 whitespace-nowrap opacity-60">
+                                                        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                                                        <span>Award Letter</span>
+                                                    </span>
+                                                    <span class="text-[9px] text-stone-300 ml-1">-</span>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </td>
+
+                                    <!-- 13. Status -->
+                                    <td class="py-3 px-3 text-center border-r border-[#e5ded4] whitespace-nowrap">
+                                        @if($isDocCompleted)
+                                            <span class="doc-status-completed" style="background-color: #ebf8f1 !important; border: 1px solid #bbf0d0 !important; color: #3b7d59 !important; font-weight: 700 !important; border-radius: 6px !important; padding: 4px 14px !important; font-size: 11px !important; display: inline-block !important;">
+                                                Completed
+                                            </span>
                                         @else
-                                            <span class="text-stone-400 font-mono">-</span>
+                                            <span class="doc-status-pending" style="background-color: #fef7d8 !important; border: 1px solid #fae69e !important; color: #a87a2a !important; font-weight: 700 !important; border-radius: 6px !important; padding: 4px 14px !important; font-size: 11px !important; display: inline-block !important;">
+                                                Pending
+                                            </span>
                                         @endif
                                     </td>
 
-                                    <!-- 14. Action (4 Icons: Edit, Delete, View, Quick View) -->
-                                    <td class="py-3 px-3 text-center print:hidden">
+                                    <!-- 14. Action (4 Icons: View, Edit, Download, Delete) -->
+                                    <td class="py-3 px-3 text-center print:hidden whitespace-nowrap">
                                         <div class="flex items-center justify-center gap-1">
+                                            <!-- 1. View Summary (Eye icon) -->
+                                            <button type="button" 
+                                                    onclick='openReportTenderModal({!! htmlspecialchars($tenderModalJson, ENT_QUOTES, "UTF-8") !!})' 
+                                                    class="p-1.5 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition inline-flex items-center justify-center" 
+                                                    title="View Tender Summary">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            </button>
+
                                             @if(Auth::check() && Auth::user()->isAdmin())
-                                                <!-- Edit -->
-                                                <a href="{{ route('tenders.edit', $t) }}" class="p-1.5 text-stone-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition inline-flex items-center justify-center" title="Edit Tender">
+                                                <!-- 2. Edit (Pencil icon) -->
+                                                <a href="{{ route('tenders.edit', $t) }}" 
+                                                   class="p-1.5 text-stone-500 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition inline-flex items-center justify-center" 
+                                                   title="Edit Tender">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                                 </a>
+                                            @endif
 
-                                                <!-- Delete -->
+                                            <!-- 3. Download Official Tender Document (Tray with down arrow icon) -->
+                                            <a href="{{ route('tenders.download-document', $t) }}" 
+                                               class="p-1.5 text-stone-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition inline-flex items-center justify-center" 
+                                               title="Download Tender Document / RFP">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                            </a>
+
+                                            @if(Auth::check() && Auth::user()->isAdmin())
+                                                <!-- 4. Delete (Trash icon) -->
                                                 <button type="button"
                                                         onclick="openDeleteReportTenderModal('{{ route('tenders.destroy', $t) }}', '{{ addslashes($t->effective_tender_no) }}')"
-                                                        class="p-1.5 text-stone-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition inline-flex items-center justify-center"
+                                                        class="p-1.5 text-stone-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition inline-flex items-center justify-center"
                                                         title="Delete Tender">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                                 </button>
                                             @endif
-
-                                            <!-- View -->
-                                            <a href="{{ route('tenders.show', ['tender' => $t, 'from' => 'reports']) }}" class="p-1.5 text-stone-600 hover:text-orange-700 hover:bg-orange-50 rounded-lg transition inline-flex items-center justify-center" title="View Tender Details">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                            </a>
-
-                                            <!-- Quick View -->
-                                            <button type="button" 
-                                                    onclick='openReportTenderModal({!! htmlspecialchars($tenderModalJson, ENT_QUOTES, "UTF-8") !!})' 
-                                                    class="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition inline-flex items-center justify-center" 
-                                                    title="Quick View Summary">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -836,18 +1057,24 @@
                 </div>
 
                 <!-- Mobile & Tablet Responsive Ledger Cards (< 1400px, hidden on print) -->
+                <!-- Mobile & Tablet Responsive Ledger Cards (< 1400px, hidden on print) -->
                 <div class="reports-mobile-cards print:hidden">
                     @forelse($tenders as $idx => $t)
                         @php
+                            $hasBidSecDoc = !empty($t->bid_security_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->bid_security_file) || file_exists(public_path('storage/' . $t->bid_security_file)));
+                            $hasLoiDoc = !empty($t->letter_of_intent_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->letter_of_intent_file) || file_exists(public_path('storage/' . $t->letter_of_intent_file)));
+                            $hasPerfSecDoc = !empty($t->performance_security_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->performance_security_file) || file_exists(public_path('storage/' . $t->performance_security_file)));
+                            $hasAwardDoc = !empty($t->award_letter_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($t->award_letter_file) || file_exists(public_path('storage/' . $t->award_letter_file)));
+
+                            $isDocCompleted = ($hasBidSecDoc && $hasLoiDoc && $hasPerfSecDoc && $hasAwardDoc);
+                            $tenderNoClean = $t->effective_tender_no ?: ('Tender #' . $t->id);
+
                             $postDocsHtml = '';
-                            if ($t->isWon()) {
-                                if ($t->isDocumentsCompleted()) {
-                                    $postDocsHtml = '<span class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Complete ✓</span>';
-                                } else {
-                                    $postDocsHtml = '<span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">Pending (' . $t->completedDocumentsCount() . '/2) ⚠️</span>';
-                                }
+                            if ($isDocCompleted) {
+                                $postDocsHtml = '<span class="text-[11px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Completed ✓</span>';
                             } else {
-                                $postDocsHtml = '<span class="text-[11px] font-black text-stone-500 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">-</span>';
+                                $docsCount = ($hasBidSecDoc ? 1 : 0) + ($hasLoiDoc ? 1 : 0) + ($hasPerfSecDoc ? 1 : 0) + ($hasAwardDoc ? 1 : 0);
+                                $postDocsHtml = '<span class="text-[11px] font-black text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-300">Pending (' . $docsCount . '/4) ⚠️</span>';
                             }
 
                             $feeHtml = 'Unpaid / Pending';
@@ -887,7 +1114,7 @@
                                 'perf_sec_html' => $perfSecHtml,
                             ]);
                         @endphp
-                        <div class="rounded-2xl border border-[#e5ded4] p-4 flex flex-col justify-between gap-3 shadow-2xs {{ $t->isWon() ? 'bg-emerald-50/20' : 'bg-[#FCFAF7]' }}">
+                        <div class="rounded-2xl border border-[#e5ded4] p-4 flex flex-col justify-between gap-3 shadow-2xs {{ $isDocCompleted ? 'bg-emerald-50/20' : 'bg-[#FCFAF7]' }}">
                             <!-- Header: S.No, Tender No, Status -->
                             <div class="flex items-start justify-between gap-2 flex-wrap">
                                 <div class="flex items-center gap-2 min-w-0">
@@ -900,16 +1127,14 @@
                                     @endif
                                 </div>
                                 <div>
-                                    @if($t->isWon())
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-900 border border-emerald-300">🏆 WON</span>
-                                    @elseif($t->isLost())
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-900 border border-rose-300">❌ LOST</span>
-                                    @elseif($t->status === 'cancelled' || $t->tender_outcome === 'cancelled')
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-stone-200 text-stone-800 border border-stone-300">Cancelled</span>
-                                    @elseif($t->status === 'draft')
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">Draft</span>
+                                    @if($isDocCompleted)
+                                        <span class="doc-status-completed" style="background-color: #ebf8f1 !important; border: 1px solid #bbf0d0 !important; color: #3b7d59 !important; font-weight: 700 !important; border-radius: 6px !important; padding: 3px 10px !important; font-size: 10px !important;">
+                                            Completed
+                                        </span>
                                     @else
-                                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-blue-100 text-blue-900 border border-blue-200">Active</span>
+                                        <span class="doc-status-pending" style="background-color: #fef7d8 !important; border: 1px solid #fae69e !important; color: #a87a2a !important; font-weight: 700 !important; border-radius: 6px !important; padding: 3px 10px !important; font-size: 10px !important;">
+                                            Pending
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -925,7 +1150,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs bg-white rounded-xl p-2.5 border border-[#e5ded4]">
                                 <div class="min-w-0">
                                     <span class="text-[10px] font-bold uppercase text-stone-400 block">Vendor</span>
-                                    <span class="font-bold text-[#c2410c] block truncate">{{ $t->company ? ($t->company->company_name ?: $t->company->name) : '-' }}</span>
+                                    <span class="font-bold text-[#c2410c] block truncate">{{ $t->company ? ($t->company->company_name ?: $t->company->name) : 'Al Madina Enterprises' }}</span>
                                 </div>
                                 <div class="min-w-0">
                                     <span class="text-[10px] font-bold uppercase text-stone-400 block">Department</span>
@@ -937,12 +1162,12 @@
                                 </div>
                             </div>
 
-                            <!-- Financials & Securities Grid -->
+                            <!-- Financials Grid -->
                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs bg-white rounded-xl p-2.5 border border-[#e5ded4]">
                                 <div class="min-w-0">
                                     <span class="text-[10px] font-bold uppercase text-stone-400 block">Award Value</span>
                                     @if($t->isWon())
-                                        <span class="font-mono font-black text-emerald-800 block truncate">PKR {{ number_format($t->awarded_amount ?: $t->budget, 2) }}</span>
+                                        <span class="font-mono font-black text-stone-900 block truncate">PKR {{ number_format($t->awarded_amount ?: $t->budget, 2) }}</span>
                                     @else
                                         <span class="text-stone-400 font-mono">-</span>
                                     @endif
@@ -974,17 +1199,117 @@
                                     @if($t->isPerformanceSecurityPaid())
                                         <span class="font-mono font-bold text-emerald-800 block truncate">PKR {{ number_format($t->performance_security_amount, 2) }}</span>
                                     @else
-                                        <span class="text-stone-400 font-bold">No Fees</span>
+                                        <span class="text-stone-400 font-medium">No Fees</span>
                                     @endif
                                 </div>
                                 <div class="min-w-0">
-                                    <span class="text-[10px] font-bold uppercase text-stone-400 block">Award Docs</span>
-                                    @if($t->isWon())
-                                        <span class="text-[10px] font-extrabold {{ $t->isDocumentsCompleted() ? 'text-emerald-800' : 'text-amber-800' }}">
-                                            {{ $t->isDocumentsCompleted() ? 'Complete ✓' : 'Pending (' . $t->completedDocumentsCount() . '/2)' }}
-                                        </span>
+                                    <span class="text-[10px] font-bold uppercase text-stone-400 block mb-0.5">Doc Status</span>
+                                    @if($isDocCompleted)
+                                        <span class="doc-status-completed" style="background-color: #ebf8f1 !important; border: 1px solid #bbf0d0 !important; color: #3b7d59 !important; font-weight: 700 !important; border-radius: 6px !important; padding: 2px 8px !important; font-size: 10px !important; display: inline-block !important;">Completed</span>
                                     @else
-                                        <span class="text-stone-400 font-mono">-</span>
+                                        <span class="doc-status-pending" style="background-color: #fef7d8 !important; border: 1px solid #fae69e !important; color: #a87a2a !important; font-weight: 700 !important; border-radius: 6px !important; padding: 2px 8px !important; font-size: 10px !important; display: inline-block !important;">Pending</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <!-- Tender Award & Security Documents (Mobile 2x2 Grid matching client exact reference) -->
+                            <div class="bg-white rounded-xl p-2.5 border border-[#e5ded4]">
+                                <span class="text-[10px] font-bold uppercase text-stone-500 block mb-1.5">Tender Award & Security Documents</span>
+                                <div class="grid grid-cols-2 gap-1.5">
+                                    <!-- Bid Security -->
+                                    @if($hasBidSecDoc)
+                                        <a href="{{ asset('storage/' . $t->bid_security_file) }}"
+                                           target="_blank"
+                                           onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->bid_security_file) }}', '{{ addslashes($tenderNoClean) }} - Bid Security', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'bid_security']) }}', 'bid_sec')"
+                                           class="doc-btn-pill doc-btn-bid group"
+                                           style="background-color: #eaf3fd !important; border: 1px solid #c7dcf7 !important; color: #4b6f96 !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+                                                <span class="truncate">Bid Security</span>
+                                            </span>
+                                            <svg class="w-2.5 h-2.5 shrink-0 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                        </a>
+                                    @else
+                                        <span class="doc-btn-pill doc-btn-disabled"
+                                              style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate opacity-60">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>
+                                                <span class="truncate">Bid Security</span>
+                                            </span>
+                                            <span class="text-[9px] text-stone-300">-</span>
+                                        </span>
+                                    @endif
+
+                                    <!-- Letter of Intent -->
+                                    @if($hasLoiDoc)
+                                        <a href="{{ asset('storage/' . $t->letter_of_intent_file) }}"
+                                           target="_blank"
+                                           onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->letter_of_intent_file) }}', '{{ addslashes($tenderNoClean) }} - Letter of Intent', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'loi']) }}', 'loi')"
+                                           class="doc-btn-pill doc-btn-loi group"
+                                           style="background-color: #ebf8f1 !important; border: 1px solid #bbf0d0 !important; color: #3b7d59 !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                <span class="truncate">Letter of Intent</span>
+                                            </span>
+                                            <svg class="w-2.5 h-2.5 shrink-0 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                        </a>
+                                    @else
+                                        <span class="doc-btn-pill doc-btn-disabled"
+                                              style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate opacity-60">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                                <span class="truncate">Letter of Intent</span>
+                                            </span>
+                                            <span class="text-[9px] text-stone-300">-</span>
+                                        </span>
+                                    @endif
+
+                                    <!-- Perf. Security -->
+                                    @if($hasPerfSecDoc)
+                                        <a href="{{ asset('storage/' . $t->performance_security_file) }}"
+                                           target="_blank"
+                                           onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->performance_security_file) }}', '{{ addslashes($tenderNoClean) }} - Performance Security', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'performance_security']) }}', 'perf_sec')"
+                                           class="doc-btn-pill doc-btn-perf group"
+                                           style="background-color: #fef5e7 !important; border: 1px solid #fbdcb0 !important; color: #8c6734 !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                                <span class="truncate">Perf. Security</span>
+                                            </span>
+                                            <svg class="w-2.5 h-2.5 shrink-0 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                        </a>
+                                    @else
+                                        <span class="doc-btn-pill doc-btn-disabled"
+                                              style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate opacity-60">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                                <span class="truncate">Perf. Security</span>
+                                            </span>
+                                            <span class="text-[9px] text-stone-300">-</span>
+                                        </span>
+                                    @endif
+
+                                    <!-- Award Letter -->
+                                    @if($hasAwardDoc)
+                                        <a href="{{ asset('storage/' . $t->award_letter_file) }}"
+                                           target="_blank"
+                                           onclick="event.preventDefault(); openDocumentPreviewModal('{{ asset('storage/' . $t->award_letter_file) }}', '{{ addslashes($tenderNoClean) }} - Award Letter', '{{ route('tenders.download-document', ['tender' => $t, 'type' => 'award']) }}', 'award')"
+                                           class="doc-btn-pill doc-btn-award group"
+                                           style="background-color: #f6edfc !important; border: 1px solid #e4ccf7 !important; color: #714e96 !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                                                <span class="truncate">Award Letter</span>
+                                            </span>
+                                            <svg class="w-2.5 h-2.5 shrink-0 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+                                        </a>
+                                    @else
+                                        <span class="doc-btn-pill doc-btn-disabled"
+                                              style="background-color: #fafaf9 !important; border: 1px dashed #e7e5e4 !important; color: #a8a29e !important; font-size: 10px !important; padding: 3px 6px !important;">
+                                            <span class="inline-flex items-center gap-1 truncate opacity-60">
+                                                <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+                                                <span class="truncate">Award Letter</span>
+                                            </span>
+                                            <span class="text-[9px] text-stone-300">-</span>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -999,6 +1324,9 @@
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                     </button>
                                 @endif
+                                <a href="{{ route('tenders.download-document', $t) }}" class="p-1.5 text-stone-600 hover:text-emerald-700 bg-white border border-stone-200 rounded-lg" title="Download Official Tender Document">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                </a>
                                 <a href="{{ route('tenders.show', ['tender' => $t, 'from' => 'reports']) }}" class="p-1.5 text-stone-600 hover:text-orange-700 bg-white border border-stone-200 rounded-lg" title="View Tender Details">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                 </a>
@@ -1211,7 +1539,110 @@
         </div>
     </div>
 
+    <!-- DOCUMENT / ATTACHMENT PREVIEW MODAL -->
+    <div id="docPreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6" style="background-color: rgba(28, 25, 23, 0.72); backdrop-filter: blur(4px);">
+        <div class="bg-white rounded-2xl sm:rounded-3xl border border-[#e5ded4] shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+            <!-- Modal Header -->
+            <div class="px-5 py-3.5 bg-stone-100/90 border-b border-[#e5ded4] flex items-center justify-between gap-3 shrink-0">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div id="docPreviewIconWrap" class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-blue-100 text-blue-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div class="min-w-0">
+                        <h3 id="docPreviewTitle" class="text-sm font-black text-stone-900 truncate">Document Preview</h3>
+                        <p id="docPreviewSub" class="text-[11px] text-stone-500 font-medium truncate">Official tender document attachment</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                    <a id="docPreviewNewTabLink" href="#" target="_blank" class="px-3 py-1.5 text-xs font-bold text-stone-700 hover:text-stone-900 bg-white hover:bg-stone-50 border border-stone-200 rounded-xl transition inline-flex items-center gap-1.5 shadow-2xs">
+                        <span>Open in New Tab</span>
+                        <span class="text-[11px]">↗</span>
+                    </a>
+                    <a id="docPreviewDownloadLink" href="#" download class="px-3 py-1.5 text-xs font-bold text-white bg-stone-900 hover:bg-stone-800 rounded-xl transition inline-flex items-center gap-1.5 shadow-2xs">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span>Download</span>
+                    </a>
+                    <button type="button" onclick="closeDocPreviewModal()" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 hover:text-stone-900 flex items-center justify-center font-bold text-lg leading-none transition ml-1" title="Close Preview">&times;</button>
+                </div>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div id="docPreviewContent" class="p-4 sm:p-6 overflow-y-auto flex-1 flex items-center justify-center bg-[#FCFAF7] min-h-[400px]">
+                <!-- iframe / img / fallback content is dynamically injected here -->
+            </div>
+        </div>
+    </div>
+
     <script>
+        function openDocumentPreviewModal(url, title, downloadUrl, docType) {
+            document.getElementById('docPreviewTitle').textContent = title || 'Document Preview';
+            document.getElementById('docPreviewNewTabLink').href = url || '#';
+            document.getElementById('docPreviewDownloadLink').href = downloadUrl || url || '#';
+
+            const sub = document.getElementById('docPreviewSub');
+            const iconWrap = document.getElementById('docPreviewIconWrap');
+            const content = document.getElementById('docPreviewContent');
+
+            let badgeBg = 'bg-blue-100 text-blue-700';
+            if (docType === 'loi') badgeBg = 'bg-emerald-100 text-emerald-700';
+            else if (docType === 'perf_sec') badgeBg = 'bg-amber-100 text-amber-700';
+            else if (docType === 'award') badgeBg = 'bg-purple-100 text-purple-700';
+            iconWrap.className = `w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${badgeBg}`;
+
+            const cleanUrl = url.split('?')[0].toLowerCase();
+            if (cleanUrl.endsWith('.pdf')) {
+                sub.textContent = 'PDF Document Preview';
+                content.innerHTML = `<iframe src="${url}" class="w-full h-full min-h-[550px] sm:min-h-[640px] rounded-xl border border-[#e5ded4] bg-white shadow-inner" style="min-height: 68vh; height: 68vh;"></iframe>`;
+            } else if (cleanUrl.match(/\.(jpg|jpeg|png|webp|gif|svg)$/)) {
+                sub.textContent = 'Image Document Preview';
+                content.innerHTML = `<img src="${url}" class="max-h-[68vh] max-w-full rounded-xl object-contain shadow-md mx-auto border border-[#e5ded4]">`;
+            } else {
+                sub.textContent = 'Uploaded Attachment File';
+                content.innerHTML = `
+                    <div class="text-center py-12 px-4 space-y-4 max-w-md mx-auto bg-white p-6 rounded-2xl border border-[#e5ded4] shadow-xs">
+                        <div class="w-14 h-14 mx-auto rounded-2xl bg-stone-100 text-stone-700 flex items-center justify-center">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-stone-900 text-sm">${title}</h4>
+                            <p class="text-xs text-stone-500 mt-1">This file format is best viewed by opening directly in a new tab or downloading.</p>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 pt-2">
+                            <a href="${url}" target="_blank" class="px-4 py-2 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold transition inline-flex items-center gap-1.5 shadow-xs">
+                                Open File ↗
+                            </a>
+                            <a href="${downloadUrl || url}" download class="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-xl text-xs font-bold transition inline-flex items-center gap-1.5">
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const modal = document.getElementById('docPreviewModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeDocPreviewModal() {
+            const modal = document.getElementById('docPreviewModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                const content = document.getElementById('docPreviewContent');
+                if (content) content.innerHTML = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDocPreviewModal();
+                closeReportTenderModal();
+                closeDeleteReportTenderModal();
+            }
+        });
         function openReportTenderModal(data) {
             document.getElementById('repModalHeaderNo').textContent = data.effective_tender_no || '';
             document.getElementById('repModalDesc').textContent = data.description || '';

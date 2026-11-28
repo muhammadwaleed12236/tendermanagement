@@ -234,6 +234,39 @@ class Tender extends Model
         return (bool) ($this->has_letter_of_intent && $this->has_award_letter);
     }
 
+    public function hasBidSecurityDocument(): bool
+    {
+        return !empty($this->bid_security_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->bid_security_file) || file_exists(public_path('storage/' . $this->bid_security_file)));
+    }
+
+    public function hasLoiDocument(): bool
+    {
+        return !empty($this->letter_of_intent_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->letter_of_intent_file) || file_exists(public_path('storage/' . $this->letter_of_intent_file)));
+    }
+
+    public function hasPerformanceSecurityDocument(): bool
+    {
+        return !empty($this->performance_security_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->performance_security_file) || file_exists(public_path('storage/' . $this->performance_security_file)));
+    }
+
+    public function hasAwardLetterDocument(): bool
+    {
+        return !empty($this->award_letter_file) && (\Illuminate\Support\Facades\Storage::disk('public')->exists($this->award_letter_file) || file_exists(public_path('storage/' . $this->award_letter_file)));
+    }
+
+    public function isAllDocumentsCompleted(): bool
+    {
+        return $this->hasBidSecurityDocument()
+            && $this->hasLoiDocument()
+            && $this->hasPerformanceSecurityDocument()
+            && $this->hasAwardLetterDocument();
+    }
+
+    public function getDocumentCompletionStatusAttribute(): string
+    {
+        return $this->isAllDocumentsCompleted() ? 'Completed' : 'Pending';
+    }
+
     public function completedDocumentsCount(): int
     {
         $count = 0;

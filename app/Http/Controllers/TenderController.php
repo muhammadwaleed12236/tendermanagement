@@ -560,37 +560,30 @@ class TenderController extends Controller
             'Bid Security Status',
             'Performance Security (PKR)',
             'Performance Security Status',
+            'Tender Award & Security Documents',
             'Status',
-            'Received Award Documents',
         ];
 
         $rows = [];
         foreach ($tenders as $idx => $t) {
-            $statusLabel = 'Pending';
-            if ($t->isWon()) {
-                $statusLabel = 'Awarded';
-            } elseif ($t->isLost()) {
-                $statusLabel = 'Not Awarded';
-            } elseif ($t->status === 'cancelled' || $t->tender_outcome === 'cancelled') {
-                $statusLabel = 'Cancelled';
-            }
-
-            $awardDocsLabel = '-';
-            if ($t->isWon()) {
-                $awardDocsLabel = $t->isDocumentsCompleted()
-                    ? 'Complete'
-                    : 'Pending (' . $t->completedDocumentsCount() . '/2)';
-            }
-
             $feeStatus = $t->is_tender_fee_paid ? 'Paid' : ($t->tender_fee_amount ? 'Unpaid' : 'No Fee');
             $bidSecStatus = $t->bid_security_amount
                 ? ($t->bid_security_status === 'released_returned' ? 'Refunded / Released' : 'Active')
                 : '-';
             $perfStatus = $t->isPerformanceSecurityPaid() ? 'Paid' : 'No Fees';
 
+            $docsList = [];
+            if ($t->hasBidSecurityDocument()) $docsList[] = 'Bid Security';
+            if ($t->hasLoiDocument()) $docsList[] = 'Letter of Intent';
+            if ($t->hasPerformanceSecurityDocument()) $docsList[] = 'Perf. Security';
+            if ($t->hasAwardLetterDocument()) $docsList[] = 'Award Letter';
+
+            $docsSummary = !empty($docsList) ? implode(', ', $docsList) : 'None';
+            $statusLabel = $t->isAllDocumentsCompleted() ? 'Completed' : 'Pending';
+
             $rows[] = [
                 $idx + 1,
-                $t->company ? ($t->company->company_name ?: $t->company->name) : '-',
+                $t->company ? ($t->company->company_name ?: $t->company->name) : 'Al Madina Enterprises',
                 $t->department ? $t->department->name : '-',
                 $t->title ?: ($t->description ?: '-'),
                 $t->effective_tender_no,
@@ -603,8 +596,8 @@ class TenderController extends Controller
                 $bidSecStatus,
                 $t->isPerformanceSecurityPaid() ? ('PKR ' . number_format($t->performance_security_amount, 2)) : 'No Fees',
                 $perfStatus,
+                $docsSummary,
                 $statusLabel,
-                $awardDocsLabel,
             ];
         }
 
